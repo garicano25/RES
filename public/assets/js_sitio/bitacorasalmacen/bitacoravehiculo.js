@@ -10,6 +10,11 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
     ID_BITACORAS_ALMACEN = 0
     document.getElementById('formularioBITACORA').reset();
    
+        $("#TABLA_BOTIQUIN_VEHICULOS").hide();
+        $("#TABLA_KIT_SEGURIDAD_VEHICULOS").hide();
+        $("#DIV_KILOMETRAJE_LLEGADA").hide();
+        $("#FIRMA_REGRESO_VEHICULO").hide();
+
 })
 
 
@@ -85,9 +90,106 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
         { targets: 10, title: 'Fecha de entrega', className: 'all text-center' },
         { targets: 11, title: 'Editar', className: 'all text-center' },
         { targets: 12, title: 'Visualizar', className: 'all text-center' }
-    ]
+    ],
+    createdRow: function (row, data) {
+    if (data.ROW_CLASS) {
+        $(row).addClass(data.ROW_CLASS);
+    }
+}
+
 
 });
+
+// $(document).on('click', '.editarMaterial', function () {
+
+//     ID_FORM_GLOBAL = $(this).data('id');
+//     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
+
+//     $.ajax({
+//         url: '/obtenerMaterialVehiculos',
+//         method: 'GET',
+//         data: { id: ID_FORM_GLOBAL, inventario: ID_INVENTARIO_GLOBAL },
+
+//         success: function (res) {
+
+//             if (!res.success) {
+//                 alert(res.message || "No se pudo obtener el material.");
+//                 return;
+//             }
+
+//             let material = res.material;
+
+//             let canvas1 = document.getElementById("firmaCanvas");
+//             let canvas2 = document.getElementById("firmaCanvas2");
+
+//             let ctx1 = canvas1.getContext("2d");
+//             let ctx2 = canvas2.getContext("2d");
+
+          
+//             canvas1.width = canvas1.width;
+//             canvas2.width = canvas2.width;
+
+//             $("#FIRMA_RECIBIDO_POR").val("");
+//             $("#FIRMA_ENTREGADO_POR").val("");
+
+           
+//             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
+//             $("#FECHA_ALMACEN_SOLICITUD").val(material.FECHA_ALMACEN_SOLICITUD);
+//             $("#DESCRIPCION").val(material.DESCRIPCION);
+//             $("#CANTIDAD").val(material.CANTIDAD);
+//             $("#CANTIDAD_SALIDA").val(material.CANTIDAD_SALIDA);
+//             $("#UNIDAD_SALIDA").val(material.UNIDAD_SALIDA);
+//             $("#INVENTARIO").val(material.INVENTARIO);
+//             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
+//             $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
+
+
+
+//                         $("#VALIDADO_POR").val(material.VALIDADO_POR);
+
+//             if (material.YA_GUARDADO) {
+
+//                 $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
+//                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
+//                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
+
+               
+//                 if (material.FIRMA_RECIBIDO_POR) {
+//                     let img1 = new Image();
+//                     img1.onload = function () {
+//                         ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
+//                     };
+//                     img1.src = material.FIRMA_RECIBIDO_POR;
+
+//                     $("#FIRMA_RECIBIDO_POR").val(material.FIRMA_RECIBIDO_POR);
+//                 }
+
+//                 if (material.FIRMA_ENTREGADO_POR) {
+//                     let img2 = new Image();
+//                     img2.onload = function () {
+//                         ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
+//                     };
+//                     img2.src = material.FIRMA_ENTREGADO_POR;
+
+//                     $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
+//                 }
+
+//             } else {
+//                 $("#ID_BITACORAS_ALMACEN").val(0);
+//                 $("#RECIBIDO_POR").val("");
+//                 $("#OBSERVACIONES_BITACORA").val("");
+//             }
+
+//             $("#miModal_BITACORA").modal("show");
+//             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
+//         },
+
+//         error: function () {
+//             alert("Error al obtener el material individual.");
+//         }
+//     });
+// });
+
 
 $(document).on('click', '.editarMaterial', function () {
 
@@ -110,18 +212,29 @@ $(document).on('click', '.editarMaterial', function () {
 
             let canvas1 = document.getElementById("firmaCanvas");
             let canvas2 = document.getElementById("firmaCanvas2");
+            let canvas3 = document.getElementById("firmaCanvas3");
+            let canvas4 = document.getElementById("firmaCanvas4");
 
             let ctx1 = canvas1.getContext("2d");
             let ctx2 = canvas2.getContext("2d");
+            let ctx3 = canvas3.getContext("2d");
+            let ctx4 = canvas4.getContext("2d");
 
-          
-            canvas1.width = canvas1.width; 
+
+            canvas1.width = canvas1.width;
             canvas2.width = canvas2.width;
+            canvas3.width = canvas3.width;
+            canvas4.width = canvas4.width;
+
 
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");
+            $("#FIRMA_VERIFICADO_POR").val("");
+            $("#FIRMA_VALIDADO_POR").val("");
 
-           
+            /* ===============================
+               CAMPOS NORMALES
+            =============================== */
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_ALMACEN_SOLICITUD").val(material.FECHA_ALMACEN_SOLICITUD);
             $("#DESCRIPCION").val(material.DESCRIPCION);
@@ -131,22 +244,142 @@ $(document).on('click', '.editarMaterial', function () {
             $("#INVENTARIO").val(material.INVENTARIO);
             $("#OBSERVACIONES_REC").val(material.OBSERVACIONES_REC);
             $("#ENTREGADO_POR").val(material.ENTREGADO_POR);
+            $("#VALIDADO_POR").val(material.VALIDADO_POR);
 
+            /* ===============================
+               RADIOS – VERIFICACIÓN
+            =============================== */
+            marcarRadio('SEGUIMIENTO_VEHICULOS', material.SEGUIMIENTO_VEHICULOS);
+            marcarRadio('INSPECCION_USUARIO_VEHICULOS', material.INSPECCION_USUARIO_VEHICULOS);
+
+            /* ===============================
+               RADIOS – DOCUMENTOS
+            =============================== */
+            marcarRadio('TARJETA_CIRCULACION_VEHICULOS', material.TARJETA_CIRCULACION_VEHICULOS);
+            $('input[name="OBS_TARJETA_CIRCULACION_VEHICULOS"]').val(material.OBS_TARJETA_CIRCULACION_VEHICULOS || '');
+
+            marcarRadio('TENENCIA_VIGENTE_VEHICULOS', material.TENENCIA_VIGENTE_VEHICULOS);
+            $('input[name="OBS_TENENCIA_VIGENTE_VEHICULOS"]').val(material.OBS_TENENCIA_VIGENTE_VEHICULOS || '');
+
+            marcarRadio('POLIZA_SEGURO_VIGENTE_VEHICULOS', material.POLIZA_SEGURO_VIGENTE_VEHICULOS);
+            $('input[name="OBS_POLIZA_SEGURO_VIGENTE_VEHICULOS"]').val(material.OBS_POLIZA_SEGURO_VIGENTE_VEHICULOS || '');
+
+            marcarRadio('INSTRUCTIVO_MANUAL_VEHICULOS', material.INSTRUCTIVO_MANUAL_VEHICULOS);
+            $('input[name="OBS_INSTRUCTIVO_MANUAL_VEHICULOS"]').val(material.OBS_INSTRUCTIVO_MANUAL_VEHICULOS || '');
+
+            /* ===============================
+               RADIOS – ACCESORIOS Y PARTES
+            =============================== */
+            marcarRadio('ENCENDIDO_MOTOR_VEHICULOS', material.ENCENDIDO_MOTOR_VEHICULOS);
+            marcarRadio('ACCESORIOS_CAMBIO_LLANTA_VEHICULOS', material.ACCESORIOS_CAMBIO_LLANTA_VEHICULOS);
+            marcarRadio('NIVEL_ACEITE_VEHICULOS', material.NIVEL_ACEITE_VEHICULOS);
+            marcarRadio('REFLEJANTES_SEGURIDAD_VEHICULOS', material.REFLEJANTES_SEGURIDAD_VEHICULOS);
+            marcarRadio('FRENOS_VEHICULOS', material.FRENOS_VEHICULOS);
+            marcarRadio('CABLE_PASA_CORRIENTE_VEHICULOS', material.CABLE_PASA_CORRIENTE_VEHICULOS);
+            marcarRadio('SISTEMA_ELECTRICO_VEHICULOS', material.SISTEMA_ELECTRICO_VEHICULOS);
+            marcarRadio('GEL_ANTIBACTERIAL_VEHICULOS', material.GEL_ANTIBACTERIAL_VEHICULOS);
+            marcarRadio('FAROS_VEHICULOS', material.FAROS_VEHICULOS);
+            marcarRadio('ESPEJOS_VEHICULOS', material.ESPEJOS_VEHICULOS);
+            marcarRadio('INTERMITENTES_VEHICULOS', material.INTERMITENTES_VEHICULOS);
+            marcarRadio('CRISTALES_VENTANAS_VEHICULOS', material.CRISTALES_VENTANAS_VEHICULOS);
+            marcarRadio('FUNCIONAMIENTO_LIMPIADORES_VEHICULOS', material.FUNCIONAMIENTO_LIMPIADORES_VEHICULOS);
+            marcarRadio('MANCHAS_VESTIDURAS_VEHICULOS', material.MANCHAS_VESTIDURAS_VEHICULOS);
+            marcarRadio('AGUA_LIMPIADORES_VEHICULOS', material.AGUA_LIMPIADORES_VEHICULOS);
+            marcarRadio('ASIENTOS_VEHICULOS', material.ASIENTOS_VEHICULOS);
+            marcarRadio('MOLDURAS_DELANTERAS_VEHICULOS', material.MOLDURAS_DELANTERAS_VEHICULOS);
+            marcarRadio('CINTURONES_SEGURIDAD_VEHICULOS', material.CINTURONES_SEGURIDAD_VEHICULOS);
+            marcarRadio('MOLDURAS_TRASERAS_VEHICULOS', material.MOLDURAS_TRASERAS_VEHICULOS);
+            marcarRadio('CALCOMANIAS_LOGO_VEHICULOS', material.CALCOMANIAS_LOGO_VEHICULOS);
+            marcarRadio('LLANTAS_VEHICULOS', material.LLANTAS_VEHICULOS);
+            marcarRadio('PASE_VEHICULAR_VEHICULOS', material.PASE_VEHICULAR_VEHICULOS);
+            marcarRadio('LLANTA_REFACCION_VEHICULOS', material.LLANTA_REFACCION_VEHICULOS);
+            marcarRadio('BRILLO_SEGURIDAD_VEHICULOS', material.BRILLO_SEGURIDAD_VEHICULOS);
+
+            /* ===============================
+               YA GUARDADO
+            =============================== */
             if (material.YA_GUARDADO) {
 
                 $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
-                $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
 
-               
+ 
+                
+                $("#MARCA_VEHICULO").val(material.MARCA_VEHICULO);
+                $("#MANTENIMIENTO_VEHICULO").val(material.MANTENIMIENTO_VEHICULO);
+                $("#MODELO_VEHICULO").val(material.MODELO_VEHICULO);
+                $("#COLOR_VEHICULO").val(material.COLOR_VEHICULO);
+                $("#PLACAS_VEHICULO").val(material.PLACAS_VEHICULO);
+                $("#NOINVENTARIO_VEHICULO").val(material.NOINVENTARIO_VEHICULO);
+                $("#NOLICENCIA_VEHICULO").val(material.NOLICENCIA_VEHICULO);
+                $("#FECHAVENCIMIENTO_VEHICULO").val(material.FECHAVENCIMIENTO_VEHICULO);
+                $("#KILOMETRAJE_SALIDA_VEHICULOS").val(material.KILOMETRAJE_SALIDA_VEHICULOS);
+                $("#COMBUSTIBLE_SALIDA_VEHICULOS").val(material.COMBUSTIBLE_SALIDA_VEHICULOS);
+                $("#NOPERSONAS_VEHICULOS").val(material.NOPERSONAS_VEHICULOS);
+                $("#HORASALIDA_VEHICULOS").val(material.HORASALIDA_VEHICULOS);
+                $("#BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS").val(material.BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS);
+                $("#KIT_SEGURIDAD_VEHICULOS").val(material.KIT_SEGURIDAD_VEHICULOS);
+                $("#KILOMETRAJE_LLEGADA_VEHICULOS").val(material.KILOMETRAJE_LLEGADA_VEHICULOS);
+                $("#COMBUSTIBLE_LLEGADA_VEHICULOS").val(material.COMBUSTIBLE_LLEGADA_VEHICULOS);
+                $("#HORAREGRESO_VEHICULOS").val(material.HORAREGRESO_VEHICULOS);
+                $("#VERIFICA_POR").val(material.VERIFICA_POR);
+                $("#VALIDADO_POR").val(material.VALIDADO_POR);
+                $("#RETORNO_VEHICULOS").val(material.RETORNO_VEHICULOS);
+
+
+                $("#OBS_MALETIN_VEHICULOS").val(material.OBS_MALETIN_VEHICULOS);
+                $("#OBS_FERULA_VEHICULOS").val(material.OBS_FERULA_VEHICULOS);
+                $("#OBS_FACE_SHIELD_VEHICULOS").val(material.OBS_FACE_SHIELD_VEHICULOS);
+                $("#OBS_TIJERAS_VEHICULOS").val(material.OBS_TIJERAS_VEHICULOS);
+                $("#OBS_GASAS_10_VEHICULOS").val(material.OBS_GASAS_10_VEHICULOS);
+                $("#OBS_GASAS_5_VEHICULOS").val(material.OBS_GASAS_5_VEHICULOS);
+                $("#OBS_GUANTES_VEHICULOS").val(material.OBS_GUANTES_VEHICULOS);
+                $("#OBS_MICROPORE_1_VEHICULOS").val(material.OBS_MICROPORE_1_VEHICULOS);
+                $("#OBS_MICROPORE_2_VEHICULOS").val(material.OBS_MICROPORE_2_VEHICULOS);
+                $("#OBS_VENDA_5_VEHICULOS").val(material.OBS_VENDA_5_VEHICULOS);
+                $("#OBS_VENDA_10_VEHICULOS").val(material.OBS_VENDA_10_VEHICULOS);
+                $("#OBS_SOLUCION_SALINA_VEHICULOS").val(material.OBS_SOLUCION_SALINA_VEHICULOS);
+                $("#OBS_VENDA_TRIANGULAR_VEHICULOS").val(material.OBS_VENDA_TRIANGULAR_VEHICULOS);
+                $("#OBS_MALETIN_HERRAMIENTAS_VEHICULOS").val(material.OBS_MALETIN_HERRAMIENTAS_VEHICULOS);
+                $("#OBS_DESARMADOR_CRUZ_VEHICULOS").val(material.OBS_DESARMADOR_CRUZ_VEHICULOS);
+                $("#OBS_DESARMADOR_PLANO_VEHICULOS").val(material.OBS_DESARMADOR_PLANO_VEHICULOS);
+                $("#OBS_PINZAS_MULTIUSOS_VEHICULOS").val(material.OBS_PINZAS_MULTIUSOS_VEHICULOS);
+                $("#OBS_CUERDAS_BUNGEE_VEHICULOS").val(material.OBS_CUERDAS_BUNGEE_VEHICULOS);
+                $("#OBS_LONA_POLIETILENO_VEHICULOS").val(material.OBS_LONA_POLIETILENO_VEHICULOS);
+                $("#OBS_GUANTES_NEOPRENO_VEHICULOS").val(material.OBS_GUANTES_NEOPRENO_VEHICULOS);
+                $("#OBS_CALIBRADOR_LLANTAS_VEHICULOS").val(material.OBS_CALIBRADOR_LLANTAS_VEHICULOS);
+                $("#OBS_EXTINTOR_PQS_VEHICULOS").val(material.OBS_EXTINTOR_PQS_VEHICULOS);
+                $("#OBS_LINTERNA_RECARGABLE_VEHICULOS").val(material.OBS_LINTERNA_RECARGABLE_VEHICULOS);
+            
+   
+                
+                if (material.BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS === '1') {
+                    $('#TABLA_BOTIQUIN_VEHICULOS').show();
+                } else {
+                    $('#TABLA_BOTIQUIN_VEHICULOS').hide();
+                }
+
+                if (material.KIT_SEGURIDAD_VEHICULOS === '1') {
+                    $('#TABLA_KIT_SEGURIDAD_VEHICULOS').show();
+                } else {
+                    $('#TABLA_KIT_SEGURIDAD_VEHICULOS').hide();
+                }
+
+                if (material.RETORNO_VEHICULOS === '1') {
+                    $('#DIV_KILOMETRAJE_LLEGADA').show();
+                    $('#FIRMA_REGRESO_VEHICULO').show();
+                } else {
+                    $('#DIV_KILOMETRAJE_LLEGADA').hide();
+                    $('#FIRMA_REGRESO_VEHICULO').hide();
+                }
+
                 if (material.FIRMA_RECIBIDO_POR) {
                     let img1 = new Image();
                     img1.onload = function () {
                         ctx1.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
                     };
                     img1.src = material.FIRMA_RECIBIDO_POR;
-
                     $("#FIRMA_RECIBIDO_POR").val(material.FIRMA_RECIBIDO_POR);
                 }
 
@@ -156,9 +389,32 @@ $(document).on('click', '.editarMaterial', function () {
                         ctx2.drawImage(img2, 0, 0, canvas2.width, canvas2.height);
                     };
                     img2.src = material.FIRMA_ENTREGADO_POR;
-
                     $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
                 }
+
+
+
+
+                  if (material.FIRMA_VERIFICADO_POR) {
+                    let img3 = new Image();
+                    img3.onload = function () {
+                        ctx3.drawImage(img3, 0, 0, canvas3.width, canvas3.height);
+                    };
+                    img3.src = material.FIRMA_VERIFICADO_POR;
+                    $("#FIRMA_VERIFICADO_POR").val(material.FIRMA_VERIFICADO_POR);
+                }
+
+
+                  if (material.FIRMA_VALIDADO_POR) {
+                    let img4 = new Image();
+                    img4.onload = function () {
+                        ctx4.drawImage(img4, 0, 0, canvas4.width, canvas4.height);
+                    };
+                    img4.src = material.FIRMA_VALIDADO_POR;
+                    $("#FIRMA_VALIDADO_POR").val(material.FIRMA_VALIDADO_POR);
+                }
+
+
 
             } else {
                 $("#ID_BITACORAS_ALMACEN").val(0);
@@ -175,6 +431,7 @@ $(document).on('click', '.editarMaterial', function () {
         }
     });
 });
+
 
 
 $(document).on('click', '.visualizarMaterial', function () {
@@ -222,6 +479,27 @@ $(document).on('click', '.visualizarMaterial', function () {
 
             if (material.YA_GUARDADO) {
 
+
+                if (material.BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS === '1') {
+                    $('#TABLA_BOTIQUIN_VEHICULOS').show();
+                } else {
+                    $('#TABLA_BOTIQUIN_VEHICULOS').hide();
+                }
+
+                if (material.KIT_SEGURIDAD_VEHICULOS === '1') {
+                    $('#TABLA_KIT_SEGURIDAD_VEHICULOS').show();
+                } else {
+                    $('#TABLA_KIT_SEGURIDAD_VEHICULOS').hide();
+                }
+
+                if (material.RETORNO_VEHICULOS === '1') {
+                    $('#DIV_KILOMETRAJE_LLEGADA').show();
+                    $('#FIRMA_REGRESO_VEHICULO').show();
+                } else {
+                    $('#DIV_KILOMETRAJE_LLEGADA').hide();
+                    $('#FIRMA_REGRESO_VEHICULO').hide();
+                                }
+                
                 $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
@@ -275,10 +553,20 @@ function cargarFirmaEnCanvas(canvas, ctx, base64) {
     img.src = base64;
 }
 
+function marcarRadio(nombre, valor) {
+    $('input[name="' + nombre + '"]').prop('checked', false);
+
+    if (valor === 'SI' || valor === 'NO') {
+        $('input[name="' + nombre + '"][value="' + valor + '"]').prop('checked', true);
+    }
+}
+
+
+
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();
 
-        formularioValido = validarFormulario3($('#formularioBITACORA'))
+     formularioValido = validarFormulario3($('#formularioBITACORA'))
 
     if (formularioValido) {
 
@@ -359,4 +647,37 @@ $("#guardaBITACORA").click(function (e) {
 
 }
     
+});
+
+
+
+
+
+$('#BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS').on('change', function () {
+    if ($(this).val() === '1') {
+        $('#TABLA_BOTIQUIN_VEHICULOS').slideDown();
+    } else {
+        $('#TABLA_BOTIQUIN_VEHICULOS').slideUp();
+    }
+});
+
+
+$('#KIT_SEGURIDAD_VEHICULOS').on('change', function () {
+    if ($(this).val() === '1') {
+        $('#TABLA_KIT_SEGURIDAD_VEHICULOS').slideDown();
+    } else {
+        $('#TABLA_KIT_SEGURIDAD_VEHICULOS').slideUp();
+    }
+});
+
+
+
+$('#RETORNO_VEHICULOS').on('change', function () {
+    if ($(this).val() === '1') {   
+        $('#DIV_KILOMETRAJE_LLEGADA').slideDown();
+        $('#FIRMA_REGRESO_VEHICULO').slideDown();
+    } else {                     
+        $('#DIV_KILOMETRAJE_LLEGADA').slideUp();
+        $('#FIRMA_REGRESO_VEHICULO').slideUp();
+    }
 });

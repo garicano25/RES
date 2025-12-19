@@ -11,6 +11,9 @@
     .bg-verde-suave {
         background-color: #d1e7dd !important;
     }
+
+
+    
 </style>
 
 <div class="contenedor-contenido">
@@ -58,10 +61,62 @@
                             </div>
                         </div>
                     </div>
+
+
+
+                    <div class="col-12 mt-3">
+                        <table class="table table-bordered align-middle text-center">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th style="width: 40%;">Tipo de verificación</th>
+                                    <th style="width: 15%;">Sí</th>
+                                    <th style="width: 15%;">No</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">Seguimiento</td>
+                                    <td class="text-center">
+                                        <input type="radio"
+                                            id="SEGUIMIENTO_SI_VEHICULOS"
+                                            name="SEGUIMIENTO_VEHICULOS"
+                                            value="SI" required>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="radio"
+                                            id="SEGUIMIENTO_NO_VEHICULOS"
+                                            name="SEGUIMIENTO_VEHICULOS"
+                                            value="NO" required>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">Inspección del Usuario</td>
+                                    <td class="text-center">
+                                        <input type="radio"
+                                            id="INSPECCION_USUARIO_SI_VEHICULOS"
+                                            name="INSPECCION_USUARIO_VEHICULOS"
+                                            value="SI" required>
+                                    </td>
+                                    <td class="text-center">
+                                        <input type="radio"
+                                            id="INSPECCION_USUARIO_NO_VEHICULOS"
+                                            name="INSPECCION_USUARIO_VEHICULOS"
+                                            value="NO" required>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+
+
+
                     <div class="col-12 mt-3">
                         <div class="row">
                             <div class="col-9 mt-2">
-                                <label class="form-label">Descripción del Artículo </label>
+                                <label class="form-label">Descripción del vehículo </label>
                                 <input type="text" class="form-control" id="DESCRIPCION" name="DESCRIPCION" readonly>
                             </div>
                             <div class="col-3 mt-2">
@@ -83,8 +138,8 @@
                                 <label class="form-label">Cantidad entregada</label>
                                 <input type="text" class="form-control" id="CANTIDAD_SALIDA" name="CANTIDAD_SALIDA" readonly>
                             </div>
-                            <div class="col-2 mt-2">
-                                <label class="form-label">U.M. </label>
+                            <div class="col-2 mt-3">
+                                <label class="form-label">U.M.</label>
                                 <input type="text" class="form-control" id="UNIDAD_SALIDA" name="UNIDAD_SALIDA" readonly>
                             </div>
 
@@ -92,28 +147,558 @@
                     </div>
                     <div class="col-12 mt-3">
                         <div class="row">
-                            <div class="col-4">
-                                <label class="form-label">Funcionamiento </label>
-                                <select class="form-control" id="FUNCIONAMIENTO_BITACORA" name="FUNCIONAMIENTO_BITACORA" required>
-                                    <option value="" selected disabled>Seleccione una opción</option>
-                                    <option value="1">Buen estado</option>
-                                    <option value="2">Mal estado</option>
-                                </select>
+
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Marca *</label>
+                                <input type="text" class="form-control" id="MARCA_VEHICULO" name="MARCA_VEHICULO" readonly>
                             </div>
-                            <div class="col-8">
-                                <label class="form-label">Motivo </label>
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Último mantenimiento </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="MANTENIMIENTO_VEHICULO" name="MANTENIMIENTO_VEHICULO">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Modelo *</label>
+                                <input type="text" class="form-control" id="MODELO_VEHICULO" name="MODELO_VEHICULO" readonly>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Color *</label>
+                                <input type="text" class="form-control" id="COLOR_VEHICULO" name="COLOR_VEHICULO" readonly>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Placas *</label>
+                                <input type="text" class="form-control" id="PLACAS_VEHICULO" name="PLACAS_VEHICULO" readonly>
+                            </div>
+                            <div class="col-4 mt-2">
+                                <label class="form-label">No. de inventario *</label>
+                                <input type="text" class="form-control" id="NOINVENTARIO_VEHICULO" name="NOINVENTARIO_VEHICULO" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-3">
+                        <div class="row">
+
+                            <div class="col-4">
+                                <label class="form-label">Área/Proceso/Proyecto </label>
                                 <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
                             </div>
+                            <div class="col-4">
+                                <label class="form-label">No. de licencia</label>
+                                <input type="text" class="form-control" id="NOLICENCIA_VEHICULO" name="NOLICENCIA_VEHICULO">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Fecha de vencimiento </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAVENCIMIENTO_VEHICULO" name="FECHAVENCIMIENTO_VEHICULO">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 mt-3">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered align-middle">
+                                        <thead class="table-secondary text-center">
+                                            <tr>
+                                                <th>Documento</th>
+                                                <th>Sí</th>
+                                                <th>No</th>
+                                                <th>Observaciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Tarjeta de Circulación</td>
+                                                <td class="text-center">
+                                                    <input type="radio"
+                                                        id="TARJETA_CIRCULACION_SI_VEHICULOS"
+                                                        name="TARJETA_CIRCULACION_VEHICULOS"
+                                                        value="SI">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="radio"
+                                                        id="TARJETA_CIRCULACION_NO_VEHICULOS"
+                                                        name="TARJETA_CIRCULACION_VEHICULOS"
+                                                        value="NO">
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="form-control"
+                                                        name="OBS_TARJETA_CIRCULACION_VEHICULOS">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tenencia Vigente</td>
+                                                <td class="text-center">
+                                                    <input type="radio"
+                                                        id="TENENCIA_VIGENTE_SI_VEHICULOS"
+                                                        name="TENENCIA_VIGENTE_VEHICULOS"
+                                                        value="SI">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="radio"
+                                                        id="TENENCIA_VIGENTE_NO_VEHICULOS"
+                                                        name="TENENCIA_VIGENTE_VEHICULOS"
+                                                        value="NO">
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="form-control"
+                                                        name="OBS_TENENCIA_VIGENTE_VEHICULOS">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Póliza de Seguro Vigente</td>
+                                                <td class="text-center">
+                                                    <input type="radio"
+                                                        id="POLIZA_SEGURO_VIGENTE_SI_VEHICULOS"
+                                                        name="POLIZA_SEGURO_VIGENTE_VEHICULOS"
+                                                        value="SI">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="radio"
+                                                        id="POLIZA_SEGURO_VIGENTE_NO_VEHICULOS"
+                                                        name="POLIZA_SEGURO_VIGENTE_VEHICULOS"
+                                                        value="NO">
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="form-control"
+                                                        name="OBS_POLIZA_SEGURO_VIGENTE_VEHICULOS">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Instructivo / Manual</td>
+                                                <td class="text-center">
+                                                    <input type="radio"
+                                                        id="INSTRUCTIVO_MANUAL_SI_VEHICULOS"
+                                                        name="INSTRUCTIVO_MANUAL_VEHICULOS"
+                                                        value="SI">
+                                                </td>
+                                                <td class="text-center">
+                                                    <input type="radio"
+                                                        id="INSTRUCTIVO_MANUAL_NO_VEHICULOS"
+                                                        name="INSTRUCTIVO_MANUAL_VEHICULOS"
+                                                        value="NO">
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="form-control"
+                                                        name="OBS_INSTRUCTIVO_MANUAL_VEHICULOS">
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 mt-3">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered align-middle">
+
+                                        <thead>
+                                            <tr class="table-secondary text-center">
+                                                <th colspan="6">Accesorios y partes</th>
+                                            </tr>
+                                            <tr class="text-center">
+                                                <th>Descripción</th>
+                                                <th>Sí</th>
+                                                <th>No</th>
+                                                <th>Descripción</th>
+                                                <th>Sí</th>
+                                                <th>No</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+
+                                            <tr>
+                                                <td>Encendido / Motor</td>
+                                                <td class="text-center"><input type="radio" id="ENCENDIDO_MOTOR_SI_VEHICULOS" name="ENCENDIDO_MOTOR_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="ENCENDIDO_MOTOR_NO_VEHICULOS" name="ENCENDIDO_MOTOR_VEHICULOS" value="NO"></td>
+
+                                                <td>Accesorios para Cambio de Llanta (Gato / Llave)</td>
+                                                <td class="text-center"><input type="radio" id="ACCESORIOS_CAMBIO_LLANTA_SI_VEHICULOS" name="ACCESORIOS_CAMBIO_LLANTA_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="ACCESORIOS_CAMBIO_LLANTA_NO_VEHICULOS" name="ACCESORIOS_CAMBIO_LLANTA_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Nivel de Aceite</td>
+                                                <td class="text-center"><input type="radio" id="NIVEL_ACEITE_SI_VEHICULOS" name="NIVEL_ACEITE_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="NIVEL_ACEITE_NO_VEHICULOS" name="NIVEL_ACEITE_VEHICULOS" value="NO"></td>
+
+                                                <td>Reflejantes / Triángulo de Seguridad / Conos</td>
+                                                <td class="text-center"><input type="radio" id="REFLEJANTES_SEGURIDAD_SI_VEHICULOS" name="REFLEJANTES_SEGURIDAD_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="REFLEJANTES_SEGURIDAD_NO_VEHICULOS" name="REFLEJANTES_SEGURIDAD_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Frenos</td>
+                                                <td class="text-center"><input type="radio" id="FRENOS_SI_VEHICULOS" name="FRENOS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="FRENOS_NO_VEHICULOS" name="FRENOS_VEHICULOS" value="NO"></td>
+
+                                                <td>Cable pasa corriente</td>
+                                                <td class="text-center"><input type="radio" id="CABLE_PASA_CORRIENTE_SI_VEHICULOS" name="CABLE_PASA_CORRIENTE_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="CABLE_PASA_CORRIENTE_NO_VEHICULOS" name="CABLE_PASA_CORRIENTE_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Sistema Eléctrico</td>
+                                                <td class="text-center"><input type="radio" id="SISTEMA_ELECTRICO_SI_VEHICULOS" name="SISTEMA_ELECTRICO_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="SISTEMA_ELECTRICO_NO_VEHICULOS" name="SISTEMA_ELECTRICO_VEHICULOS" value="NO"></td>
+
+                                                <td>Gel antibacterial / Spray desinfectante</td>
+                                                <td class="text-center"><input type="radio" id="GEL_ANTIBACTERIAL_SI_VEHICULOS" name="GEL_ANTIBACTERIAL_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="GEL_ANTIBACTERIAL_NO_VEHICULOS" name="GEL_ANTIBACTERIAL_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Faros</td>
+                                                <td class="text-center"><input type="radio" id="FAROS_SI_VEHICULOS" name="FAROS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="FAROS_NO_VEHICULOS" name="FAROS_VEHICULOS" value="NO"></td>
+
+                                                <td>Espejos</td>
+                                                <td class="text-center"><input type="radio" id="ESPEJOS_SI_VEHICULOS" name="ESPEJOS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="ESPEJOS_NO_VEHICULOS" name="ESPEJOS_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Intermitentes</td>
+                                                <td class="text-center"><input type="radio" id="INTERMITENTES_SI_VEHICULOS" name="INTERMITENTES_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="INTERMITENTES_NO_VEHICULOS" name="INTERMITENTES_VEHICULOS" value="NO"></td>
+
+                                                <td>Cristales / Ventanas</td>
+                                                <td class="text-center"><input type="radio" id="CRISTALES_VENTANAS_SI_VEHICULOS" name="CRISTALES_VENTANAS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="CRISTALES_VENTANAS_NO_VEHICULOS" name="CRISTALES_VENTANAS_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Funcionamiento de Limpiadores</td>
+                                                <td class="text-center"><input type="radio" id="FUNCIONAMIENTO_LIMPIADORES_SI_VEHICULOS" name="FUNCIONAMIENTO_LIMPIADORES_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="FUNCIONAMIENTO_LIMPIADORES_NO_VEHICULOS" name="FUNCIONAMIENTO_LIMPIADORES_VEHICULOS" value="NO"></td>
+
+                                                <td>Manchas en Vestiduras</td>
+                                                <td class="text-center"><input type="radio" id="MANCHAS_VESTIDURAS_SI_VEHICULOS" name="MANCHAS_VESTIDURAS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="MANCHAS_VESTIDURAS_NO_VEHICULOS" name="MANCHAS_VESTIDURAS_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Disponibilidad de Agua para Limpiadores</td>
+                                                <td class="text-center"><input type="radio" id="AGUA_LIMPIADORES_SI_VEHICULOS" name="AGUA_LIMPIADORES_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="AGUA_LIMPIADORES_NO_VEHICULOS" name="AGUA_LIMPIADORES_VEHICULOS" value="NO"></td>
+
+                                                <td>Asientos</td>
+                                                <td class="text-center"><input type="radio" id="ASIENTOS_SI_VEHICULOS" name="ASIENTOS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="ASIENTOS_NO_VEHICULOS" name="ASIENTOS_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Molduras Delanteras</td>
+                                                <td class="text-center"><input type="radio" id="MOLDURAS_DELANTERAS_SI_VEHICULOS" name="MOLDURAS_DELANTERAS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="MOLDURAS_DELANTERAS_NO_VEHICULOS" name="MOLDURAS_DELANTERAS_VEHICULOS" value="NO"></td>
+
+                                                <td>Cinturones de Seguridad</td>
+                                                <td class="text-center"><input type="radio" id="CINTURONES_SEGURIDAD_SI_VEHICULOS" name="CINTURONES_SEGURIDAD_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="CINTURONES_SEGURIDAD_NO_VEHICULOS" name="CINTURONES_SEGURIDAD_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Molduras Traseras</td>
+                                                <td class="text-center"><input type="radio" id="MOLDURAS_TRASERAS_SI_VEHICULOS" name="MOLDURAS_TRASERAS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="MOLDURAS_TRASERAS_NO_VEHICULOS" name="MOLDURAS_TRASERAS_VEHICULOS" value="NO"></td>
+
+                                                <td>Calcomanías (Imanes) con Logo de la Empresa</td>
+                                                <td class="text-center"><input type="radio" id="CALCOMANIAS_LOGO_SI_VEHICULOS" name="CALCOMANIAS_LOGO_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="CALCOMANIAS_LOGO_NO_VEHICULOS" name="CALCOMANIAS_LOGO_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Llantas</td>
+                                                <td class="text-center"><input type="radio" id="LLANTAS_SI_VEHICULOS" name="LLANTAS_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="LLANTAS_NO_VEHICULOS" name="LLANTAS_VEHICULOS" value="NO"></td>
+
+                                                <td>Pase Vehicular a Instalaciones del Cliente</td>
+                                                <td class="text-center"><input type="radio" id="PASE_VEHICULAR_SI_VEHICULOS" name="PASE_VEHICULAR_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="PASE_VEHICULAR_NO_VEHICULOS" name="PASE_VEHICULAR_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Llanta de Refacción</td>
+                                                <td class="text-center"><input type="radio" id="LLANTA_REFACCION_SI_VEHICULOS" name="LLANTA_REFACCION_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="LLANTA_REFACCION_NO_VEHICULOS" name="LLANTA_REFACCION_VEHICULOS" value="NO"></td>
+
+                                                <td>Brillo de seguridad</td>
+                                                <td class="text-center"><input type="radio" id="BRILLO_SEGURIDAD_SI_VEHICULOS" name="BRILLO_SEGURIDAD_VEHICULOS" value="SI"></td>
+                                                <td class="text-center"><input type="radio" id="BRILLO_SEGURIDAD_NO_VEHICULOS" name="BRILLO_SEGURIDAD_VEHICULOS" value="NO"></td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 mt-4">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center align-middle">
+
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <th colspan="3">Kilometraje de salida</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <!-- SALIDA -->
+                                                <td colspan="3">
+                                                    <input type="text" class="form-control mb-2"
+                                                        name="KILOMETRAJE_SALIDA_VEHICULOS" id="KILOMETRAJE_SALIDA_VEHICULOS"
+                                                        placeholder="Kilometraje salida" required>
+
+                                                    <select class="form-select" name="COMBUSTIBLE_SALIDA_VEHICULOS" id="COMBUSTIBLE_SALIDA_VEHICULOS" required>
+                                                        <option value="">Nivel combustible</option>
+                                                        <option value="LLENO">Lleno</option>
+                                                        <option value="3/4">3/4</option>
+                                                        <option value="1/2">1/2</option>
+                                                        <option value="1/4">1/4</option>
+                                                        <option value="VACIO">Vacío</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-2">
+                                <label class="form-label">Observaciones generales</label>
+                                <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3"></textarea>
+                            </div>
+
+                            <div class="col-6 mt-2">
+                                <label class="form-label">Número de Personas que viajan en la unidad *</label>
+                                <input type="text" class="form-control" id="NOPERSONAS_VEHICULOS" name="NOPERSONAS_VEHICULOS" required>
+                            </div>
+
+                            <div class="col-6 mt-2">
+                                <label class="form-label">Salida de la unidad / horario aprox *</label>
+                                <input type="time" id="HORASALIDA_VEHICULOS" name="HORASALIDA_VEHICULOS" class="form-control" required>
+                            </div>
+
+
+                            <div class="col-12 mt-3">
+                                <div class="form-group">
+                                    <label for="BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS">
+                                        Cuenta con botiquín de primeros auxilios
+                                    </label>
+                                    <select class="form-select"
+                                        id="BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS"
+                                        name="BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS"
+                                        required>
+                                        <option value="" disabled selected>Seleccione una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 mt-4" id="TABLA_BOTIQUIN_VEHICULOS" style="display:none;">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered align-middle">
+                                        <thead class="table-secondary text-center">
+                                            <tr>
+                                                <th>Descripción del material a entregar</th>
+                                                <th style="width: 15%;">Cantidad Entregada</th>
+                                                <th style="width: 25%;">Observaciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Maletín para automóvil (medidas: 26 x 35 x 11 cm) color rojo</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_MALETIN_VEHICULOS" id="OBS_MALETIN_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Sam Splint férula enrollada (36.0” x 4.5”)</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_FERULA_VEHICULOS" id="OBS_FERULA_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Face Shield para RCP con estuche nylon (PVC)</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_FACE_SHIELD_VEHICULOS" id="OBS_FACE_SHIELD_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Tijeras redondas de acero inoxidable con mango de plástico</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_TIJERAS_VEHICULOS" id="OBS_TIJERAS_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gasas (10 x 10 cm)</td>
+                                                <td class="text-center">2</td>
+                                                <td><input type="text" class="form-control" name="OBS_GASAS_10_VEHICULOS" id="OBS_GASAS_10_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Gasas (5 x 5 cm)</td>
+                                                <td class="text-center">2</td>
+                                                <td><input type="text" class="form-control" name="OBS_GASAS_5_VEHICULOS" id="OBS_GASAS_5_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Par de guantes de látex (1 talla Mediana, 1 talla Grande)</td>
+                                                <td class="text-center">2</td>
+                                                <td><input type="text" class="form-control" name="OBS_GUANTES_VEHICULOS" id="OBS_GUANTES_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Micropore Farme Piel (1.25 cm x 5 cm)</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_MICROPORE_1_VEHICULOS" id="OBS_MICROPORE_1_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Micropore Farme Piel (2.25 cm x 5 cm)</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_MICROPORE_2_VEHICULOS" id="OBS_MICROPORE_2_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Venda elástica (5 cm x 5 cm)</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_VENDA_5_VEHICULOS" id="OBS_VENDA_5_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Venda elástica (10 cm x 5 cm)</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_VENDA_10_VEHICULOS" id="OBS_VENDA_10_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Solución salina (50 ml / 0.9%)</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_SOLUCION_SALINA_VEHICULOS" id="OBS_SOLUCION_SALINA_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Venda triangular</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_VENDA_TRIANGULAR_VEHICULOS" id="OBS_VENDA_TRIANGULAR_VEHICULOS"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <small class="fw-bold">
+                                        *Estos artículos se consideran consumibles, los cuales pueden no ser devueltos a RES,
+                                        con la justificación de su uso.
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <div class="form-group">
+                                    <label for="KIT_SEGURIDAD_VEHICULOS">
+                                        Cuenta con kit de seguridad
+                                    </label>
+                                    <select class="form-select"
+                                        id="KIT_SEGURIDAD_VEHICULOS"
+                                        name="KIT_SEGURIDAD_VEHICULOS" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-4" id="TABLA_KIT_SEGURIDAD_VEHICULOS" style="display:none;">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered align-middle">
+                                        <thead class="table-secondary text-center">
+                                            <tr>
+                                                <th>Descripción del material entregado</th>
+                                                <th style="width: 15%;">Cantidad Entregada</th>
+                                                <th style="width: 30%;">Observaciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Maletín para herramientas</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_MALETIN_HERRAMIENTAS_VEHICULOS" id="OBS_MALETIN_HERRAMIENTAS_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Desarmador de cruz</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_DESARMADOR_CRUZ_VEHICULOS" id="OBS_DESARMADOR_CRUZ_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Desarmador plano</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_DESARMADOR_PLANO_VEHICULOS" id="OBS_DESARMADOR_PLANO_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Pinzas multiusos</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_PINZAS_MULTIUSOS_VEHICULOS" id="OBS_PINZAS_MULTIUSOS_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cuerdas bungee</td>
+                                                <td class="text-center">4</td>
+                                                <td><input type="text" class="form-control" name="OBS_CUERDAS_BUNGEE_VEHICULOS" id="OBS_CUERDAS_BUNGEE_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Lona de Polietileno</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_LONA_POLIETILENO_VEHICULOS" id="OBS_LONA_POLIETILENO_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Guantes de punto de neopreno *</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_GUANTES_NEOPRENO_VEHICULOS" id="OBS_GUANTES_NEOPRENO_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Calibrador de presión de llantas</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_CALIBRADOR_LLANTAS_VEHICULOS" id="OBS_CALIBRADOR_LLANTAS_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Extintor 1kg tipo PQS (polvo químico seco)</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_EXTINTOR_PQS_VEHICULOS" id="OBS_EXTINTOR_PQS_VEHICULOS"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Linterna recargable</td>
+                                                <td class="text-center">1</td>
+                                                <td><input type="text" class="form-control" name="OBS_LINTERNA_RECARGABLE_VEHICULOS" id="OBS_LINTERNA_RECARGABLE_VEHICULOS"></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <small class="fw-bold">
+                                        *Estos artículos se consideran consumibles, los cuales pueden no ser devueltos a RES,
+                                        con la justificación de su uso.
+                                    </small>
+                                </div>
+                            </div>
+
                             <div class="col-6 mt-3">
                                 <label class="form-label">Recibido por</label>
                                 <select class="form-control" id="RECIBIDO_POR" name="RECIBIDO_POR" required>
                                     <option value="">Seleccione una opción</option>
-
-                                    @foreach ($usuarios as $u)
-                                    <option value="{{ $u->ID_USUARIO }}">
-                                        {{ $u->EMPLEADO_NOMBRE }} {{ $u->EMPLEADO_APELLIDOPATERNO }} {{ $u->EMPLEADO_APELLIDOMATERNO }}
-                                    </option>
-                                    @endforeach
+                                    <optgroup label="Colaboradores">
+                                        @foreach ($colaboradores as $recibido)
+                                        <option value="{{ $recibido->CURP }}">
+                                            {{ $recibido->NOMBRE_COLABORADOR }} {{ $recibido->PRIMER_APELLIDO }} {{ $recibido->SEGUNDO_APELLIDO }}
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Proveedores">
+                                        @foreach ($proveedores as $recibido)
+                                        <option value="{{ $recibido->RFC_ALTA }}">
+                                            {{ $recibido->NOMBRE_DIRECTORIO }}
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
                                 </select>
                             </div>
                             <div class="col-6 mt-3 ">
@@ -146,10 +731,125 @@
                                 </div>
                                 <input type="hidden" id="FIRMA_ENTREGADO_POR" name="FIRMA_ENTREGADO_POR">
                             </div>
-                            <div class="col-12 mt-2">
-                                <label class="form-label">Observación </label>
-                                <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3"></textarea>
+
+
+                            <div class="col-12 mt-3">
+                                <div class="form-group">
+                                    <label for="RETORNO_LABEL_VEHICULOS">
+                                        El vehículo ya retorno
+                                    </label>
+                                    <select class="form-select"
+                                        id="RETORNO_VEHICULOS"
+                                        name="RETORNO_VEHICULOS" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>
                             </div>
+
+
+                            <div class="col-12 mt-4" id="DIV_KILOMETRAJE_LLEGADA" style="display: none;">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered text-center align-middle">
+
+                                        <thead class="table-secondary">
+                                            <tr>
+                                                <th colspan="3">Kilometraje de llegada</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr>
+                                                <!-- LLEGADA -->
+                                                <td colspan="3">
+                                                    <input type="text" class="form-control mb-2"
+                                                        name="KILOMETRAJE_LLEGADA_VEHICULOS" id="KILOMETRAJE_LLEGADA_VEHICULOS"
+                                                        placeholder="Kilometraje llegada" required>
+
+                                                    <select class="form-select"
+                                                        name="COMBUSTIBLE_LLEGADA_VEHICULOS" id="COMBUSTIBLE_LLEGADA_VEHICULOS" required>
+                                                        <option value="">Nivel combustible</option>
+                                                        <option value="LLENO">Lleno</option>
+                                                        <option value="3/4">3/4</option>
+                                                        <option value="1/2">1/2</option>
+                                                        <option value="1/4">1/4</option>
+                                                        <option value="VACIO">Vacío</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
+                                <div class="col-12 mt-2">
+                                    <label class="form-label">Regreso de la unidad / horario aprox *</label>
+                                    <input type="time" id="HORAREGRESO_VEHICULOS" name="HORAREGRESO_VEHICULOS" class="form-control" required>
+                                </div>
+
+
+                            </div>
+
+                            <div class="col-12" id="FIRMA_REGRESO_VEHICULO" style="display: none;">
+                                <div class="row">
+
+                                    <div class="col-6 mt-3">
+                                        <label class="form-label">Verificado por</label>
+                                        <select class="form-control" id="VERIFICA_POR" name="VERIFICA_POR" required>
+                                            <option value="">Seleccione una opción</option>
+                                            <optgroup label="Colaboradores">
+                                                @foreach ($colaboradores as $recibido)
+                                                <option value="{{ $recibido->CURP }}">
+                                                    {{ $recibido->NOMBRE_COLABORADOR }} {{ $recibido->PRIMER_APELLIDO }} {{ $recibido->SEGUNDO_APELLIDO }}
+                                                </option>
+                                                @endforeach
+                                            </optgroup>
+                                            <optgroup label="Proveedores">
+                                                @foreach ($proveedores as $recibido)
+                                                <option value="{{ $recibido->RFC_ALTA }}">
+                                                    {{ $recibido->NOMBRE_DIRECTORIO }}
+                                                </option>
+                                                @endforeach
+                                            </optgroup>
+                                        </select>
+                                    </div>
+                                    <div class="col-6 mt-3 ">
+                                        <label class="form-label">Validado por </label>
+                                        <input type="text" class="form-control" id="VALIDADO_POR" name="VALIDADO_POR">
+                                    </div>
+                                    <div class="col-6 mt-3 text-center">
+                                        <label class="form-label">Firma (verificado por)</label>
+                                        <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
+                                            <canvas id="firmaCanvas3" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
+                                                Tu navegador no soporta canvas.
+                                            </canvas>
+                                            <br>
+                                            <button type="button" class="btn btn-danger btn-sm mt-2" id="btnLimpiarFirma3">
+                                                Borrar firma
+                                            </button>
+                                        </div>
+                                        <input type="hidden" id="FIRMA_VERIFICADO_POR" name="FIRMA_VERIFICADO_POR">
+                                    </div>
+                                    <div class="col-6 mt-3 text-center">
+                                        <label class="form-label">Firma (Validado por)</label>
+                                        <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
+                                            <canvas id="firmaCanvas4" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
+                                                Tu navegador no soporta canvas.
+                                            </canvas>
+                                            <br>
+                                            <button type="button" class="btn btn-danger btn-sm mt-2" id="btnLimpiarFirma4">
+                                                Borrar firma
+                                            </button>
+                                        </div>
+                                        <input type="hidden" id="FIRMA_VALIDADO_POR" name="FIRMA_VALIDADO_POR">
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -386,6 +1086,227 @@
         document.getElementById("btnLimpiarFirma2").addEventListener("click", function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             document.getElementById("FIRMA_ENTREGADO_POR").value = "";
+        });
+
+    })();
+
+    //////////////////////////// FIRMA 3 //////////////
+
+    (function() {
+
+        const canvas = document.getElementById("firmaCanvas3");
+        const ctx = canvas.getContext("2d");
+
+        let dibujando = false;
+        let movimiento = false;
+        let pos = {
+            x: 0,
+            y: 0
+        };
+        let posAnterior = {
+            x: 0,
+            y: 0
+        };
+
+        function obtenerPosCanvas(evt) {
+            let rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        function dibujarPunto(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = "#000";
+            ctx.fill();
+            ctx.closePath();
+
+            document.getElementById("FIRMA_VERIFICADO_POR").value = canvas.toDataURL("image/png");
+        }
+
+        canvas.addEventListener("mousedown", function(e) {
+            dibujando = true;
+            movimiento = false;
+            posAnterior = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("mouseup", function() {
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+            dibujando = false;
+        });
+
+        canvas.addEventListener("mousemove", function(e) {
+            if (dibujando) movimiento = true;
+            pos = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            dibujando = true;
+            movimiento = false;
+
+            let t = e.touches[0];
+            posAnterior = obtenerPosCanvas(t);
+        });
+
+        canvas.addEventListener("touchend", function(e) {
+            e.preventDefault();
+
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+
+            dibujando = false;
+        });
+
+        canvas.addEventListener("touchmove", function(e) {
+            e.preventDefault();
+            movimiento = true;
+
+            let t = e.touches[0];
+            pos = obtenerPosCanvas(t);
+        });
+
+        function render() {
+            if (dibujando && movimiento) {
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(posAnterior.x, posAnterior.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.closePath();
+
+                posAnterior = pos;
+
+                document.getElementById("FIRMA_VERIFICADO_POR").value =
+                    canvas.toDataURL("image/png");
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+
+        document.getElementById("btnLimpiarFirma3").addEventListener("click", function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("FIRMA_VERIFICADO_POR").value = "";
+        });
+
+    })();
+
+
+    //////////////////////////// FIRMA 3 //////////////
+
+    (function() {
+
+        const canvas = document.getElementById("firmaCanvas4");
+        const ctx = canvas.getContext("2d");
+
+        let dibujando = false;
+        let movimiento = false;
+        let pos = {
+            x: 0,
+            y: 0
+        };
+        let posAnterior = {
+            x: 0,
+            y: 0
+        };
+
+        function obtenerPosCanvas(evt) {
+            let rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        function dibujarPunto(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = "#000";
+            ctx.fill();
+            ctx.closePath();
+
+            document.getElementById("FIRMA_VALIDADO_POR").value = canvas.toDataURL("image/png");
+        }
+
+        canvas.addEventListener("mousedown", function(e) {
+            dibujando = true;
+            movimiento = false;
+            posAnterior = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("mouseup", function() {
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+            dibujando = false;
+        });
+
+        canvas.addEventListener("mousemove", function(e) {
+            if (dibujando) movimiento = true;
+            pos = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            dibujando = true;
+            movimiento = false;
+
+            let t = e.touches[0];
+            posAnterior = obtenerPosCanvas(t);
+        });
+
+        canvas.addEventListener("touchend", function(e) {
+            e.preventDefault();
+
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+
+            dibujando = false;
+        });
+
+        canvas.addEventListener("touchmove", function(e) {
+            e.preventDefault();
+            movimiento = true;
+
+            let t = e.touches[0];
+            pos = obtenerPosCanvas(t);
+        });
+
+        function render() {
+            if (dibujando && movimiento) {
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(posAnterior.x, posAnterior.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.closePath();
+
+                posAnterior = pos;
+
+                document.getElementById("FIRMA_VALIDADO_POR").value =
+                    canvas.toDataURL("image/png");
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+
+        document.getElementById("btnLimpiarFirma4").addEventListener("click", function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("FIRMA_VALIDADO_POR").value = "";
         });
 
     })();

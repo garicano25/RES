@@ -53,12 +53,139 @@ class bitacoravehiculosController extends Controller
 
 
 
- 
+
+
+
+    // public function Tablabitacoravehiculos()
+    // {
+    //     try {
+    //         $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
+    //             ->where('ESTADO_APROBACION', 'Aprobada')
+    //             ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
+    //             ->orderBy('FECHA_ALMACEN_SOLICITUD', 'asc')
+    //             ->get();
+
+    //         $data = [];
+    //         $tiposPermitidos = ['Vehículos'];
+
+    //         foreach ($tabla as $value) {
+
+    //             $materiales = json_decode($value->MATERIALES_JSON, true);
+    //             if (!is_array($materiales)) continue;
+
+    //             foreach ($materiales as $articulo) {
+
+    //                 if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
+
+    //                     if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
+
+    //                         foreach ($articulo['ARTICULOS'] as $detalle) {
+
+    //                             if (!empty($detalle['ES_ASIGNACION_DETALLE']) && $detalle['ES_ASIGNACION_DETALLE'] == 1) {
+    //                                 continue;
+    //                             }
+
+    //                             if (
+    //                                 empty($detalle['INVENTARIO']) ||
+    //                                 empty($detalle['TIPO_INVENTARIO']) ||
+    //                                 !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
+    //                             ) continue;
+
+    //                             $producto = DB::table('formulario_inventario')
+    //                                 ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+    //                                 ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
+    //                                 ->first();
+
+    //                             $data[] = [
+    //                                 'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
+    //                                 'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
+    //                                 'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+    //                                 'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
+    //                                 'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
+    //                                 'CANTIDAD' => $detalle['CANTIDAD_DETALLE'] ?? '',
+    //                                 'CANTIDAD_SALIDA' => $detalle['CANTIDAD_DETALLE'] ?? '',
+    //                                 'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
+    //                                 'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
+    //                                 'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
+    //                                 'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+    //                                 'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
+    //                                 'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
+    //                                 'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
+    //                                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+    //                                                 data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+    //                                                 <i class="bi bi-pencil-square"></i>
+    //                                             </button>',
+    //                                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
+    //                                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+    //                                                 data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+    //                                                 <i class="bi bi-eye"></i>
+    //                                             </button>',
+    //                             ];
+    //                         }
+    //                     }
+
+
+    //                 } else {
+
+    //                     if (!empty($articulo['ES_ASIGNACION']) && $articulo['ES_ASIGNACION'] == 1) {
+    //                         continue;
+    //                     }
+
+    //                     if (
+    //                         empty($articulo['TIPO_INVENTARIO']) ||
+    //                         !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
+    //                     ) continue;
+
+    //                     $producto = DB::table('formulario_inventario')
+    //                         ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+    //                         ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
+    //                         ->first();
+
+    //                     $data[] = [
+    //                         'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
+    //                         'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
+    //                         'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
+    //                         'FECHA_ALMACEN_SOLICITUD' => $value->FECHA_ALMACEN_SOLICITUD ?? 'N/A',
+    //                         'OBSERVACIONES_REC' => $value->OBSERVACIONES_REC ?? 'N/A',
+    //                         'CANTIDAD' => $articulo['CANTIDAD'] ?? '',
+    //                         'CANTIDAD_SALIDA' => $articulo['CANTIDAD_SALIDA'] ?? '',
+    //                         'PRODUCTO_NOMBRE' => $producto->DESCRIPCION_EQUIPO ?? 'N/A',
+    //                         'MARCA_EQUIPO' => $producto->MARCA_EQUIPO ?? 'N/A',
+    //                         'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
+    //                         'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
+    //                         'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
+    //                         'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
+    //                         'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
+    //                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+    //                                     data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+    //                                     <i class="bi bi-pencil-square"></i>
+    //                                 </button>',
+    //                         'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
+    //                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+    //                                     data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+    //                                     <i class="bi bi-eye"></i>
+    //                                 </button>',
+    //                     ];
+    //                 }
+    //             }
+    //         }
+
+    //         return response()->json(['data' => $data], 200);
+    //     } catch (\Exception $e) {
+    //         return response()->json([
+    //             'error' => true,
+    //             'message' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+
 
 
     public function Tablabitacoravehiculos()
     {
         try {
+
             $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
                 ->where('ESTADO_APROBACION', 'Aprobada')
                 ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
@@ -68,6 +195,10 @@ class bitacoravehiculosController extends Controller
             $data = [];
             $tiposPermitidos = ['Vehículos'];
 
+            // 🔹 RANGO DE FECHAS
+            $fechaInicio = '2025-01-01';
+            $fechaFin    = '2025-12-15';
+
             foreach ($tabla as $value) {
 
                 $materiales = json_decode($value->MATERIALES_JSON, true);
@@ -75,6 +206,9 @@ class bitacoravehiculosController extends Controller
 
                 foreach ($materiales as $articulo) {
 
+                    /* ======================================================
+                   VARIOS ARTÍCULOS
+                ====================================================== */
                     if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
 
                         if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
@@ -91,12 +225,51 @@ class bitacoravehiculosController extends Controller
                                     !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
                                 ) continue;
 
+                                /* ======================================================
+                               NUEVO: DETERMINAR CLASE DE FILA
+                            ====================================================== */
+                                $rowClass = '';
+                                $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
+
+                                if ($fechaSolicitud >= $fechaInicio && $fechaSolicitud <= $fechaFin) {
+
+                                    // 🟢 LA FECHA MANDA
+                                    $rowClass = 'bg-verde-suave';
+                                } elseif ($fechaSolicitud >= '2025-12-16') {
+
+                                    // 🔍 CONSULTAR BITÁCORA
+                                    $bitacora = DB::table('bitacorasalmacen')
+                                        ->where('RECEMPLEADO_ID', $value->ID_FORMULARIO_RECURSOS_EMPLEADOS)
+                                        ->where('INVENTARIO_ID', $detalle['INVENTARIO'])
+                                        ->where('ACTIVO', 1)
+                                        ->first();
+
+                                    if ($bitacora) {
+                                        if ($bitacora->RETORNO_VEHICULOS == 1) {
+                                            $rowClass = 'bg-verde-suave';
+                                        } elseif ($bitacora->RETORNO_VEHICULOS == 2) {
+                                            $rowClass = 'bg-amarillo-suave';
+                                        }
+                                    }
+                                }
+
+                                /* ======================================================
+                               PRODUCTO
+                            ====================================================== */
                                 $producto = DB::table('formulario_inventario')
-                                    ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+                                    ->select(
+                                        'DESCRIPCION_EQUIPO',
+                                        'MARCA_EQUIPO',
+                                        'MODELO_EQUIPO',
+                                        'SERIE_EQUIPO',
+                                        'CODIGO_EQUIPO'
+                                    )
                                     ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
                                     ->first();
 
                                 $data[] = [
+                                    'ROW_CLASS' => $rowClass,
+
                                     'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
                                     'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
                                     'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
@@ -110,21 +283,27 @@ class bitacoravehiculosController extends Controller
                                     'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                                     'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
                                     'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
-                                    'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
-                                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-                                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-                                                    <i class="bi bi-pencil-square"></i>
-                                                </button>',
-                                    'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
-                                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-                                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-                                                    <i class="bi bi-eye"></i>
-                                                </button>',
+
+                                    'BTN_EDITAR' => '<button type="button"
+                                    class="btn btn-warning btn-custom rounded-pill editarMaterial"
+                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                    <i class="bi bi-pencil-square"></i>
+                                </button>',
+
+                                    'BTN_VISUALIZAR' => '<button type="button"
+                                    class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
+                                    data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                                    data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+                                    <i class="bi bi-eye"></i>
+                                </button>',
                                 ];
                             }
                         }
 
-
+                        /* ======================================================
+                   ARTÍCULO ÚNICO
+                ====================================================== */
                     } else {
 
                         if (!empty($articulo['ES_ASIGNACION']) && $articulo['ES_ASIGNACION'] == 1) {
@@ -136,12 +315,46 @@ class bitacoravehiculosController extends Controller
                             !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
                         ) continue;
 
+                        /* ======================================================
+                       NUEVO: DETERMINAR CLASE DE FILA
+                    ====================================================== */
+                        $rowClass = '';
+                        $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
+
+                        if ($fechaSolicitud >= $fechaInicio && $fechaSolicitud <= $fechaFin) {
+
+                            $rowClass = 'bg-verde-suave';
+                        } elseif ($fechaSolicitud >= '2025-12-16') {
+
+                            $bitacora = DB::table('bitacorasalmacen')
+                                ->where('RECEMPLEADO_ID', $value->ID_FORMULARIO_RECURSOS_EMPLEADOS)
+                                ->where('INVENTARIO_ID', $articulo['INVENTARIO'])
+                                ->where('ACTIVO', 1)
+                                ->first();
+
+                            if ($bitacora) {
+                                if ($bitacora->RETORNO_VEHICULOS == 1) {
+                                    $rowClass = 'bg-verde-suave';
+                                } elseif ($bitacora->RETORNO_VEHICULOS == 2) {
+                                    $rowClass = 'bg-amarillo-suave';
+                                }
+                            }
+                        }
+
                         $producto = DB::table('formulario_inventario')
-                            ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+                            ->select(
+                                'DESCRIPCION_EQUIPO',
+                                'MARCA_EQUIPO',
+                                'MODELO_EQUIPO',
+                                'SERIE_EQUIPO',
+                                'CODIGO_EQUIPO'
+                            )
                             ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
                             ->first();
 
                         $data[] = [
+                            'ROW_CLASS' => $rowClass,
+
                             'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
                             'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
                             'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
@@ -155,16 +368,20 @@ class bitacoravehiculosController extends Controller
                             'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
                             'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
                             'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
-                            'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial"
-                                        data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-                                        data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </button>',
-                            'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
-                                        data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
-                                        data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-                                        <i class="bi bi-eye"></i>
-                                    </button>',
+
+                            'BTN_EDITAR' => '<button type="button"
+                            class="btn btn-warning btn-custom rounded-pill editarMaterial"
+                            data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                            data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                            <i class="bi bi-pencil-square"></i>
+                        </button>',
+
+                            'BTN_VISUALIZAR' => '<button type="button"
+                            class="btn btn-primary btn-custom rounded-pill visualizarMaterial"
+                            data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '"
+                            data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+                            <i class="bi bi-eye"></i>
+                        </button>',
                         ];
                     }
                 }
@@ -180,8 +397,7 @@ class bitacoravehiculosController extends Controller
     }
 
 
-
-
+    
 
 
 
@@ -202,21 +418,104 @@ class bitacoravehiculosController extends Controller
                 return response()->json([
                     'success' => true,
                     'material' => [
-                        'ID_BITACORAS_ALMACEN'      => $bitacora->ID_BITACORAS_ALMACEN,
+
+                        'ID_BITACORAS_ALMACEN' => $bitacora->ID_BITACORAS_ALMACEN,
+                        'YA_GUARDADO'          => true,
+
+                       
                         'SOLICITANTE_SALIDA'        => $bitacora->SOLICITANTE_SALIDA,
-                        'FECHA_ALMACEN_SOLICITUD'              => $bitacora->FECHA_ALMACEN_SOLICITUD,
-                        'DESCRIPCION'               => $bitacora->DESCRIPCION,
-                        'CANTIDAD'                  => $bitacora->CANTIDAD,
-                        'CANTIDAD_SALIDA'           => $bitacora->CANTIDAD_SALIDA,
-                        'UNIDAD_SALIDA'             => $bitacora->UNIDAD_SALIDA,
-                        'INVENTARIO'                => $bitacora->INVENTARIO,
-                        'OBSERVACIONES_REC'         => $bitacora->OBSERVACIONES_REC,
-                        'RECIBIDO_POR'              => $bitacora->RECIBIDO_POR,
-                        'ENTREGADO_POR'             => $bitacora->ENTREGADO_POR,
-                        'FIRMA_RECIBIDO_POR'        => $bitacora->FIRMA_RECIBIDO_POR,
-                        'FIRMA_ENTREGADO_POR'       => $bitacora->FIRMA_ENTREGADO_POR,
-                        'OBSERVACIONES_BITACORA'    => $bitacora->OBSERVACIONES_BITACORA,
-                        'YA_GUARDADO'               => true
+                        'FECHA_ALMACEN_SOLICITUD'  => $bitacora->FECHA_ALMACEN_SOLICITUD,
+                        'DESCRIPCION'              => $bitacora->DESCRIPCION,
+                        'CANTIDAD'                 => $bitacora->CANTIDAD,
+                        'CANTIDAD_SALIDA'          => $bitacora->CANTIDAD_SALIDA,
+                        'UNIDAD_SALIDA'            => $bitacora->UNIDAD_SALIDA,
+                        'INVENTARIO'               => $bitacora->INVENTARIO,
+                        'OBSERVACIONES_REC'        => $bitacora->OBSERVACIONES_REC,
+                        'RECIBIDO_POR'        => $bitacora->RECIBIDO_POR,
+                        'ENTREGADO_POR'       => $bitacora->ENTREGADO_POR,
+                        'VALIDADO_POR'        => $bitacora->VALIDADO_POR,
+                        'FIRMA_RECIBIDO_POR'  => $bitacora->FIRMA_RECIBIDO_POR,
+                        'FIRMA_ENTREGADO_POR' => $bitacora->FIRMA_ENTREGADO_POR,
+                        'FIRMA_VALIDADO_POR'  => $bitacora->FIRMA_VALIDADO_POR,
+                        'FIRMA_VERIFICADO_POR'  => $bitacora->FIRMA_VERIFICADO_POR,
+                        'MARCA_VEHICULO'      =>    $bitacora->MARCA_VEHICULO,
+                        'MANTENIMIENTO_VEHICULO'  => $bitacora->MANTENIMIENTO_VEHICULO,
+                        'MODELO_VEHICULO' => $bitacora->MODELO_VEHICULO,
+                        'COLOR_VEHICULO' => $bitacora->COLOR_VEHICULO,
+                        'PLACAS_VEHICULO' => $bitacora->PLACAS_VEHICULO,
+                        'NOINVENTARIO_VEHICULO'  => $bitacora->NOINVENTARIO_VEHICULO,
+                        'NOLICENCIA_VEHICULO'  => $bitacora->NOLICENCIA_VEHICULO,
+                        'FECHAVENCIMIENTO_VEHICULO' => $bitacora->FECHAVENCIMIENTO_VEHICULO,
+                        'KILOMETRAJE_SALIDA_VEHICULOS' => $bitacora->KILOMETRAJE_SALIDA_VEHICULOS,
+                        'COMBUSTIBLE_SALIDA_VEHICULOS'  =>$bitacora->COMBUSTIBLE_SALIDA_VEHICULOS,
+                        'NOPERSONAS_VEHICULOS' => $bitacora->NOPERSONAS_VEHICULOS,
+                        'HORASALIDA_VEHICULOS' => $bitacora->HORASALIDA_VEHICULOS,
+                        'BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS' => $bitacora->BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS,
+                        'KIT_SEGURIDAD_VEHICULOS' => $bitacora->KIT_SEGURIDAD_VEHICULOS,
+                        'KILOMETRAJE_LLEGADA_VEHICULOS' => $bitacora->KILOMETRAJE_LLEGADA_VEHICULOS,
+                        'COMBUSTIBLE_LLEGADA_VEHICULOS' => $bitacora->COMBUSTIBLE_LLEGADA_VEHICULOS,
+                        'RETORNO_VEHICULOS' =>  $bitacora->RETORNO_VEHICULOS,
+                        'OBS_MALETIN_VEHICULOS'  =>  $bitacora->OBS_MALETIN_VEHICULOS,
+                        'OBS_FERULA_VEHICULOS' =>  $bitacora->OBS_FERULA_VEHICULOS,
+                        'OBS_FACE_SHIELD_VEHICULOS' =>  $bitacora->OBS_FACE_SHIELD_VEHICULOS,
+                        'OBS_TIJERAS_VEHICULOS' =>  $bitacora->OBS_TIJERAS_VEHICULOS,
+                        'OBS_GASAS_10_VEHICULOS' =>  $bitacora->OBS_GASAS_10_VEHICULOS,
+                        'OBS_GASAS_5_VEHICULOS' =>  $bitacora->OBS_GASAS_5_VEHICULOS,
+                        'OBS_GUANTES_VEHICULOS' =>  $bitacora->OBS_GUANTES_VEHICULOS,
+                        'OBS_MICROPORE_1_VEHICULOS' =>  $bitacora->OBS_MICROPORE_1_VEHICULOS,
+                        'OBS_MICROPORE_2_VEHICULOS' =>  $bitacora->OBS_MICROPORE_2_VEHICULOS,
+                        'OBS_VENDA_5_VEHICULOS' =>  $bitacora->OBS_VENDA_5_VEHICULOS,
+                        'OBS_VENDA_10_VEHICULOS' =>  $bitacora->OBS_VENDA_10_VEHICULOS,
+                        'OBS_SOLUCION_SALINA_VEHICULOS' =>  $bitacora->OBS_SOLUCION_SALINA_VEHICULOS,
+                        'OBS_VENDA_TRIANGULAR_VEHICULOS' =>  $bitacora->OBS_VENDA_TRIANGULAR_VEHICULOS,
+                        'OBS_MALETIN_HERRAMIENTAS_VEHICULOS' =>  $bitacora->OBS_MALETIN_HERRAMIENTAS_VEHICULOS,
+                        'OBS_DESARMADOR_CRUZ_VEHICULOS' =>  $bitacora->OBS_DESARMADOR_CRUZ_VEHICULOS,
+                        'OBS_DESARMADOR_PLANO_VEHICULOS' =>  $bitacora->OBS_DESARMADOR_PLANO_VEHICULOS,
+                        'OBS_PINZAS_MULTIUSOS_VEHICULOS' =>  $bitacora->OBS_PINZAS_MULTIUSOS_VEHICULOS,
+                        'OBS_CUERDAS_BUNGEE_VEHICULOS' =>  $bitacora->OBS_CUERDAS_BUNGEE_VEHICULOS,
+                        'OBS_LONA_POLIETILENO_VEHICULOS' =>  $bitacora->OBS_LONA_POLIETILENO_VEHICULOS,
+                        'OBS_GUANTES_NEOPRENO_VEHICULOS' =>  $bitacora->OBS_GUANTES_NEOPRENO_VEHICULOS,
+                        'OBS_CALIBRADOR_LLANTAS_VEHICULOS' =>  $bitacora->OBS_CALIBRADOR_LLANTAS_VEHICULOS,
+                        'OBS_EXTINTOR_PQS_VEHICULOS' =>  $bitacora->OBS_EXTINTOR_PQS_VEHICULOS,
+                        'OBS_LINTERNA_RECARGABLE_VEHICULOS' =>  $bitacora->OBS_LINTERNA_RECARGABLE_VEHICULOS,
+                        'VERIFICA_POR' => $bitacora->VERIFICA_POR,
+                        'VALIDADO_POR' =>$bitacora->VALIDADO_POR,
+                        'SEGUIMIENTO_VEHICULOS'          => $bitacora->SEGUIMIENTO_VEHICULOS,
+                        'INSPECCION_USUARIO_VEHICULOS'   => $bitacora->INSPECCION_USUARIO_VEHICULOS,
+                        'TARJETA_CIRCULACION_VEHICULOS'        => $bitacora->TARJETA_CIRCULACION_VEHICULOS,
+                        'OBS_TARJETA_CIRCULACION_VEHICULOS'    => $bitacora->OBS_TARJETA_CIRCULACION_VEHICULOS,
+                        'TENENCIA_VIGENTE_VEHICULOS'            => $bitacora->TENENCIA_VIGENTE_VEHICULOS,
+                        'OBS_TENENCIA_VIGENTE_VEHICULOS'        => $bitacora->OBS_TENENCIA_VIGENTE_VEHICULOS,
+                        'POLIZA_SEGURO_VIGENTE_VEHICULOS'       => $bitacora->POLIZA_SEGURO_VIGENTE_VEHICULOS,
+                        'OBS_POLIZA_SEGURO_VIGENTE_VEHICULOS'   => $bitacora->OBS_POLIZA_SEGURO_VIGENTE_VEHICULOS,
+                        'INSTRUCTIVO_MANUAL_VEHICULOS'          => $bitacora->INSTRUCTIVO_MANUAL_VEHICULOS,
+                        'OBS_INSTRUCTIVO_MANUAL_VEHICULOS'      => $bitacora->OBS_INSTRUCTIVO_MANUAL_VEHICULOS,
+                        'ENCENDIDO_MOTOR_VEHICULOS'              => $bitacora->ENCENDIDO_MOTOR_VEHICULOS,
+                        'ACCESORIOS_CAMBIO_LLANTA_VEHICULOS'     => $bitacora->ACCESORIOS_CAMBIO_LLANTA_VEHICULOS,
+                        'NIVEL_ACEITE_VEHICULOS'                 => $bitacora->NIVEL_ACEITE_VEHICULOS,
+                        'REFLEJANTES_SEGURIDAD_VEHICULOS'        => $bitacora->REFLEJANTES_SEGURIDAD_VEHICULOS,
+                        'FRENOS_VEHICULOS'                       => $bitacora->FRENOS_VEHICULOS,
+                        'CABLE_PASA_CORRIENTE_VEHICULOS'         => $bitacora->CABLE_PASA_CORRIENTE_VEHICULOS,
+                        'SISTEMA_ELECTRICO_VEHICULOS'             => $bitacora->SISTEMA_ELECTRICO_VEHICULOS,
+                        'GEL_ANTIBACTERIAL_VEHICULOS'             => $bitacora->GEL_ANTIBACTERIAL_VEHICULOS,
+                        'FAROS_VEHICULOS'                        => $bitacora->FAROS_VEHICULOS,
+                        'ESPEJOS_VEHICULOS'                      => $bitacora->ESPEJOS_VEHICULOS,
+                        'INTERMITENTES_VEHICULOS'                => $bitacora->INTERMITENTES_VEHICULOS,
+                        'CRISTALES_VENTANAS_VEHICULOS'            => $bitacora->CRISTALES_VENTANAS_VEHICULOS,
+                        'FUNCIONAMIENTO_LIMPIADORES_VEHICULOS'   => $bitacora->FUNCIONAMIENTO_LIMPIADORES_VEHICULOS,
+                        'MANCHAS_VESTIDURAS_VEHICULOS'            => $bitacora->MANCHAS_VESTIDURAS_VEHICULOS,
+                        'AGUA_LIMPIADORES_VEHICULOS'              => $bitacora->AGUA_LIMPIADORES_VEHICULOS,
+                        'ASIENTOS_VEHICULOS'                     => $bitacora->ASIENTOS_VEHICULOS,
+                        'MOLDURAS_DELANTERAS_VEHICULOS'           => $bitacora->MOLDURAS_DELANTERAS_VEHICULOS,
+                        'CINTURONES_SEGURIDAD_VEHICULOS'          => $bitacora->CINTURONES_SEGURIDAD_VEHICULOS,
+                        'MOLDURAS_TRASERAS_VEHICULOS'             => $bitacora->MOLDURAS_TRASERAS_VEHICULOS,
+                        'CALCOMANIAS_LOGO_VEHICULOS'              => $bitacora->CALCOMANIAS_LOGO_VEHICULOS,
+                        'LLANTAS_VEHICULOS'                       => $bitacora->LLANTAS_VEHICULOS,
+                        'PASE_VEHICULAR_VEHICULOS'                => $bitacora->PASE_VEHICULAR_VEHICULOS,
+                        'LLANTA_REFACCION_VEHICULOS'              => $bitacora->LLANTA_REFACCION_VEHICULOS,
+                        'BRILLO_SEGURIDAD_VEHICULOS'              => $bitacora->BRILLO_SEGURIDAD_VEHICULOS,
+                        'HORAREGRESO_VEHICULOS'          => $bitacora->HORAREGRESO_VEHICULOS,
+                        'OBSERVACIONES_BITACORA' => $bitacora->OBSERVACIONES_BITACORA,
                     ]
                 ]);
             }
@@ -279,6 +578,12 @@ class bitacoravehiculosController extends Controller
                 ($usuario->EMPLEADO_NOMBRE ?? '') . ' ' .
                 ($usuario->EMPLEADO_APELLIDOPATERNO ?? '') . ' ' .
                 ($usuario->EMPLEADO_APELLIDOMATERNO ?? '');
+
+            $materialEncontrado['VALIDADO_POR'] =
+                ($usuario->EMPLEADO_NOMBRE ?? '') . ' ' .
+                ($usuario->EMPLEADO_APELLIDOPATERNO ?? '') . ' ' .
+                ($usuario->EMPLEADO_APELLIDOMATERNO ?? '');
+
 
             return response()->json(['success' => true, 'material' => $materialEncontrado]);
         } catch (\Exception $e) {
