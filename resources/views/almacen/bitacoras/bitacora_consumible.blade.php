@@ -151,6 +151,24 @@
                                 <label class="form-label">Observación </label>
                                 <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3"></textarea>
                             </div>
+
+
+                            <div class="col-12 mt-3">
+                                <div class="form-group">
+                                    <label for="RETORNO_LABEL">
+                                        Finalizar bitácora
+                                    </label>
+                                    <select class="form-select"
+                                        id="FINALIZAR_BITACORA_CONSUMBIBLES"
+                                        name="FINALIZAR_BITACORA_CONSUMBIBLES" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
                         </div>
                     </div>
                 </div>

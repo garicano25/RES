@@ -81,8 +81,12 @@ var Tablabitacoraconsumibles = $("#Tablabitacoraconsumibles").DataTable({
         { targets: 9, title: 'Fecha de entrega', className: 'all text-center' },
         { targets: 10, title: 'Editar', className: 'all text-center' },
         { targets: 11, title: 'Visualizar', className: 'all text-center' }
-    ]
-
+   ],
+    createdRow: function (row, data) {
+    if (data.ROW_CLASS) {
+        $(row).addClass(data.ROW_CLASS);
+    }
+}
 });
 
 $(document).on('click', '.editarMaterial', function () {

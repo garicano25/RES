@@ -29,7 +29,7 @@ class bitacoraModel extends Model
         'OBSERVACIONES_BITACORA',
         'ACTIVO',
         'UNIDAD_SALIDA',
-
+        'FINALIZAR_BITACORA_CONSUMBIBLES',
 
 
 
@@ -54,7 +54,6 @@ class bitacoraModel extends Model
         'OBS_POLIZA_SEGURO_VIGENTE_VEHICULOS',
         'INSTRUCTIVO_MANUAL_VEHICULOS',
         'OBS_INSTRUCTIVO_MANUAL_VEHICULOS',
-
         'ENCENDIDO_MOTOR_VEHICULOS',
         'ACCESORIOS_CAMBIO_LLANTA_VEHICULOS',
         'NIVEL_ACEITE_VEHICULOS',
