@@ -249,188 +249,194 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                    <div class="col-2 mt-2">
-                                                        <div class="form-group">
-                                                            <label> Cantidad *</label>
-                                                            <input type="Number" step="any" class="form-control" id="CANTIDAD_EQUIPO" name="CANTIDAD_EQUIPO" required>
-                                                        </div>
+                                                <div class="col-2 mt-2">
+                                                    <div class="form-group">
+                                                        <label> Cantidad *</label>
+                                                        <input type="Number" step="any" class="form-control" id="CANTIDAD_EQUIPO" name="CANTIDAD_EQUIPO" required>
                                                     </div>
-
-                                                    <div class="col-2 mt-2">
-                                                        <div class="form-group">
-                                                            <label>Límite mínimo </label>
-                                                            <input type="Number" step="any" class="form-control" id="LIMITEMINIMO_EQUIPO" name="LIMITEMINIMO_EQUIPO">
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="col-2 mt-2">
-                                                        <div class="form-group">
-                                                            <label> U.M. *</label>
-                                                            <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA" required>
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="col-6 mt-2">
-                                                        <div class="form-group">
-                                                            <label> Ubicación *</label>
-                                                            <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO" required>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-4 mt-2">
-                                                        <div class="form-group">
-                                                            <label> Estado *</label>
-                                                            <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO" required>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-4 mt-2">
-                                                        <label>¿El ítem es crítico? </label>
-                                                        <select class="form-control" name="ITEM_CRITICO" id="ITEM_CRITICO">
-                                                            <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="1">Sí</option>
-                                                            <option value="2">No</option>
-                                                        </select>
-                                                    </div>
-
-
-                                                    <div class="col-4 mt-2">
-                                                        <div class="form-group">
-                                                            <label>Fecha de adquisición *</label>
-                                                            <div class="input-group">
-                                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ADQUISICION" name="FECHA_ADQUISICION" required>
-                                                                <span class="input-group-addon"><i class="icon-calender"></i></span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-12 mt-2" id="DESPUES_2024" style="display: block;">
-                                                        <label class="form-label">Proveedor</label>
-
-
-
-                                                        <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
-                                                            <option value="">Seleccionar proveedor</option>
-                                                            <optgroup label="Proveedor oficial">
-                                                                @foreach ($proveedoresOficiales as $proveedor)
-                                                                <option value="{{ $proveedor->RFC_ALTA }}">
-                                                                    {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
-                                                                </option>
-                                                                @endforeach
-                                                            </optgroup>
-                                                            <optgroup label="Proveedores temporales">
-                                                                @foreach ($proveedoresTemporales as $proveedor)
-                                                                <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
-                                                                    {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
-                                                                </option>
-                                                                @endforeach
-                                                            </optgroup>
-                                                        </select>
-                                                    </div>
-
-
-                                                    <div class="col-12 mt-2" id="ANTES_2024" style="display: none;">
-                                                        <label class="form-label">Proveedor</label>
-                                                        <input type="text" class="form-control" id="PROVEEDOR_ANTESDEL2024">
-                                                    </div>
-
-                                                    <div class="col-3 mt-2">
-                                                        <div class="form-group">
-                                                            <label> Precio Unitario (MXN)</label>
-                                                            <input type="text" step="any" class="form-control" id="UNITARIO_EQUIPO" name="UNITARIO_EQUIPO">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-3 mt-2">
-                                                        <div class="form-group">
-                                                            <label> Precio Total</label>
-                                                            <input type="text" class="form-control" id="TOTAL_EQUIPO" name="TOTAL_EQUIPO">
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="col-3 mt-2">
-                                                        <div class="form-group">
-                                                            <label>Tipo *</label>
-                                                            <select class="form-select" id="TIPO_EQUIPO" name="TIPO_EQUIPO" required>
-                                                                <option value="0" disabled selected>Seleccione una opción</option>
-                                                                @foreach ($tipoinventario as $tipos)
-                                                                <option value="{{ $tipos->DESCRIPCION_TIPO }}">{{ $tipos->DESCRIPCION_TIPO }}</option>
-                                                                @endforeach
-
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-3 mt-2">
-                                                        <label>Marcar si el ítem. requiere *</label>
-                                                        <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO" required>
-                                                            <option value="" selected disabled>Seleccione una opción</option>
-                                                            <option value="1">Documentación</option>
-                                                            <option value="2">Mantenimiento</option>
-                                                            <option value="3">N/A</option>
-
-                                                        </select>
-                                                    </div>
-
-
-                                                    <div class="col-12 mt-3">
-                                                        <div class="form-group">
-                                                            <label> Observación</label>
-                                                            <textarea class="form-control" id="OBSERVACION_EQUIPO" name="OBSERVACION_EQUIPO" rows="5" required></textarea>
-                                                        </div>
-                                                    </div>
-
-
                                                 </div>
+
+                                                <div class="col-2 mt-2">
+                                                    <div class="form-group">
+                                                        <label>Límite mínimo </label>
+                                                        <input type="Number" step="any" class="form-control" id="LIMITEMINIMO_EQUIPO" name="LIMITEMINIMO_EQUIPO">
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-2 mt-2">
+                                                    <div class="form-group">
+                                                        <label> U.M. *</label>
+                                                        <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA" required>
+                                                    </div>
+                                                </div>
+
+
+
+                                                <div class="col-6 mt-2">
+                                                    <div class="form-group">
+                                                        <label> Ubicación *</label>
+                                                        <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO" required>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-4 mt-2">
+                                                    <div class="form-group">
+                                                        <label> Estado *</label>
+                                                        <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO" required>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4 mt-2">
+                                                    <label>¿El ítem es crítico? </label>
+                                                    <select class="form-control" name="ITEM_CRITICO" id="ITEM_CRITICO">
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Sí</option>
+                                                        <option value="2">No</option>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-4 mt-2">
+                                                    <div class="form-group">
+                                                        <label>Fecha de adquisición *</label>
+                                                        <div class="input-group">
+                                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ADQUISICION" name="FECHA_ADQUISICION" required>
+                                                            <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-12 mt-2" id="DESPUES_2024" style="display: block;">
+                                                    <label class="form-label">Proveedor</label>
+
+
+
+                                                    <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
+                                                        <option value="">Seleccionar proveedor</option>
+                                                        <optgroup label="Proveedor oficial">
+                                                            @foreach ($proveedoresOficiales as $proveedor)
+                                                            <option value="{{ $proveedor->RFC_ALTA }}">
+                                                                {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                            </option>
+                                                            @endforeach
+                                                        </optgroup>
+                                                        <optgroup label="Proveedores temporales">
+                                                            @foreach ($proveedoresTemporales as $proveedor)
+                                                            <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                                                {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                                            </option>
+                                                            @endforeach
+                                                        </optgroup>
+
+                                                        <optgroup label="Extra">
+                                                            <option value="Nota de remisión">Nota de remisión</option>
+                                                            <option value="N/A">N/A</option>
+
+                                                        </optgroup>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-12 mt-2" id="ANTES_2024" style="display: none;">
+                                                    <label class="form-label">Proveedor</label>
+                                                    <input type="text" class="form-control" id="PROVEEDOR_ANTESDEL2024">
+                                                </div>
+
+                                                <div class="col-3 mt-2">
+                                                    <div class="form-group">
+                                                        <label> Precio Unitario (MXN)</label>
+                                                        <input type="text" step="any" class="form-control" id="UNITARIO_EQUIPO" name="UNITARIO_EQUIPO">
+                                                    </div>
+                                                </div>
+                                                <div class="col-3 mt-2">
+                                                    <div class="form-group">
+                                                        <label> Precio Total</label>
+                                                        <input type="text" class="form-control" id="TOTAL_EQUIPO" name="TOTAL_EQUIPO">
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="col-3 mt-2">
+                                                    <div class="form-group">
+                                                        <label>Tipo *</label>
+                                                        <select class="form-select" id="TIPO_EQUIPO" name="TIPO_EQUIPO" required>
+                                                            <option value="0" disabled selected>Seleccione una opción</option>
+                                                            @foreach ($tipoinventario as $tipos)
+                                                            <option value="{{ $tipos->DESCRIPCION_TIPO }}">{{ $tipos->DESCRIPCION_TIPO }}</option>
+                                                            @endforeach
+
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-3 mt-2">
+                                                    <label>Marcar si el ítem. requiere *</label>
+                                                    <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO" required>
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Documentación</option>
+                                                        <option value="2">Mantenimiento</option>
+                                                        <option value="3">N/A</option>
+
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-12 mt-3">
+                                                    <div class="form-group">
+                                                        <label> Observación</label>
+                                                        <textarea class="form-control" id="OBSERVACION_EQUIPO" name="OBSERVACION_EQUIPO" rows="5" required></textarea>
+                                                    </div>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div> <!--   Fin del tab información del producto -->
+                            </div>
+                        </div> <!--   Fin del tab información del producto -->
 
 
-                            <!-- TAB 2: Documentación del producto -->
-                            <div class="tab-pane fade" id="contenido-documentos" role="tabpanel">
-                                <ol class="breadcrumb mb-5">
-                                    <h3 style="color: #ffffff; margin: 0;">&nbsp;Documentos del producto</h3>
-                                    <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_DOCUMENTACION" style="margin-left: auto;">
-                                        Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                                    </button>
-                                </ol>
+                        <!-- TAB 2: Documentación del producto -->
+                        <div class="tab-pane fade" id="contenido-documentos" role="tabpanel">
+                            <ol class="breadcrumb mb-5">
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Documentos del producto</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_DOCUMENTACION" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
 
-                                <div class="card-body">
-                                    <div class="card-body position-relative" id="tabla_activo" style="display: block;">
-                                        <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                                        <table id="Tabladocumentosinventario" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
-                                    </div>
+                            <div class="card-body">
+                                <div class="card-body position-relative" id="tabla_activo" style="display: block;">
+                                    <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                    <table id="Tabladocumentosinventario" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
                                 </div>
                             </div>
-                            <!-- TAB 3: Entrada del producto -->
-                            <div class="tab-pane fade" id="contenido-entrada" role="tabpanel">
-                                <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-                                    <h3 style="color: #ffffff; margin: 0;">&nbsp;Bitácora</h3>
-                                </ol>
-
-                                <div class="card-body">
-                                    <div class="card-body position-relative" id="tabla_activo" style="display: block;">
-                                        <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                                        <table id="Tablaentradainventario" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
-                                    </div>
-                                </div>
-                            </div>
-
                         </div>
+                        <!-- TAB 3: Entrada del producto -->
+                        <div class="tab-pane fade" id="contenido-entrada" role="tabpanel">
+                            <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Bitácora</h3>
+                            </ol>
+
+                            <div class="card-body">
+                                <div class="card-body position-relative" id="tabla_activo" style="display: block;">
+                                    <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                    <table id="Tablaentradainventario" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="modal-footer mt-5">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                        <button type="submit" class="btn btn-success" id="guardarINVENTARIO">Guardar</button>
-                    </div>
+                </div>
+                <div class="modal-footer mt-5">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarINVENTARIO">Guardar</button>
+                </div>
             </form>
         </div>
     </div>
