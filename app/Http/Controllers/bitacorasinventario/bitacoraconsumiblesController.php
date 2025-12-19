@@ -175,7 +175,7 @@ class bitacoraconsumiblesController extends Controller
                 ->get();
 
             $data = [];
-            $tiposPermitidos = ['Consumible', 'Material para curso', 'Papelería'];
+            $tiposPermitidos = ['Consumible', 'Material para curso', 'Papelería', 'EPP', 'Donación'];
 
             foreach ($tabla as $value) {
 
