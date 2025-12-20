@@ -395,7 +395,7 @@ class bitacoraconsumiblesController extends Controller
                     'material' => [
                         'ID_BITACORAS_ALMACEN'      => $bitacora->ID_BITACORAS_ALMACEN,
                         'SOLICITANTE_SALIDA'        => $bitacora->SOLICITANTE_SALIDA,
-                        'FECHA_ALMACEN_SOLICITUD'              => $bitacora->FECHA_ALMACEN_SOLICITUD,
+                        'FECHA_ALMACEN_SOLICITUD'   => $bitacora->FECHA_ALMACEN_SOLICITUD,
                         'DESCRIPCION'               => $bitacora->DESCRIPCION,
                         'CANTIDAD'                  => $bitacora->CANTIDAD,
                         'CANTIDAD_SALIDA'           => $bitacora->CANTIDAD_SALIDA,

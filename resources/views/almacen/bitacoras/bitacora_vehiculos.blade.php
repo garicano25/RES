@@ -16,17 +16,13 @@
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
         <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-card-list"></i>&nbsp;Bitácora de vehículos</h3>
-
     </ol>
 
     <div class="card-body">
         <table id="Tablabitacoravehiculos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
-
         </table>
     </div>
-
 </div>
-
 
 
 <div class="modal fade" id="miModal_BITACORA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -59,8 +55,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-12 mt-3">
                         <table class="table table-bordered align-middle text-center">
                             <thead class="table-secondary">
@@ -69,7 +63,6 @@
                                     <th style="width: 15%;">Sí/No</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <tr>
                                     <td class="text-center">Seguimiento</td>
@@ -94,10 +87,6 @@
                             </tbody>
                         </table>
                     </div>
-
-
-
-
 
                     <div class="col-12 mt-3">
                         <div class="row">
@@ -131,9 +120,9 @@
 
                         </div>
                     </div>
+
                     <div class="col-12 mt-3">
                         <div class="row">
-
                             <div class="col-4 mt-2">
                                 <label class="form-label">Marca *</label>
                                 <input type="text" class="form-control" id="MARCA_VEHICULO" name="MARCA_VEHICULO" readonly>
@@ -163,9 +152,9 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-12 mt-3">
                         <div class="row">
-
                             <div class="col-4">
                                 <label class="form-label">Área/Proceso/Proyecto </label>
                                 <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
@@ -181,8 +170,6 @@
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
-
-
                             <div class="col-12 mt-3">
                                 <div class="table-responsive">
                                     <table class="table table-bordered align-middle">
@@ -275,17 +262,14 @@
                                                         name="OBS_INSTRUCTIVO_MANUAL_VEHICULOS">
                                                 </td>
                                             </tr>
-
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-
                             <div class="col-12 mt-3">
                                 <div class="table-responsive">
                                     <table class="table table-bordered align-middle">
-
                                         <thead>
                                             <tr class="table-secondary text-center">
                                                 <th colspan="6">Accesorios y partes</th>
@@ -299,9 +283,7 @@
                                                 <th>No</th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
-
                                             <tr>
                                                 <td>Encendido / Motor</td>
                                                 <td class="text-center"><input type="radio" id="ENCENDIDO_MOTOR_SI_VEHICULOS" name="ENCENDIDO_MOTOR_VEHICULOS" value="SI"></td>
@@ -311,7 +293,6 @@
                                                 <td class="text-center"><input type="radio" id="ACCESORIOS_CAMBIO_LLANTA_SI_VEHICULOS" name="ACCESORIOS_CAMBIO_LLANTA_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="ACCESORIOS_CAMBIO_LLANTA_NO_VEHICULOS" name="ACCESORIOS_CAMBIO_LLANTA_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Nivel de Aceite</td>
                                                 <td class="text-center"><input type="radio" id="NIVEL_ACEITE_SI_VEHICULOS" name="NIVEL_ACEITE_VEHICULOS" value="SI"></td>
@@ -321,7 +302,6 @@
                                                 <td class="text-center"><input type="radio" id="REFLEJANTES_SEGURIDAD_SI_VEHICULOS" name="REFLEJANTES_SEGURIDAD_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="REFLEJANTES_SEGURIDAD_NO_VEHICULOS" name="REFLEJANTES_SEGURIDAD_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Frenos</td>
                                                 <td class="text-center"><input type="radio" id="FRENOS_SI_VEHICULOS" name="FRENOS_VEHICULOS" value="SI"></td>
@@ -331,7 +311,6 @@
                                                 <td class="text-center"><input type="radio" id="CABLE_PASA_CORRIENTE_SI_VEHICULOS" name="CABLE_PASA_CORRIENTE_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="CABLE_PASA_CORRIENTE_NO_VEHICULOS" name="CABLE_PASA_CORRIENTE_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Sistema Eléctrico</td>
                                                 <td class="text-center"><input type="radio" id="SISTEMA_ELECTRICO_SI_VEHICULOS" name="SISTEMA_ELECTRICO_VEHICULOS" value="SI"></td>
@@ -341,7 +320,6 @@
                                                 <td class="text-center"><input type="radio" id="GEL_ANTIBACTERIAL_SI_VEHICULOS" name="GEL_ANTIBACTERIAL_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="GEL_ANTIBACTERIAL_NO_VEHICULOS" name="GEL_ANTIBACTERIAL_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Faros</td>
                                                 <td class="text-center"><input type="radio" id="FAROS_SI_VEHICULOS" name="FAROS_VEHICULOS" value="SI"></td>
@@ -351,7 +329,6 @@
                                                 <td class="text-center"><input type="radio" id="ESPEJOS_SI_VEHICULOS" name="ESPEJOS_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="ESPEJOS_NO_VEHICULOS" name="ESPEJOS_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Intermitentes</td>
                                                 <td class="text-center"><input type="radio" id="INTERMITENTES_SI_VEHICULOS" name="INTERMITENTES_VEHICULOS" value="SI"></td>
@@ -361,7 +338,6 @@
                                                 <td class="text-center"><input type="radio" id="CRISTALES_VENTANAS_SI_VEHICULOS" name="CRISTALES_VENTANAS_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="CRISTALES_VENTANAS_NO_VEHICULOS" name="CRISTALES_VENTANAS_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Funcionamiento de Limpiadores</td>
                                                 <td class="text-center"><input type="radio" id="FUNCIONAMIENTO_LIMPIADORES_SI_VEHICULOS" name="FUNCIONAMIENTO_LIMPIADORES_VEHICULOS" value="SI"></td>
@@ -371,7 +347,6 @@
                                                 <td class="text-center"><input type="radio" id="MANCHAS_VESTIDURAS_SI_VEHICULOS" name="MANCHAS_VESTIDURAS_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="MANCHAS_VESTIDURAS_NO_VEHICULOS" name="MANCHAS_VESTIDURAS_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Disponibilidad de Agua para Limpiadores</td>
                                                 <td class="text-center"><input type="radio" id="AGUA_LIMPIADORES_SI_VEHICULOS" name="AGUA_LIMPIADORES_VEHICULOS" value="SI"></td>
@@ -381,7 +356,6 @@
                                                 <td class="text-center"><input type="radio" id="ASIENTOS_SI_VEHICULOS" name="ASIENTOS_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="ASIENTOS_NO_VEHICULOS" name="ASIENTOS_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Molduras Delanteras</td>
                                                 <td class="text-center"><input type="radio" id="MOLDURAS_DELANTERAS_SI_VEHICULOS" name="MOLDURAS_DELANTERAS_VEHICULOS" value="SI"></td>
@@ -391,7 +365,6 @@
                                                 <td class="text-center"><input type="radio" id="CINTURONES_SEGURIDAD_SI_VEHICULOS" name="CINTURONES_SEGURIDAD_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="CINTURONES_SEGURIDAD_NO_VEHICULOS" name="CINTURONES_SEGURIDAD_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Molduras Traseras</td>
                                                 <td class="text-center"><input type="radio" id="MOLDURAS_TRASERAS_SI_VEHICULOS" name="MOLDURAS_TRASERAS_VEHICULOS" value="SI"></td>
@@ -401,7 +374,6 @@
                                                 <td class="text-center"><input type="radio" id="CALCOMANIAS_LOGO_SI_VEHICULOS" name="CALCOMANIAS_LOGO_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="CALCOMANIAS_LOGO_NO_VEHICULOS" name="CALCOMANIAS_LOGO_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Llantas</td>
                                                 <td class="text-center"><input type="radio" id="LLANTAS_SI_VEHICULOS" name="LLANTAS_VEHICULOS" value="SI"></td>
@@ -411,41 +383,33 @@
                                                 <td class="text-center"><input type="radio" id="PASE_VEHICULAR_SI_VEHICULOS" name="PASE_VEHICULAR_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="PASE_VEHICULAR_NO_VEHICULOS" name="PASE_VEHICULAR_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                             <tr>
                                                 <td>Llanta de Refacción</td>
                                                 <td class="text-center"><input type="radio" id="LLANTA_REFACCION_SI_VEHICULOS" name="LLANTA_REFACCION_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="LLANTA_REFACCION_NO_VEHICULOS" name="LLANTA_REFACCION_VEHICULOS" value="NO"></td>
-
                                                 <td>Brillo de seguridad</td>
                                                 <td class="text-center"><input type="radio" id="BRILLO_SEGURIDAD_SI_VEHICULOS" name="BRILLO_SEGURIDAD_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="BRILLO_SEGURIDAD_NO_VEHICULOS" name="BRILLO_SEGURIDAD_VEHICULOS" value="NO"></td>
                                             </tr>
-
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
 
-
                             <div class="col-12 mt-4">
                                 <div class="table-responsive">
                                     <table class="table table-bordered text-center align-middle">
-
                                         <thead class="table-secondary">
                                             <tr>
                                                 <th colspan="3">Kilometraje de salida</th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
                                             <tr>
-                                                <!-- SALIDA -->
                                                 <td colspan="3">
                                                     <input type="text" class="form-control mb-2"
                                                         name="KILOMETRAJE_SALIDA_VEHICULOS" id="KILOMETRAJE_SALIDA_VEHICULOS"
                                                         placeholder="Kilometraje salida" required>
-
                                                     <select class="form-select" name="COMBUSTIBLE_SALIDA_VEHICULOS" id="COMBUSTIBLE_SALIDA_VEHICULOS" required>
                                                         <option value="">Nivel combustible</option>
                                                         <option value="LLENO">Lleno</option>
@@ -457,7 +421,6 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-
                                     </table>
                                 </div>
                             </div>
@@ -490,27 +453,21 @@
                                         margin-bottom:8px;
                                         font-weight:bold;
                                         font-size:15px;
-                                        color:#0d6efd;
-                                    ">
+                                        color:#0d6efd;">
                                     Modo actual: Marcar X
                                 </div>
-
 
                                 <canvas id="canvasCarro" width="850" height="350" style="border:1px solid #ccc;"></canvas>
 
                                 <div style="margin-top:10px;">
                                     <button type="button" id="btnX" class="modo-btn activo">Marcar X</button>
                                     <button type="button" id="btnCirculo" class="modo-btn">Encerrar</button>
-                                    <button type="button" id="btnBorrarUltimo">Borrar último</button>
-                                    <button type="button" id="btnLimpiar">Limpiar todo</button>
+                                    <button type="button" id="btnBorrarUltimo" class="modo-btn">Borrar último</button>
+                                    <button type="button" id="btnLimpiar" class="modo-btn">Limpiar todo</button>
                                 </div>
 
                                 <input type="hidden" name="DANIOS_UNIDAD_JSON" id="DANIOS_UNIDAD_JSON">
                             </div>
-
-
-
-
 
                             <div class="col-12 mt-2">
                                 <label class="form-label">Observaciones generales</label>
@@ -527,7 +484,6 @@
                                 <input type="time" id="HORASALIDA_VEHICULOS" name="HORASALIDA_VEHICULOS" class="form-control" required>
                             </div>
 
-
                             <div class="col-12 mt-3">
                                 <div class="form-group">
                                     <label for="BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS">
@@ -543,7 +499,6 @@
                                     </select>
                                 </div>
                             </div>
-
 
                             <div class="col-12 mt-4" id="TABLA_BOTIQUIN_VEHICULOS" style="display:none;">
                                 <div class="table-responsive">
@@ -623,7 +578,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
                                     <small class="fw-bold">
                                         *Estos artículos se consideran consumibles, los cuales pueden no ser devueltos a RES,
                                         con la justificación de su uso.
@@ -709,7 +663,6 @@
                                             </tr>
                                         </tbody>
                                     </table>
-
                                     <small class="fw-bold">
                                         *Estos artículos se consideran consumibles, los cuales pueden no ser devueltos a RES,
                                         con la justificación de su uso.
@@ -737,10 +690,12 @@
                                     </optgroup>
                                 </select>
                             </div>
+
                             <div class="col-6 mt-3 ">
                                 <label class="form-label">Entregado por </label>
                                 <input type="text" class="form-control" id="ENTREGADO_POR" name="ENTREGADO_POR">
                             </div>
+
                             <div class="col-6 mt-3 text-center">
                                 <label class="form-label">Firma (Recibido por)</label>
                                 <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
@@ -754,6 +709,7 @@
                                 </div>
                                 <input type="hidden" id="FIRMA_RECIBIDO_POR" name="FIRMA_RECIBIDO_POR">
                             </div>
+
                             <div class="col-6 mt-3 text-center">
                                 <label class="form-label">Firma (Entregado por)</label>
                                 <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
@@ -767,7 +723,6 @@
                                 </div>
                                 <input type="hidden" id="FIRMA_ENTREGADO_POR" name="FIRMA_ENTREGADO_POR">
                             </div>
-
 
                             <div class="col-12 mt-3">
                                 <div class="form-group">
@@ -784,25 +739,20 @@
                                 </div>
                             </div>
 
-
                             <div class="col-12 mt-4" id="DIV_KILOMETRAJE_LLEGADA" style="display: none;">
                                 <div class="table-responsive">
                                     <table class="table table-bordered text-center align-middle">
-
                                         <thead class="table-secondary">
                                             <tr>
                                                 <th colspan="3">Kilometraje de llegada</th>
                                             </tr>
                                         </thead>
-
                                         <tbody>
                                             <tr>
-                                                <!-- LLEGADA -->
                                                 <td colspan="3">
                                                     <input type="text" class="form-control mb-2"
                                                         name="KILOMETRAJE_LLEGADA_VEHICULOS" id="KILOMETRAJE_LLEGADA_VEHICULOS"
                                                         placeholder="Kilometraje llegada" required>
-
                                                     <select class="form-select"
                                                         name="COMBUSTIBLE_LLEGADA_VEHICULOS" id="COMBUSTIBLE_LLEGADA_VEHICULOS" required>
                                                         <option value="">Nivel combustible</option>
@@ -815,21 +765,16 @@
                                                 </td>
                                             </tr>
                                         </tbody>
-
                                     </table>
                                 </div>
-
                                 <div class="col-12 mt-2">
                                     <label class="form-label">Regreso de la unidad / horario aprox *</label>
                                     <input type="time" id="HORAREGRESO_VEHICULOS" name="HORAREGRESO_VEHICULOS" class="form-control" required>
                                 </div>
-
-
                             </div>
 
                             <div class="col-12" id="FIRMA_REGRESO_VEHICULO" style="display: none;">
                                 <div class="row">
-
                                     <div class="col-6 mt-3">
                                         <label class="form-label">Verificado por</label>
                                         <select class="form-control" id="VERIFICA_POR" name="VERIFICA_POR" required>
@@ -880,12 +825,8 @@
                                         </div>
                                         <input type="hidden" id="FIRMA_VALIDADO_POR" name="FIRMA_VALIDADO_POR">
                                     </div>
-
                                 </div>
-
                             </div>
-
-
                         </div>
                     </div>
                 </div>
