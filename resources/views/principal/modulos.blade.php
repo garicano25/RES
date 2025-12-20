@@ -1158,7 +1158,7 @@
         <div class="modal-xl">
 
             <div class="modal-header">
-                <h2>Información de la Empresa</h2>
+                <h2 class="titulomodal">Información de la Empresa</h2>
                 <span class="modal-close" id="cerrarModal">&times;</span>
             </div>
 
@@ -1650,9 +1650,11 @@
             font-weight: 600;
         }
 
-        h2 {
+        .titulomodal {
+
             color: #ffffff;
-        }
+
+        } 
     </style>
 
 
