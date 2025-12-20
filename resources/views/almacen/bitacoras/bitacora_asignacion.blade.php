@@ -127,7 +127,7 @@
                             </div>
                             <div class="col-6 mt-3 ">
                                 <label class="form-label">Entregado por </label>
-                                <input type="text" class="form-control" id="ENTREGADO_POR" name="ENTREGADO_POR">
+                                <input type="text" class="form-control" id="ENTREGADO_POR" name="ENTREGADO_POR" readonly>
                             </div>
                             <div class="col-6 mt-3 text-center">
                                 <label class="form-label">Firma (Recibido por)</label>
