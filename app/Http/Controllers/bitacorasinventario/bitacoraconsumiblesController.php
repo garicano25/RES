@@ -408,6 +408,7 @@ class bitacoraconsumiblesController extends Controller
                         'FIRMA_ENTREGADO_POR'       => $bitacora->FIRMA_ENTREGADO_POR,
                         'OBSERVACIONES_BITACORA'    => $bitacora->OBSERVACIONES_BITACORA,
                         'FUNCIONAMIENTO_BITACORA'   => $bitacora->FUNCIONAMIENTO_BITACORA,
+                        'FINALIZAR_BITACORA_CONSUMBIBLES'   => $bitacora->FINALIZAR_BITACORA_CONSUMBIBLES,
                         'YA_GUARDADO'               => true
                     ]
                 ]);

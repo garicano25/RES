@@ -189,9 +189,7 @@ Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodig
 
 
 Route::get('/modulos', [catalogoanuncioController::class, 'index']);
-
 Route::get('/tipo-cambio', [catalogoanuncioController::class, 'getTipoCambio']);
-
 Route::get('/obtenerInfoEmpresa', [catalogoanuncioController::class, 'obtenerInfoEmpresa']);
 
 //==============================================  USUARIO  ============================================== 
@@ -203,7 +201,6 @@ Route::get('/Tablausuarios', [usuarioController::class, 'Tablausuarios']);
 Route::get('/Tablaproveedores', [usuarioController::class, 'Tablaproveedores']);
 Route::get('/usuarioDelete', [usuarioController::class, 'store']);
 Route::get('/usuariofoto/{id}', [usuarioController::class, 'mostrarFotoUsuario'])->name('usuariofoto');
-
 Route::post('/validarRFC', [usuarioController::class, 'validarRFC']);
 
 
@@ -215,8 +212,6 @@ Route::post('/validarRFC', [usuarioController::class, 'validarRFC']);
 //==============================================  INFORMACION EMRPESA  ============================================== 
 
 Route::get('/informacionempresa', function () {return view('RH.informacionempresa.empresainformacion');});
-
-
 Route::post('/InfoEmpresaSave', [empresainformacionController::class, 'store']);
 Route::get('/Tablainformacionempresa', [empresainformacionController::class, 'Tablainformacionempresa']);
 Route::get('/InfoEmpresaDelete', [empresainformacionController::class, 'store']);
@@ -946,7 +941,7 @@ Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
 //==============================================    LISTA DE AF   ============================================== 
 Route::get('/listadeaf', [listaafController::class, 'index']);
 Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
-
+SEHILAB_PRODUCCION
 //==============================================    LISTA DE AFN   ============================================== 
 Route::get('/listadeafn', [listaafnController::class, 'index']);
 Route::get('/Tablalistadeafn', [listaafnController::class, 'Tablalistadeafn']);

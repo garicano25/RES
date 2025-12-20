@@ -138,6 +138,7 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+                $("#FINALIZAR_BITACORA_CONSUMBIBLES").val(material.FINALIZAR_BITACORA_CONSUMBIBLES);
 
                
                 if (material.FIRMA_RECIBIDO_POR) {
@@ -226,6 +227,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+                $("#FINALIZAR_BITACORA_CONSUMBIBLES").val(material.FINALIZAR_BITACORA_CONSUMBIBLES);
 
                
                 if (material.FIRMA_RECIBIDO_POR) {
