@@ -185,7 +185,14 @@ var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
             className: 'text-center'
         },
         { data: 'DESCRIPCION_EQUIPO' },
-        { data: 'CANTIDAD_EQUIPO' },
+ {
+            data: null,
+            render: function (data) {
+                let cantidad = data.CANTIDAD_EQUIPO || '';
+                let unidad = data.UNIDAD_MEDIDA || '';
+                return `${cantidad} (${unidad})`;
+            }
+        },
         { data: 'MARCA_EQUIPO' },
         { data: 'MODELO_EQUIPO' },
         { data: 'SERIE_EQUIPO' },

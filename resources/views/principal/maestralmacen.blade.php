@@ -499,7 +499,7 @@
 
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.27"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.28"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))
@@ -515,28 +515,28 @@
     @endif
 
     @if(request()->is('listadeaf'))
-    <script src="/assets/js_sitio/listadeaf/listaaf.js?v=1.2"></script>
+    <script src="/assets/js_sitio/listadeaf/listaaf.js?v=1.3"></script>
     @endif
 
     @if(request()->is('listadeafn'))
-    <script src="/assets/js_sitio/listadeafn/listaafn.js"></script>
+    <script src="/assets/js_sitio/listadeafn/listaafn.js?v=1.0"></script>
     @endif
 
     @if(request()->is('listadecomercializacion'))
-    <script src="/assets/js_sitio/listacomercializacion/listacomercializacion.js?v=1.0"></script>
+    <script src="/assets/js_sitio/listacomercializacion/listacomercializacion.js?v=1.1"></script>
     @endif
 
     @if(request()->is('listadeitemcriticos'))
-    <script src="/assets/js_sitio/listadeitemcritico/listaitemcritico.js"></script>
+    <script src="/assets/js_sitio/listadeitemcritico/listaitemcritico.js?v=1.0"></script>
     @endif
 
     @if(request()->is('listadealertas'))
-    <script src="/assets/js_sitio/listadealerta/listaalerta.js"></script>
+    <script src="/assets/js_sitio/listadealerta/listaalerta.js?v=1.0"></script>
     @endif
 
 
     @if(request()->is('listadeasignacion'))
-    <script src="/assets/js_sitio/listadeasignacion/listadeasignacion.js"></script>
+    <script src="/assets/js_sitio/listadeasignacion/listadeasignacion.js?v=1.0"></script>
     @endif
 
     @if(request()->is('bitacoraconsumibles'))
