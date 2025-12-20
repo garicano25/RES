@@ -550,6 +550,8 @@ class bitacoravehiculosController extends Controller
                         'BRILLO_SEGURIDAD_VEHICULOS'              => $bitacora->BRILLO_SEGURIDAD_VEHICULOS,
                         'HORAREGRESO_VEHICULOS'          => $bitacora->HORAREGRESO_VEHICULOS,
                         'OBSERVACIONES_BITACORA' => $bitacora->OBSERVACIONES_BITACORA,
+                        'DANIOS_UNIDAD_JSON' => $bitacora->DANIOS_UNIDAD_JSON,
+
                     ]
                 ]);
             }

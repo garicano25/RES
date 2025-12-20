@@ -11,9 +11,6 @@
     .bg-verde-suave {
         background-color: #d1e7dd !important;
     }
-
-
-    
 </style>
 
 <div class="contenedor-contenido">
@@ -69,8 +66,7 @@
                             <thead class="table-secondary">
                                 <tr>
                                     <th style="width: 40%;">Tipo de verificación</th>
-                                    <th style="width: 15%;">Sí</th>
-                                    <th style="width: 15%;">No</th>
+                                    <th style="width: 15%;">Sí/No</th>
                                 </tr>
                             </thead>
 
@@ -78,31 +74,21 @@
                                 <tr>
                                     <td class="text-center">Seguimiento</td>
                                     <td class="text-center">
-                                        <input type="radio"
-                                            id="SEGUIMIENTO_SI_VEHICULOS"
-                                            name="SEGUIMIENTO_VEHICULOS"
-                                            value="SI" required>
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="radio"
-                                            id="SEGUIMIENTO_NO_VEHICULOS"
-                                            name="SEGUIMIENTO_VEHICULOS"
-                                            value="NO" required>
+                                        <select class="form-select" name="SEGUIMIENTO_VEHICULOS" id="SEGUIMIENTO_VEHICULOS" required>
+                                            <option value="">Seleccione una opción</option>
+                                            <option value="1">Sí</option>
+                                            <option value="2">No</option>
+                                        </select>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="text-center">Inspección del Usuario</td>
                                     <td class="text-center">
-                                        <input type="radio"
-                                            id="INSPECCION_USUARIO_SI_VEHICULOS"
-                                            name="INSPECCION_USUARIO_VEHICULOS"
-                                            value="SI" required>
-                                    </td>
-                                    <td class="text-center">
-                                        <input type="radio"
-                                            id="INSPECCION_USUARIO_NO_VEHICULOS"
-                                            name="INSPECCION_USUARIO_VEHICULOS"
-                                            value="NO" required>
+                                        <select class="form-select" name="INSPECCION_USUARIO_VEHICULOS" id="INSPECCION_USUARIO_VEHICULOS" required>
+                                            <option value="">Seleccione una opción</option>
+                                            <option value="1">Sí</option>
+                                            <option value="2">No</option>
+                                        </select>
                                     </td>
                                 </tr>
                             </tbody>
@@ -475,6 +461,56 @@
                                     </table>
                                 </div>
                             </div>
+
+                            <div style="text-align:center;">
+
+                                <p style="font-size:14px; margin-bottom:8px;">
+                                    Marque con una <strong>"X"</strong> si existen golpes, rayones o alguna anomalía de importancia,
+                                    y encierre la <strong>"X"</strong> en un círculo si la anomalía se detecta al regreso de la unidad.
+                                </p>
+
+                                <style>
+                                    .modo-btn {
+                                        padding: 6px 12px;
+                                        margin-right: 5px;
+                                        border: 1px solid #999;
+                                        background: #f8f9fa;
+                                        cursor: pointer;
+                                    }
+
+                                    .modo-btn.activo {
+                                        background: #0d6efd;
+                                        color: #fff;
+                                        border-color: #0d6efd;
+                                    }
+                                </style>
+
+                                <div id="modoActual"
+                                    style="
+                                        margin-bottom:8px;
+                                        font-weight:bold;
+                                        font-size:15px;
+                                        color:#0d6efd;
+                                    ">
+                                    Modo actual: Marcar X
+                                </div>
+
+
+                                <canvas id="canvasCarro" width="850" height="350" style="border:1px solid #ccc;"></canvas>
+
+                                <div style="margin-top:10px;">
+                                    <button type="button" id="btnX" class="modo-btn activo">Marcar X</button>
+                                    <button type="button" id="btnCirculo" class="modo-btn">Encerrar</button>
+                                    <button type="button" id="btnBorrarUltimo">Borrar último</button>
+                                    <button type="button" id="btnLimpiar">Limpiar todo</button>
+                                </div>
+
+                                <input type="hidden" name="DANIOS_UNIDAD_JSON" id="DANIOS_UNIDAD_JSON">
+                            </div>
+
+
+
+
 
                             <div class="col-12 mt-2">
                                 <label class="form-label">Observaciones generales</label>
