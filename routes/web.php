@@ -941,7 +941,7 @@ Route::post('/SalidalmacenSave', [salidalmacenController::class, 'store']);
 //==============================================    LISTA DE AF   ============================================== 
 Route::get('/listadeaf', [listaafController::class, 'index']);
 Route::get('/Tablalistadeaf', [listaafController::class, 'Tablalistadeaf']);
-SEHILAB_PRODUCCION
+
 //==============================================    LISTA DE AFN   ============================================== 
 Route::get('/listadeafn', [listaafnController::class, 'index']);
 Route::get('/Tablalistadeafn', [listaafnController::class, 'Tablalistadeafn']);
