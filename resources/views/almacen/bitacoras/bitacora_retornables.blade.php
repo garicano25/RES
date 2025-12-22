@@ -151,6 +151,54 @@
                                 <label class="form-label">Observación </label>
                                 <textarea class="form-control" id="OBSERVACIONES_BITACORA" name="OBSERVACIONES_BITACORA" rows="3"></textarea>
                             </div>
+
+
+                            <div class="col-12 mt-3">
+                                <div class="form-group">
+                                    <label for="RETORNO_LABEL">
+                                        El artículo ya retorno *
+                                    </label>
+                                    <select class="form-select"
+                                        id="RETORNO_BITACORA_RETORNABLE"
+                                        name="RETORNO_BITACORA_RETORNABLE" required>
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12" id="RETORNO_EQUIPO" style="display: none;">
+                                <div class="row">
+                                    <div class="col-6 mt-3 text-center">
+                                        <label class="form-label">Firma (Retornado por)</label>
+                                        <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
+                                            <canvas id="firmaCanvas3" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
+                                                Tu navegador no soporta canvas.
+                                            </canvas>
+                                            <br>
+                                            <button type="button" class="btn btn-danger btn-sm mt-2" id="btnLimpiarFirma3">
+                                                Borrar firma
+                                            </button>
+                                        </div>
+                                        <input type="hidden" id="FIRMA_RETORNADO_POR" name="FIRMA_RETORNADO_POR">
+                                    </div>
+                                    <div class="col-6 mt-3 text-center">
+                                        <label class="form-label">Firma (Recibido por)</label>
+                                        <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
+                                            <canvas id="firmaCanvas4" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
+                                                Tu navegador no soporta canvas.
+                                            </canvas>
+                                            <br>
+                                            <button type="button" class="btn btn-danger btn-sm mt-2" id="btnLimpiarFirma4">
+                                                Borrar firma
+                                            </button>
+                                        </div>
+                                        <input type="hidden" id="FIRMA_ACEPTADO_POR" name="FIRMA_ACEPTADO_POR">
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -387,6 +435,227 @@
         document.getElementById("btnLimpiarFirma2").addEventListener("click", function() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             document.getElementById("FIRMA_ENTREGADO_POR").value = "";
+        });
+
+    })();
+
+    //////////////////////////// FIRMA 3 //////////////
+
+    (function() {
+
+        const canvas = document.getElementById("firmaCanvas3");
+        const ctx = canvas.getContext("2d");
+
+        let dibujando = false;
+        let movimiento = false;
+        let pos = {
+            x: 0,
+            y: 0
+        };
+        let posAnterior = {
+            x: 0,
+            y: 0
+        };
+
+        function obtenerPosCanvas(evt) {
+            let rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        function dibujarPunto(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = "#000";
+            ctx.fill();
+            ctx.closePath();
+
+            document.getElementById("FIRMA_RETORNADO_POR").value = canvas.toDataURL("image/png");
+        }
+
+        canvas.addEventListener("mousedown", function(e) {
+            dibujando = true;
+            movimiento = false;
+            posAnterior = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("mouseup", function() {
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+            dibujando = false;
+        });
+
+        canvas.addEventListener("mousemove", function(e) {
+            if (dibujando) movimiento = true;
+            pos = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            dibujando = true;
+            movimiento = false;
+
+            let t = e.touches[0];
+            posAnterior = obtenerPosCanvas(t);
+        });
+
+        canvas.addEventListener("touchend", function(e) {
+            e.preventDefault();
+
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+
+            dibujando = false;
+        });
+
+        canvas.addEventListener("touchmove", function(e) {
+            e.preventDefault();
+            movimiento = true;
+
+            let t = e.touches[0];
+            pos = obtenerPosCanvas(t);
+        });
+
+        function render() {
+            if (dibujando && movimiento) {
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(posAnterior.x, posAnterior.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.closePath();
+
+                posAnterior = pos;
+
+                document.getElementById("FIRMA_RETORNADO_POR").value =
+                    canvas.toDataURL("image/png");
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+
+        document.getElementById("btnLimpiarFirma3").addEventListener("click", function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("FIRMA_RETORNADO_POR").value = "";
+        });
+
+    })();
+
+
+    //////////////////////////// FIRMA 3 //////////////
+
+    (function() {
+
+        const canvas = document.getElementById("firmaCanvas4");
+        const ctx = canvas.getContext("2d");
+
+        let dibujando = false;
+        let movimiento = false;
+        let pos = {
+            x: 0,
+            y: 0
+        };
+        let posAnterior = {
+            x: 0,
+            y: 0
+        };
+
+        function obtenerPosCanvas(evt) {
+            let rect = canvas.getBoundingClientRect();
+            return {
+                x: evt.clientX - rect.left,
+                y: evt.clientY - rect.top
+            };
+        }
+
+        function dibujarPunto(x, y) {
+            ctx.beginPath();
+            ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+            ctx.fillStyle = "#000";
+            ctx.fill();
+            ctx.closePath();
+
+            document.getElementById("FIRMA_ACEPTADO_POR").value = canvas.toDataURL("image/png");
+        }
+
+        canvas.addEventListener("mousedown", function(e) {
+            dibujando = true;
+            movimiento = false;
+            posAnterior = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("mouseup", function() {
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+            dibujando = false;
+        });
+
+        canvas.addEventListener("mousemove", function(e) {
+            if (dibujando) movimiento = true;
+            pos = obtenerPosCanvas(e);
+        });
+
+        canvas.addEventListener("touchstart", function(e) {
+            e.preventDefault();
+            dibujando = true;
+            movimiento = false;
+
+            let t = e.touches[0];
+            posAnterior = obtenerPosCanvas(t);
+        });
+
+        canvas.addEventListener("touchend", function(e) {
+            e.preventDefault();
+
+            if (dibujando && !movimiento) {
+                dibujarPunto(posAnterior.x, posAnterior.y);
+            }
+
+            dibujando = false;
+        });
+
+        canvas.addEventListener("touchmove", function(e) {
+            e.preventDefault();
+            movimiento = true;
+
+            let t = e.touches[0];
+            pos = obtenerPosCanvas(t);
+        });
+
+        function render() {
+            if (dibujando && movimiento) {
+                ctx.strokeStyle = "#000";
+                ctx.lineWidth = 2;
+
+                ctx.beginPath();
+                ctx.moveTo(posAnterior.x, posAnterior.y);
+                ctx.lineTo(pos.x, pos.y);
+                ctx.stroke();
+                ctx.closePath();
+
+                posAnterior = pos;
+
+                document.getElementById("FIRMA_ACEPTADO_POR").value =
+                    canvas.toDataURL("image/png");
+            }
+
+            requestAnimationFrame(render);
+        }
+
+        render();
+
+        document.getElementById("btnLimpiarFirma4").addEventListener("click", function() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            document.getElementById("FIRMA_ACEPTADO_POR").value = "";
         });
 
     })();

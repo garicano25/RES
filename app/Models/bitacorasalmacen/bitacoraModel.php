@@ -29,10 +29,17 @@ class bitacoraModel extends Model
         'OBSERVACIONES_BITACORA',
         'ACTIVO',
         'UNIDAD_SALIDA',
+        /* =========================
+           CONSUMIBLES
+        ========================= */
         'FINALIZAR_BITACORA_CONSUMBIBLES',
 
-
-
+        /* =========================
+           RETORNABLE
+        ========================= */
+        'RETORNO_BITACORA_RETORNABLE',
+        'FIRMA_RETORNADO_POR',
+        'FIRMA_ACEPTADO_POR',
         /* =========================
            VEHICULO
         ========================= */

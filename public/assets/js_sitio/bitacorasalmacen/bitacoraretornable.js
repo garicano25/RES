@@ -9,6 +9,8 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
     
     ID_BITACORAS_ALMACEN = 0
     document.getElementById('formularioBITACORA').reset();
+
+    $("#RETORNO_EQUIPO").hide();
     $("#guardaBITACORA").show();
    
 })
@@ -86,7 +88,13 @@ var Tablabitacoraretornable = $("#Tablabitacoraretornable").DataTable({
         { targets: 10, title: 'Fecha de entrega', className: 'all text-center' },
         { targets: 11, title: 'Editar', className: 'all text-center' },
         { targets: 12, title: 'Visualizar', className: 'all text-center' }
-    ]
+    ],
+    createdRow: function (row, data) {
+        if (data.ROW_CLASS) {
+            $(row).addClass(data.ROW_CLASS);
+        }
+    }
+
 });
 
 $(document).on('click', '.editarMaterial', function () {
@@ -110,16 +118,26 @@ $(document).on('click', '.editarMaterial', function () {
 
             let canvas1 = document.getElementById("firmaCanvas");
             let canvas2 = document.getElementById("firmaCanvas2");
+            let canvas3 = document.getElementById("firmaCanvas3");
+            let canvas4 = document.getElementById("firmaCanvas4");
 
             let ctx1 = canvas1.getContext("2d");
             let ctx2 = canvas2.getContext("2d");
+            let ctx3 = canvas3.getContext("2d");
+            let ctx4 = canvas4.getContext("2d");
 
           
             canvas1.width = canvas1.width; 
             canvas2.width = canvas2.width;
+            canvas3.width = canvas3.width;
+            canvas3.width = canvas4.width;
 
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");
+
+            $("#FIRMA_RETORNADO_POR").val("");
+            $("#FIRMA_ACEPTADO_POR").val("");
+            
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_ALMACEN_SOLICITUD").val(material.FECHA_ALMACEN_SOLICITUD);
             $("#DESCRIPCION").val(material.DESCRIPCION);
@@ -136,8 +154,15 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+                $("#RETORNO_BITACORA_RETORNABLE").val(material.RETORNO_BITACORA_RETORNABLE);
 
-               
+
+                if (material.RETORNO_BITACORA_RETORNABLE === '1') {
+                    $('#RETORNO_EQUIPO').show();
+                } else {
+                    $('#RETORNO_EQUIPO').hide();
+                }
+
                 if (material.FIRMA_RECIBIDO_POR) {
                     let img1 = new Image();
                     img1.onload = function () {
@@ -157,6 +182,31 @@ $(document).on('click', '.editarMaterial', function () {
 
                     $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
                 }
+
+
+
+                    if (material.FIRMA_RETORNADO_POR) {
+                    let img3 = new Image();
+                    img3.onload = function () {
+                        ctx3.drawImage(img3, 0, 0, canvas3.width, canvas3.height);
+                    };
+                    img3.src = material.FIRMA_RETORNADO_POR;
+                    $("#FIRMA_RETORNADO_POR").val(material.FIRMA_RETORNADO_POR);
+                }
+
+                if (material.FIRMA_ACEPTADO_POR) {
+                    let img4 = new Image();
+                    img4.onload = function () {
+                        ctx4.drawImage(img4, 0, 0, canvas4.width, canvas4.height);
+                    };
+                    img4.src = material.FIRMA_ACEPTADO_POR;
+                    $("#FIRMA_ACEPTADO_POR").val(material.FIRMA_ACEPTADO_POR);
+                }
+
+
+
+
+
 
             } else {
                 $("#ID_BITACORAS_ALMACEN").val(0);
@@ -194,23 +244,30 @@ $(document).on('click', '.visualizarMaterial', function () {
 
             $("#guardaBITACORA").hide();
 
-
             let material = res.material;
 
             let canvas1 = document.getElementById("firmaCanvas");
             let canvas2 = document.getElementById("firmaCanvas2");
+            let canvas3 = document.getElementById("firmaCanvas3");
+            let canvas4 = document.getElementById("firmaCanvas4");
 
             let ctx1 = canvas1.getContext("2d");
             let ctx2 = canvas2.getContext("2d");
+            let ctx3 = canvas3.getContext("2d");
+            let ctx4 = canvas4.getContext("2d");
 
           
             canvas1.width = canvas1.width; 
             canvas2.width = canvas2.width;
+            canvas3.width = canvas3.width;
+            canvas3.width = canvas4.width;
 
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");
 
-           
+            $("#FIRMA_RETORNADO_POR").val("");
+            $("#FIRMA_ACEPTADO_POR").val("");
+            
             $("#SOLICITANTE_SALIDA").val(material.SOLICITANTE_SALIDA);
             $("#FECHA_ALMACEN_SOLICITUD").val(material.FECHA_ALMACEN_SOLICITUD);
             $("#DESCRIPCION").val(material.DESCRIPCION);
@@ -227,8 +284,15 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+                $("#RETORNO_BITACORA_RETORNABLE").val(material.RETORNO_BITACORA_RETORNABLE);
 
-               
+
+                if (material.RETORNO_BITACORA_RETORNABLE === '1') {
+                    $('#RETORNO_EQUIPO').show();
+                } else {
+                    $('#RETORNO_EQUIPO').hide();
+                }
+
                 if (material.FIRMA_RECIBIDO_POR) {
                     let img1 = new Image();
                     img1.onload = function () {
@@ -249,6 +313,31 @@ $(document).on('click', '.visualizarMaterial', function () {
                     $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
                 }
 
+
+
+                    if (material.FIRMA_RETORNADO_POR) {
+                    let img3 = new Image();
+                    img3.onload = function () {
+                        ctx3.drawImage(img3, 0, 0, canvas3.width, canvas3.height);
+                    };
+                    img3.src = material.FIRMA_RETORNADO_POR;
+                    $("#FIRMA_RETORNADO_POR").val(material.FIRMA_RETORNADO_POR);
+                }
+
+                if (material.FIRMA_ACEPTADO_POR) {
+                    let img4 = new Image();
+                    img4.onload = function () {
+                        ctx4.drawImage(img4, 0, 0, canvas4.width, canvas4.height);
+                    };
+                    img4.src = material.FIRMA_ACEPTADO_POR;
+                    $("#FIRMA_ACEPTADO_POR").val(material.FIRMA_ACEPTADO_POR);
+                }
+
+
+
+
+
+
             } else {
                 $("#ID_BITACORAS_ALMACEN").val(0);
                 $("#RECIBIDO_POR").val("");
@@ -264,6 +353,8 @@ $(document).on('click', '.visualizarMaterial', function () {
         }
     });
 });
+
+
 
 
 function cargarFirmaEnCanvas(canvas, ctx, base64) {
@@ -362,3 +453,14 @@ $("#guardaBITACORA").click(function (e) {
 }
     
 });
+
+
+$('#RETORNO_BITACORA_RETORNABLE').on('change', function () {
+    if ($(this).val() === '1') {   
+        $('#RETORNO_EQUIPO').show();
+    } else {                     
+        $('#RETORNO_EQUIPO').hide();
+    }
+});
+
+

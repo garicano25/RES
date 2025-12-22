@@ -112,12 +112,12 @@ var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
         { targets: 11, title: 'Editar', className: 'all text-center' },
         { targets: 12, title: 'Visualizar', className: 'all text-center' }
     ],
-    createdRow: function (row, data) {
-    if (data.ROW_CLASS) {
-        $(row).addClass(data.ROW_CLASS);
-    }
-}
 
+    createdRow: function (row, data) {
+        if (data.ROW_CLASS) {
+            $(row).addClass(data.ROW_CLASS);
+        }
+    }
 
 });
 
@@ -389,11 +389,8 @@ $(document).on('click', '.visualizarMaterial', function () {
                 return;
             }
 
-
                 $("#guardaBITACORA").hide();
 
-            
-            
                 let material = res.material;
             
                 let canvas1 = document.getElementById("firmaCanvas");
