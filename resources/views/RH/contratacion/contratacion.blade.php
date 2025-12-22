@@ -1230,7 +1230,7 @@
 
                     <div class="mb-3">
                         <label>Nombre del documento *</label>
-                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_SOPORTECONTRATO" name="NOMBRE_DOCUMENTO_SOPORTECONTRATO" readonly required>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_SOPORTECONTRATO" name="NOMBRE_DOCUMENTO_SOPORTECONTRATO"  required>
                     </div>
 
 
