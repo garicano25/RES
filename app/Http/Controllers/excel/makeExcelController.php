@@ -1265,10 +1265,29 @@ class makeExcelController extends Controller{
 
 
 
-            //DATOS 
+            function decodificarUnicodeMalFormado1($texto)
+            {
+                return preg_replace_callback(
+                    '/u([0-9a-fA-F]{4})/',
+                    function ($matches) {
+                        return mb_convert_encoding(
+                            pack('H*', $matches[1]),
+                            'UTF-8',
+                            'UCS-2BE'
+                        );
+                    },
+                    $texto
+                );
+            }
 
-            $sheet->setCellValue('G7', str_replace(['[', ']', '"'], '', $puesto));
-            
+            $puesto = str_replace(['[', ']', '"'], '', $puesto);
+            $puesto = str_replace('\\', '', $puesto);
+
+            $puesto = decodificarUnicodeMalFormado1($puesto);
+
+            $sheet->setCellValue('G7', $puesto);
+
+
 
             if (!is_null($val->AREA_TRABAJO_DPT)) {
                 $sheet->setCellValue('G8', $val->AREA_TRABAJO_DPT);        
@@ -1767,47 +1786,17 @@ class makeExcelController extends Controller{
             //X. Organigrama																						
 
 
-            // if (!is_null($val->ORGANIGRAMA_DPT)) {
-            //     $sheet->setCellValue('B144', $val->ORGANIGRAMA_DPT);        
-            // }
+           
 
 
-            // // // Agregar la imagen en la celda B144
-            //   $imagePath = public_path('/assets/images/organigramaaa.png'); // Asegúrate de que la ruta sea correcta
-
-            //   $drawing = new \PhpOffice\PhpSpreadsheet\Worksheet\Drawing();
-            //   $drawing->setName('Organigrama');
-            //   $drawing->setDescription('Organigrama');
-            //   $drawing->setPath($imagePath);
-            //   $drawing->setCoordinates('B147');
-
-            //   // Ajustar el tamaño de la imagen para que sea grande
-            //   $drawing->setHeight($sheet->getRowDimension(147)->getRowHeight() * 175); 
-            //   $drawing->setWidth($sheet->getColumnDimension('B')->getWidth() * 175); 
-
-            //   // Centrar la imagen en la celda
-            //   $drawing->setOffsetX(($sheet->getColumnDimension('B')->getWidth() * 370 - $drawing->getWidth()) / 2);
-            //   $drawing->setOffsetY(($sheet->getRowDimension(147)->getRowHeight() * 250 - $drawing->getHeight()) / 2);
-
-            //   $drawing->setWorksheet($spreadsheet->getActiveSheet());
-
-
-
-            /* =====================================================
-   1. OBTENER CATEGORÍA
-===================================================== */
             $categoria = DB::table('catalogo_categorias')
                 ->where('ID_CATALOGO_CATEGORIA', $val->DEPARTAMENTOS_AREAS_ID)
                 ->first();
 
             $areaId = null;
 
-            /* =====================================================
-   2. DETERMINAR AREA_ID
-===================================================== */
             if ($categoria) {
 
-                // 🟢 ES LÍDER
                 if ((int)$categoria->ES_LIDER_CATEGORIA === 1) {
 
                     $areaLider = DB::table('areas_lideres')
@@ -1819,7 +1808,6 @@ class makeExcelController extends Controller{
                         $areaId = $areaLider->AREA_ID;
                     }
                 }
-                // 🔵 NO ES LÍDER
                 else {
 
                     $liderCategoria = DB::table('lideres_categorias')
@@ -1832,9 +1820,7 @@ class makeExcelController extends Controller{
                 }
             }
 
-            /* =====================================================
-   3. OBTENER IMAGEN DEL ÁREA
-===================================================== */
+      
             if ($areaId) {
 
                 $area = DB::table('areas')
@@ -1847,35 +1833,22 @@ class makeExcelController extends Controller{
 
                     if (file_exists($rutaOriginal)) {
 
-                        // 🔥 CORREGIR ORIENTACIÓN SI ES NECESARIO
                         $imagePath = $this->corregirOrientacionImagen($rutaOriginal);
 
-                        /* =====================================================
-                        4. INSERTAR IMAGEN EN EXCEL (CORRECTO)
-                        ===================================================== */
-                                                $drawing = new Drawing();
-                                                $drawing->setName('Organigrama');
-                                                $drawing->setDescription('Organigrama');
-                                                $drawing->setPath($imagePath);
-                                                $drawing->setCoordinates('B147');
+    
+                            $drawing = new Drawing();
+                            $drawing->setName('Organigrama');
+                            $drawing->setDescription('Organigrama');
+                            $drawing->setPath($imagePath);
+                            $drawing->setCoordinates('B147');
 
-                                                /* =========================================
-                        🔥 TAMAÑO REAL EN PIXELES (CONTROLADO)
-                        ========================================= */
-                                                $drawing->setResizeProportional(false);
-                                                $drawing->setWidth(750);   // AJUSTA SI QUIERES
-                                                $drawing->setHeight(406);  // AJUSTA SI QUIERES
-
-                                                /* =========================================
-                        🔥 POSICIÓN FINA
-                        ========================================= */
-                                                $drawing->setOffsetX(20);
-                                                $drawing->setOffsetY(10);
-
-                                                /* =========================================
-                        ✅ ASIGNAR A LA HOJA (UNA SOLA VEZ)
-                        ========================================= */
-                                                $drawing->setWorksheet($sheet);
+                            $drawing->setResizeProportional(false);
+                            $drawing->setWidth(750);   
+                            $drawing->setHeight(406);  
+                            
+                            $drawing->setOffsetX(20);
+                            $drawing->setOffsetY(10);                            
+                            $drawing->setWorksheet($sheet);
                     }
                 }
             }
@@ -1941,44 +1914,44 @@ class makeExcelController extends Controller{
                 //IV. Relaciones internas estratégicas
 
 
-header('Content-Type: text/html; charset=utf-8');
+                            header('Content-Type: text/html; charset=utf-8');
 
-$fila1 = 83;
-$longitud = 1;
-foreach ($internas as $key => $val) {
+                            $fila1 = 83;
+                            $longitud = 1;
+                            foreach ($internas as $key => $val) {
 
-    if ($longitud <= 10) {
+                                if ($longitud <= 10) {
 
-        $puesto3 = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $val->INTERNAS_CONQUIEN_DPT)->value('NOMBRE_CATEGORIA');
-        $decodedName = html_entity_decode(mb_convert_encoding($puesto3, 'UTF-8', 'UTF-8'));
+                                    $puesto3 = catalogocategoriaModel::where('ID_CATALOGO_CATEGORIA', $val->INTERNAS_CONQUIEN_DPT)->value('NOMBRE_CATEGORIA');
+                                    $decodedName = html_entity_decode(mb_convert_encoding($puesto3, 'UTF-8', 'UTF-8'));
 
-        $sheet->setCellValue('B' . $fila1, $decodedName);
+                                    $sheet->setCellValue('B' . $fila1, $decodedName);
 
 
-        if (!is_null($val->INTERNAS_PARAQUE_DPT)) {
-            $sheet->setCellValue('J' . $fila1, $val->INTERNAS_PARAQUE_DPT);
-        }
+                                    if (!is_null($val->INTERNAS_PARAQUE_DPT)) {
+                                        $sheet->setCellValue('J' . $fila1, $val->INTERNAS_PARAQUE_DPT);
+                                    }
 
-        if (!is_null($val->INTERNAS_FRECUENCIA_DPT)) {
-            $internas = strtoupper($val->INTERNAS_FRECUENCIA_DPT);
-            if ($internas == 'DIARIA') {
-                $sheet->setCellValue('T' . $fila1, 'X');
-            } else if ($internas == 'SEMANAL') {
-                $sheet->setCellValue('U' . $fila1, 'X');
-            } else if ($internas == 'MENSUAL') {
-                $sheet->setCellValue('V' . $fila1, 'X');
-            } else if ($internas == 'SEMESTRAL') {
-                $sheet->setCellValue('W' . $fila1, 'X');
-            } else if ($internas == 'ANUAL') {
-                $sheet->setCellValue('X' . $fila1, 'X');
-            }
-        }
+                                    if (!is_null($val->INTERNAS_FRECUENCIA_DPT)) {
+                                        $internas = strtoupper($val->INTERNAS_FRECUENCIA_DPT);
+                                        if ($internas == 'DIARIA') {
+                                            $sheet->setCellValue('T' . $fila1, 'X');
+                                        } else if ($internas == 'SEMANAL') {
+                                            $sheet->setCellValue('U' . $fila1, 'X');
+                                        } else if ($internas == 'MENSUAL') {
+                                            $sheet->setCellValue('V' . $fila1, 'X');
+                                        } else if ($internas == 'SEMESTRAL') {
+                                            $sheet->setCellValue('W' . $fila1, 'X');
+                                        } else if ($internas == 'ANUAL') {
+                                            $sheet->setCellValue('X' . $fila1, 'X');
+                                        }
+                                    }
 
-        $fila1++;
-    }
+                                    $fila1++;
+                                }
 
-    $longitud++;
-}
+                                $longitud++;
+                            }
 
 
               
