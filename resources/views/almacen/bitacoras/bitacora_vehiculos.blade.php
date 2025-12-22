@@ -776,7 +776,7 @@
                             <div class="col-12" id="FIRMA_REGRESO_VEHICULO" style="display: none;">
                                 <div class="row">
                                     <div class="col-6 mt-3">
-                                        <label class="form-label">Verificado por</label>
+                                        <label class="form-label">Retornado por</label>
                                         <select class="form-control" id="VERIFICA_POR" name="VERIFICA_POR" required>
                                             <option value="">Seleccione una opción</option>
                                             <optgroup label="Colaboradores">
@@ -796,11 +796,11 @@
                                         </select>
                                     </div>
                                     <div class="col-6 mt-3 ">
-                                        <label class="form-label">Validado por </label>
+                                        <label class="form-label">Recibido por </label>
                                         <input type="text" class="form-control" id="VALIDADO_POR" name="VALIDADO_POR">
                                     </div>
                                     <div class="col-6 mt-3 text-center">
-                                        <label class="form-label">Firma (verificado por)</label>
+                                        <label class="form-label">Firma (Retornado por)</label>
                                         <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
                                             <canvas id="firmaCanvas3" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
                                                 Tu navegador no soporta canvas.
@@ -813,7 +813,7 @@
                                         <input type="hidden" id="FIRMA_VERIFICADO_POR" name="FIRMA_VERIFICADO_POR">
                                     </div>
                                     <div class="col-6 mt-3 text-center">
-                                        <label class="form-label">Firma (Validado por)</label>
+                                        <label class="form-label">Firma (Recibido por)</label>
                                         <div style="border: 1px dashed #ffffffff; border-radius: 5px; padding: 10px; text-align:center;">
                                             <canvas id="firmaCanvas4" width="400" height="200" style="border:1px solid #ccc; cursor: crosshair;">
                                                 Tu navegador no soporta canvas.
