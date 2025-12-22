@@ -935,66 +935,51 @@ $('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
-function mostrarCursos(data,form){
-if ('CURSOS' in data) {
-    if (data.CURSOS.length > 0) { 
-        var cursos = data.CURSOS
-        var count = 1    
+
     
-        cursos.forEach(function (obj) {
-        
-        
+    function mostrarCursos(data, form) {
+    if (!('CURSOS' in data) || data.CURSOS.length === 0) return;
 
-        // cumple = obj.CURSO_CUMPLE_PPT.toUpperCase(); 
-
-        $('#' + form).find(`textarea[id='CURSO${count}_PPT']`).val(obj.CURSO_PPT)
+    var cursos = data.CURSOS;
     
+    cursos.forEach(function (curso, index) {
+        const num = index + 1;
+
+        // Textarea del curso
+        $('#' + form).find(`#CURSO${num}_PPT`).val(curso.CURSO_PPT);
+
+            $('#' + form).find(`input[id='PORCENTAJE_CURSO${num}']`).val(curso.PORCENTAJE_CURSO);
+
         
-    //    $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
-
-
-        if (obj.CURSO_DESEABLE == null) {
-            
-            $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='checkbox']`).prop('checked', true)
-
-        } else {
-            
-            $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='checkbox']`).prop('checked', true)
-
+        // Radios de Cumple (si/no)
+        const cumple = (curso.CURSO_CUMPLE_PPT || '').toLowerCase();
+        if (cumple === 'si' || cumple === 'no') {
+            const radioId = `#CURSO${num}_CUMPLE_${cumple.toUpperCase()}`;
+            $('#' + form).find(`input${radioId}[type='radio']`).prop('checked', true);
         }
 
-        count++
-        });
+        // Checkbox requerido/deseable
+        const checkId = curso.CURSO_DESEABLE == null 
+                        ? `#CURSO${num}_REQUERIDO_PPT` 
+                        : `#CURSO${num}_DESEABLE_PPT`;
 
+        $('#' + form).find(`input${checkId}[type='checkbox']`).prop('checked', true);
+    });
 
-        cursosTotales = data.CURSOS.length 
-        if (cursosTotales <= 10) {
-
-        $('#cursoTemasCollapse').collapse('show')
-
-
-        } else if (cursosTotales > 10 && cursosTotales <= 20) {
-            $('#cursoTemasCollapse').collapse('show')
-            $('#cursoTemas1Collapse').collapse('show')
-            
-
-        } else if (cursosTotales > 20 && cursosTotales <= 30) {
-            $('#cursoTemasCollapse').collapse('show')
-            $('#cursoTemas1Collapse').collapse('show')
-            $('#cursoTemas2Collapse').collapse('show')
-
-
-        } else if (cursosTotales > 30){
-            
-            $('.collapse').collapse('show')
-        
-
-
-        }
-
-    }
+    // Mostrar colapsables según el total de cursos
+    const total = cursos.length;
+    if (total <= 10) {
+        $('#cursoTemasCollapse').collapse('show');
+    } else if (total <= 20) {
+        $('#cursoTemasCollapse, #cursoTemas1Collapse').collapse('show');
+    } else if (total <= 30) {
+        $('#cursoTemasCollapse, #cursoTemas1Collapse, #cursoTemas2Collapse').collapse('show');
+    } else {
+        $('.collapse').collapse('show');
     }
 }
+
+    
 
 
 

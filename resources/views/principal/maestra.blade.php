@@ -702,7 +702,7 @@
     @endif
 
     @if(request()->is('visualizarseleccion'))
-    <script src="/assets/js_sitio/seleccion/visualizarseleccion.js?v=1.0"></script>
+    <script src="/assets/js_sitio/seleccion/visualizarseleccion.js?v=1.1"></script>
     @endif
 
     @if(request()->is('pruebasconocimientos'))
