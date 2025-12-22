@@ -277,7 +277,6 @@ function cargarFirmaEnCanvas(canvas, ctx, base64) {
     img.src = base64;
 }
 
-
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();
 

@@ -38,14 +38,8 @@ var tablasoportecontratoCargada = false;
 var Tablacontratosyanexos;
 var tablacontratosCargada = false; 
 
-
-
-
-
 var Tablarequisicioncontratacion;
 var tablarequisiconCargada = false; 
-
-
 
 var Tablacvs;
 var tablaCVCargada = false; 
@@ -123,13 +117,6 @@ textoInactivo.addEventListener('click', () => {
 
 $(document).ready(function() {
     $("#boton_nuevo_contrato").click(function () {
-        
-
-
-
-       
-
-
 
         ID_FORMULARIO_CONTRATACION = 0;
 
@@ -1398,16 +1385,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
-
-
-
-
-
-
-
-
-
 function obtenerDocumentosOficiales(data) {
     let row = data.data().DOCUMENTOS_JSON;
     let documentos = JSON.parse(row);
@@ -1514,48 +1491,6 @@ function obtenerDocumentosOficiales(data) {
     });
 }
 
-
-
-
-
-
-// function cargarBajasColaborador() {
-//     const container = document.getElementById('BAJAS_COLABORADOR');
-    
-//     container.innerHTML = `
-//         <h5>Historial del colaborador</h5>
-//     `;
-
-//     fetch(`/obtenerbajasalta`, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json',
-//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-//         },
-//         body: JSON.stringify({ curp: curpSeleccionada }) 
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//         // Crear la tabla
-//         let tabla = '<table class="table table-bordered">';
-//         tabla += '<thead><tr><th>Tipo</th><th>Fecha</th></tr></thead>';
-//         tabla += '<tbody>';
-
-//         data.forEach(registro => {
-//             tabla += `<tr><td>${registro.tipo}</td><td>${registro.fecha}</td></tr>`;
-//         });
-
-//         tabla += '</tbody></table>';
-
-//         // Agregar la tabla al contenedor
-//         container.innerHTML += tabla;
-//     })
-//     .catch(error => {
-//         console.error('Error al obtener las bajas del colaborador:', error);
-//     });
-// }
-
-
 function cargarBajasColaborador() {
     const container = document.getElementById('BAJAS_COLABORADOR');
     
@@ -1603,7 +1538,6 @@ function cargarBajasColaborador() {
         console.error('Error al obtener las bajas del colaborador:', error);
     });
 }
-
 
 
 
@@ -1766,58 +1700,6 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
     
 });
 
-// function cargarTablaDocumentosSoporte() {
-//     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
-//         Tabladocumentosoporte.clear().destroy();
-//     }
-
-//     Tabladocumentosoporte = $("#Tabladocumentosoporte").DataTable({
-//         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-//         lengthChange: true,
-//         lengthMenu: [
-//             [10, 25, 50, -1],
-//             [10, 25, 50, 'All']
-//         ],
-//         info: false,
-//         paging: true,
-//         searching: true,
-//         filtering: true,
-//         scrollY: '65vh',
-//         scrollCollapse: true,
-//         responsive: true,
-//         ajax: {
-//             dataType: 'json',
-//             data: { curp: curpSeleccionada }, 
-//             method: 'GET',
-//             cache: false,
-//             url: '/Tabladocumentosoporte',  
-//             beforeSend: function () {
-//                 $('#loadingIcon').css('display', 'inline-block');
-//             },
-//             complete: function () {
-//                 $('#loadingIcon').css('display', 'none');
-//                 Tabladocumentosoporte.columns.adjust().draw(); 
-//             },
-//             error: function (jqXHR, textStatus, errorThrown) {
-//                 $('#loadingIcon').css('display', 'none');
-//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
-//             },
-//             dataSrc: 'data'
-//         },
-//         columns: [
-//             { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-//             { data: 'NOMBRE_DOCUMENTO', className: 'text-center' },  
-//             { data: 'BTN_DOCUMENTO' }, 
-//             { data: 'BTN_EDITAR' },
-//         ],
-//         columnDefs: [
-//             { targets: 0, title: '#', className: 'all text-center' },
-//             { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
-//             { targets: 2, title: 'Documento de soporte', className: 'all text-center' },  
-//             { targets: 3, title: 'Editar', className: 'all text-center' },  
-//         ]
-//     });
-// }
 
 function cargarTablaDocumentosSoporte() {
     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporte')) {
@@ -2693,7 +2575,7 @@ $('#Tablacontratosyanexos').on('click', 'td>button.EDITAR', function () {
 
    $(".adendacontratodiv").empty();
 
-if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
+    if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
         obtenerAdendascontrato(row.data().ADENDAS);
     }
 
@@ -2819,8 +2701,6 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 
 
      cargarInformacionContrato();
-
-
     cargarTablaDocumentosSoporteContrato();
     cargarTablaRenovacionContrato ();
     cargarTablaInformacionMedica ();
@@ -3296,21 +3176,21 @@ Modalrenovacioncontrato.addEventListener('hidden.bs.modal', event => {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-        const radioSi = document.getElementById('procedesi');
-        const radioNo = document.getElementById('procedeno');
-        const agregarAdendaDiv = document.getElementById('AGREGAR_ADENDA');
+    const radioSi = document.getElementById('procedesi');
+    const radioNo = document.getElementById('procedeno');
+    const agregarAdendaDiv = document.getElementById('AGREGAR_ADENDA');
 
-        function toggleAdendaDiv() {
-            if (radioSi.checked) {
-                agregarAdendaDiv.style.display = 'block';
-            } else {
-                agregarAdendaDiv.style.display = 'none';
-            }
+    function toggleAdendaDiv() {
+        if (radioSi.checked) {
+            agregarAdendaDiv.style.display = 'block';
+        } else {
+            agregarAdendaDiv.style.display = 'none';
         }
+    }
 
-        radioSi.addEventListener('change', toggleAdendaDiv);
-        radioNo.addEventListener('change', toggleAdendaDiv);
-    });
+    radioSi.addEventListener('change', toggleAdendaDiv);
+    radioNo.addEventListener('change', toggleAdendaDiv);
+});
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -5153,7 +5033,7 @@ document.addEventListener('DOMContentLoaded', function() {
             nombreDocumento.removeAttribute('readonly');
             nombreDocumento.value = ''; 
         } else {
-            nombreDocumento.setAttribute('readonly', true);
+            nombreDocumento.setAttribute('readonly', false);
             nombreDocumento.value = selectedOption; 
         }
     });
