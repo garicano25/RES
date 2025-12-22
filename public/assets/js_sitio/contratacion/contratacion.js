@@ -5033,7 +5033,6 @@ document.addEventListener('DOMContentLoaded', function() {
             nombreDocumento.removeAttribute('readonly');
             nombreDocumento.value = ''; 
         } else {
-            nombreDocumento.setAttribute('readonly', false);
             nombreDocumento.value = selectedOption; 
         }
     });
