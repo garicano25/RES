@@ -540,20 +540,20 @@
     @endif
 
     @if(request()->is('bitacoraconsumibles'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.32"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.33"></script>
     @endif
 
 
     @if(request()->is('bitacoraretornables'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.19"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.20"></script>
     @endif
 
     @if(request()->is('bitacoravehiculos'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.22"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.23"></script>
     @endif
 
     @if(request()->is('bitacoraasignacion'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraasignacion.js?v=1.2"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraasignacion.js?v=1.3"></script>
     @endif
 
 

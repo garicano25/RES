@@ -170,7 +170,7 @@ class bitacoraretornableController extends Controller
             $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
                 ->where('ESTADO_APROBACION', 'Aprobada')
                 ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
-                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'desc')
+                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'asc')
                 ->get();
 
             $data = [];

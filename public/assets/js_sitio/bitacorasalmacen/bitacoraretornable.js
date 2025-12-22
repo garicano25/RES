@@ -45,8 +45,8 @@ var Tablabitacoraretornable = $("#Tablabitacoraretornable").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], 
-  columns: [
+    order: [[0, 'desc']], 
+    columns: [
         { 
             data: null,
             render: function(data, type, row, meta) {
