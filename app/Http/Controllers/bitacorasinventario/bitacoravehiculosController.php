@@ -189,13 +189,12 @@ class bitacoravehiculosController extends Controller
             $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
                 ->where('ESTADO_APROBACION', 'Aprobada')
                 ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
-                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'asc')
+                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'desc')
                 ->get();
 
             $data = [];
             $tiposPermitidos = ['Vehículos'];
 
-            // 🔹 RANGO DE FECHAS
             $fechaInicio = '2025-01-01';
             $fechaFin    = '2025-12-15';
 
@@ -206,9 +205,7 @@ class bitacoravehiculosController extends Controller
 
                 foreach ($materiales as $articulo) {
 
-                    /* ======================================================
-                   VARIOS ARTÍCULOS
-                ====================================================== */
+                  
                     if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
 
                         if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
@@ -225,19 +222,15 @@ class bitacoravehiculosController extends Controller
                                     !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
                                 ) continue;
 
-                                /* ======================================================
-                               NUEVO: DETERMINAR CLASE DE FILA
-                            ====================================================== */
+                              
                                 $rowClass = '';
                                 $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
 
                                 if ($fechaSolicitud >= $fechaInicio && $fechaSolicitud <= $fechaFin) {
 
-                                    // 🟢 LA FECHA MANDA
                                     $rowClass = 'bg-verde-suave';
                                 } elseif ($fechaSolicitud >= '2025-12-16') {
 
-                                    // 🔍 CONSULTAR BITÁCORA
                                     $bitacora = DB::table('bitacorasalmacen')
                                         ->where('RECEMPLEADO_ID', $value->ID_FORMULARIO_RECURSOS_EMPLEADOS)
                                         ->where('INVENTARIO_ID', $detalle['INVENTARIO'])
@@ -253,9 +246,7 @@ class bitacoravehiculosController extends Controller
                                     }
                                 }
 
-                                /* ======================================================
-                               PRODUCTO
-                            ====================================================== */
+                         
                                 $producto = DB::table('formulario_inventario')
                                     ->select(
                                         'DESCRIPCION_EQUIPO',
@@ -301,9 +292,6 @@ class bitacoravehiculosController extends Controller
                             }
                         }
 
-                        /* ======================================================
-                   ARTÍCULO ÚNICO
-                ====================================================== */
                     } else {
 
                         if (!empty($articulo['ES_ASIGNACION']) && $articulo['ES_ASIGNACION'] == 1) {
@@ -315,9 +303,7 @@ class bitacoravehiculosController extends Controller
                             !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
                         ) continue;
 
-                        /* ======================================================
-                       NUEVO: DETERMINAR CLASE DE FILA
-                    ====================================================== */
+                    
                         $rowClass = '';
                         $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
 

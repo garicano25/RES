@@ -182,7 +182,7 @@ class bitacoraconsumiblesController extends Controller
             $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
                 ->where('ESTADO_APROBACION', 'Aprobada')
                 ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
-                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'asc')
+                ->orderBy('FECHA_ALMACEN_SOLICITUD', 'desc')
                 ->get();
 
             $data = [];
@@ -220,15 +220,12 @@ class bitacoraconsumiblesController extends Controller
                                     !in_array($detalle['TIPO_INVENTARIO'], $tiposPermitidos)
                                 ) continue;
 
-                                /* ======================================
-                               DETERMINAR COLOR DE FILA
-                            ====================================== */
+                              
                                 $rowClass = '';
                                 $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
 
                                 if ($fechaSolicitud >= $fechaInicio && $fechaSolicitud <= $fechaFin) {
 
-                                    // 🟢 FECHA MANDA
                                     $rowClass = 'bg-verde-suave';
                                 } elseif ($fechaSolicitud >= '2025-12-11') {
 
@@ -284,7 +281,6 @@ class bitacoraconsumiblesController extends Controller
                             }
                         }
 
-                        /* ================= ÚNICO ================= */
                     } else {
 
                         if (!empty($articulo['RETORNA_EQUIPO']) && $articulo['RETORNA_EQUIPO'] == 1) {
@@ -300,9 +296,6 @@ class bitacoraconsumiblesController extends Controller
                             !in_array($articulo['TIPO_INVENTARIO'], $tiposPermitidos)
                         ) continue;
 
-                        /* ======================================
-                       DETERMINAR COLOR DE FILA
-                    ====================================== */
                         $rowClass = '';
                         $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
 
