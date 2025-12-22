@@ -237,14 +237,6 @@
                                         </div>
                                         <span>CV</span>
                                     </div>
-
-                                    <div class="multisteps-form__progress-btn" id="step7">
-                                        <div class="step-circle">
-                                            <i class="bi bi-clock-history"></i>
-                                        </div>
-                                        <span>Historial de cambios</span>
-                                    </div>
-
                                 </div>
                             </div>
 
