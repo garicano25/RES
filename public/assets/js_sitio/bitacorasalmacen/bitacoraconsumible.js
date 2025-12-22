@@ -8,6 +8,7 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
     
     ID_BITACORAS_ALMACEN = 0
     document.getElementById('formularioBITACORA').reset();
+    $("#guardaBITACORA").show();
    
 })
 
@@ -195,6 +196,10 @@ $(document).on('click', '.visualizarMaterial', function () {
                 return;
             }
 
+
+            $("#guardaBITACORA").hide();
+
+        
             let material = res.material;
 
             let canvas1 = document.getElementById("firmaCanvas");

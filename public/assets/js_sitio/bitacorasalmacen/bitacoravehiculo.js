@@ -35,6 +35,7 @@ Modalbitacoravehiculo.addEventListener('hidden.bs.modal', event => {
     $("#TABLA_KIT_SEGURIDAD_VEHICULOS").hide();
     $("#DIV_KILOMETRAJE_LLEGADA").hide();
     $("#FIRMA_REGRESO_VEHICULO").hide();
+    $("#guardaBITACORA").show();
 
 });
 
@@ -124,6 +125,9 @@ $(document).on('click', '.editarMaterial', function () {
 
     ID_FORM_GLOBAL = $(this).data('id');
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
+
+
+
 
     $.ajax({
         url: '/obtenerMaterialVehiculos',
@@ -385,6 +389,11 @@ $(document).on('click', '.visualizarMaterial', function () {
                 return;
             }
 
+
+                $("#guardaBITACORA").hide();
+
+            
+            
                 let material = res.material;
             
                 let canvas1 = document.getElementById("firmaCanvas");

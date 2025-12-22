@@ -9,6 +9,7 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
     
     ID_BITACORAS_ALMACEN = 0
     document.getElementById('formularioBITACORA').reset();
+    $("#guardaBITACORA").show();
    
 })
 
@@ -190,6 +191,9 @@ $(document).on('click', '.visualizarMaterial', function () {
                 alert(res.message || "No se pudo obtener el material.");
                 return;
             }
+
+            $("#guardaBITACORA").hide();
+
 
             let material = res.material;
 
