@@ -194,6 +194,7 @@
                                                 Borrar firma
                                             </button>
                                         </div>
+
                                         <input type="hidden" id="FIRMA_ACEPTADO_POR" name="FIRMA_ACEPTADO_POR">
                                     </div>
                                 </div>

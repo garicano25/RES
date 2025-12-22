@@ -130,11 +130,10 @@ $(document).on('click', '.editarMaterial', function () {
             canvas1.width = canvas1.width; 
             canvas2.width = canvas2.width;
             canvas3.width = canvas3.width;
-            canvas3.width = canvas4.width;
+            canvas4.width = canvas4.width;
 
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");
-
             $("#FIRMA_RETORNADO_POR").val("");
             $("#FIRMA_ACEPTADO_POR").val("");
             
@@ -260,7 +259,7 @@ $(document).on('click', '.visualizarMaterial', function () {
             canvas1.width = canvas1.width; 
             canvas2.width = canvas2.width;
             canvas3.width = canvas3.width;
-            canvas3.width = canvas4.width;
+            canvas4.width = canvas4.width;
 
             $("#FIRMA_RECIBIDO_POR").val("");
             $("#FIRMA_ENTREGADO_POR").val("");

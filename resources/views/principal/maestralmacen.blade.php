@@ -545,7 +545,7 @@
 
 
     @if(request()->is('bitacoraretornables'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.22"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.23"></script>
     @endif
 
     @if(request()->is('bitacoravehiculos'))
