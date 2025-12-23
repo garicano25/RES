@@ -412,8 +412,12 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
     if (resp.readonly === true) {
         $('#CANTIDAD_EQUIPO').attr('readonly', true);
+        $('#LIMITEMINIMO_EQUIPO').attr('readonly', true);
+
     } else {
         $('#CANTIDAD_EQUIPO').removeAttr('readonly');
+        $('#LIMITEMINIMO_EQUIPO').removeAttr('readonly');
+
     }
 
 });
