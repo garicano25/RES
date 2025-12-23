@@ -154,6 +154,7 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
                 $("#RETORNO_BITACORA_RETORNABLE").val(material.RETORNO_BITACORA_RETORNABLE);
+                $("#FECHA_RETORNO_BITACORA").val(material.FECHA_RETORNO_BITACORA);
 
 
                 if (material.RETORNO_BITACORA_RETORNABLE === '1') {
@@ -284,6 +285,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
                 $("#RETORNO_BITACORA_RETORNABLE").val(material.RETORNO_BITACORA_RETORNABLE);
+                $("#FECHA_RETORNO_BITACORA").val(material.FECHA_RETORNO_BITACORA);
 
 
                 if (material.RETORNO_BITACORA_RETORNABLE === '1') {

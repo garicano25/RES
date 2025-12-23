@@ -169,6 +169,21 @@
                             </div>
 
                             <div class="col-12" id="RETORNO_EQUIPO" style="display: none;">
+
+                                <div class="col-12 mt-3">
+                                    <div class="row justify-content-center">
+                                        <div class="col-3">
+                                            <label class="form-label">Fecha de retorno *</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_RETORNO_BITACORA" name="FECHA_RETORNO_BITACORA" required>
+                                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="row">
                                     <div class="col-6 mt-3 text-center">
                                         <label class="form-label">Firma (Retornado por)</label>

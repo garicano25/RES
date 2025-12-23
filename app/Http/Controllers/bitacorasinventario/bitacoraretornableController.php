@@ -439,7 +439,7 @@ class bitacoraretornableController extends Controller
                         'RETORNO_BITACORA_RETORNABLE'   => $bitacora->RETORNO_BITACORA_RETORNABLE,
                         'FIRMA_RETORNADO_POR'   => $bitacora->FIRMA_RETORNADO_POR,
                         'FIRMA_ACEPTADO_POR'   => $bitacora->FIRMA_ACEPTADO_POR,
-                
+                        'FECHA_RETORNO_BITACORA'  => $bitacora->FECHA_RETORNO_BITACORA,
                         'YA_GUARDADO'               => true        
                     ]
                 ]);

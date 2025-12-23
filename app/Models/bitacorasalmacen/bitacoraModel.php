@@ -40,6 +40,8 @@ class bitacoraModel extends Model
         'RETORNO_BITACORA_RETORNABLE',
         'FIRMA_RETORNADO_POR',
         'FIRMA_ACEPTADO_POR',
+        'FECHA_RETORNO_BITACORA',
+
         /* =========================
            VEHICULO
         ========================= */
