@@ -387,7 +387,7 @@
                                                 <td>Llanta de Refacción</td>
                                                 <td class="text-center"><input type="radio" id="LLANTA_REFACCION_SI_VEHICULOS" name="LLANTA_REFACCION_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="LLANTA_REFACCION_NO_VEHICULOS" name="LLANTA_REFACCION_VEHICULOS" value="NO"></td>
-                                                <td>Brillo de seguridad</td>
+                                                <td>Birlo de seguridad </td>
                                                 <td class="text-center"><input type="radio" id="BRILLO_SEGURIDAD_SI_VEHICULOS" name="BRILLO_SEGURIDAD_VEHICULOS" value="SI"></td>
                                                 <td class="text-center"><input type="radio" id="BRILLO_SEGURIDAD_NO_VEHICULOS" name="BRILLO_SEGURIDAD_VEHICULOS" value="NO"></td>
                                             </tr>
@@ -1289,7 +1289,6 @@
         });
 
     })();
-    
 </script>
 
 
