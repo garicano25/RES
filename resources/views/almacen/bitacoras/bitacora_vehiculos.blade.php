@@ -522,7 +522,8 @@
                                                 <td><input type="text" class="form-control" name="OBS_FERULA_VEHICULOS" id="OBS_FERULA_VEHICULOS"></td>
                                             </tr>
                                             <tr>
-                                                <td>Face Shield para RCP con estuche nylon (PVC)</td>
+                                                <td>Face Shield para RCP con estuche nylon: pastico cloruro de polivinilo (PVC)
+                                                </td>
                                                 <td class="text-center">1</td>
                                                 <td><input type="text" class="form-control" name="OBS_FACE_SHIELD_VEHICULOS" id="OBS_FACE_SHIELD_VEHICULOS"></td>
                                             </tr>
