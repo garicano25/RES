@@ -165,7 +165,17 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#OBSERVACIONES_BITACORA").val("");
             }
 
-            $("#miModal_BITACORA").modal("show");
+            // $("#miModal_BITACORA").modal("show");
+            const modalElement = document.getElementById('miModal_BITACORA');
+
+            const modalBitacora = new bootstrap.Modal(modalElement, {
+                backdrop: 'static', 
+                keyboard: false     
+            });
+
+            modalBitacora.show();
+
+
             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
 
@@ -255,7 +265,17 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#OBSERVACIONES_BITACORA").val("");
             }
 
-            $("#miModal_BITACORA").modal("show");
+            // $("#miModal_BITACORA").modal("show");
+
+            const modalElement = document.getElementById('miModal_BITACORA');
+
+            const modalBitacora = new bootstrap.Modal(modalElement, {
+                backdrop: 'static', 
+                keyboard: false     
+            });
+
+            modalBitacora.show();
+
             $('#miModal_BITACORA .modal-title').html(material.DESCRIPCION);
         },
 
