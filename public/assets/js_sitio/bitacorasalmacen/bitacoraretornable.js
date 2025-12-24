@@ -15,7 +15,6 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
    
 })
 
-
 var Tablabitacoraretornable = $("#Tablabitacoraretornable").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
@@ -224,7 +223,6 @@ $(document).on('click', '.editarMaterial', function () {
     });
 });
 
-
 $(document).on('click', '.visualizarMaterial', function () {
 
     ID_FORM_GLOBAL = $(this).data('id');
@@ -355,9 +353,6 @@ $(document).on('click', '.visualizarMaterial', function () {
     });
 });
 
-
-
-
 function cargarFirmaEnCanvas(canvas, ctx, base64) {
     let img = new Image();
     img.onload = function () {
@@ -454,7 +449,6 @@ $("#guardaBITACORA").click(function (e) {
 }
     
 });
-
 
 $('#RETORNO_BITACORA_RETORNABLE').on('change', function () {
     if ($(this).val() === '1') {   

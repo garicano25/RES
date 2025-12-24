@@ -175,7 +175,6 @@ $(document).on('click', '.editarMaterial', function () {
     });
 });
 
-
 $(document).on('click', '.visualizarMaterial', function () {
 
     ID_FORM_GLOBAL = $(this).data('id');
@@ -266,8 +265,6 @@ $(document).on('click', '.visualizarMaterial', function () {
     });
 });
 
-
-
 function cargarFirmaEnCanvas(canvas, ctx, base64) {
     let img = new Image();
     img.onload = function () {
@@ -276,7 +273,6 @@ function cargarFirmaEnCanvas(canvas, ctx, base64) {
     };
     img.src = base64;
 }
-
 
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();
