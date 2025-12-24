@@ -904,7 +904,85 @@ function cargarDaniosEnCanvas(json) {
     actualizar();
 }
 
-$('#miModal_BITACORA').modal({
-    backdrop: 'static',
-    keyboard: false
+
+
+let imagenesSeleccionadas = [];
+
+/* ===============================
+   MOSTRAR PREVIEW
+=============================== */
+function mostrarPreview(files) {
+
+    Array.from(files).forEach(file => {
+
+        if (!file.type.startsWith('image/')) return;
+
+        imagenesSeleccionadas.push(file);
+    });
+
+    renderPreview();
+}
+
+/* ===============================
+   RENDERIZAR IMÁGENES
+=============================== */
+function renderPreview() {
+
+    const preview = document.getElementById('previewImagenesBitacora');
+    preview.innerHTML = '';
+
+    imagenesSeleccionadas.forEach((file, index) => {
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            const col = document.createElement('div');
+            col.className = 'col-6 col-md-3 mb-3 position-relative';
+
+            col.innerHTML = `
+                <div class="card shadow-sm position-relative">
+                    
+                    <!-- BOTÓN ELIMINAR -->
+                    <button type="button"
+                            class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                            style="z-index: 10; border-radius: 50%;"
+                            onclick="eliminarImagen(${index})">
+                        ✕
+                    </button>
+
+                    <img src="${e.target.result}"
+                         class="img-fluid rounded"
+                         style="height:180px; object-fit:cover;">
+                </div>
+            `;
+
+            preview.appendChild(col);
+        };
+
+        reader.readAsDataURL(file);
+    });
+}
+
+/* ===============================
+   ELIMINAR IMAGEN
+=============================== */
+function eliminarImagen(index) {
+
+    imagenesSeleccionadas.splice(index, 1);
+    renderPreview();
+}
+
+/* ===============================
+   EVENTOS INPUTS
+=============================== */
+document.getElementById('inputCamara').addEventListener('change', function () {
+    mostrarPreview(this.files);
+    this.value = ''; 
 });
+
+document.getElementById('inputGaleria').addEventListener('change', function () {
+    mostrarPreview(this.files);
+    this.value = ''; 
+});
+

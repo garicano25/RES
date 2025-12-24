@@ -459,6 +459,10 @@
 
                                 <canvas id="canvasCarro" width="850" height="350" style="border:1px solid #ccc;"></canvas>
 
+
+
+
+
                                 <div style="margin-top:10px;">
                                     <button type="button" id="btnX" class="modo-btn activo">Marcar X</button>
                                     <button type="button" id="btnCirculo" class="modo-btn">Encerrar</button>
@@ -468,6 +472,42 @@
 
                                 <input type="hidden" name="DANIOS_UNIDAD_JSON" id="DANIOS_UNIDAD_JSON">
                             </div>
+
+
+                            <div class="col-12 mt-3 text-center">
+                                <label class="form-label fw-bold">Evidencias del vehículo</label>
+                                <br>
+
+                                <input type="file"
+                                    id="inputCamara"
+                                    accept="image/*"
+                                    capture="environment"
+                                    multiple
+                                    hidden>
+
+                                <input type="file"
+                                    id="inputGaleria"
+                                    accept="image/*"
+                                    multiple
+                                    hidden>
+
+                                <button type="button"
+                                    class="btn btn-success me-2"
+                                    onclick="document.getElementById('inputCamara').click()">
+                                    📷 Tomar foto
+                                </button>
+
+                                <button type="button"
+                                    class="btn btn-primary"
+                                    onclick="document.getElementById('inputGaleria').click()">
+                                    🖼️ Cargar imágenes
+                                </button>
+                            </div>
+
+                            <!-- PREVIEW -->
+                            <div id="previewImagenesBitacora" class="row mt-3"></div>
+
+
 
                             <div class="col-12 mt-2">
                                 <label class="form-label">Observaciones generales</label>
