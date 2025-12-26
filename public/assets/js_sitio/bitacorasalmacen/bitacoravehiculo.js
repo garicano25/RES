@@ -137,8 +137,6 @@ $(document).on('click', '.editarMaterial', function () {
     ID_INVENTARIO_GLOBAL = $(this).data('inventario');
 
 
-
-
     $.ajax({
         url: '/obtenerMaterialVehiculos',
         method: 'GET',
@@ -480,8 +478,6 @@ $(document).on('click', '.visualizarMaterial', function () {
                     }
                 });
                     
-            
-           
                 marcarRadio('TARJETA_CIRCULACION_VEHICULOS', material.TARJETA_CIRCULACION_VEHICULOS);
                 $('input[name="OBS_TARJETA_CIRCULACION_VEHICULOS"]').val(material.OBS_TARJETA_CIRCULACION_VEHICULOS || '');
                 marcarRadio('TENENCIA_VIGENTE_VEHICULOS', material.TENENCIA_VIGENTE_VEHICULOS);

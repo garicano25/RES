@@ -3,7 +3,6 @@ let ID_FORM_GLOBAL = null;
 let ID_INVENTARIO_GLOBAL = null;
 
 
-
 const Modalbitacora = document.getElementById('miModal_BITACORA')
 Modalbitacora.addEventListener('hidden.bs.modal', event => {
     
@@ -197,9 +196,7 @@ $(document).on('click', '.editarMaterial', function () {
                     $("#FIRMA_ENTREGADO_POR").val(material.FIRMA_ENTREGADO_POR);
                 }
 
-
-
-                    if (material.FIRMA_RETORNADO_POR) {
+                if (material.FIRMA_RETORNADO_POR) {
                     let img3 = new Image();
                     img3.onload = function () {
                         ctx3.drawImage(img3, 0, 0, canvas3.width, canvas3.height);
@@ -216,11 +213,6 @@ $(document).on('click', '.editarMaterial', function () {
                     img4.src = material.FIRMA_ACEPTADO_POR;
                     $("#FIRMA_ACEPTADO_POR").val(material.FIRMA_ACEPTADO_POR);
                 }
-
-
-
-
-
 
             } else {
                 $("#ID_BITACORAS_ALMACEN").val(0);
@@ -341,8 +333,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 }
 
 
-
-                    if (material.FIRMA_RETORNADO_POR) {
+                if (material.FIRMA_RETORNADO_POR) {
                     let img3 = new Image();
                     img3.onload = function () {
                         ctx3.drawImage(img3, 0, 0, canvas3.width, canvas3.height);
@@ -359,10 +350,6 @@ $(document).on('click', '.visualizarMaterial', function () {
                     img4.src = material.FIRMA_ACEPTADO_POR;
                     $("#FIRMA_ACEPTADO_POR").val(material.FIRMA_ACEPTADO_POR);
                 }
-
-
-
-
 
 
             } else {
@@ -582,7 +569,6 @@ $("#guardaBITACORA").click(function (e) {
     }
 });
 
-
 $('#RETORNO_BITACORA_RETORNABLE').on('change', function () {
     if ($(this).val() === '1') {   
         $('#RETORNO_EQUIPO').show();
@@ -590,7 +576,6 @@ $('#RETORNO_BITACORA_RETORNABLE').on('change', function () {
         $('#RETORNO_EQUIPO').hide();
     }
 });
-
 
 
 ///////// CARGAR IMAGENES  
