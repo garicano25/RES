@@ -35,7 +35,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_EMPRESA = 0;
     document.getElementById('formularioEMPRESA').reset();
 
-    $('#miModal_EMPRESA .modal-title').html('Cliente');
+    $('#miModal_EMPRESA .modal-title').html('Información empresa');
 
 });
 

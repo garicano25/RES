@@ -608,7 +608,7 @@
 
 
     @if(request()->is('informacionempresa'))
-    <script src="/assets/js_sitio/informacionempresa/empresainformacion.js"></script>
+    <script src="/assets/js_sitio/informacionempresa/empresainformacion.js?v=1.0"></script>
     @endif
 
     @if(request()->is('organigrama'))
