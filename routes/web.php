@@ -988,9 +988,8 @@ Route::get('/Tablabitacoravehiculos', [bitacoravehiculosController::class, 'Tabl
 Route::get('/obtenerMaterialVehiculos', [bitacoravehiculosController::class, 'obtenerMaterialVehiculos']);
 Route::post('/BitacoraVehiculoSave', [bitacoravehiculosController::class, 'store']);
 Route::get('/obtenerDatosInventarioVehiculo',[bitacoravehiculosController::class, 'obtenerDatosInventarioVehiculo']);
-
-
-
+Route::get( '/obtenerImagenesBitacora',[bitacoravehiculosController::class, 'obtenerImagenesBitacora'])->name('bitacora.obtenerImagenes');
+Route::get('/bitacora/vehiculo/imagen/{id}', [bitacoravehiculosController::class, 'mostrarImagenBitacora'] )->name('bitacora.mostrarImagen');
 
 /// ASIGNACION
 

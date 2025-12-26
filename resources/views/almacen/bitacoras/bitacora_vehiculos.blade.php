@@ -474,7 +474,7 @@
                             </div>
 
 
-                            <div class="col-12 mt-3 text-center">
+                            <div class="col-12 mt-4 text-center">
                                 <label class="form-label fw-bold">Evidencias del vehículo</label>
                                 <br>
 
@@ -494,19 +494,29 @@
                                 <button type="button"
                                     class="btn btn-success me-2"
                                     onclick="document.getElementById('inputCamara').click()">
-                                    📷 Tomar foto
+                                    Tomar foto
                                 </button>
 
                                 <button type="button"
                                     class="btn btn-primary"
                                     onclick="document.getElementById('inputGaleria').click()">
-                                    🖼️ Cargar imágenes
+                                    Cargar imágenes
                                 </button>
                             </div>
 
-                            <!-- PREVIEW -->
                             <div id="previewImagenesBitacora" class="row mt-3"></div>
 
+
+                            <input type="file"
+                                name="IMAGENES_BITACORA[]"
+
+                                multiple
+                                accept="image/*"
+                                hidden>
+
+                           
+
+                            <div id="contenedorImagenesHidden" style="display:none;"></div>
 
 
                             <div class="col-12 mt-2">

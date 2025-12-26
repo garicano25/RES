@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Artisan;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 use DB;
 
@@ -19,6 +20,9 @@ use App\Models\recempleados\recemplaedosModel;
 use App\Models\usuario\usuarioModel;
 use App\Models\bitacorasalmacen\bitacoraModel;
 use App\Models\contratacion\contratacionModel;
+
+use App\Models\bitacorasalmacen\imagenebitacoraalmacen;
+
 
 class bitacoravehiculosController extends Controller
 {
@@ -383,6 +387,31 @@ class bitacoravehiculosController extends Controller
     }
 
 
+    public function mostrarImagenBitacora($id)
+    {
+        $imagen = imagenebitacoraalmacen::where('ID_IMAGENES_BITACORASALMACEN', $id)
+            ->where('ACTIVO', 1)
+            ->firstOrFail();
+
+        if (!Storage::exists($imagen->RUTA_FOTOS)) {
+            abort(404);
+        }
+
+        return Storage::response($imagen->RUTA_FOTOS);
+    }
+
+    public function obtenerImagenesBitacora(Request $request)
+    {
+        $imagenes = imagenebitacoraalmacen::where('RECEMPLEADO_ID', $request->RECEMPLEADO_ID)
+            ->where('INVENTARIO_ID', $request->INVENTARIO_ID)
+            ->where('ACTIVO', 1)
+            ->get([
+                'ID_IMAGENES_BITACORASALMACEN'
+            ]);
+
+        return response()->json($imagenes);
+    }
+
 
 
     public function obtenerDatosInventarioVehiculo(Request $request)
@@ -616,47 +645,199 @@ class bitacoravehiculosController extends Controller
 
 
 
+
+
+    // public function store(Request $request)
+    // {
+    //     try {
+
+    //         switch (intval($request->api)) {
+
+    //             case 1:
+
+
+
+    //                 if ($request->ID_BITACORAS_ALMACEN == 0) {
+
+    //                     DB::statement('ALTER TABLE bitacorasalmacen AUTO_INCREMENT=1;');
+    //                     $bitacoras = bitacoraModel::create($request->all());
+    //                 } else {
+
+    //                     if (isset($request->ELIMINAR)) {
+
+    //                         if ($request->ELIMINAR == 1) {
+
+    //                             bitacoraModel::where('ID_BITACORAS_ALMACEN', $request->ID_BITACORAS_ALMACEN)
+    //                                 ->update(['ACTIVO' => 0]);
+
+    //                             return response()->json([
+    //                                 'code' => 1,
+    //                                 'bitacora' => 'Desactivada'
+    //                             ]);
+    //                         } else {
+
+    //                             bitacoraModel::where('ID_BITACORAS_ALMACEN', $request->ID_BITACORAS_ALMACEN)
+    //                                 ->update(['ACTIVO' => 1]);
+
+    //                             return response()->json([
+    //                                 'code' => 1,
+    //                                 'bitacora' => 'Activada'
+    //                             ]);
+    //                         }
+    //                     } else {
+
+    //                         $bitacoras = bitacoraModel::find($request->ID_BITACORAS_ALMACEN);
+    //                         $bitacoras->update($request->all());
+    //                     }
+    //                 }
+
+
+
+    //                 if ($request->hasFile('IMAGENES_BITACORA')) {
+
+    //                     foreach ($request->file('IMAGENES_BITACORA') as $index => $imagen) {
+
+    //                         if (!$imagen->isValid()) continue;
+
+    //                         $folder = "Bitácora_vehículos/{$request->RECEMPLEADO_ID}/{$request->INVENTARIO_ID}";
+
+    //                         $filename = 'img_' . time() . '_' . $index . '.' . $imagen->getClientOriginalExtension();
+
+    //                         $path = $imagen->storeAs($folder, $filename);
+
+    //                         DB::table('imagenes_bitacorasalmacen')->insert([
+    //                             'RECEMPLEADO_ID' => $request->RECEMPLEADO_ID,
+    //                             'INVENTARIO_ID'  => $request->INVENTARIO_ID,
+    //                             'RUTA_FOTOS'     => $path,
+    //                             'ACTIVO'         => 1,
+    //                             'created_at'     => now(),
+    //                             'updated_at'     => now(),
+    //                         ]);
+    //                     }
+    //                 }
+
+    //                 return response()->json([
+    //                     'code' => 1,
+    //                     'bitacora' => 'Guardada correctamente'
+    //                 ]);
+
+    //             default:
+
+    //                 return response()->json([
+    //                     'code' => 0,
+    //                     'msj' => 'Api no encontrada'
+    //                 ]);
+    //         }
+    //     } catch (\Exception $e) {
+
+    //         return response()->json([
+    //             'code' => 0,
+    //             'error' => $e->getMessage()
+    //         ], 500);
+    //     }
+    // }
+
+
+
+
+
     public function store(Request $request)
     {
         try {
+
             switch (intval($request->api)) {
+
                 case 1:
+
                     if ($request->ID_BITACORAS_ALMACEN == 0) {
+
                         DB::statement('ALTER TABLE bitacorasalmacen AUTO_INCREMENT=1;');
                         $bitacoras = bitacoraModel::create($request->all());
                     } else {
+
                         if (isset($request->ELIMINAR)) {
+
                             if ($request->ELIMINAR == 1) {
-                                $bitacoras = bitacoraModel::where('ID_BITACORAS_ALMACEN', $request['ID_BITACORAS_ALMACEN'])->update(['ACTIVO' => 0]);
-                                $response['code'] = 1;
-                                $response['bitacora'] = 'Desactivada';
+
+                                bitacoraModel::where('ID_BITACORAS_ALMACEN', $request->ID_BITACORAS_ALMACEN)
+                                    ->update(['ACTIVO' => 0]);
+
+                                return response()->json([
+                                    'code' => 1,
+                                    'bitacora' => 'Desactivada'
+                                ]);
                             } else {
-                                $bitacoras = bitacoraModel::where('ID_BITACORAS_ALMACEN', $request['ID_BITACORAS_ALMACEN'])->update(['ACTIVO' => 1]);
-                                $response['code'] = 1;
-                                $response['bitacora'] = 'Activada';
+
+                                bitacoraModel::where('ID_BITACORAS_ALMACEN', $request->ID_BITACORAS_ALMACEN)
+                                    ->update(['ACTIVO' => 1]);
+
+                                return response()->json([
+                                    'code' => 1,
+                                    'bitacora' => 'Activada'
+                                ]);
                             }
                         } else {
+
                             $bitacoras = bitacoraModel::find($request->ID_BITACORAS_ALMACEN);
                             $bitacoras->update($request->all());
-                            $response['code'] = 1;
-                            $response['bitacora'] = 'Actualizada';
                         }
-                        return response()->json($response);
                     }
-                    $response['code']  = 1;
-                    $response['bitacora']  = $bitacoras;
-                    return response()->json($response);
-                    break;
+
+                    if ($request->hasFile('IMAGENES_BITACORA')) {
+
+                        foreach ($request->file('IMAGENES_BITACORA') as $index => $imagen) {
+
+                            if (!$imagen->isValid()) continue;
+
+                            $folder = "Bitácora_vehículos/{$request->RECEMPLEADO_ID}/{$request->INVENTARIO_ID}";
+                            $filename = 'img_' . time() . '_' . $index . '.' . $imagen->getClientOriginalExtension();
+                            $path = $imagen->storeAs($folder, $filename);
+
+                            DB::table('imagenes_bitacorasalmacen')->insert([
+                                'RECEMPLEADO_ID' => $request->RECEMPLEADO_ID,
+                                'INVENTARIO_ID'  => $request->INVENTARIO_ID,
+                                'RUTA_FOTOS'     => $path,
+                                'ACTIVO'         => 1,
+                                'created_at'     => now(),
+                                'updated_at'     => now(),
+                            ]);
+                        }
+                    }
+
+                   
+                    if ($request->has('IMAGENES_ELIMINADAS')) {
+
+                        DB::table('imagenes_bitacorasalmacen')
+                            ->whereIn(
+                                'ID_IMAGENES_BITACORASALMACEN',
+                                $request->IMAGENES_ELIMINADAS
+                            )
+                            ->update([
+                                'ACTIVO' => 0,
+                                'updated_at' => now()
+                            ]);
+                    }
+
+                    return response()->json([
+                        'code' => 1,
+                        'bitacora' => 'Guardada correctamente'
+                    ]);
+
                 default:
-                    $response['code']  = 1;
-                    $response['msj']  = 'Api no encontrada';
-                    return response()->json($response);
+
+                    return response()->json([
+                        'code' => 0,
+                        'msj' => 'Api no encontrada'
+                    ]);
             }
-        } catch (Exception $e) {
-            return response()->json('Error al guardar ');
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'code' => 0,
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
-
 
 
 
