@@ -674,171 +674,6 @@ function marcarRadio(nombre, valor) {
     }
 }
 
-// $("#guardaBITACORA").click(function (e) {
-//     e.preventDefault();
-
-//     formularioValido = validarFormulario3($('#formularioBITACORA'))
-
-//     if (formularioValido) {
-
-      
-//         if (ID_BITACORAS_ALMACEN == 0) {
-
-//             alertMensajeConfirm({
-//                 title: "¿Desea guardar la información?",
-//                 text: "Al guardarla, se podra usar",
-//                 icon: "question",
-//             }, async function () {
-
-//                 await loaderbtn('guardaBITACORA')
-
-             
-//                 $('#contenedorImagenesHidden').empty();
-
-//                 imagenesSeleccionadas.forEach(file => {
-
-//                     const dataTransfer = new DataTransfer();
-//                     dataTransfer.items.add(file);
-
-//                     const input = document.createElement('input');
-//                     input.type = 'file';
-//                     input.name = 'IMAGENES_BITACORA[]';
-//                     input.files = dataTransfer.files;
-
-//                     document.getElementById('contenedorImagenesHidden').appendChild(input);
-//                 });
-
-//                 await ajaxAwaitFormData(
-//                     {
-//                         api: 1,
-//                         ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,
-//                         RECEMPLEADO_ID: ID_FORM_GLOBAL,
-//                         INVENTARIO_ID: ID_INVENTARIO_GLOBAL
-//                     },
-//                     'BitacoraVehiculoSave',
-//                     'formularioBITACORA',
-//                     'guardaBITACORA',
-//                     { callbackAfter: true, callbackBefore: true },
-//                     () => {
-
-//                         Swal.fire({
-//                             icon: 'info',
-//                             title: 'Espere un momento',
-//                             text: 'Estamos guardando la información',
-//                             showConfirmButton: false
-//                         })
-
-//                         $('.swal2-popup').addClass('ld ld-breath')
-
-//                     },
-//                     function (data) {
-
-//                         ID_BITACORAS_ALMACEN = data.bitacora.ID_BITACORAS_ALMACEN
-
-//                         imagenesSeleccionadas = [];
-//                         $('#previewImagenesBitacora').empty();
-//                         $('#contenedorImagenesHidden').empty();
-
-//                         alertMensaje(
-//                             'success',
-//                             'Información guardada correctamente',
-//                             'Esta información esta lista para usarse',
-//                             null,
-//                             null,
-//                             1500
-//                         )
-
-//                         $('#miModal_BITACORA').modal('hide')
-//                         document.getElementById('formularioBITACORA').reset();
-//                         Tablabitacoravehiculos.ajax.reload()
-//                     }
-//                 )
-
-//             }, 1)
-
-
-//         } else {
-
-//             alertMensajeConfirm({
-//                 title: "¿Desea editar la información de este formulario?",
-//                 text: "Al guardarla, se podra usar",
-//                 icon: "question",
-//             }, async function () {
-
-//                 await loaderbtn('guardaBITACORA')
-
-             
-//                 $('#contenedorImagenesHidden').empty();
-
-//                 imagenesSeleccionadas.forEach(file => {
-
-//                     const dataTransfer = new DataTransfer();
-//                     dataTransfer.items.add(file);
-
-//                     const input = document.createElement('input');
-//                     input.type = 'file';
-//                     input.name = 'IMAGENES_BITACORA[]';
-//                     input.files = dataTransfer.files;
-
-//                     document.getElementById('contenedorImagenesHidden').appendChild(input);
-//                 });
-
-//                 await ajaxAwaitFormData(
-//                     {
-//                         api: 1,
-//                         ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,
-//                         RECEMPLEADO_ID: ID_FORM_GLOBAL,
-//                         INVENTARIO_ID: ID_INVENTARIO_GLOBAL
-//                     },
-//                     'BitacoraVehiculoSave',
-//                     'formularioBITACORA',
-//                     'guardaBITACORA',
-//                     { callbackAfter: true, callbackBefore: true },
-//                     () => {
-
-//                         Swal.fire({
-//                             icon: 'info',
-//                             title: 'Espere un momento',
-//                             text: 'Estamos guardando la información',
-//                             showConfirmButton: false
-//                         })
-
-//                         $('.swal2-popup').addClass('ld ld-breath')
-
-//                     },
-//                     function (data) {
-
-//                         setTimeout(() => {
-
-//                             ID_BITACORAS_ALMACEN = data.bitacora.ID_BITACORAS_ALMACEN
-
-//                             imagenesSeleccionadas = [];
-//                             $('#previewImagenesBitacora').empty();
-//                             $('#contenedorImagenesHidden').empty();
-
-//                             alertMensaje(
-//                                 'success',
-//                                 'Información editada correctamente',
-//                                 'Información guardada'
-//                             )
-
-//                             $('#miModal_BITACORA').modal('hide')
-//                             document.getElementById('formularioBITACORA').reset();
-//                             Tablabitacoravehiculos.ajax.reload()
-
-//                         }, 300);
-
-//                     }
-//                 )
-
-//             }, 1)
-//         }
-
-//     } else {
-//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
-//     }
-// });
-
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();
 
@@ -1240,12 +1075,6 @@ function renderImagenNueva(file, index) {
     reader.readAsDataURL(file);
 }
 
-
-
-
-/* ===============================
-   EVENTOS INPUTS
-=============================== */
 document.getElementById('inputCamara').addEventListener('change', function () {
     mostrarPreview(this.files);
     this.value = ''; 
@@ -1255,10 +1084,6 @@ document.getElementById('inputGaleria').addEventListener('change', function () {
     mostrarPreview(this.files);
     this.value = ''; 
 });
-
-
-
-
 
 function cargarImagenesGuardadas(recId, inventarioId) {
 
@@ -1305,10 +1130,6 @@ function cargarImagenesGuardadas(recId, inventarioId) {
     });
 }
 
-
-
-
-
 function eliminarImagenDOM(btn) {
 
     const col = btn.closest('.col-6');
@@ -1328,8 +1149,6 @@ function eliminarImagenDOM(btn) {
 
     col.remove();
 }
-
-
 
 function cargarImagenesGuardadasVisualizar(recId, inventarioId) {
 

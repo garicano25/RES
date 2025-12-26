@@ -153,6 +153,49 @@
                             </div>
 
 
+                            <div class="col-12 mt-4 text-center">
+                                <label class="form-label fw-bold">Evidencias del artículo</label>
+                                <br>
+
+                                <input type="file"
+                                    id="inputCamara"
+                                    accept="image/*"
+                                    capture="environment"
+                                    multiple
+                                    hidden>
+
+                                <input type="file"
+                                    id="inputGaleria"
+                                    accept="image/*"
+                                    multiple
+                                    hidden>
+
+                                <button type="button"
+                                    class="btn btn-success me-2"
+                                    onclick="document.getElementById('inputCamara').click()">
+                                    Tomar foto
+                                </button>
+
+                                <button type="button"
+                                    class="btn btn-primary"
+                                    onclick="document.getElementById('inputGaleria').click()">
+                                    Cargar imágenes
+                                </button>
+                            </div>
+
+                            <div id="previewImagenesBitacora" class="row mt-3"></div>
+
+
+                            <input type="file"
+                                name="IMAGENES_BITACORA[]"
+
+                                multiple
+                                accept="image/*"
+                                hidden>
+
+                            <div id="contenedorImagenesHidden" style="display:none;"></div>
+
+
                             <div class="col-12 mt-3">
                                 <div class="form-group">
                                     <label for="RETORNO_LABEL">
@@ -167,7 +210,7 @@
                                     </select>
                                 </div>
                             </div>
-
+                    
                             <div class="col-12" id="RETORNO_EQUIPO" style="display: none;">
 
                                 <div class="col-12 mt-3">

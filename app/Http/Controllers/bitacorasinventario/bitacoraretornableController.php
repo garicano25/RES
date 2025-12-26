@@ -512,49 +512,101 @@ class bitacoraretornableController extends Controller
 
 
 
-
-
     public function store(Request $request)
     {
         try {
+
             switch (intval($request->api)) {
+
                 case 1:
+
                     if ($request->ID_BITACORAS_ALMACEN == 0) {
+
                         DB::statement('ALTER TABLE bitacorasalmacen AUTO_INCREMENT=1;');
                         $bitacoras = bitacoraModel::create($request->all());
                     } else {
+
                         if (isset($request->ELIMINAR)) {
+
                             if ($request->ELIMINAR == 1) {
-                                $bitacoras = bitacoraModel::where('ID_BITACORAS_ALMACEN', $request['ID_BITACORAS_ALMACEN'])->update(['ACTIVO' => 0]);
-                                $response['code'] = 1;
-                                $response['bitacora'] = 'Desactivada';
+
+                                bitacoraModel::where('ID_BITACORAS_ALMACEN', $request->ID_BITACORAS_ALMACEN)
+                                    ->update(['ACTIVO' => 0]);
+
+                                return response()->json([
+                                    'code' => 1,
+                                    'bitacora' => 'Desactivada'
+                                ]);
                             } else {
-                                $bitacoras = bitacoraModel::where('ID_BITACORAS_ALMACEN', $request['ID_BITACORAS_ALMACEN'])->update(['ACTIVO' => 1]);
-                                $response['code'] = 1;
-                                $response['bitacora'] = 'Activada';
+
+                                bitacoraModel::where('ID_BITACORAS_ALMACEN', $request->ID_BITACORAS_ALMACEN)
+                                    ->update(['ACTIVO' => 1]);
+
+                                return response()->json([
+                                    'code' => 1,
+                                    'bitacora' => 'Activada'
+                                ]);
                             }
                         } else {
+
                             $bitacoras = bitacoraModel::find($request->ID_BITACORAS_ALMACEN);
                             $bitacoras->update($request->all());
-                            $response['code'] = 1;
-                            $response['bitacora'] = 'Actualizada';
                         }
-                        return response()->json($response);
                     }
-                    $response['code']  = 1;
-                    $response['bitacora']  = $bitacoras;
-                    return response()->json($response);
-                    break;
+
+                    if ($request->hasFile('IMAGENES_BITACORA')) {
+
+                        foreach ($request->file('IMAGENES_BITACORA') as $index => $imagen) {
+
+                            if (!$imagen->isValid()) continue;
+
+                            $folder = "Bitácora_retornable/{$request->RECEMPLEADO_ID}/{$request->INVENTARIO_ID}";
+                            $filename = 'img_' . time() . '_' . $index . '.' . $imagen->getClientOriginalExtension();
+                            $path = $imagen->storeAs($folder, $filename);
+
+                            DB::table('imagenes_bitacorasalmacen')->insert([
+                                'RECEMPLEADO_ID' => $request->RECEMPLEADO_ID,
+                                'INVENTARIO_ID'  => $request->INVENTARIO_ID,
+                                'RUTA_FOTOS'     => $path,
+                                'ACTIVO'         => 1,
+                                'created_at'     => now(),
+                                'updated_at'     => now(),
+                            ]);
+                        }
+                    }
+
+
+                    if ($request->has('IMAGENES_ELIMINADAS')) {
+
+                        DB::table('imagenes_bitacorasalmacen')
+                            ->whereIn(
+                                'ID_IMAGENES_BITACORASALMACEN',
+                                $request->IMAGENES_ELIMINADAS
+                            )
+                            ->update([
+                                'ACTIVO' => 0,
+                                'updated_at' => now()
+                            ]);
+                    }
+
+                    return response()->json([
+                        'code' => 1,
+                        'bitacora' => 'Guardada correctamente'
+                    ]);
+
                 default:
-                    $response['code']  = 1;
-                    $response['msj']  = 'Api no encontrada';
-                    return response()->json($response);
+
+                    return response()->json([
+                        'code' => 0,
+                        'msj' => 'Api no encontrada'
+                    ]);
             }
-        } catch (Exception $e) {
-            return response()->json('Error al guardar ');
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'code' => 0,
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
-
-    
-
 }

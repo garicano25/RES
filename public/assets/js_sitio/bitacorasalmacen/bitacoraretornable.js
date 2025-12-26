@@ -13,6 +13,18 @@ Modalbitacora.addEventListener('hidden.bs.modal', event => {
     $("#RETORNO_EQUIPO").hide();
     $("#guardaBITACORA").show();
    
+
+      
+    if (typeof imagenesSeleccionadas !== "undefined") {
+        imagenesSeleccionadas = [];
+    }
+
+    $('#previewImagenesBitacora').empty();
+    $('#contenedorImagenesHidden').empty();
+
+    $('#inputCamara').val('');
+    $('#inputGaleria').val('');
+
 })
 
 var Tablabitacoraretornable = $("#Tablabitacoraretornable").DataTable({
@@ -148,6 +160,9 @@ $(document).on('click', '.editarMaterial', function () {
 
             if (material.YA_GUARDADO) {
 
+                cargarImagenesGuardadas(ID_FORM_GLOBAL,ID_INVENTARIO_GLOBAL);
+
+                
                 $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
@@ -287,6 +302,10 @@ $(document).on('click', '.visualizarMaterial', function () {
 
             if (material.YA_GUARDADO) {
 
+
+                cargarImagenesGuardadasVisualizar(ID_FORM_GLOBAL,ID_INVENTARIO_GLOBAL);
+
+                
                 $("#ID_BITACORAS_ALMACEN").val(material.ID_BITACORAS_ALMACEN);
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
@@ -383,90 +402,186 @@ function cargarFirmaEnCanvas(canvas, ctx, base64) {
 $("#guardaBITACORA").click(function (e) {
     e.preventDefault();
 
-        formularioValido = validarFormulario3($('#formularioBITACORA'))
+    formularioValido = validarFormulario3($('#formularioBITACORA'))
 
     if (formularioValido) {
 
-    if (ID_BITACORAS_ALMACEN == 0) {
-        
-        alertMensajeConfirm({
-            title: "¿Desea guardar la información?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+        if (ID_BITACORAS_ALMACEN == 0) {
 
-            await loaderbtn('guardaBITACORA')
-            await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraRetornableSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {
-        
-               
-
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
-
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-
-                    ID_BITACORAS_ALMACEN = data.bitacora.ID_BITACORAS_ALMACEN
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_BITACORA').modal('hide')
-                    document.getElementById('formularioBITACORA').reset();
-                    Tablabitacoraretornable.ajax.reload()
-                
-            })
-            
-            
-            
-        }, 1)
-        
-    } else {
             alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
-            text: "Al guardarla, se podra usar",
-            icon: "question",
-        },async function () { 
+                title: "¿Desea guardar la información?",
+                text: "Al guardarla, se podra usar",
+                icon: "question",
+            }, async function () {
 
-            await loaderbtn('guardaBITACORA')
-                 await ajaxAwaitFormData({ api: 1, ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,RECEMPLEADO_ID:ID_FORM_GLOBAL,INVENTARIO_ID: ID_INVENTARIO_GLOBAL}, 'BitacoraRetornableSave', 'formularioBITACORA', 'guardaBITACORA', { callbackAfter: true, callbackBefore: true }, () => {        
-                Swal.fire({
-                    icon: 'info',
-                    title: 'Espere un momento',
-                    text: 'Estamos guardando la información',
-                    showConfirmButton: false
-                })
+                await loaderbtn('guardaBITACORA')
 
-                $('.swal2-popup').addClass('ld ld-breath')
-        
-                
-            }, function (data) {
-                    
-                setTimeout(() => {
+            
+                $('#contenedorImagenesHidden').empty();
 
-                    
-                    ID_BITACORAS_ALMACEN = data.bitacora.ID_BITACORAS_ALMACEN
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
-                    $('#miModal_BITACORA').modal('hide')
-                    document.getElementById('formularioBITACORA').reset();
-                    Tablabitacoraretornable.ajax.reload()
+                imagenesSeleccionadas.forEach(file => {
 
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
 
-                }, 300);  
-            })
-        }, 1)
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.name = 'IMAGENES_BITACORA[]';
+                    input.files = dataTransfer.files;
+
+                    document.getElementById('contenedorImagenesHidden').appendChild(input);
+                });
+
+              
+                imagenesEliminadas.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'IMAGENES_ELIMINADAS[]';
+                    input.value = id;
+                    document.getElementById('contenedorImagenesHidden').appendChild(input);
+                });
+
+                await ajaxAwaitFormData(
+                    {
+                        api: 1,
+                        ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,
+                        RECEMPLEADO_ID: ID_FORM_GLOBAL,
+                        INVENTARIO_ID: ID_INVENTARIO_GLOBAL
+                    },
+                    'BitacoraRetornableSave',
+                    'formularioBITACORA',
+                    'guardaBITACORA',
+                    { callbackAfter: true, callbackBefore: true },
+                    () => {
+
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Espere un momento',
+                            text: 'Estamos guardando la información',
+                            showConfirmButton: false
+                        })
+
+                        $('.swal2-popup').addClass('ld ld-breath')
+
+                    },
+                    function (data) {
+
+                        ID_BITACORAS_ALMACEN = data.bitacora.ID_BITACORAS_ALMACEN
+
+                        imagenesSeleccionadas = [];
+                        imagenesEliminadas = [];
+                        $('#previewImagenesBitacora').empty();
+                        $('#contenedorImagenesHidden').empty();
+
+                        alertMensaje(
+                            'success',
+                            'Información guardada correctamente',
+                            'Esta información esta lista para usarse',
+                            null,
+                            null,
+                            1500
+                        )
+
+                        $('#miModal_BITACORA').modal('hide')
+                        document.getElementById('formularioBITACORA').reset();
+                        Tablabitacoravehiculos.ajax.reload()
+                    }
+                )
+
+            }, 1)
+
+        } else {
+
+            alertMensajeConfirm({
+                title: "¿Desea editar la información de este formulario?",
+                text: "Al guardarla, se podra usar",
+                icon: "question",
+            }, async function () {
+
+                await loaderbtn('guardaBITACORA')
+
+              
+                $('#contenedorImagenesHidden').empty();
+
+                imagenesSeleccionadas.forEach(file => {
+
+                    const dataTransfer = new DataTransfer();
+                    dataTransfer.items.add(file);
+
+                    const input = document.createElement('input');
+                    input.type = 'file';
+                    input.name = 'IMAGENES_BITACORA[]';
+                    input.files = dataTransfer.files;
+
+                    document.getElementById('contenedorImagenesHidden').appendChild(input);
+                });
+
+               
+                imagenesEliminadas.forEach(id => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = 'IMAGENES_ELIMINADAS[]';
+                    input.value = id;
+                    document.getElementById('contenedorImagenesHidden').appendChild(input);
+                });
+
+                await ajaxAwaitFormData(
+                    {
+                        api: 1,
+                        ID_BITACORAS_ALMACEN: ID_BITACORAS_ALMACEN,
+                        RECEMPLEADO_ID: ID_FORM_GLOBAL,
+                        INVENTARIO_ID: ID_INVENTARIO_GLOBAL
+                    },
+                    'BitacoraRetornableSave',
+                    'formularioBITACORA',
+                    'guardaBITACORA',
+                    { callbackAfter: true, callbackBefore: true },
+                    () => {
+
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Espere un momento',
+                            text: 'Estamos guardando la información',
+                            showConfirmButton: false
+                        })
+
+                        $('.swal2-popup').addClass('ld ld-breath')
+
+                    },
+                    function (data) {
+
+                        setTimeout(() => {
+
+                            ID_BITACORAS_ALMACEN = data.bitacora.ID_BITACORAS_ALMACEN
+
+                            imagenesSeleccionadas = [];
+                            imagenesEliminadas = [];
+                            $('#previewImagenesBitacora').empty();
+                            $('#contenedorImagenesHidden').empty();
+
+                            alertMensaje(
+                                'success',
+                                'Información editada correctamente',
+                                'Información guardada'
+                            )
+
+                            $('#miModal_BITACORA').modal('hide')
+                            document.getElementById('formularioBITACORA').reset();
+                            Tablabitacoravehiculos.ajax.reload()
+
+                        }, 300);
+
+                    }
+                )
+
+            }, 1)
+        }
+
+    } else {
+        alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
     }
-
-} else {
-    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
-
-}
-    
 });
+
 
 $('#RETORNO_BITACORA_RETORNABLE').on('change', function () {
     if ($(this).val() === '1') {   
@@ -477,3 +592,168 @@ $('#RETORNO_BITACORA_RETORNABLE').on('change', function () {
 });
 
 
+
+///////// CARGAR IMAGENES  
+
+let imagenesGuardadas = []; 
+let imagenesSeleccionadas = []; 
+let imagenesEliminadas = [];
+
+function mostrarPreview(files) {
+
+    Array.from(files).forEach(file => {
+        if (!file.type.startsWith('image/')) return;
+
+        imagenesSeleccionadas.push(file);
+        renderImagenNueva(file, imagenesSeleccionadas.length - 1);
+    });
+}
+
+function renderImagenNueva(file, index) {
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        const preview = document.getElementById('previewImagenesBitacora');
+
+        const col = document.createElement('div');
+        col.className = 'col-6 col-md-3 mb-3';
+        col.dataset.index = index; 
+
+        col.innerHTML = `
+            <div class="card shadow-sm position-relative">
+
+                <button type="button"
+                    class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                    style="z-index:10;border-radius:50%;"
+                    onclick="eliminarImagenDOM(this)">
+                    ✕
+                </button>
+
+                <div style="height:180px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
+                    <img src="${e.target.result}"
+                         style="height:100%;width:100%;object-fit:contain;background:#fff;">
+                </div>
+
+                <div class="text-center mt-2 mb-2">
+                    <a class="btn btn-outline-primary btn-sm"
+                       href="${e.target.result}"
+                       download>
+                       ⬇️ Descargar
+                    </a>
+                </div>
+            </div>
+        `;
+
+        preview.appendChild(col);
+    };
+
+    reader.readAsDataURL(file);
+}
+
+document.getElementById('inputCamara').addEventListener('change', function () {
+    mostrarPreview(this.files);
+    this.value = ''; 
+});
+
+document.getElementById('inputGaleria').addEventListener('change', function () {
+    mostrarPreview(this.files);
+    this.value = ''; 
+});
+
+function cargarImagenesGuardadas(recId, inventarioId) {
+
+    $.get('/obtenerImagenesBitacora', {
+        RECEMPLEADO_ID: recId,
+        INVENTARIO_ID: inventarioId
+    }, function (imagenes) {
+
+        const preview = document.getElementById('previewImagenesBitacora');
+
+        imagenes.forEach(img => {
+
+            const col = document.createElement('div');
+            col.className = 'col-6 col-md-3 mb-3';
+            col.dataset.guardada = "1"; 
+
+            col.innerHTML = `
+                <div class="card shadow-sm position-relative">
+
+                    <button type="button"
+                        class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
+                        style="z-index:10;border-radius:50%;"
+                        onclick="eliminarImagenDOM(this)">
+                        ✕
+                    </button>
+
+                    <div style="height:180px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
+                        <img src="/bitacora/vehiculo/imagen/${img.ID_IMAGENES_BITACORASALMACEN}"
+                             style="height:100%;width:100%;object-fit:contain;background:#fff;">
+                    </div>
+
+                    <div class="text-center mt-2 mb-2">
+                        <a class="btn btn-outline-primary btn-sm"
+                           href="/bitacora/vehiculo/imagen/${img.ID_IMAGENES_BITACORASALMACEN}"
+                           download>
+                           ⬇️ Descargar
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            preview.appendChild(col);
+        });
+    });
+}
+
+function eliminarImagenDOM(btn) {
+
+    const col = btn.closest('.col-6');
+
+    // Imagen NUEVA
+    if (col.dataset.index !== undefined) {
+        const index = parseInt(col.dataset.index);
+        imagenesSeleccionadas.splice(index, 1);
+    }
+
+    // Imagen GUARDADA
+    if (col.dataset.guardada === "1") {
+        const img = col.querySelector('img');
+        const id = img.getAttribute('src').split('/').pop();
+        imagenesEliminadas.push(id);
+    }
+
+    col.remove();
+}
+
+function cargarImagenesGuardadasVisualizar(recId, inventarioId) {
+
+    $.get('/obtenerImagenesBitacora', {
+        RECEMPLEADO_ID: recId,
+        INVENTARIO_ID: inventarioId
+    }, function (imagenes) {
+
+        const preview = document.getElementById('previewImagenesBitacora');
+
+        imagenes.forEach(img => {
+
+            const col = document.createElement('div');
+            col.className = 'col-6 col-md-3 mb-3';
+            col.dataset.guardada = "1"; 
+
+            col.innerHTML = `
+                <div class="card shadow-sm position-relative">
+
+               
+                    <div style="height:180px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
+                        <img src="/bitacora/vehiculo/imagen/${img.ID_IMAGENES_BITACORASALMACEN}"
+                             style="height:100%;width:100%;object-fit:contain;background:#fff;">
+                    </div>
+                </div>
+            `;
+
+            preview.appendChild(col);
+        });
+    });
+}
