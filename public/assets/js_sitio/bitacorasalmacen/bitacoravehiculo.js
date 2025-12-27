@@ -31,6 +31,10 @@ Modalbitacoravehiculo.addEventListener('hidden.bs.modal', event => {
         }
     }
 
+    limpiarCombustibleSalida();
+    limpiarCombustibleLlegada();
+
+
     $("#TABLA_BOTIQUIN_VEHICULOS").hide();
     $("#TABLA_KIT_SEGURIDAD_VEHICULOS").hide();
     $("#DIV_KILOMETRAJE_LLEGADA").hide();
@@ -47,6 +51,11 @@ Modalbitacoravehiculo.addEventListener('hidden.bs.modal', event => {
 
     $('#inputCamara').val('');
     $('#inputGaleria').val('');
+
+    trazosComb = [];
+    document.getElementById("COMBUSTIBLE_SALIDA_VEHICULOS").value = "";
+    redibujarComb();
+
 });
 
 var Tablabitacoravehiculos = $("#Tablabitacoravehiculos").DataTable({
@@ -251,6 +260,8 @@ $(document).on('click', '.editarMaterial', function () {
                 marcarRadio('LLANTA_REFACCION_VEHICULOS', material.LLANTA_REFACCION_VEHICULOS);
                 marcarRadio('BRILLO_SEGURIDAD_VEHICULOS', material.BRILLO_SEGURIDAD_VEHICULOS);
 
+            
+            
             /* ===============================
                YA GUARDADO
             =============================== */
@@ -272,13 +283,11 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#NOLICENCIA_VEHICULO").val(material.NOLICENCIA_VEHICULO);
                 $("#FECHAVENCIMIENTO_VEHICULO").val(material.FECHAVENCIMIENTO_VEHICULO);
                 $("#KILOMETRAJE_SALIDA_VEHICULOS").val(material.KILOMETRAJE_SALIDA_VEHICULOS);
-                $("#COMBUSTIBLE_SALIDA_VEHICULOS").val(material.COMBUSTIBLE_SALIDA_VEHICULOS);
                 $("#NOPERSONAS_VEHICULOS").val(material.NOPERSONAS_VEHICULOS);
                 $("#HORASALIDA_VEHICULOS").val(material.HORASALIDA_VEHICULOS);
                 $("#BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS").val(material.BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS);
                 $("#KIT_SEGURIDAD_VEHICULOS").val(material.KIT_SEGURIDAD_VEHICULOS);
                 $("#KILOMETRAJE_LLEGADA_VEHICULOS").val(material.KILOMETRAJE_LLEGADA_VEHICULOS);
-                $("#COMBUSTIBLE_LLEGADA_VEHICULOS").val(material.COMBUSTIBLE_LLEGADA_VEHICULOS);
                 $("#HORAREGRESO_VEHICULOS").val(material.HORAREGRESO_VEHICULOS);
                 $("#VERIFICA_POR").val(material.VERIFICA_POR);
                 $("#VALIDADO_POR").val(material.VALIDADO_POR);
@@ -365,6 +374,17 @@ $(document).on('click', '.editarMaterial', function () {
 
                 $("#DANIOS_UNIDAD_JSON").val(material.DANIOS_UNIDAD_JSON || "");
                 cargarDaniosEnCanvas(material.DANIOS_UNIDAD_JSON);
+
+                $("#COMBUSTIBLE_SALIDA_VEHICULOS").val(material.COMBUSTIBLE_SALIDA_VEHICULOS || "");
+                if (material.COMBUSTIBLE_SALIDA_VEHICULOS) {
+                    cargarCombustibleSalida(material.COMBUSTIBLE_SALIDA_VEHICULOS);
+                }
+
+                $("#COMBUSTIBLE_LLEGADA_VEHICULOS").val(material.COMBUSTIBLE_LLEGADA_VEHICULOS || "");
+                if (material.COMBUSTIBLE_LLEGADA_VEHICULOS) {
+                    cargarCombustibleLlegada(material.COMBUSTIBLE_LLEGADA_VEHICULOS);
+                }
+
             
             } else {
                 $("#ID_BITACORAS_ALMACEN").val(0);
@@ -511,6 +531,8 @@ $(document).on('click', '.visualizarMaterial', function () {
                 marcarRadio('LLANTA_REFACCION_VEHICULOS', material.LLANTA_REFACCION_VEHICULOS);
                 marcarRadio('BRILLO_SEGURIDAD_VEHICULOS', material.BRILLO_SEGURIDAD_VEHICULOS);
 
+            
+            
             /* ===============================
                YA GUARDADO
             =============================== */
@@ -534,13 +556,12 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#NOLICENCIA_VEHICULO").val(material.NOLICENCIA_VEHICULO);
                 $("#FECHAVENCIMIENTO_VEHICULO").val(material.FECHAVENCIMIENTO_VEHICULO);
                 $("#KILOMETRAJE_SALIDA_VEHICULOS").val(material.KILOMETRAJE_SALIDA_VEHICULOS);
-                $("#COMBUSTIBLE_SALIDA_VEHICULOS").val(material.COMBUSTIBLE_SALIDA_VEHICULOS);
                 $("#NOPERSONAS_VEHICULOS").val(material.NOPERSONAS_VEHICULOS);
                 $("#HORASALIDA_VEHICULOS").val(material.HORASALIDA_VEHICULOS);
                 $("#BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS").val(material.BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS);
                 $("#KIT_SEGURIDAD_VEHICULOS").val(material.KIT_SEGURIDAD_VEHICULOS);
                 $("#KILOMETRAJE_LLEGADA_VEHICULOS").val(material.KILOMETRAJE_LLEGADA_VEHICULOS);
-                $("#COMBUSTIBLE_LLEGADA_VEHICULOS").val(material.COMBUSTIBLE_LLEGADA_VEHICULOS);
+              
                 $("#HORAREGRESO_VEHICULOS").val(material.HORAREGRESO_VEHICULOS);
                 $("#VERIFICA_POR").val(material.VERIFICA_POR);
                 $("#VALIDADO_POR").val(material.VALIDADO_POR);
@@ -627,6 +648,17 @@ $(document).on('click', '.visualizarMaterial', function () {
 
                 $("#DANIOS_UNIDAD_JSON").val(material.DANIOS_UNIDAD_JSON || "");
                 cargarDaniosEnCanvas(material.DANIOS_UNIDAD_JSON);
+
+
+                 $("#COMBUSTIBLE_SALIDA_VEHICULOS").val(material.COMBUSTIBLE_SALIDA_VEHICULOS || "");
+                if (material.COMBUSTIBLE_SALIDA_VEHICULOS) {
+                    cargarCombustibleSalida(material.COMBUSTIBLE_SALIDA_VEHICULOS);
+                }
+
+                $("#COMBUSTIBLE_LLEGADA_VEHICULOS").val(material.COMBUSTIBLE_LLEGADA_VEHICULOS || "");
+                if (material.COMBUSTIBLE_LLEGADA_VEHICULOS) {
+                    cargarCombustibleLlegada(material.COMBUSTIBLE_LLEGADA_VEHICULOS);
+                }
             
             } else {
                 $("#ID_BITACORAS_ALMACEN").val(0);
@@ -879,6 +911,11 @@ $('#RETORNO_VEHICULOS').on('change', function () {
     }
 });
 
+
+// ===============================
+// DAÑOS DEL CARRO 
+// ===============================
+
 const canvas = document.getElementById("canvasCarro");
 const ctx = canvas.getContext("2d");
 
@@ -1012,7 +1049,11 @@ function cargarDaniosEnCanvas(json) {
     actualizar();
 }
 
-///////// CARGAR IMAGENES  
+
+// ===============================
+// CARGAR IMAGENES  
+// ===============================
+
 
 let imagenesGuardadas = []; 
 let imagenesSeleccionadas = []; 
@@ -1175,4 +1216,301 @@ function cargarImagenesGuardadasVisualizar(recId, inventarioId) {
             preview.appendChild(col);
         });
     });
+}
+
+
+// ===============================
+// COMBUSTIBLE SALIDA 
+// ===============================
+const canvasComb = document.getElementById("canvasCombustibleSalida");
+const ctxComb = canvasComb.getContext("2d");
+
+const imgComb = new Image();
+imgComb.src = "/assets/images/nivelcombustible.png";
+
+let dibujandoComb = false;
+let trazosComb = [];  
+let trazoActual = [];
+
+imgComb.onload = () => redibujarComb();
+
+canvasComb.addEventListener("mousedown", e => {
+    dibujandoComb = true;
+    trazoActual = [];
+
+    const pos = getPosComb(e);
+    trazoActual.push(pos);
+});
+
+canvasComb.addEventListener("mousemove", e => {
+    if (!dibujandoComb) return;
+
+    const pos = getPosComb(e);
+    trazoActual.push(pos);
+
+    redibujarComb();
+});
+
+canvasComb.addEventListener("mouseup", () => {
+    if (!dibujandoComb) return;
+
+    dibujandoComb = false;
+    trazosComb.push(trazoActual);
+    actualizarHiddenComb();
+});
+
+canvasComb.addEventListener("mouseleave", () => {
+    if (dibujandoComb) {
+        dibujandoComb = false;
+        trazosComb.push(trazoActual);
+        actualizarHiddenComb();
+    }
+});
+
+function getPosComb(e) {
+    const rect = canvasComb.getBoundingClientRect();
+    return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+    };
+}
+
+function redibujarComb() {
+    ctxComb.clearRect(0, 0, canvasComb.width, canvasComb.height);
+
+    if (!imgComb.complete) {
+        imgComb.onload = () => redibujarComb();
+        return;
+    }
+
+    ctxComb.drawImage(imgComb, 0, 0, canvasComb.width, canvasComb.height);
+
+    ctxComb.strokeStyle = "red";
+    ctxComb.lineWidth = 3;
+    ctxComb.lineCap = "round";
+
+    trazosComb.forEach(trazo => {
+        ctxComb.beginPath();
+        trazo.forEach((p, i) => {
+            if (i === 0) ctxComb.moveTo(p.x, p.y);
+            else ctxComb.lineTo(p.x, p.y);
+        });
+        ctxComb.stroke();
+    });
+
+    if (trazoActual.length > 0) {
+        ctxComb.beginPath();
+        trazoActual.forEach((p, i) => {
+            if (i === 0) ctxComb.moveTo(p.x, p.y);
+            else ctxComb.lineTo(p.x, p.y);
+        });
+        ctxComb.stroke();
+    }
+}
+
+function actualizarHiddenComb() {
+    document.getElementById("COMBUSTIBLE_SALIDA_VEHICULOS").value =
+        JSON.stringify(trazosComb);
+}
+
+document.getElementById("btnLimpiarCombustibleSalida").onclick = () => {
+    trazosComb = [];
+    trazoActual = [];
+    actualizarHiddenComb();
+    redibujarComb();
+};
+
+function limpiarCombustibleSalida() {
+    trazosComb = [];
+    trazoActual = [];
+    document.getElementById("COMBUSTIBLE_SALIDA_VEHICULOS").value = "";
+
+    if (imgComb.complete) {
+        redibujarComb();
+    } else {
+        imgComb.onload = () => redibujarComb();
+    }
+}
+
+function cargarCombustibleSalida(json) {
+
+    trazosComb = [];
+    trazoActual = [];
+
+    if (!json) {
+        redibujarComb();
+        return;
+    }
+
+    try {
+        let datos = json;
+        if (typeof datos === "string") {
+            datos = JSON.parse(datos);
+        }
+
+        if (Array.isArray(datos)) {
+            trazosComb = datos;
+        }
+
+        document.getElementById("COMBUSTIBLE_SALIDA_VEHICULOS").value =
+            JSON.stringify(trazosComb);
+
+    } catch (e) {
+        trazosComb = [];
+        document.getElementById("COMBUSTIBLE_SALIDA_VEHICULOS").value = "";
+    }
+
+    redibujarComb();
+}
+
+
+// ===============================
+// COMBUSTIBLE LLEGADA
+// ===============================
+
+
+const canvasCombLlegada = document.getElementById("canvasCombustibleLlegada");
+const ctxCombLlegada = canvasCombLlegada.getContext("2d");
+
+const imgCombLlegada = new Image();
+imgCombLlegada.src = "/assets/images/nivelcombustible.png";
+
+let dibujandoCombLlegada = false;
+let trazosCombLlegada = [];
+let trazoActualLlegada = [];
+
+imgCombLlegada.onload = () => redibujarCombLlegada();
+
+canvasCombLlegada.addEventListener("mousedown", e => {
+    dibujandoCombLlegada = true;
+    trazoActualLlegada = [];
+
+    const pos = getPosCombLlegada(e);
+    trazoActualLlegada.push(pos);
+});
+
+canvasCombLlegada.addEventListener("mousemove", e => {
+    if (!dibujandoCombLlegada) return;
+
+    const pos = getPosCombLlegada(e);
+    trazoActualLlegada.push(pos);
+
+    redibujarCombLlegada();
+});
+
+canvasCombLlegada.addEventListener("mouseup", () => {
+    if (!dibujandoCombLlegada) return;
+
+    dibujandoCombLlegada = false;
+    trazosCombLlegada.push(trazoActualLlegada);
+    actualizarHiddenCombLlegada();
+});
+
+canvasCombLlegada.addEventListener("mouseleave", () => {
+    if (dibujandoCombLlegada) {
+        dibujandoCombLlegada = false;
+        trazosCombLlegada.push(trazoActualLlegada);
+        actualizarHiddenCombLlegada();
+    }
+});
+
+function getPosCombLlegada(e) {
+    const rect = canvasCombLlegada.getBoundingClientRect();
+    return {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top
+    };
+}
+
+function redibujarCombLlegada() {
+    ctxCombLlegada.clearRect(0, 0, canvasCombLlegada.width, canvasCombLlegada.height);
+
+    if (!imgCombLlegada.complete) {
+        imgCombLlegada.onload = () => redibujarCombLlegada();
+        return;
+    }
+
+    ctxCombLlegada.drawImage(
+        imgCombLlegada,
+        0, 0,
+        canvasCombLlegada.width,
+        canvasCombLlegada.height
+    );
+
+    ctxCombLlegada.strokeStyle = "red";
+    ctxCombLlegada.lineWidth = 3;
+    ctxCombLlegada.lineCap = "round";
+
+    trazosCombLlegada.forEach(trazo => {
+        ctxCombLlegada.beginPath();
+        trazo.forEach((p, i) => {
+            if (i === 0) ctxCombLlegada.moveTo(p.x, p.y);
+            else ctxCombLlegada.lineTo(p.x, p.y);
+        });
+        ctxCombLlegada.stroke();
+    });
+
+    if (trazoActualLlegada.length > 0) {
+        ctxCombLlegada.beginPath();
+        trazoActualLlegada.forEach((p, i) => {
+            if (i === 0) ctxCombLlegada.moveTo(p.x, p.y);
+            else ctxCombLlegada.lineTo(p.x, p.y);
+        });
+        ctxCombLlegada.stroke();
+    }
+}
+
+function actualizarHiddenCombLlegada() {
+    document.getElementById("COMBUSTIBLE_LLEGADA_VEHICULOS").value =
+        JSON.stringify(trazosCombLlegada);
+}
+
+document.getElementById("btnLimpiarCombustibleLlegada").onclick = () => {
+    trazosCombLlegada = [];
+    trazoActualLlegada = [];
+    actualizarHiddenCombLlegada();
+    redibujarCombLlegada();
+};
+
+function limpiarCombustibleLlegada() {
+    trazosCombLlegada = [];
+    trazoActualLlegada = [];
+    document.getElementById("COMBUSTIBLE_LLEGADA_VEHICULOS").value = "";
+
+    if (imgCombLlegada.complete) {
+        redibujarCombLlegada();
+    } else {
+        imgCombLlegada.onload = () => redibujarCombLlegada();
+    }
+}
+
+function cargarCombustibleLlegada(json) {
+
+    trazosCombLlegada = [];
+    trazoActualLlegada = [];
+
+    if (!json) {
+        redibujarCombLlegada();
+        return;
+    }
+
+    try {
+        let datos = json;
+        if (typeof datos === "string") {
+            datos = JSON.parse(datos);
+        }
+
+        if (Array.isArray(datos)) {
+            trazosCombLlegada = datos;
+        }
+
+        document.getElementById("COMBUSTIBLE_LLEGADA_VEHICULOS").value =
+            JSON.stringify(trazosCombLlegada);
+
+    } catch (e) {
+        trazosCombLlegada = [];
+        document.getElementById("COMBUSTIBLE_LLEGADA_VEHICULOS").value = "";
+    }
+
+    redibujarCombLlegada();
 }

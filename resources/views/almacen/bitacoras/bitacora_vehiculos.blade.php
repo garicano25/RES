@@ -406,20 +406,43 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td colspan="3">
+                                            <tr>
+                                                <td colspan="3" style="text-align:center;">
                                                     <input type="text" class="form-control mb-2"
-                                                        name="KILOMETRAJE_SALIDA_VEHICULOS" id="KILOMETRAJE_SALIDA_VEHICULOS"
-                                                        placeholder="Kilometraje salida" required>
-                                                    <select class="form-select" name="COMBUSTIBLE_SALIDA_VEHICULOS" id="COMBUSTIBLE_SALIDA_VEHICULOS" required>
-                                                        <option value="">Nivel combustible</option>
-                                                        <option value="LLENO">Lleno</option>
-                                                        <option value="3/4">3/4</option>
-                                                        <option value="1/2">1/2</option>
-                                                        <option value="1/4">1/4</option>
-                                                        <option value="VACIO">Vacío</option>
-                                                    </select>
+                                                        name="KILOMETRAJE_SALIDA_VEHICULOS"
+                                                        id="KILOMETRAJE_SALIDA_VEHICULOS"
+                                                        placeholder="Kilometraje salida"
+                                                        required>
+
+                                                    <p style="font-size:14px; margin-bottom:4px;">
+                                                        <strong>Marque el nivel actual de combustible</strong>
+                                                    </p>
+
+                                                    <div style="display:flex; justify-content:center;">
+
+                                                        <canvas id="canvasCombustibleSalida"
+                                                            width="360"
+                                                            height="160"
+                                                            style="border:1px solid #ccc; cursor:crosshair;">
+                                                        </canvas>
+
+                                                    </div>
+
+                                                    <div style="margin-top:6px;">
+                                                        <button type="button" id="btnLimpiarCombustibleSalida">
+                                                            Limpiar
+                                                        </button>
+                                                    </div>
+
+                                                    <input type="hidden"
+                                                        name="COMBUSTIBLE_SALIDA_VEHICULOS"
+                                                        id="COMBUSTIBLE_SALIDA_VEHICULOS">
+
                                                 </td>
                                             </tr>
+
+                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -514,7 +537,7 @@
                                 accept="image/*"
                                 hidden>
 
-                           
+
 
                             <div id="contenedorImagenesHidden" style="display:none;"></div>
 
@@ -800,20 +823,38 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td colspan="3">
+                                                <td colspan="3" style="text-align:center;">
+
                                                     <input type="text" class="form-control mb-2"
-                                                        name="KILOMETRAJE_LLEGADA_VEHICULOS" id="KILOMETRAJE_LLEGADA_VEHICULOS"
-                                                        placeholder="Kilometraje llegada" required>
-                                                    <select class="form-select"
-                                                        name="COMBUSTIBLE_LLEGADA_VEHICULOS" id="COMBUSTIBLE_LLEGADA_VEHICULOS" required>
-                                                        <option value="">Nivel combustible</option>
-                                                        <option value="LLENO">Lleno</option>
-                                                        <option value="3/4">3/4</option>
-                                                        <option value="1/2">1/2</option>
-                                                        <option value="1/4">1/4</option>
-                                                        <option value="VACIO">Vacío</option>
-                                                    </select>
+                                                        name="KILOMETRAJE_LLEGADA_VEHICULOS"
+                                                        id="KILOMETRAJE_LLEGADA_VEHICULOS"
+                                                        placeholder="Kilometraje llegada"
+                                                        required>
+
+                                                    <p style="font-size:14px; margin-bottom:4px;">
+                                                        <strong>Marque el nivel actual de combustible</strong>
+                                                    </p>
+
+                                                    <div style="display:flex; justify-content:center;">
+                                                        <canvas id="canvasCombustibleLlegada"
+                                                            width="360"
+                                                            height="160"
+                                                            style="border:1px solid #ccc; cursor:crosshair;">
+                                                        </canvas>
+                                                    </div>
+
+                                                    <div style="margin-top:6px;">
+                                                        <button type="button" id="btnLimpiarCombustibleLlegada">
+                                                            Limpiar
+                                                        </button>
+                                                    </div>
+
+                                                    <input type="hidden"
+                                                        name="COMBUSTIBLE_LLEGADA_VEHICULOS"
+                                                        id="COMBUSTIBLE_LLEGADA_VEHICULOS">
                                                 </td>
+
+
                                             </tr>
                                         </tbody>
                                     </table>
