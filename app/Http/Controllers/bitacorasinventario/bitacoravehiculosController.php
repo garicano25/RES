@@ -413,29 +413,31 @@ class bitacoravehiculosController extends Controller
 
     public function obtenerLicenciaPersona(Request $request)
     {
-        $valor = $request->valor;
-
+        $valor = $request->valor; 
         $documentosJson = null;
 
+      
         $colaborador = contratacionModel::where('CURP', $valor)->first();
+
         if ($colaborador && $colaborador->DOCUMENTOS_JSON) {
             $documentosJson = $colaborador->DOCUMENTOS_JSON;
         }
 
+       
         if (!$documentosJson) {
-            $proveedor = DB::table('formulario_altaproveedor')
-                ->where('RFC_ALTA', $valor)
-                ->first();
+
+            $proveedor = altaproveedorModel::where('RFC_ALTA', $valor)->first();
 
             if ($proveedor && $proveedor->DOCUMENTOS_JSON) {
                 $documentosJson = $proveedor->DOCUMENTOS_JSON;
             }
         }
 
+      
         if (!$documentosJson) {
             return response()->json([
                 'success' => false,
-                'type' => 'NO_DOCUMENTOS',
+                'type'    => 'NO_DOCUMENTOS',
                 'message' => 'No tiene documentos registrados'
             ]);
         }
@@ -445,11 +447,12 @@ class bitacoravehiculosController extends Controller
         if (!is_array($documentos)) {
             return response()->json([
                 'success' => false,
-                'type' => 'INVALIDO',
+                'type'    => 'INVALIDO',
                 'message' => 'Documentos inválidos'
             ]);
         }
 
+      
         foreach ($documentos as $doc) {
 
             if (($doc['TIPO_DOCUMENTO_IDENTIFICACION'] ?? null) == '5') {
@@ -463,25 +466,28 @@ class bitacoravehiculosController extends Controller
                 $fechaVigencia = Carbon::parse($vigencia)->endOfDay();
                 $hoy = Carbon::now();
 
+                // ❌ Licencia vencida
                 if ($fechaVigencia->lt($hoy)) {
                     return response()->json([
                         'success' => false,
-                        'type' => 'VENCIDA',
+                        'type'    => 'VENCIDA',
                         'message' => 'La licencia está vencida'
                     ]);
                 }
 
+                // ✅ Licencia válida
                 return response()->json([
-                    'success' => true,
-                    'numero' => $doc['NUMERO_DOCUMENTO'] ?? '',
+                    'success'  => true,
+                    'numero'   => $doc['NUMERO_DOCUMENTO'] ?? '',
                     'vigencia' => $vigencia
                 ]);
             }
         }
 
+        // ❌ No existe licencia
         return response()->json([
             'success' => false,
-            'type' => 'NO_LICENCIA',
+            'type'    => 'NO_LICENCIA',
             'message' => 'No tiene licencia registrada'
         ]);
     }
