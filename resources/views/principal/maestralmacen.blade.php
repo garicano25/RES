@@ -549,7 +549,7 @@
     @endif
 
     @if(request()->is('bitacoravehiculos'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.29"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.30"></script>
     @endif
 
     @if(request()->is('bitacoraasignacion'))

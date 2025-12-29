@@ -885,6 +885,64 @@ $("#guardaBITACORA").click(function (e) {
     }
 });
 
+$('#RECIBIDO_POR').on('change', function () {
+
+    const valor = $(this).val();
+
+    $('#NOLICENCIA_VEHICULO').val('');
+    $('#FECHAVENCIMIENTO_VEHICULO').val('');
+    $('#guardaBITACORA').show();
+
+    if (!valor) return;
+
+    $.ajax({
+        url: '/obtenerLicenciaPersona',
+        method: 'GET',
+        data: { valor },
+
+        success: function (res) {
+
+            if (!res.success) {
+
+                let mensaje = 'No se podrá guardar la información.';
+
+                if (res.type === 'NO_LICENCIA') {
+                    mensaje = 'Esta persona no tiene licencia registrada y no se podrá guardar la información.';
+                }
+
+                if (res.type === 'VENCIDA') {
+                    mensaje = 'La licencia está vencida y no se podrá guardar la información.';
+                }
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Licencia inválida',
+                    text: mensaje,
+                    confirmButtonText: 'Aceptar'
+                });
+
+                $('#guardaBITACORA').hide();
+                return;
+            }
+
+            $('#NOLICENCIA_VEHICULO').val(res.numero);
+            $('#FECHAVENCIMIENTO_VEHICULO').val(res.vigencia);
+            $('#guardaBITACORA').show();
+        },
+
+        error: function () {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo verificar la licencia. No se podrá guardar la información.'
+            });
+
+            $('#guardaBITACORA').hide();
+        }
+    });
+});
+
 $('#BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS').on('change', function () {
     if ($(this).val() === '1') {
         $('#TABLA_BOTIQUIN_VEHICULOS').slideDown();
