@@ -674,6 +674,16 @@
 
                                 </div>
 
+                                <div class="col-12 mb-3">
+                                    <label>¡El proveedor realizará salidas de inventario!</label>
+                                    <select class="form-control" name="TIENE_ASIGNACION" id="TIENE_ASIGNACION">
+                                        <option value="" selected disabled>Seleccione una opción</option>
+                                        <option value="1">Sí</option>
+                                        <option value="2">No</option>
+                                    </select>
+                                </div>
+                                
+
                                 <div class="col-12 mb-3 text-center mt-4">
                                     <h5><b>Documento de identificación oficial</b></h5>
                                 </div>
@@ -693,17 +703,8 @@
 
 
 
-                                <div class="mb-3 text-center">
-                                    <label><b>Inventario</b></label>
-                                </div>
-                                <div class="col-12 mb-3">
-                                    <label>¡El proveedor realizará salidas de inventario!</label>
-                                    <select class="form-control" name="TIENE_ASIGNACION" id="TIENE_ASIGNACION">
-                                        <option value="" selected disabled>Seleccione una opción</option>
-                                        <option value="1">Sí</option>
-                                        <option value="2">No</option>
-                                    </select>
-                                </div>
+
+
 
 
                             </div>
