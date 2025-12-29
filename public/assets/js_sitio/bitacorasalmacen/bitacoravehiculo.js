@@ -222,6 +222,10 @@ $(document).on('click', '.editarMaterial', function () {
                         if (!$("#NOINVENTARIO_VEHICULO").val()) {
                             $("#NOINVENTARIO_VEHICULO").val(resp.data.CODIGO_EQUIPO);
                         }
+
+                        if (!$("#NUMERO_POLIZA").val()) {
+                            $("#NUMERO_POLIZA").val(resp.data.NUMERO_POLIZA);
+                        }
                     }
                 });
                     
@@ -280,6 +284,7 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#COLOR_VEHICULO").val(material.COLOR_VEHICULO);
                 $("#PLACAS_VEHICULO").val(material.PLACAS_VEHICULO);
                 $("#NOINVENTARIO_VEHICULO").val(material.NOINVENTARIO_VEHICULO);
+                $("#NUMERO_POLIZA").val(material.NUMERO_POLIZA);
                 $("#NOLICENCIA_VEHICULO").val(material.NOLICENCIA_VEHICULO);
                 $("#FECHAVENCIMIENTO_VEHICULO").val(material.FECHAVENCIMIENTO_VEHICULO);
                 $("#KILOMETRAJE_SALIDA_VEHICULOS").val(material.KILOMETRAJE_SALIDA_VEHICULOS);
@@ -495,6 +500,10 @@ $(document).on('click', '.visualizarMaterial', function () {
                         if (!$("#NOINVENTARIO_VEHICULO").val()) {
                             $("#NOINVENTARIO_VEHICULO").val(resp.data.CODIGO_EQUIPO);
                         }
+
+                         if (!$("#NUMERO_POLIZA").val()) {
+                            $("#NUMERO_POLIZA").val(resp.data.NUMERO_POLIZA);
+                        }
                     }
                 });
                     
@@ -553,6 +562,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#COLOR_VEHICULO").val(material.COLOR_VEHICULO);
                 $("#PLACAS_VEHICULO").val(material.PLACAS_VEHICULO);
                 $("#NOINVENTARIO_VEHICULO").val(material.NOINVENTARIO_VEHICULO);
+                $("#NUMERO_POLIZA").val(material.NUMERO_POLIZA);
                 $("#NOLICENCIA_VEHICULO").val(material.NOLICENCIA_VEHICULO);
                 $("#FECHAVENCIMIENTO_VEHICULO").val(material.FECHAVENCIMIENTO_VEHICULO);
                 $("#KILOMETRAJE_SALIDA_VEHICULOS").val(material.KILOMETRAJE_SALIDA_VEHICULOS);
@@ -561,7 +571,6 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS").val(material.BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS);
                 $("#KIT_SEGURIDAD_VEHICULOS").val(material.KIT_SEGURIDAD_VEHICULOS);
                 $("#KILOMETRAJE_LLEGADA_VEHICULOS").val(material.KILOMETRAJE_LLEGADA_VEHICULOS);
-              
                 $("#HORAREGRESO_VEHICULOS").val(material.HORAREGRESO_VEHICULOS);
                 $("#VERIFICA_POR").val(material.VERIFICA_POR);
                 $("#VALIDADO_POR").val(material.VALIDADO_POR);

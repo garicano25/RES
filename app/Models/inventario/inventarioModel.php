@@ -34,6 +34,7 @@ class inventarioModel extends Model
         'ITEM_CRITICO',
         'PLACAS_VEHICULOS',
         'COLOR_VEHICULO',
+        'NUMERO_POLIZA',
         'ASIGNADO'
 
 

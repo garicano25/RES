@@ -236,16 +236,22 @@
                                                 <div class="col-12 mt-2" id="DATOS_VEHICULOS" style="display: none;">
                                                     <div class="row">
 
-                                                        <div class="col-6 mt-2">
+                                                        <div class="col-4 mt-2">
                                                             <div class="form-group">
                                                                 <label>Placas *</label>
                                                                 <input type="text" class="form-control" id="PLACAS_VEHICULOS" name="PLACAS_VEHICULOS" required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-6 mt-2">
+                                                        <div class="col-4 mt-2">
                                                             <div class="form-group">
                                                                 <label>Color *</label>
                                                                 <input type="text" class="form-control" id="COLOR_VEHICULO" name="COLOR_VEHICULO" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-4 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Número de Póliza *</label>
+                                                                <input type="text" class="form-control" id="NUMERO_POLIZA" name="NUMERO_POLIZA" required>
                                                             </div>
                                                         </div>
                                                     </div>

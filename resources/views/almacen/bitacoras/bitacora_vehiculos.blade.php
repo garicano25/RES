@@ -156,8 +156,8 @@
                     <div class="col-12 mt-3">
                         <div class="row">
                             <div class="col-4">
-                                <label class="form-label">Área/Proceso/Proyecto </label>
-                                <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
+                                <label class="form-label">Número de Póliza</label>
+                                <input type="text" class="form-control" id="NUMERO_POLIZA" name="NUMERO_POLIZA">
                             </div>
                             <div class="col-4">
                                 <label class="form-label">No. de licencia</label>
@@ -169,6 +169,10 @@
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAVENCIMIENTO_VEHICULO" name="FECHAVENCIMIENTO_VEHICULO">
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
+                            </div>
+                            <div class="col-12 mt-3">
+                                <label class="form-label">Área/Proceso/Proyecto </label>
+                                <input type="text" class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" readonly>
                             </div>
                             <div class="col-12 mt-3">
                                 <div class="table-responsive">

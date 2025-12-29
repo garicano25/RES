@@ -124,7 +124,8 @@ class bitacoraModel extends Model
         'VALIDADO_POR',
         'FIRMA_VALIDADO_POR',
         'RETORNO_VEHICULOS',
-        'DANIOS_UNIDAD_JSON'
+        'DANIOS_UNIDAD_JSON',
+        'NUMERO_POLIZA'
 
 
 
