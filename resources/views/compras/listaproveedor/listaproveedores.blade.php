@@ -181,6 +181,27 @@
             align-items: flex-start;
         }
     }
+
+
+    .estado-verde {
+        background-color: #d4edda !important;
+        color: black;
+        border-radius: 0.25rem;
+    }
+
+    .estado-amarillo {
+        background-color: #fff3cd !important;
+        color: black;
+        border-radius: 0.25rem;
+    }
+
+    .estado-rojo {
+        background-color: #f8d7da !important;
+        color: black;
+        border-radius: 0.25rem;
+    }
+
+    
 </style>
 
 
@@ -654,6 +675,24 @@
                                     </div>
 
                                 </div>
+
+                                <div class="col-12 mb-3 text-center mt-4">
+                                    <h5><b>Documento de identificación oficial</b></h5>
+                                </div>
+
+
+                                <div class="row">
+                                    <div class="col-2">
+                                        <div class="form-group" style="text-align: center;">
+                                            <button type="button" class="btn btn-danger botonagregardocumentoficial" id="botonagregardocumentoficial">
+                                                Agregar documento <i class="bi bi-plus-circle"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="listadedocumentoficial mt-4"></div>
+
 
 
                                 <div class="mb-3 text-center">

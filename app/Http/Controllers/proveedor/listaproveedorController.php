@@ -551,35 +551,74 @@ public function Tablareferencias(Request $request)
     {
         try {
             switch (intval($request->api)) {
+
+
                 case 1:
                     if ($request->ID_FORMULARIO_ALTA == 0) {
-                        DB::statement('ALTER TABLE formulario_altaproveedor AUTO_INCREMENT=1;');
-                        $funciones = altaproveedorModel::create($request->all());
-                    } else {
 
+                        DB::statement('ALTER TABLE formulario_altaproveedor AUTO_INCREMENT=1;');
+
+                        $data = $request->except(['documentos']);
+                        $contratos = altaproveedorModel::create($data);
+                    } else {
                         if (isset($request->ELIMINAR)) {
                             if ($request->ELIMINAR == 1) {
-
-                                $funciones = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 0]);
+                                $contratos = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 0]);
                                 $response['code'] = 1;
-                                $response['funcion'] = 'Desactivada';
+                                $response['contrato'] = 'Desactivada';
                             } else {
-                                $funciones = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 1]);
+                                $contratos = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 1]);
                                 $response['code'] = 1;
-                                $response['funcion'] = 'Activada';
+                                $response['contrato'] = 'Activada';
                             }
                         } else {
-                            $funciones = altaproveedorModel::find($request->ID_FORMULARIO_ALTA);
-                            $funciones->update($request->all());
+                        // Editar un contrato existente
+                        $contratos = altaproveedorModel::find($request->ID_FORMULARIO_ALTA);
+                        $contratos->update($request->all());
+
                             $response['code'] = 1;
-                            $response['funcion'] = 'Actualizada';
-                        }
-                        return response()->json($response);
+                        $response['contrato'] = 'Actualizada';
                     }
-                    $response['code']  = 1;
-                    $response['funcion']  = $funciones;
-                    return response()->json($response);
-                    break;
+                }
+
+                $response['code'] = 1;
+                $response['contrato'] = $contratos;
+                return response()->json($response);
+                
+                break;
+
+
+
+
+                // case 1:
+                //     if ($request->ID_FORMULARIO_ALTA == 0) {
+                //         DB::statement('ALTER TABLE formulario_altaproveedor AUTO_INCREMENT=1;');
+                //         $funciones = altaproveedorModel::create($request->all());
+                //     } else {
+
+                //         if (isset($request->ELIMINAR)) {
+                //             if ($request->ELIMINAR == 1) {
+
+                //                 $funciones = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 0]);
+                //                 $response['code'] = 1;
+                //                 $response['funcion'] = 'Desactivada';
+                //             } else {
+                //                 $funciones = altaproveedorModel::where('ID_FORMULARIO_ALTA', $request['ID_FORMULARIO_ALTA'])->update(['ACTIVO' => 1]);
+                //                 $response['code'] = 1;
+                //                 $response['funcion'] = 'Activada';
+                //             }
+                //         } else {
+                //             $funciones = altaproveedorModel::find($request->ID_FORMULARIO_ALTA);
+                //             $funciones->update($request->all());
+                //             $response['code'] = 1;
+                //             $response['funcion'] = 'Actualizada';
+                //         }
+                //         return response()->json($response);
+                //     }
+                //     $response['code']  = 1;
+                //     $response['funcion']  = $funciones;
+                //     return response()->json($response);
+                //     break;
 
 
                 case 2:

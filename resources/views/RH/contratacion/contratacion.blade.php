@@ -440,46 +440,7 @@
                                 <div class="listadedocumentoficial mt-4"></div>
 
 
-
-
-                                <!-- 
-                                <div class="col-2 mb-3">
-                                    <label for="estadoCivil">Tipo *</label>
-                                    <select class="form-control" id="TIPO_DOCUMENTO_IDENTIFICACION" name="TIPO_DOCUMENTO_IDENTIFICACION" required>
-                                        <option value="0" disabled selected>Seleccione una opción</option>
-                                        <option value="1">Residencia temporal</option>
-                                        <option value="2">Residencia Permanente</option>
-                                        <option value="3">INE</option>
-                                        <option value="4">Pasaporte</option>
-                                        <option value="5">Licencia de conducir</option>
-
-                                    </select>
-                                </div>
-                                <div class="col-2 mb-3">
-                                    <label>Emisión *</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="EMISION_DOCUMENTO" name="EMISION_DOCUMENTO" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-2 mb-3">
-                                    <label>Vigencia *</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="VIGENCIA_DOCUMENTO" name="VIGENCIA_DOCUMENTO" required>
-                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    <label>Número *</label>
-                                    <input type="text" class="form-control" id="NUMERO_DOCUMENTO" name="NUMERO_DOCUMENTO" required>
-                                </div>
-                                <div class="col-3 mb-3">
-                                    <label>Expedido en *</label>
-                                    <input type="text" class="form-control" id="EXPEDIDO_DOCUMENTO" name="EXPEDIDO_DOCUMENTO" required>
-                                </div> -->
-
-
-
+                                
                                 <div class="col-12 mb-3 text-center mt-4">
                                     <h5><b>Domicilio</b></h5>
                                 </div>

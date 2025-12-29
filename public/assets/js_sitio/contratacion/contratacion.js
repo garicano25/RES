@@ -1488,6 +1488,8 @@ function obtenerDocumentosOficiales(data) {
     });
 }
 
+
+
 function cargarBajasColaborador() {
     const container = document.getElementById('BAJAS_COLABORADOR');
     

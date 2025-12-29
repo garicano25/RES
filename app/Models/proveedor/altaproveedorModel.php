@@ -52,7 +52,8 @@ class altaproveedorModel extends Model
         'NOMBRE_PERSONA',
         'TIPO_PERSONA_OPCION',
         'VERIFICACION_SOLCITADA',
-        'TIENE_ASIGNACION'
+        'TIENE_ASIGNACION',
+        'DOCUMENTOS_JSON'
 
     ];
     
