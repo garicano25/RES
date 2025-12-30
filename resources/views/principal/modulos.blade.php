@@ -1039,7 +1039,7 @@
                                 </div>
                             </a>
                             @elseif($tieneRolRestringidoUnico || $tieneSoloRolLideOperaciones )
-                            <div class="modules__card" onclick="noPermiso('Almacén')">
+                            <div class="modules__card" onclick="noPermiso('Mantenimiento')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                 <h2 class="modules__text">Mantenimiento</h2>
                             </div>
