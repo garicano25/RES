@@ -386,7 +386,7 @@
                         <!-- TAB 2: Documentación del producto -->
                         <div class="tab-pane fade" id="contenido-documentos" role="tabpanel">
                             <ol class="breadcrumb mb-5">
-                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Documentos del producto</h3>
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Documentos del articulo</h3>
                                 <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_DOCUMENTACION" style="margin-left: auto;">
                                     Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                                 </button>
