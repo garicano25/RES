@@ -1035,7 +1035,7 @@
                             <a href="{{ url('/mantenimiento') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
-                                    <h2 class="modules__text">Almacén</h2>
+                                    <h2 class="modules__text">Mantenimiento</h2>
                                 </div>
                             </a>
                             @elseif($tieneRolRestringidoUnico || $tieneSoloRolLideOperaciones )
