@@ -1287,8 +1287,10 @@ function cargarImagenesGuardadasVisualizar(recId, inventarioId) {
 
 
 // ===============================
-// COMBUSTIBLE SALIDA 
+// COMBUSTIBLE SALIDA
 // ===============================
+
+
 const canvasComb = document.getElementById("canvasCombustibleSalida");
 const ctxComb = canvasComb.getContext("2d");
 
@@ -1296,21 +1298,26 @@ const imgComb = new Image();
 imgComb.src = "/assets/images/nivelcombustible.png";
 
 let dibujandoComb = false;
-let trazosComb = [];  
+let trazosComb = [];
 let trazoActual = [];
 
 imgComb.onload = () => redibujarComb();
 
-canvasComb.addEventListener("mousedown", e => {
+canvasComb.addEventListener("pointerdown", e => {
+    e.preventDefault();
+
     dibujandoComb = true;
     trazoActual = [];
+
+    canvasComb.setPointerCapture(e.pointerId);
 
     const pos = getPosComb(e);
     trazoActual.push(pos);
 });
 
-canvasComb.addEventListener("mousemove", e => {
+canvasComb.addEventListener("pointermove", e => {
     if (!dibujandoComb) return;
+    e.preventDefault();
 
     const pos = getPosComb(e);
     trazoActual.push(pos);
@@ -1318,20 +1325,23 @@ canvasComb.addEventListener("mousemove", e => {
     redibujarComb();
 });
 
-canvasComb.addEventListener("mouseup", () => {
+canvasComb.addEventListener("pointerup", e => {
+    if (!dibujandoComb) return;
+    e.preventDefault();
+
+    dibujandoComb = false;
+    trazosComb.push(trazoActual);
+    actualizarHiddenComb();
+
+    canvasComb.releasePointerCapture(e.pointerId);
+});
+
+canvasComb.addEventListener("pointercancel", e => {
     if (!dibujandoComb) return;
 
     dibujandoComb = false;
     trazosComb.push(trazoActual);
     actualizarHiddenComb();
-});
-
-canvasComb.addEventListener("mouseleave", () => {
-    if (dibujandoComb) {
-        dibujandoComb = false;
-        trazosComb.push(trazoActual);
-        actualizarHiddenComb();
-    }
 });
 
 function getPosComb(e) {
@@ -1345,10 +1355,7 @@ function getPosComb(e) {
 function redibujarComb() {
     ctxComb.clearRect(0, 0, canvasComb.width, canvasComb.height);
 
-    if (!imgComb.complete) {
-        imgComb.onload = () => redibujarComb();
-        return;
-    }
+    if (!imgComb.complete) return;
 
     ctxComb.drawImage(imgComb, 0, 0, canvasComb.width, canvasComb.height);
 
@@ -1375,16 +1382,18 @@ function redibujarComb() {
     }
 }
 
+function redibujarCombWrapper() {
+    redibujarComb();
+}
+const redibujarCombAlias = redibujarComb;
+
 function actualizarHiddenComb() {
     document.getElementById("COMBUSTIBLE_SALIDA_VEHICULOS").value =
         JSON.stringify(trazosComb);
 }
 
 document.getElementById("btnLimpiarCombustibleSalida").onclick = () => {
-    trazosComb = [];
-    trazoActual = [];
-    actualizarHiddenComb();
-    redibujarComb();
+    limpiarCombustibleSalida();
 };
 
 function limpiarCombustibleSalida() {
@@ -1392,11 +1401,7 @@ function limpiarCombustibleSalida() {
     trazoActual = [];
     document.getElementById("COMBUSTIBLE_SALIDA_VEHICULOS").value = "";
 
-    if (imgComb.complete) {
-        redibujarComb();
-    } else {
-        imgComb.onload = () => redibujarComb();
-    }
+    redibujarComb();
 }
 
 function cargarCombustibleSalida(json) {
@@ -1411,6 +1416,7 @@ function cargarCombustibleSalida(json) {
 
     try {
         let datos = json;
+
         if (typeof datos === "string") {
             datos = JSON.parse(datos);
         }
@@ -1431,6 +1437,9 @@ function cargarCombustibleSalida(json) {
 }
 
 
+
+
+
 // ===============================
 // COMBUSTIBLE LLEGADA
 // ===============================
@@ -1446,18 +1455,24 @@ let dibujandoCombLlegada = false;
 let trazosCombLlegada = [];
 let trazoActualLlegada = [];
 
+
 imgCombLlegada.onload = () => redibujarCombLlegada();
 
-canvasCombLlegada.addEventListener("mousedown", e => {
+canvasCombLlegada.addEventListener("pointerdown", e => {
+    e.preventDefault();
+
     dibujandoCombLlegada = true;
     trazoActualLlegada = [];
+
+    canvasCombLlegada.setPointerCapture(e.pointerId);
 
     const pos = getPosCombLlegada(e);
     trazoActualLlegada.push(pos);
 });
 
-canvasCombLlegada.addEventListener("mousemove", e => {
+canvasCombLlegada.addEventListener("pointermove", e => {
     if (!dibujandoCombLlegada) return;
+    e.preventDefault();
 
     const pos = getPosCombLlegada(e);
     trazoActualLlegada.push(pos);
@@ -1465,20 +1480,23 @@ canvasCombLlegada.addEventListener("mousemove", e => {
     redibujarCombLlegada();
 });
 
-canvasCombLlegada.addEventListener("mouseup", () => {
+canvasCombLlegada.addEventListener("pointerup", e => {
+    if (!dibujandoCombLlegada) return;
+    e.preventDefault();
+
+    dibujandoCombLlegada = false;
+    trazosCombLlegada.push(trazoActualLlegada);
+    actualizarHiddenCombLlegada();
+
+    canvasCombLlegada.releasePointerCapture(e.pointerId);
+});
+
+canvasCombLlegada.addEventListener("pointercancel", e => {
     if (!dibujandoCombLlegada) return;
 
     dibujandoCombLlegada = false;
     trazosCombLlegada.push(trazoActualLlegada);
     actualizarHiddenCombLlegada();
-});
-
-canvasCombLlegada.addEventListener("mouseleave", () => {
-    if (dibujandoCombLlegada) {
-        dibujandoCombLlegada = false;
-        trazosCombLlegada.push(trazoActualLlegada);
-        actualizarHiddenCombLlegada();
-    }
 });
 
 function getPosCombLlegada(e) {
@@ -1492,10 +1510,7 @@ function getPosCombLlegada(e) {
 function redibujarCombLlegada() {
     ctxCombLlegada.clearRect(0, 0, canvasCombLlegada.width, canvasCombLlegada.height);
 
-    if (!imgCombLlegada.complete) {
-        imgCombLlegada.onload = () => redibujarCombLlegada();
-        return;
-    }
+    if (!imgCombLlegada.complete) return;
 
     ctxCombLlegada.drawImage(
         imgCombLlegada,
@@ -1533,10 +1548,7 @@ function actualizarHiddenCombLlegada() {
 }
 
 document.getElementById("btnLimpiarCombustibleLlegada").onclick = () => {
-    trazosCombLlegada = [];
-    trazoActualLlegada = [];
-    actualizarHiddenCombLlegada();
-    redibujarCombLlegada();
+    limpiarCombustibleLlegada();
 };
 
 function limpiarCombustibleLlegada() {
@@ -1544,11 +1556,7 @@ function limpiarCombustibleLlegada() {
     trazoActualLlegada = [];
     document.getElementById("COMBUSTIBLE_LLEGADA_VEHICULOS").value = "";
 
-    if (imgCombLlegada.complete) {
-        redibujarCombLlegada();
-    } else {
-        imgCombLlegada.onload = () => redibujarCombLlegada();
-    }
+    redibujarCombLlegada();
 }
 
 function cargarCombustibleLlegada(json) {
@@ -1563,6 +1571,7 @@ function cargarCombustibleLlegada(json) {
 
     try {
         let datos = json;
+
         if (typeof datos === "string") {
             datos = JSON.parse(datos);
         }
@@ -1581,3 +1590,5 @@ function cargarCombustibleLlegada(json) {
 
     redibujarCombLlegada();
 }
+
+

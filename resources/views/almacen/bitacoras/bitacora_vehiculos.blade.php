@@ -11,6 +11,14 @@
     .bg-verde-suave {
         background-color: #d1e7dd !important;
     }
+
+    #canvasCombustibleSalida {
+        touch-action: none;
+    }
+
+    #canvasCombustibleLlegada {
+        touch-action: none;
+    }
 </style>
 
 <div class="contenedor-contenido">
