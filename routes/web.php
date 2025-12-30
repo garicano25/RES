@@ -247,7 +247,6 @@ Route::get('/dpt', [dptController::class, 'index']);
 Route::post('/dptSave', [dptController::class, 'store']);
 Route::get('/TablaDPT', [dptController::class, 'TablaDPT']);
 Route::get('/dptDelete', [dptController::class, 'store']);
-
 Route::get('/makeExcelDPT/{id_formulario}', [makeExcelController::class, 'makeExcelDPT']);
 Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan']);
 Route::get('/consultarfuncionescargo/{areaId}', [dptController::class, 'consultarfuncionescargo']);
