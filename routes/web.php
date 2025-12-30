@@ -20,10 +20,7 @@ use App\Http\Controllers\VerificationController;
 
 
 // CONTROLADORES INFORMACION EMPRESA
-
 use App\Http\Controllers\empresainformacion\empresainformacionController;
-
-
 
 // CONTROLADORES DE ORGANIZACION 
 use App\Http\Controllers\organizacion\areasController;
@@ -145,18 +142,17 @@ use App\Http\Controllers\listaitemcritico\listaitemcriticoController;
 use App\Http\Controllers\listaalerta\listaalertaController;
 use App\Http\Controllers\listaasignacion\listaasignacionController;
 
-
 //// BITACORAS INVENTARIO
-
 use App\Http\Controllers\bitacorasinventario\bitacoraconsumiblesController;
 use App\Http\Controllers\bitacorasinventario\bitacoraretornableController;
 use App\Http\Controllers\bitacorasinventario\bitacoravehiculosController;
 use App\Http\Controllers\bitacorasinventario\bitacoraasignacionController;
 
-
 /// NOTIFICACIONES 
-
 use App\Http\Controllers\notificacion\notificacionController;
+
+/// MANTENIMIENTO 
+use App\Http\Controllers\listamantenimiento\listamantenimientoController;
 
 
 //==============================================  login  ============================================== 
@@ -905,9 +901,6 @@ Route::get('/equipofoto/{id}', [inventarioController::class, 'mostrarFotoEquipo'
 Route::get('/inventarioDelete', [inventarioController::class, 'store']);
 Route::get('/generarCodigoAF', [inventarioController::class, 'generarCodigoAF']);
 Route::get('/generarCodigoANF', [inventarioController::class, 'generarCodigoANF']);
-
-
-
 Route::get('/cantidadEquipoReadonly', [inventarioController::class, 'cantidadEquipoReadonly']);
 
 /// ENTRADA INVENTARIO
@@ -964,14 +957,12 @@ Route::get('/Tablalistadeasignacion', [listaasignacionController::class, 'Tablal
 
 //==============================================    BITACORAS   ============================================== 
 
-
 /// CONSUMIBLES
 
 Route::get('/bitacoraconsumibles', [bitacoraconsumiblesController::class, 'index']);
 Route::get('/Tablabitacoraconsumibles', [bitacoraconsumiblesController::class, 'Tablabitacoraconsumibles']);
 Route::get('/obtenerMaterialIndividual', [bitacoraconsumiblesController::class, 'obtenerMaterialIndividual']);
 Route::post('/BitacoraSave', [bitacoraconsumiblesController::class, 'store']);
-
 
 /// RETORNABLES
 
@@ -999,6 +990,32 @@ Route::get('/obtenerMaterialAsingnacion', [bitacoraasignacionController::class, 
 Route::post('/BitacoraAsignacionSave', [bitacoraasignacionController::class, 'store']);
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////MANTENIMIENTO////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//==============================================    LISTA DE MANTENIMIENTO   ============================================== 
+
+
+Route::get('/mantenimiento', [listamantenimientoController::class, 'index']);
+Route::get('/Tablamantenimiento', [listamantenimientoController::class, 'Tablamantenimiento']);
+Route::post('/MantenimientoSave', [listamantenimientoController::class, 'store']);
+Route::get('/MantenimientoDelete', [listamantenimientoController::class, 'store']);
+Route::get('/mostrarFotoEquipoMan/{id}', [listamantenimientoController::class, 'mostrarFotoEquipoMan'])->name('mostrarFotoEquipoMan');
+Route::get('/cantidadEquipoReadonlyMan', [listamantenimientoController::class, 'cantidadEquipoReadonlyMan']);
+
+/// VISUALIZAR FECHAS DE DOCUMENTOS 
+Route::get('/obtenerDocumentosPorMantenimiento/{inventario_id}', [listamantenimientoController::class, 'obtenerDocumentosPorMantenimiento']);
+
+/// DOCUMENTOS DEL MANTENIMIENTO
+Route::get('/Tabladocumentomantenimiento', [listamantenimientoController::class, 'Tabladocumentomantenimiento']);
+Route::get('/mostrardocumentomantenimiento/{id}', [listamantenimientoController::class, 'mostrardocumentomantenimiento']);
+
+
+
+
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////PAGINA WEB///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1022,47 +1039,6 @@ Route::get('/Directorio', function () { return view('compras.proveedores.directo
 //==============================================  NOTIFICACIONES  ============================================== 
 
 Route::get('/notificaciones', [notificacionController::class, 'notificaciones']);
-
-//============================================== ENCRIPTAR TURAS ============================================== 
-
-// Route::get('/{encryptedRoute}', function ($encryptedRoute) {
-//     try {
-//         $decryptedRoute = Crypt::decryptString($encryptedRoute);
-
-//         switch ($decryptedRoute) {
-//             case 'Directorio':
-//                 return view('compras.proveedores.directorio');
-//             case 'Alta':
-//                 return view('compras.proveedores.altaproveedores');
-//             default:
-//                 abort(404);
-//         }
-//     } catch (\Exception $e) {
-//         abort(404);
-//     }
-// })->name('route.encrypted');
-
-
-// Route::get('/{encryptedRoute}', function ($encryptedRoute) {
-//     try {
-//         // Desencriptar la URL
-//         $decryptedRoute = Crypt::decryptString($encryptedRoute);
-
-//         // Verificar la ruta desencriptada
-//         switch ($decryptedRoute) {
-//             // case 'Solicitudes':
-//             //     // Llamar al controlador y su método 'index'
-//             //     return app(SolicitudesController::class)->index();
-//             case 'Directorio':
-//                 return view('compras.proveedores.directorio');
-//             default:
-//                 abort(404);
-//         }
-//     } catch (\Exception $e) {
-//         // En caso de que la encriptación falle, lanzar error 404
-//         abort(404);
-//     }
-// })->name('route.encrypted');
 
 
 //============================================== C.P ============================================== 

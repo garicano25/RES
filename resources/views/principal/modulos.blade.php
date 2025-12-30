@@ -1029,17 +1029,29 @@
                             @endif
 
                             {{-- Mantenimiento --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
-                            <div class="modules__card" onclick="noPermiso('Mantenimiento')">
+
+
+                            @if($tieneSoloRolAlmacenista)
+                            <a href="{{ url('/mantenimiento') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
+                                    <h2 class="modules__text">Almacén</h2>
+                                </div>
+                            </a>
+                            @elseif($tieneRolRestringidoUnico || $tieneSoloRolLideOperaciones )
+                            <div class="modules__card" onclick="noPermiso('Almacén')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                 <h2 class="modules__text">Mantenimiento</h2>
                             </div>
                             @else
-                            <div class="modules__card">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
-                                <h2 class="modules__text">Mantenimiento</h2>
-                            </div>
+                            <a href="{{ url('/mantenimiento') }}" class="modules__link">
+                                <div class="modules__card">
+                                    <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
+                                    <h2 class="modules__text">Mantenimiento</h2>
+                                </div>
+                            </a>
                             @endif
+
 
                             {{-- HSE --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
@@ -1654,7 +1666,7 @@
 
             color: #ffffff;
 
-        } 
+        }
     </style>
 
 
