@@ -219,7 +219,7 @@ Route::get('/InfoEmpresaDelete', [empresainformacionController::class, 'store'])
 
 
 //==============================================  ORGANIZACION  ============================================== 
-Route::get('/tablero', function () {return view('tablero.index');});
+Route::get('/tablero', function () {return view('RH.tablero.index');});
 
 // ORGANIGRAMA
 Route::get('/organigrama', [areasController::class, 'index']);

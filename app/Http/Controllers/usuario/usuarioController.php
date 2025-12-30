@@ -26,7 +26,7 @@ class usuarioController extends Controller
 
         array_unshift($roles, 'Superusuario', 'Administrador', 'Proveedor');
     
-        return view('usuario.usuario', compact('roles'));
+        return view('RH.usuario.usuario', compact('roles'));
     }
 
 
