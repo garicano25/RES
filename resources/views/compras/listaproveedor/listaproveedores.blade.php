@@ -675,7 +675,7 @@
                                 </div>
 
                                 <div class="col-12 mb-3">
-                                    <label>¡El proveedor realizará salidas de almacén!</label>
+                                    <label>¡El proveedor es interno!</label>
                                     <select class="form-control" name="TIENE_ASIGNACION" id="TIENE_ASIGNACION">
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         <option value="1">Sí</option>
