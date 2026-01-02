@@ -638,7 +638,7 @@ $('#TIPO_EQUIPO').on('change', function () {
             }
         });
     } else {
-        $('#CODIGO_EQUIPO').val('');
+        $('#CODIGO_EQUIPO').val('N/A');
     }
 });
 

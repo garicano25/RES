@@ -127,18 +127,51 @@ class inventarioController extends Controller
     }
 
 
+    // public function generarCodigoAF()
+    // {
+    //     try {
+    //         $anio_actual = date('y'); 
+
+    //         $ultimo = DB::table('formulario_inventario')
+    //             ->where('CODIGO_EQUIPO', 'like', 'AFR%' . $anio_actual)
+    //             ->orderBy('CODIGO_EQUIPO', 'desc')
+    //             ->first();
+
+    //         if ($ultimo) {
+    //             preg_match('/AFR(\d+)' . $anio_actual . '/', $ultimo->CODIGO_EQUIPO, $matches);
+    //             $consecutivo = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
+    //         } else {
+    //             $consecutivo = 1;
+    //         }
+
+    //         $codigo_nuevo = 'AFR' . str_pad($consecutivo, 5, '0', STR_PAD_LEFT) . $anio_actual;
+
+    //         return response()->json([
+    //             'codigo' => $codigo_nuevo,
+    //             'msj' => 'Código generado correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'codigo' => null,
+    //             'msj' => 'Error: ' . $e->getMessage()
+    //         ]);
+    //     }
+    // }
+
+
+
     public function generarCodigoAF()
     {
         try {
             $anio_actual = date('y'); 
 
             $ultimo = DB::table('formulario_inventario')
-                ->where('CODIGO_EQUIPO', 'like', 'AFR%' . $anio_actual)
+                ->where('CODIGO_EQUIPO', 'like', 'AFR%')
                 ->orderBy('CODIGO_EQUIPO', 'desc')
                 ->first();
 
             if ($ultimo) {
-                preg_match('/AFR(\d+)' . $anio_actual . '/', $ultimo->CODIGO_EQUIPO, $matches);
+                preg_match('/AFR(\d{5})\d{2}/', $ultimo->CODIGO_EQUIPO, $matches);
                 $consecutivo = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
             } else {
                 $consecutivo = 1;
