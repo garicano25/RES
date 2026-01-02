@@ -17,7 +17,6 @@
     <!-- Bootstrap v.5.2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
 
-
     <!-- Datatables 1.13.1  v.5.2 -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
 
@@ -30,19 +29,10 @@
 
     <!-- Select opcion selectize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
     <link rel="stylesheet" href="assets/css/estilos.css">
-
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
-
-
-
-
 
     <style>
         .dropdown-menu {
@@ -89,7 +79,6 @@
                 <ul class="navbar-nav d-flex align-items-center" style="gap: 10px;">
                     <li class="nav-item d-flex align-items-center">
                         <div class="notification-wrapper">
-
                             <button class="nav__iconButton" id="btnNotificaciones">
                                 <img src="assets/Modulos/img/notificacion.png" alt="Notificación">
                                 <span id="contadorNotificaciones" class="notification-count">0</span>
@@ -105,17 +94,12 @@
                             </div>
                         </div>
                     </li>
-
                     <li class="nav-item dropdown d-flex align-items-center">
-
                         @auth
                         <a class="nav__iconButton dropdown-toggle" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
                             <i class="bi bi-person-fill" style="font-size: 22px; color:#555;"></i>
-
                         </a>
-
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
                             <li class="dropdown-item text-center">
                                 <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}
@@ -124,9 +108,7 @@
                                 <br>
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
-
                             <li class="dropdown-divider"></li>
-
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                     @csrf
@@ -136,11 +118,8 @@
                                 </form>
                             </li>
                         </ul>
-
                         @endauth
-
                     </li>
-
                 </ul>
             </div>
 
@@ -280,51 +259,41 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/clientes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Clientes</span><span class="d-none d-lg-inline">Clientes</span>
                         </a>
                     </li>
-
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/solicitudes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-pencil-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Solicitudes</span><span class="d-none d-lg-inline">Solicitudes</span>
                         </a>
                     </li>
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/ofertas') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-currency-dollar" style="margin-right: 5px;"></i> <span class="d-lg-none">Ofertas/Cotizaciones</span><span class="d-none d-lg-inline">Ofertas/Cotizaciones</span>
                         </a>
                     </li>
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/confirmacion') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Confirmación del servicio </span><span class="d-none d-lg-inline">Confirmación del servicio </span>
                         </a>
                     </li>
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/ordentrabajo') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Orden de trabajo - OT</span><span class="d-none d-lg-inline">Orden de trabajo - OT</span>
                         </a>
                     </li>
-
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-aspect-ratio-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">General </span><span class="d-none d-lg-inline">General </span>
                         </a>
                     </li>
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="" style="margin-right: 5px;"></i> <span class="d-lg-none">Indicadores </span><span class="d-none d-lg-inline">Indicadores </span>
@@ -338,18 +307,14 @@
                                 <span class="d-none d-lg-inline">Catálogos</span>
                             </a>
                             <ul class="dropdown-menu">
-
                                 <li><a class="dropdown-item" href="{{url('/catalogosolicitudes')}}">Catálogos de solicitudes</a>
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/catalogoconfirmacion')}}">Catálogos de confirmación</a>
                                 </li>
-
                             </ul>
                         </li>
                     </ul>
-
-
                 </ul>
             </div>
         </div>
@@ -373,9 +338,6 @@
         });
     </script>
     @endif
-
-
-
 
 
     <!-- Modal de carga -->
@@ -425,9 +387,7 @@
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 
-
     <!-- datepicker -->
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
 

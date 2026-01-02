@@ -10,13 +10,11 @@
     <title>Results In Performance</title>
 
 
-
     <!-- Bootstrap  iconos v1.11.3 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Bootstrap v.5.2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
-
 
     <!-- Datatables 1.13.1  v.5.2 -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -33,7 +31,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
 
     <!-- Select 2 -->
 
@@ -72,8 +69,6 @@
 
 <body class="body">
 
-
-
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #A4D65E; height: 100px;">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
@@ -102,17 +97,12 @@
                             </div>
                         </div>
                     </li>
-
                     <li class="nav-item dropdown d-flex align-items-center">
-
                         @auth
                         <a class="nav__iconButton dropdown-toggle" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
                             <i class="bi bi-person-fill" style="font-size: 22px; color:#555;"></i>
-
                         </a>
-
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
                             <li class="dropdown-item text-center">
                                 <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}
@@ -121,9 +111,7 @@
                                 <br>
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
-
                             <li class="dropdown-divider"></li>
-
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                     @csrf
@@ -133,11 +121,8 @@
                                 </form>
                             </li>
                         </ul>
-
                         @endauth
-
                     </li>
-
                 </ul>
             </div>
 
@@ -173,7 +158,6 @@
                     gap: 10px !important;
                 }
 
-
                 .notification-wrapper {
                     position: relative;
                     display: inline-block;
@@ -206,8 +190,6 @@
                     z-index: 9999;
                 }
 
-
-
                 .notification-header {
                     background: #a2a2a2 !important;
                     padding: 8px 12px !important;
@@ -226,8 +208,6 @@
                     padding: 0 !important;
                     line-height: 1 !important;
                 }
-
-
 
                 .notification-body {
                     max-height: 250px;
@@ -250,7 +230,6 @@
                     background: #f0f0f0;
                     cursor: pointer;
                 }
-
 
                 .notification-item strong,
                 .notification-item b {
@@ -280,23 +259,17 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
                     <ul class="navbar-nav">
-
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/mantenimiento') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Mantenimiento</span><span class="d-none d-lg-inline">Mantenimiento</span>
                             </a>
                         </li>
-
-
-
                     </ul>
                 </ul>
             </div>

@@ -235,35 +235,30 @@
                                                         <input type="Number" step="any" class="form-control" id="CANTIDAD_EQUIPO" name="CANTIDAD_EQUIPO" required>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
                                                         <label>Límite mínimo </label>
                                                         <input type="Number" step="any" class="form-control" id="LIMITEMINIMO_EQUIPO" name="LIMITEMINIMO_EQUIPO">
                                                     </div>
                                                 </div>
-
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
                                                         <label> U.M. *</label>
                                                         <input type="text" step="any" class="form-control" id="UNIDAD_MEDIDA" name="UNIDAD_MEDIDA" required>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-6 mt-2">
                                                     <div class="form-group">
                                                         <label> Ubicación *</label>
                                                         <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO" required>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-4 mt-2">
                                                     <div class="form-group">
                                                         <label> Estado *</label>
                                                         <input type="text" step="any" class="form-control" id="ESTADO_EQUIPO" name="ESTADO_EQUIPO" required>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-4 mt-2">
                                                     <label>¿El ítem es crítico? </label>
                                                     <select class="form-control" name="ITEM_CRITICO" id="ITEM_CRITICO">
@@ -272,7 +267,6 @@
                                                         <option value="2">No</option>
                                                     </select>
                                                 </div>
-
                                                 <div class="col-4 mt-2">
                                                     <div class="form-group">
                                                         <label>Fecha de adquisición *</label>
@@ -282,7 +276,6 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-12 mt-2" id="DESPUES_2024" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
                                                     <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
@@ -301,7 +294,6 @@
                                                             </option>
                                                             @endforeach
                                                         </optgroup>
-
                                                         <optgroup label="Extra">
                                                             <option value="Nota de remisión">Nota de remisión</option>
                                                             <option value="N/A">N/A</option>
@@ -309,12 +301,10 @@
                                                         </optgroup>
                                                     </select>
                                                 </div>
-
                                                 <div class="col-12 mt-2" id="ANTES_2024" style="display: none;">
                                                     <label class="form-label">Proveedor</label>
                                                     <input type="text" class="form-control" id="PROVEEDOR_ANTESDEL2024">
                                                 </div>
-
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Precio Unitario (MXN)</label>
@@ -327,7 +317,6 @@
                                                         <input type="text" class="form-control" id="TOTAL_EQUIPO" name="TOTAL_EQUIPO">
                                                     </div>
                                                 </div>
-
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label>Tipo *</label>

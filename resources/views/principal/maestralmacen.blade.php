@@ -67,12 +67,9 @@
         }
     </style>
 
-
 </head>
 
 <body class="body">
-
-
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #A4D65E; height: 100px;">
         <div class="container-fluid">
@@ -268,11 +265,6 @@
         </div>
     </nav>
 
-
-
-
-
-
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -288,15 +280,11 @@
                     </li>
                     <ul class="navbar-nav">
 
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/inventario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Inventario</span><span class="d-none d-lg-inline">Inventario</span>
                             </a>
                         </li>
-
-
-
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -326,7 +314,6 @@
                             </li>
                         </ul>
 
-
                         @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
 
                         <li class="nav-item dropdown" style="margin-left: -2px;">
@@ -341,7 +328,6 @@
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Salida de almacén</span><span class="d-none d-lg-inline">Salida de almacén</span>
                             </a>
                         </li>
-
 
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
@@ -369,7 +355,6 @@
                                 </ul>
                             </li>
                         </ul>
-
 
                         @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
 
@@ -410,14 +395,9 @@
                     popup: 'swal-wide' // Clase personalizada para ampliar la alerta
                 }
             });
-
         });
     </script>
     @endif
-
-
-
-
 
     <!-- Modal de carga -->
     <style>
@@ -440,16 +420,14 @@
             left: 28%;
         }
     </style>
+
     <div id="modal-overlay">
         <img src="/assets/images/Colorancho.png" class="ld ld-bounce" alt="Cargando" style="max-width: 100%; max-height: 214px;" id="loading-image">
     </div>
 
-
     <div style="margin-top: 25px;">
         @yield('contenido')
     </div>
-
-
 
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -478,7 +456,6 @@
     <!-- Select 2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-
     <script>
         $(document).ready(function() {
             // Inicializar campos datepicker con opciones en español
@@ -496,7 +473,6 @@
             });
         });
     </script>
-
 
     @if(request()->is('inventario'))
     <script src="/assets/js_sitio/inventario/inventario.js?v=1.30"></script>
@@ -534,7 +510,6 @@
     <script src="/assets/js_sitio/listadealerta/listaalerta.js?v=1.0"></script>
     @endif
 
-
     @if(request()->is('listadeasignacion'))
     <script src="/assets/js_sitio/listadeasignacion/listadeasignacion.js?v=1.0"></script>
     @endif
@@ -542,7 +517,6 @@
     @if(request()->is('bitacoraconsumibles'))
     <script src="/assets/js_sitio/bitacorasalmacen/bitacoraconsumible.js?v=1.35"></script>
     @endif
-
 
     @if(request()->is('bitacoraretornables'))
     <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.26"></script>

@@ -10,7 +10,6 @@
     <title>Results In Performance</title>
 
 
-
     <!-- Bootstrap  iconos v1.11.3 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
@@ -40,15 +39,11 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="assets/css/estilos.css">
 
-
     @if(request()->is('listaproveedores'))
     <!-- form_wizard_steps -->
     <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
     </link>
     @endif
-
-
-
 
     <style>
         .dropdown-menu {
@@ -110,17 +105,12 @@
                             </div>
                         </div>
                     </li>
-
                     <li class="nav-item dropdown d-flex align-items-center">
-
                         @auth
                         <a class="nav__iconButton dropdown-toggle" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
                             <i class="bi bi-person-fill" style="font-size: 22px; color:#555;"></i>
-
                         </a>
-
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
                             <li class="dropdown-item text-center">
                                 <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}
@@ -129,9 +119,7 @@
                                 <br>
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
-
                             <li class="dropdown-divider"></li>
-
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                     @csrf
@@ -141,11 +129,8 @@
                                 </form>
                             </li>
                         </ul>
-
                         @endauth
-
                     </li>
-
                 </ul>
             </div>
 
@@ -181,7 +166,6 @@
                     gap: 10px !important;
                 }
 
-
                 .notification-wrapper {
                     position: relative;
                     display: inline-block;
@@ -214,8 +198,6 @@
                     z-index: 9999;
                 }
 
-
-
                 .notification-header {
                     background: #a2a2a2 !important;
                     padding: 8px 12px !important;
@@ -234,8 +216,6 @@
                     padding: 0 !important;
                     line-height: 1 !important;
                 }
-
-
 
                 .notification-body {
                     max-height: 250px;
@@ -259,7 +239,6 @@
                     cursor: pointer;
                 }
 
-
                 .notification-item strong,
                 .notification-item b {
                     font-size: 14px !important;
@@ -270,12 +249,8 @@
                     margin-bottom: 3px;
                 }
             </style>
-
-
-
         </div>
     </nav>
-
 
 
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
@@ -285,16 +260,13 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
                     <ul class="navbar-nav">
-
                         @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
                                 style="color: #fff; font-weight: bold; text-decoration: none;"
@@ -303,35 +275,24 @@
                                 <span class="d-lg-none">Requisición de Materiales - M.R</span>
                                 <span class="d-none d-lg-inline">Requisición de Materiales - M.R</span>
                             </a>
-
                             <ul class="dropdown-menu">
-
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/requisicionmateriales') }}">
                                         Requisición de Materiales - M.R </a>
                                 </li>
                                 @endif
-
-
                                 {{-- Para líderes --}}
                                 @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Líder de Operaciones']))
-
                                 <hr class="dropdown-divider">
-
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/requisicionmaterialeslideres') }}">
                                         M.R por dar Vo.Bo
                                     </a>
                                 </li>
-
-
                                 @endif
-
-
                                 {{-- Para administradores --}}
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                                 <hr class="dropdown-divider">
-
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/requisicionmaterialesaprobacion') }}">
                                         M.R por aprobar
@@ -340,24 +301,14 @@
                                 @endif
                             </ul>
                         </li>
-
-
-
-
-
-
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/bitacora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Bitácora de consecutivos - MR</span><span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
                             </a>
                         </li>
-
                         @endif
-
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
                                 style="color: #fff; font-weight: bold; text-decoration: none;"
@@ -366,7 +317,6 @@
                                 <span class="d-lg-none">Proveedores</span>
                                 <span class="d-none d-lg-inline">Proveedores</span>
                             </a>
-
                             <ul class="dropdown-menu">
                                 {{-- Todos los roles anteriores lo ven --}}
                                 <li>
@@ -374,7 +324,6 @@
                                         Banco de proveedores
                                     </a>
                                 </li>
-
                                 {{-- Solo Superusuario, Administrador y Asistente de compras --}}
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
                                 <hr class="dropdown-divider">
@@ -384,7 +333,6 @@
                                     </a>
                                 </li>
                                 @endif
-
                                 {{-- Superusuario, Administrador, Asistente de planeación y logística y Asistente de compras --}}
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras']))
                                 <hr class="dropdown-divider">
@@ -402,9 +350,7 @@
                                 @endif
                             </ul>
                         </li>
-
                         @endif
-
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
@@ -417,7 +363,6 @@
                                     <span class="d-lg-none">Matriz comparativa</span>
                                     <span class="d-none d-lg-inline">Matriz comparativa</span>
                                 </a>
-
                                 <ul class="dropdown-menu">
                                     {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
                                     <li>
@@ -425,7 +370,6 @@
                                             Matriz comparativa de cotizaciones
                                         </a>
                                     </li>
-
                                     {{-- Solo Superusuario y Administrador --}}
                                     @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                                     <hr class="dropdown-divider">
@@ -441,9 +385,7 @@
 
                         @endif
 
-
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
-
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -453,7 +395,6 @@
                                     <span class="d-lg-none">Orden de compra - PO</span>
                                     <span class="d-none d-lg-inline">Orden de compra - PO</span>
                                 </a>
-
                                 <ul class="dropdown-menu">
                                     {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
                                     <li>
@@ -461,7 +402,6 @@
                                             Orden de compra
                                         </a>
                                     </li>
-
                                     {{-- Solo Superusuario y Administrador --}}
                                     @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                                     <hr class="dropdown-divider">
@@ -486,7 +426,6 @@
                                     <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
                                     <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
                                 </a>
-
                                 <ul class="dropdown-menu">
                                     {{-- Solo Superusuario, Administrador y Almacenista --}}
                                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Almacenista']))
@@ -497,7 +436,6 @@
                                     </li>
                                     <hr class="dropdown-divider">
                                     @endif
-
                                     {{-- Opción visible para todos los usuarios autenticados --}}
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/vobogrusuario') }}">
@@ -507,7 +445,6 @@
                                 </ul>
                             </li>
                         </ul>
-
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
 
@@ -526,17 +463,11 @@
                             </li>
                         </ul>
                         @endif
-
-
-
                     </ul>
-
-
                 </ul>
             </div>
         </div>
     </nav>
-
 
 
 
@@ -557,8 +488,6 @@
         });
     </script>
     @endif
-
-
 
 
 
@@ -588,12 +517,9 @@
     </div>
 
 
-
-
     <div style="margin-top: 25px;">
         @yield('contenido')
     </div>
-
 
 
     <!-- Jquery 3.6.4-->
@@ -638,8 +564,6 @@
             });
         });
     </script>
-
-
 
 
 
@@ -707,7 +631,6 @@
     @if(request()->is('bitacoragr'))
     <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.49"></script>
     @endif
-
 
     @if(request()->is('vobogrusuario'))
     <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.3"></script>

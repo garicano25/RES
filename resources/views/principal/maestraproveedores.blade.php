@@ -10,13 +10,11 @@
     <title>Results In Performance</title>
 
 
-
     <!-- Bootstrap  iconos v1.11.3 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Bootstrap v.5.2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
-
 
     <!-- Datatables 1.13.1  v.5.2 -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -37,12 +35,7 @@
 
     <link rel="stylesheet" href="assets/css/estilos.css">
 
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-
-
-
-
 
 
 
@@ -80,7 +73,6 @@
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #A4D65E; height: 100px;">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-
                 <img src="/assets/images/logoBlanco.png" class="ld ld-wander-h m-2" style="animation-duration:3.0s; width: 170px;" alt="Logo">
             </a>
             <!-- Contenedor para centrar el título -->
@@ -124,7 +116,6 @@
 
 
 
-
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -132,20 +123,11 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-
-
-
-
-
                     <li class="nav-item dropdown" style="margin-left: 8px;">
                         {{-- <a class="nav-link BOTON" href="{{ url('/Alta') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Alta y actualización </span><span class="d-none d-lg-inline">Alta y actualización </span>
                         </a> --}}
                     </li>
-
-
-
-
                 </ul>
             </div>
         </div>
@@ -155,7 +137,6 @@
     @if(session('error'))
 
     @endif
-
 
 
 
@@ -243,8 +224,6 @@
                             </li>
                         </ul>
                     </nav>
-
-
                     <button type="submit" id="SOLICITAR_VERIFICACION"
                         class="btn w-100 text-white fw-bold"
                         style="background-color: #ff4c4c; border-color: #ff4c4c;">
@@ -253,12 +232,8 @@
                 </div>
             </div>
 
-
-
             <!-- Contenedor del contenido principal en col-10 -->
             <div class="col-10 position-relative">
-
-
                 <!-- Contenido dinámico -->
                 <div class="contenido p-4">
                     @yield('contenido')

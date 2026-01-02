@@ -55,8 +55,6 @@
     @endif
 
 
-
-
     <style>
         .dropdown-menu {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -284,7 +282,6 @@
 
 
 
-
     <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: rgba(0, 124, 186, 0.850); -webkit-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); -moz-box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75); box-shadow: 3px 29px 29px -15px rgba(0,0,0,0.75);">
         <div class="container-fluid">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -405,8 +402,6 @@
                                 </a>
                             </li>
 
-
-
                             @endif
 
 
@@ -422,11 +417,6 @@
                             @endif
                         </ul>
                     </li>
-
-
-
-
-
 
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
 
