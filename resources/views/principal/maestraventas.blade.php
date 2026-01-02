@@ -163,7 +163,7 @@
 
                 .notification-panel {
                     position: absolute;
-                    top: 85px;
+                    top: 49px;
                     right: 0;
                     width: 350px;
                     background: #ffffff;
