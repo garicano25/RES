@@ -163,34 +163,35 @@ class inventarioController extends Controller
     public function generarCodigoAF()
     {
         try {
-            $anio_actual = date('y');
+            $anio_actual = date('y'); 
 
+         
             $ultimo = DB::table('formulario_inventario')
-                ->where('CODIGO_EQUIPO', 'like', 'AFR%')
+                ->where('CODIGO_EQUIPO', 'REGEXP', '^AFR[0-9]{5}[0-9]{2}$')
                 ->orderByRaw('CAST(SUBSTRING(CODIGO_EQUIPO, 4, 5) AS UNSIGNED) DESC')
                 ->first();
 
             if ($ultimo) {
-                preg_match('/AFR(\d{5})\d{2}/', $ultimo->CODIGO_EQUIPO, $matches);
-                $consecutivo = intval($matches[1]) + 1;
+                $consecutivo = (int) substr($ultimo->CODIGO_EQUIPO, 3, 5) + 1;
             } else {
                 $consecutivo = 1;
             }
 
-            $codigo_nuevo = 'AFR' . str_pad($consecutivo, 5, '0', STR_PAD_LEFT) . $anio_actual;
+            $codigo_nuevo = 'AFR'
+                . str_pad($consecutivo, 5, '0', STR_PAD_LEFT)
+                . $anio_actual;
 
             return response()->json([
                 'codigo' => $codigo_nuevo,
                 'msj' => 'Código generado correctamente'
             ]);
-        } catch (Exception $e) {
+        } catch (\Throwable $e) {
             return response()->json([
                 'codigo' => null,
                 'msj' => 'Error: ' . $e->getMessage()
             ]);
         }
     }
-
 
 
     public function generarCodigoANF()
