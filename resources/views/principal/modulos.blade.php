@@ -933,10 +933,6 @@
                         $tieneSoloRolAmadellaves = $user->roles->count() === 1 && $user->hasRole('Ama de llaves');
                         $tieneSoloRolLideOperaciones = $user->roles->count() === 1 && $user->hasRole('Líder de Operaciones');
 
-
-
-
-
                         $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion || $tieneSoloRolHSEQ || $tieneSoloRolSoftware || $tieneSoloRolAmadellaves ;
 
                         @endphp
@@ -959,7 +955,6 @@
                                 </div>
                             </a>
                             @endif
-
                             {{-- Compras (SIEMPRE LIBRE, excepto Almacenista que va a Bitácora-GR) --}}
                             @if($tieneSoloRolAlmacenista)
                             <a href="{{ url('/bitacoragr') }}" class="modules__link">
@@ -976,8 +971,6 @@
                                 </div>
                             </a>
                             @endif
-
-
                             {{-- Ventas --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Ventas')">
@@ -992,7 +985,6 @@
                                 </div>
                             </a>
                             @endif
-
                             {{-- Admón --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Admón')">
@@ -1005,7 +997,6 @@
                                 <h2 class="modules__text">Admón</h2>
                             </div>
                             @endif
-
                             {{-- Almacén --}}
                             @if($tieneSoloRolAlmacenista)
                             <a href="{{ url('/inventario') }}" class="modules__link">
@@ -1027,10 +1018,7 @@
                                 </div>
                             </a>
                             @endif
-
                             {{-- Mantenimiento --}}
-
-
                             @if($tieneSoloRolAlmacenista)
                             <a href="{{ url('/mantenimiento') }}" class="modules__link">
                                 <div class="modules__card">

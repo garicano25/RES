@@ -81,7 +81,6 @@
                 <ul class="navbar-nav d-flex align-items-center" style="gap: 10px;">
                     <li class="nav-item d-flex align-items-center">
                         <div class="notification-wrapper">
-
                             <button class="nav__iconButton" id="btnNotificaciones">
                                 <img src="assets/Modulos/img/notificacion.png" alt="Notificación">
                                 <span id="contadorNotificaciones" class="notification-count">0</span>
@@ -125,7 +124,6 @@
                     </li>
                 </ul>
             </div>
-
 
             <style>
                 .nav__iconButton {
@@ -241,9 +239,7 @@
                     margin-bottom: 3px;
                 }
             </style>
-
-
-
+            
         </div>
     </nav>
 

@@ -83,7 +83,6 @@
                 <ul class="navbar-nav d-flex align-items-center" style="gap: 10px;">
                     <li class="nav-item d-flex align-items-center">
                         <div class="notification-wrapper">
-
                             <button class="nav__iconButton" id="btnNotificaciones">
                                 <img src="assets/Modulos/img/notificacion.png" alt="Notificación">
                                 <span id="contadorNotificaciones" class="notification-count">0</span>
@@ -99,17 +98,12 @@
                             </div>
                         </div>
                     </li>
-
                     <li class="nav-item dropdown d-flex align-items-center">
-
                         @auth
                         <a class="nav__iconButton dropdown-toggle" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
                             <i class="bi bi-person-fill" style="font-size: 22px; color:#555;"></i>
-
                         </a>
-
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
                             <li class="dropdown-item text-center">
                                 <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}
@@ -118,9 +112,7 @@
                                 <br>
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
-
                             <li class="dropdown-divider"></li>
-
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                     @csrf
@@ -130,11 +122,8 @@
                                 </form>
                             </li>
                         </ul>
-
                         @endauth
-
                     </li>
-
                 </ul>
             </div>
 
@@ -203,8 +192,6 @@
                     z-index: 9999;
                 }
 
-
-
                 .notification-header {
                     background: #a2a2a2 !important;
                     padding: 8px 12px !important;
@@ -223,8 +210,6 @@
                     padding: 0 !important;
                     line-height: 1 !important;
                 }
-
-
 
                 .notification-body {
                     max-height: 250px;
@@ -248,7 +233,6 @@
                     cursor: pointer;
                 }
 
-
                 .notification-item strong,
                 .notification-item b {
                     font-size: 14px !important;
@@ -259,9 +243,6 @@
                     margin-bottom: 3px;
                 }
             </style>
-
-
-
         </div>
     </nav>
 
@@ -272,14 +253,12 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
                     <ul class="navbar-nav">
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/inventario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Inventario</span><span class="d-none d-lg-inline">Inventario</span>
@@ -313,22 +292,18 @@
                                 </ul>
                             </li>
                         </ul>
-
                         @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/aprobacionalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Autorizar salidas de almacén</span><span class="d-none d-lg-inline">Autorizar salida de almacén</span>
                             </a>
                         </li>
                         @endif
-
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/salidaalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Salida de almacén</span><span class="d-none d-lg-inline">Salida de almacén</span>
                             </a>
                         </li>
-
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -351,13 +326,10 @@
                                     <hr class="dropdown-divider">
                                     <li><a class="dropdown-item" href="{{url('/#')}}">Comercial</a>
                                     </li>
-
                                 </ul>
                             </li>
                         </ul>
-
                         @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
-
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -368,13 +340,10 @@
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{{url('/catalogosinventarios')}}">Catálogo de inventario</a>
                                     </li>
-
                                 </ul>
                             </li>
                         </ul>
-
                         @endif
-
                     </ul>
                 </ul>
             </div>

@@ -17,7 +17,6 @@
     <!-- Bootstrap v.5.2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
 
-
     <!-- Datatables 1.13.1  v.5.2 -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
 
@@ -30,17 +29,13 @@
 
     <!-- Select opcion selectize -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
-
-
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
 
     <link rel="stylesheet" href="assets/css/estilos.css">
     <link rel="stylesheet" href="assets/css/organigrama.css">
-
 
 
 
@@ -98,12 +93,10 @@
                 <ul class="navbar-nav d-flex align-items-center" style="gap: 10px;">
                     <li class="nav-item d-flex align-items-center">
                         <div class="notification-wrapper">
-
                             <button class="nav__iconButton" id="btnNotificaciones">
                                 <img src="assets/Modulos/img/notificacion.png" alt="Notificación">
                                 <span id="contadorNotificaciones" class="notification-count">0</span>
                             </button>
-
                             <div class="notification-panel" id="panelNotificaciones">
                                 <div class="notification-header">
                                     <h4>Notificaciones</h4>
@@ -114,17 +107,12 @@
                             </div>
                         </div>
                     </li>
-
                     <li class="nav-item dropdown d-flex align-items-center">
-
                         @auth
                         <a class="nav__iconButton dropdown-toggle" href="#" id="navbarDropdown"
                             role="button" data-bs-toggle="dropdown" aria-expanded="false">
-
                             <i class="bi bi-person-fill" style="font-size: 22px; color:#555;"></i>
-
                         </a>
-
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown" style="min-width: 250px;">
                             <li class="dropdown-item text-center">
                                 <strong>{{ Auth::user()->EMPLEADO_NOMBRE }}
@@ -133,9 +121,7 @@
                                 <br>
                                 <small>{{ Auth::user()->EMPLEADO_CORREO }}</small>
                             </li>
-
                             <li class="dropdown-divider"></li>
-
                             <li>
                                 <form method="POST" action="{{ route('logout') }}" style="display: inline;">
                                     @csrf
@@ -145,11 +131,8 @@
                                 </form>
                             </li>
                         </ul>
-
                         @endauth
-
                     </li>
-
                 </ul>
             </div>
 
@@ -218,8 +201,6 @@
                     z-index: 9999;
                 }
 
-
-
                 .notification-header {
                     background: #a2a2a2 !important;
                     padding: 8px 12px !important;
@@ -238,8 +219,6 @@
                     padding: 0 !important;
                     line-height: 1 !important;
                 }
-
-
 
                 .notification-body {
                     max-height: 250px;
@@ -262,7 +241,6 @@
                     background: #f0f0f0;
                     cursor: pointer;
                 }
-
 
                 .notification-item strong,
                 .notification-item b {
@@ -295,7 +273,6 @@
                         </a>
                     </li>
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/tablero') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Tablero</span><span class="d-none d-lg-inline">Tablero</span>
@@ -306,7 +283,6 @@
                             <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Información empresa</span><span class="d-none d-lg-inline">Información empresa</span>
                         </a>
                     </li>
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
@@ -319,14 +295,10 @@
                             <li><a class="dropdown-item" href="{{url('/dpt')}}">DPT</a></li>
                             <hr class="dropdown-divider">
                             <li><a class="dropdown-item" href="{{url('/requisiciondepersonal')}}">Requisición de personal </a></li>
-
-
                         </ul>
                     </li>
                     @endif
-
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
@@ -339,10 +311,7 @@
 
                         </ul>
                     </li>
-
                     @endif
-
-
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -355,9 +324,6 @@
                             <li><a class="dropdown-item" href="{{url('/visualizarseleccion')}}">Visualizar </a></li>
                         </ul>
                     </li>
-
-
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span Contrataciónclass="d-none d-lg-inline">Contratación</span>
@@ -369,13 +335,7 @@
                             <li><a class="dropdown-item" href="{{url('/contratacion')}}">Lista de colaboradores</a></li>
                         </ul>
                     </li>
-
                     @endif
-
-
-
-
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#"
                             style="color: #fff; font-weight: bold; text-decoration: none;"
@@ -384,31 +344,23 @@
                             <span class="d-lg-none">Rec.Empleados</span>
                             <span class="d-none d-lg-inline">Rec.Empleados</span>
                         </a>
-
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" href="{{ url('/recempleado') }}">
                                     Rec.Empleados </a>
                             </li>
-
                             {{-- Para líderes --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Líder de Operaciones', 'Administrador']))
-
                             <hr class="dropdown-divider">
-
                             <li>
                                 <a class="dropdown-item" href="{{ url('/solicitudesvobo') }}">
                                     Solicitudes por dar Vo.Bo
                                 </a>
                             </li>
-
                             @endif
-
-
                             {{-- Para administradores --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                             <hr class="dropdown-divider">
-
                             <li>
                                 <a class="dropdown-item" href="{{ url('/solicitudesaprobaciones') }}">
                                     Solicitudes por aprobar
@@ -417,9 +369,7 @@
                             @endif
                         </ul>
                     </li>
-
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span Contrataciónclass="d-none d-lg-inline">Capacitación</span>
@@ -427,23 +377,16 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/brechacompetencia') }}">Brecha de competencia</a></li>
                             <hr class="dropdown-divider">
-
                             <li><a class="dropdown-item" href="{{url('/#')}}">Capacitación</a></li>
                         </ul>
                     </li>
-
                     @endif
-
-
                     {{-- <li class="nav-item dropdown" style="margin-left: 8px;">
                     <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                         <i class="bi bi-clipboard-data-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                     </a>
                 </li> --}}
-
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
-
-
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/desvinculacion') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
@@ -481,8 +424,6 @@
                         </a>
                     </li>
                     @endif
-
-
                 </ul>
             </div>
         </div>
@@ -543,7 +484,6 @@
     </div>
 
 
-
     <!-- Jquery 3.6.4-->
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <!--Bootstrap -->
@@ -559,11 +499,9 @@
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
 
-
     <!-- datepicker -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
-
 
 
     <!-- Dropify -->
@@ -594,7 +532,6 @@
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-
 
 
     @if(request()->is('informacionempresa'))

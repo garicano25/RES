@@ -89,12 +89,10 @@
                 <ul class="navbar-nav d-flex align-items-center" style="gap: 10px;">
                     <li class="nav-item d-flex align-items-center">
                         <div class="notification-wrapper">
-
                             <button class="nav__iconButton" id="btnNotificaciones">
                                 <img src="assets/Modulos/img/notificacion.png" alt="Notificación">
                                 <span id="contadorNotificaciones" class="notification-count">0</span>
                             </button>
-
                             <div class="notification-panel" id="panelNotificaciones">
                                 <div class="notification-header">
                                     <h4>Notificaciones</h4>
@@ -351,9 +349,7 @@
                             </ul>
                         </li>
                         @endif
-
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
-
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -382,9 +378,7 @@
                                 </ul>
                             </li>
                         </ul>
-
                         @endif
-
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
@@ -414,9 +408,7 @@
                                 </ul>
                             </li>
                         </ul>
-
                         @endif
-
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -445,9 +437,7 @@
                                 </ul>
                             </li>
                         </ul>
-
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
-
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
