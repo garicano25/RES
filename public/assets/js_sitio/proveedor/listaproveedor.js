@@ -544,7 +544,6 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
             descuento.prop('checked', true);
             if (row.data().DESCUENTOS_ACTIVIDAD_ECONOMICA == "4") {
                 $("#CUAL_DESCUENTOS").show();
-
             } else {
                 $("#CUAL_DESCUENTOS").hide();
                 
@@ -557,6 +556,8 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
         vinculo.prop('checked', true);
         if (row.data().VINCULO_FAMILIAR?.toUpperCase() === "SI") {
             $("#DIV_VINCULOS").show();
+        } else {
+            $("#DIV_VINCULOS").hide();
         }
     }
 
@@ -565,7 +566,10 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
         servicios.prop('checked', true);
         if (row.data().SERVICIOS_PEMEX?.toUpperCase() === "SI") {
             $("#DIV_NUMEROPROVEEDOR").show();
+        } else {
+            $("#DIV_NUMEROPROVEEDOR").hide();   
         }
+        
         }
         
         
@@ -574,7 +578,10 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
         beneficios.prop('checked', true);
         if (row.data().BENEFICIOS_PERSONA?.toUpperCase() === "SI") {
             $("#PERSONA_EXPUESTA").show();
-        }
+        } else {
+            $("#PERSONA_EXPUESTA").hide();
+
+         }
     }
         
 

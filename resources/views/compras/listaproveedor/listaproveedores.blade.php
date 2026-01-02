@@ -621,7 +621,7 @@
                                     <div class="col-12 mb-3">
                                         <label class="form-label">¿Usted o la compañía tiene vínculos familiares hasta en tercer grado de consanguinidad con personal que laboran en Results In Performance, sus filiales o cualquier tipo de vínculo puede ser personal o laboral que pueda generar un conflicto de interés?</label>
                                         <div class="form-check d-inline-block me-3">
-                                            <input class="form-check-input" type="radio" name="VINCULO_FAMILIAR" id="VINCULO_SI" value="SI" onclick="vinculosres()">
+                                            <input class="form-check-input" type="radio" name="VINCULO_FAMILIAR" id="VINCULO_SI" value="SI">
                                             <label class="form-check-label" for="VINCULO_SI">Si</label>
                                         </div>
                                         <div class="form-check d-inline-block">
@@ -638,7 +638,7 @@
                                     </div>
                                     <div class="col-12 mb-3 d-flex align-items-center">
                                         <div class="form-check me-3">
-                                            <input class="form-check-input" type="radio" name="SERVICIOS_PEMEX" id="SI_NUMEROPROVEEDOR" value="SI" onclick="numeroproveedor()">
+                                            <input class="form-check-input" type="radio" name="SERVICIOS_PEMEX" id="SI_NUMEROPROVEEDOR" value="SI" >
                                             <label class="form-check-label" for="SI_NUMEROPROVEEDOR">Si</label>
                                         </div>
                                         <div class="form-check">
@@ -657,7 +657,7 @@
                                     </div>
                                     <div class="col-12 mb-3 d-flex align-items-center">
                                         <div class="form-check me-3">
-                                            <input class="form-check-input" type="radio" name="BENEFICIOS_PERSONA" id="SI_BENEFICIOS_PERSONA" value="SI" onclick="politicamentexpuesto()">
+                                            <input class="form-check-input" type="radio" name="BENEFICIOS_PERSONA" id="SI_BENEFICIOS_PERSONA" value="SI" >
                                             <label class="form-check-label" for="SI_BENEFICIOS_PERSONA">Si</label>
                                         </div>
                                         <div class="form-check">

@@ -676,7 +676,7 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.18"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.19"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 

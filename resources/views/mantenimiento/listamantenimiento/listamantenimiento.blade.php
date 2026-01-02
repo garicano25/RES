@@ -152,8 +152,6 @@
                                                         <label> Foto del ítem </label>
                                                         <input type="file" accept="image/jpeg,image/x-png,image/gif" id="FOTO_EQUIPO" name="FOTO_EQUIPO" data-allowed-file-extensions="jpg png JPG PNG" data-height="240" data-default-file="" />
                                                     </div>
-
-
                                                     <div class="form-group mt-5 text-center" id="MOSTRAR_ALERTA_DOCUMENTOS" style="display: none;">
                                                         <div class="table-responsive mt-3">
                                                             <table class="table table-bordered table-striped" id="tablaDocumentos">
@@ -245,8 +243,6 @@
                                                     </div>
                                                 </div>
 
-
-
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
                                                         <label> U.M. *</label>
@@ -254,15 +250,12 @@
                                                     </div>
                                                 </div>
 
-
-
                                                 <div class="col-6 mt-2">
                                                     <div class="form-group">
                                                         <label> Ubicación *</label>
                                                         <input type="text" step="any" class="form-control" id="UBICACION_EQUIPO" name="UBICACION_EQUIPO" required>
                                                     </div>
                                                 </div>
-
 
                                                 <div class="col-4 mt-2">
                                                     <div class="form-group">
@@ -280,7 +273,6 @@
                                                     </select>
                                                 </div>
 
-
                                                 <div class="col-4 mt-2">
                                                     <div class="form-group">
                                                         <label>Fecha de adquisición *</label>
@@ -293,9 +285,6 @@
 
                                                 <div class="col-12 mt-2" id="DESPUES_2024" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
-
-
-
                                                     <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
                                                         <option value="">Seleccionar proveedor</option>
                                                         <optgroup label="Proveedor oficial">
@@ -321,7 +310,6 @@
                                                     </select>
                                                 </div>
 
-
                                                 <div class="col-12 mt-2" id="ANTES_2024" style="display: none;">
                                                     <label class="form-label">Proveedor</label>
                                                     <input type="text" class="form-control" id="PROVEEDOR_ANTESDEL2024">
@@ -339,7 +327,6 @@
                                                         <input type="text" class="form-control" id="TOTAL_EQUIPO" name="TOTAL_EQUIPO">
                                                     </div>
                                                 </div>
-
 
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
@@ -366,15 +353,12 @@
                                                     </select>
                                                 </div>
 
-
                                                 <div class="col-12 mt-3">
                                                     <div class="form-group">
                                                         <label> Observación</label>
                                                         <textarea class="form-control" id="OBSERVACION_EQUIPO" name="OBSERVACION_EQUIPO" rows="5" required></textarea>
                                                     </div>
                                                 </div>
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -391,7 +375,6 @@
                                     Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                                 </button>
                             </ol>
-
                             <div class="card-body">
                                 <div class="card-body position-relative" id="tabla_activo" style="display: block;">
                                     <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -442,7 +425,6 @@
                                             <input class="form-check-input" type="radio" name="REQUIERE_FECHA" id="fechasi" value="1" required>
                                             <label class="form-check-label" for="fechasi">Sí</label>
                                         </div>
-
                                         <div class="form-check form-check-inline">
                                             <input class="form-check-input" type="radio" name="REQUIERE_FECHA" id="fechano" value="2">
                                             <label class="form-check-label" for="fechano">No</label>
@@ -469,12 +451,10 @@
                                                 <input class="form-check-input" type="radio" name="INDETERMINADO_DOCUMENTO" id="indeterminadosi" value="1" required>
                                                 <label class="form-check-label" for="indeterminadosi">Sí</label>
                                             </div>
-
                                             <div class="form-check form-check-inline">
                                                 <input class="form-check-input" type="radio" name="INDETERMINADO_DOCUMENTO" id="indeterminadono" value="2">
                                                 <label class="form-check-label" for="indeterminadono">No</label>
                                             </div>
-
                                         </div>
 
                                         <div class="col-4 mt-3">
@@ -484,14 +464,9 @@
                                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                             </div>
                                         </div>
-
-
                                     </div>
-
                                 </div>
                             </div>
-
-
 
                             <div class="col-12 mb-3">
                                 <label class="form-label">Subir Evidencia (PDF) *</label>
