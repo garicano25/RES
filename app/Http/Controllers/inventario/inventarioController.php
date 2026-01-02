@@ -163,16 +163,16 @@ class inventarioController extends Controller
     public function generarCodigoAF()
     {
         try {
-            $anio_actual = date('y'); 
+            $anio_actual = date('y');
 
             $ultimo = DB::table('formulario_inventario')
                 ->where('CODIGO_EQUIPO', 'like', 'AFR%')
-                ->orderBy('CODIGO_EQUIPO', 'desc')
+                ->orderByRaw('CAST(SUBSTRING(CODIGO_EQUIPO, 4, 5) AS UNSIGNED) DESC')
                 ->first();
 
             if ($ultimo) {
                 preg_match('/AFR(\d{5})\d{2}/', $ultimo->CODIGO_EQUIPO, $matches);
-                $consecutivo = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
+                $consecutivo = intval($matches[1]) + 1;
             } else {
                 $consecutivo = 1;
             }
@@ -190,6 +190,7 @@ class inventarioController extends Controller
             ]);
         }
     }
+
 
 
     public function generarCodigoANF()
