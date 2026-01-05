@@ -25,21 +25,10 @@
 
 
     /* ========== TABLA BITÁCORA GENERAL ========== */
-    /* #Tablabitacora {
-        table-layout: fixed !important;
-        width: 100% !important;
-    }
-
-    #Tablabitacora th,
-    #Tablabitacora td {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        vertical-align: middle;
-    } */
+ 
 
     /* ========== EXCEPCIÓN: COLUMNA JUSTIFICACIÓN ========== */
-    #Tablabitacora td.col-justificacion {
+    #Tablabitacoramrhistorial td.col-justificacion {
         white-space: normal !important;
         overflow: visible !important;
         text-overflow: unset !important;
@@ -129,7 +118,7 @@
 <div class="contenedor-contenido">
 
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de consecutivos MR - Actual</h3>
+        <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de consecutivos MR - Historial</h3>
     </ol>
 
 
@@ -141,7 +130,7 @@
             </div>
             <div class="tabla-scroll-bottom">
                 <div class="table-responsive">
-                    <table id="Tablabitacora" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
+                    <table id="Tablabitacoramrhistorial" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
@@ -700,7 +689,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" id="btnGuardarTodo">Guardar Todo</button>
+                    <button type="button" class="btn btn-success" id="btnGuardarTodo" style="display: none;">Guardar Todo</button>
                 </div>
             </form>
 

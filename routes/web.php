@@ -95,6 +95,7 @@ use App\Http\Controllers\ordentrabajo\otController;
 
 // CONTROLADORES DE MR
 use App\Http\Controllers\requisicionmaterial\mrController;
+use App\Http\Controllers\requisicionmaterial\bitacora2025Controller;
 
 // CONTROLADORES DE PROVEEDORES
 use App\Http\Controllers\proveedor\directorioController;
@@ -729,6 +730,12 @@ Route::get('/mostrarcotizacionq1/{id}', [mrController::class, 'mostrarcotizacion
 Route::get('/mostrarcotizacionq2/{id}', [mrController::class, 'mostrarcotizacionq2']);
 Route::get('/mostrarcotizacionq3/{id}', [mrController::class, 'mostrarcotizacionq3']);
 Route::get('/mr/{id}/generar-pdf', [pdfController::class, 'descargarPDF'])->name('mr.generar.pdf');
+
+//==============================================  BITACORA M.R  2025 ============================================== 
+
+Route::get('/bitacoramrhistorial', [bitacora2025Controller::class, 'index']);
+Route::get('/Tablabitacoramrhistorial', [bitacora2025Controller::class, 'Tablabitacoramrhistorial']);
+
 
 //==============================================   DIRECTORIO INTERNO  ============================================== 
 

@@ -239,7 +239,7 @@
                     margin-bottom: 3px;
                 }
             </style>
-            
+
         </div>
     </nav>
 
@@ -263,7 +263,14 @@
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/mantenimiento') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Mantenimiento</span><span class="d-none d-lg-inline">Mantenimiento</span>
+                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Mantenimiento de equipos</span><span class="d-none d-lg-inline">Mantenimiento de equipos</span>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link BOTON" href="{{ url('/#') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                                <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Mantenimiento de mobiliario</span><span class="d-none d-lg-inline">Mantenimiento de mobiliario</span>
                             </a>
                         </li>
                     </ul>

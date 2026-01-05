@@ -220,7 +220,6 @@ class mrController extends Controller
         ]);
     }
 
-
     public function rechazar(Request $request)
     {
         $request->validate([
@@ -449,7 +448,64 @@ class mrController extends Controller
     public function Tablabitacora()
     {
         try {
-            $tabla = mrModel::whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->get();
+
+            $fechaInicio = '2026-01-01';
+            $fechaFin    = '2026-12-31';
+
+            $tabla = mrModel::whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
+                ->where(function ($query) use ($fechaInicio, $fechaFin) {
+
+                    $query->where(function ($q) use ($fechaInicio, $fechaFin) {
+                        $q->where('ESTADO_APROBACION', 'Rechazada')
+                            ->whereBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin]);
+                    })
+
+                        ->orWhere(function ($q) use ($fechaInicio, $fechaFin) {
+
+                            $q->where(function ($x) use ($fechaInicio, $fechaFin) {
+                                $x->where('ESTADO_APROBACION', 'Aprobada')
+                                    ->whereBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin]);
+                            })
+
+                                ->orWhere(function ($x) use ($fechaInicio, $fechaFin) {
+                                    $x->where('ESTADO_APROBACION', 'Aprobada')
+                                        ->whereNotBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin])
+                                        ->where(function ($y) {
+
+                                            $y->whereNotExists(function ($sub) {
+                                                $sub->select(DB::raw(1))
+                                                    ->from('hoja_trabajo')
+                                                    ->whereColumn(
+                                                        'hoja_trabajo.NO_MR',
+                                                        'formulario_requisiconmaterial.NO_MR'
+                                                    );
+                                            })
+
+                                                ->orWhere(function ($sub2) {
+                                                    $sub2->whereExists(function ($s1) {
+                                                        $s1->select(DB::raw(1))
+                                                            ->from('hoja_trabajo')
+                                                            ->whereColumn(
+                                                                'hoja_trabajo.NO_MR',
+                                                                'formulario_requisiconmaterial.NO_MR'
+                                                            );
+                                                    })
+                                                        ->whereNotExists(function ($s2) {
+                                                            $s2->select(DB::raw(1))
+                                                                ->from('formulario_bitacoragr')
+                                                                ->whereColumn(
+                                                                    'formulario_bitacoragr.NO_MR',
+                                                                    'formulario_requisiconmaterial.NO_MR'
+                                                                );
+                                                        });
+                                                });
+                                        });
+                                });
+                        });
+                })
+                ->get();
+
+
 
             foreach ($tabla as $value) {
                 $no_mr = $value->NO_MR;
@@ -472,7 +528,9 @@ class mrController extends Controller
                     $value->FECHA_GR = '—';
                 }
 
-               
+
+
+
 
                 $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
                 $total = $hojas->count();
@@ -520,7 +578,7 @@ class mrController extends Controller
                     }
                 }
 
-                
+
 
                 if ($value->ESTADO_FINAL === 'En proceso') {
                     $value->COLOR = '#fff3cd'; 
@@ -538,13 +596,11 @@ class mrController extends Controller
                     $value->COLOR = '#fff3cd'; 
                 }
 
-                
-
 
                     $value->DISABLED_SELECT = false;
                 }
 
-                
+
 
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
@@ -571,7 +627,7 @@ class mrController extends Controller
                     ';
                 }
 
-             
+
                 if ($value->ESTADO_APROBACION === 'Rechazada') {
                     $value->COLOR = '#f8d7da'; 
                 }
@@ -589,6 +645,7 @@ class mrController extends Controller
             ]);
         }
     }
+
 
 
 

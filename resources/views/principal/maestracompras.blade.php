@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
-    
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <!-- Select 2 -->
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
@@ -300,11 +300,31 @@
                             </ul>
                         </li>
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
-                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                        <!-- <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/bitacora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Bitácora de consecutivos - MR</span><span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
                             </a>
-                        </li>
+                        </li> -->
+
+
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown" style="margin-left: -2px;">
+                                <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <span class="d-lg-none">Bitácora de consecutivos - MR</span>
+                                    <span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="{{url('/bitacora')}}">Actual</a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/bitacoramrhistorial')}}">Historial </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+
+
                         @endif
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
                         <li class="nav-item dropdown" style="margin-left: -2px;">
@@ -570,7 +590,11 @@
     @endif
 
     @if(request()->is('bitacora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.25"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.26"></script>
+    @endif
+
+    @if(request()->is('bitacoramrhistorial'))
+    <script src="/assets/js_sitio/requisiconmaterial/bitacorahistorial.js"></script>
     @endif
 
     @if(request()->is('bancoproveedores'))

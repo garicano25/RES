@@ -26,7 +26,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 
 
 
-var Tablabitacora = $("#Tablabitacora").DataTable({
+var Tablabitacoramrhistorial = $("#Tablabitacoramrhistorial").DataTable({
     language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
@@ -40,17 +40,17 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
     info: true,   
     scrollY: false,
     scrollCollapse: false,
-    fixedHeader: false,    
+    fixedHeader: false,
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',
         method: 'GET',
-        url: '/Tablabitacora',
+        url: '/Tablabitacoramrhistorial',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablabitacora.columns.adjust().draw();
+            Tablabitacoramrhistorial.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -134,10 +134,10 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
   infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;
     },
-  drawCallback: function () {
+drawCallback: function () {
     const topScroll = document.querySelector('.tabla-scroll-top');
     const scrollInner = document.querySelector('.tabla-scroll-top .scroll-inner');
-    const table = document.querySelector('#Tablabitacora');
+    const table = document.querySelector('#Tablabitacoramrhistorial');
     const scrollBody = document.querySelector('.dataTables_scrollBody');
 
     if (!topScroll || !scrollInner || !table || !scrollBody) return;
@@ -175,9 +175,9 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
 
 
 
-$('#Tablabitacora tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablabitacoramrhistorial tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablabitacora.row(tr);
+    var row = Tablabitacoramrhistorial.row(tr);
     ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
 
     cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
@@ -363,8 +363,8 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 
 
-$('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () {
-  const row = Tablabitacora.row($(this).closest('tr')).data();
+$('#Tablabitacoramrhistorial tbody').on('click', 'td>button.VISUALIZAR', async function () {
+  const row = Tablabitacoramrhistorial.row($(this).closest('tr')).data();
   const no_mr = row.NO_MR;
 
   if (!no_mr) {
@@ -1253,7 +1253,7 @@ $('#btnGuardarTodo').on('click', function () {
           if (data.success) {
             Swal.fire('Éxito', 'Hoja de trabajo guardada con éxito', 'success');
             $('#modalMateriales').modal('hide');
-                $('#Tablabitacora').DataTable().ajax.reload(null, false);
+                $('#Tablabitacoramrhistorial').DataTable().ajax.reload(null, false);
 
           } else {
             Swal.fire('Error', 'Ocurrió un error al guardar', 'error');
