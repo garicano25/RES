@@ -457,8 +457,7 @@ class mrController extends Controller
 
                     /*
                 |--------------------------------------------------------------------------
-                | 🔴 RECHAZADAS
-                | - SOLO aparecen si están DENTRO del rango de fecha
+                | 🔴 RECHAZADAS → SOLO DENTRO DE FECHA
                 |--------------------------------------------------------------------------
                 */
                     $query->where(function ($q) use ($fechaInicio, $fechaFin) {
@@ -473,25 +472,25 @@ class mrController extends Controller
                 */
                         ->orWhere(function ($q) use ($fechaInicio, $fechaFin) {
 
-                            /*
-                    | Aprobadas DENTRO del rango → SIEMPRE aparecen
-                    */
+                            // ✅ Aprobadas dentro de fecha → siempre
                             $q->where(function ($x) use ($fechaInicio, $fechaFin) {
                                 $x->where('ESTADO_APROBACION', 'Aprobada')
                                     ->whereBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin]);
                             })
 
-                                /*
-                    | Aprobadas FUERA del rango → reglas especiales
-                    */
+                                // ⚠️ Aprobadas fuera de fecha → reglas especiales
                                 ->orWhere(function ($x) use ($fechaInicio, $fechaFin) {
                                     $x->where('ESTADO_APROBACION', 'Aprobada')
                                         ->whereNotBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin])
                                         ->where(function ($y) {
 
                                             /*
-                              | 1️⃣ NO tiene registros en hoja_trabajo → APARECE
+                              | ❌ EXCLUIR SOLO SI:
+                              | - Tiene hoja_trabajo
+                              | - Y TODAS están Rechazadas
                               */
+
+                                            // ✅ NO tiene hojas → aparece
                                             $y->whereNotExists(function ($sub) {
                                                 $sub->select(DB::raw(1))
                                                     ->from('hoja_trabajo')
@@ -501,34 +500,29 @@ class mrController extends Controller
                                                     );
                                             })
 
-                                                /*
-                              | 2️⃣ Tiene hoja_trabajo PERO:
-                              |     - Existe al menos UNA hoja APROBADA
-                              |     - Y NO tiene registros en formulario_bitacoragr
-                              */
-                                                ->orWhere(function ($z) {
-
-                                                    // ✔ Existe al menos una hoja APROBADA
-                                                    $z->whereExists(function ($s1) {
-                                                        $s1->select(DB::raw(1))
-                                                            ->from('hoja_trabajo')
-                                                            ->whereColumn(
-                                                                'hoja_trabajo.NO_MR',
-                                                                'formulario_requisiconmaterial.NO_MR'
-                                                            )
-                                                            ->where('ESTADO_APROBACION', 'Aprobada');
-                                                    })
-
-                                                        // ❌ NO tiene GR
-                                                        ->whereNotExists(function ($s2) {
-                                                            $s2->select(DB::raw(1))
-                                                                ->from('formulario_bitacoragr')
-                                                                ->whereColumn(
-                                                                    'formulario_bitacoragr.NO_MR',
-                                                                    'formulario_requisiconmaterial.NO_MR'
-                                                                );
+                                                // ✅ Tiene hojas y al menos UNA NO es Rechazada
+                                                ->orWhereExists(function ($sub) {
+                                                    $sub->select(DB::raw(1))
+                                                        ->from('hoja_trabajo')
+                                                        ->whereColumn(
+                                                            'hoja_trabajo.NO_MR',
+                                                            'formulario_requisiconmaterial.NO_MR'
+                                                        )
+                                                        ->where(function ($w) {
+                                                            $w->whereNull('ESTADO_APROBACION')
+                                                                ->orWhere('ESTADO_APROBACION', '!=', 'Rechazada');
                                                         });
                                                 });
+                                        })
+
+                                        // ❌ Y además NO debe tener GR
+                                        ->whereNotExists(function ($sub) {
+                                            $sub->select(DB::raw(1))
+                                                ->from('formulario_bitacoragr')
+                                                ->whereColumn(
+                                                    'formulario_bitacoragr.NO_MR',
+                                                    'formulario_requisiconmaterial.NO_MR'
+                                                );
                                         });
                                 });
                         });
