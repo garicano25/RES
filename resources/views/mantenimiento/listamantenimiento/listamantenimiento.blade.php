@@ -301,7 +301,20 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12 mt-2" id="DESPUES_2024" style="display: block;">
+
+
+
+                                                <div class="col-4 mt-2">
+                                                    <label>¿El proveedor está dado de alta? </label>
+                                                    <select class="form-control" name="PROVEEDOR_ALTA" id="PROVEEDOR_ALTA">
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Sí</option>
+                                                        <option value="2">No</option>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-12 mt-2" id="PROVEEDORES_ACTIVOS" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
                                                     <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
                                                         <option value="">Seleccionar proveedor</option>
@@ -319,6 +332,7 @@
                                                             </option>
                                                             @endforeach
                                                         </optgroup>
+
                                                         <optgroup label="Extra">
                                                             <option value="Nota de remisión">Nota de remisión</option>
                                                             <option value="N/A">N/A</option>
@@ -326,10 +340,14 @@
                                                         </optgroup>
                                                     </select>
                                                 </div>
-                                                <div class="col-12 mt-2" id="ANTES_2024" style="display: none;">
+
+
+                                                <div class="col-12 mt-2" id="ESCRIBIR_PROVEEDOR" style="display: none;">
                                                     <label class="form-label">Proveedor</label>
-                                                    <input type="text" class="form-control" id="PROVEEDOR_ANTESDEL2024">
+                                                    <input type="text" class="form-control" id="NOMBRE_PROVEEDOR" name="NOMBRE_PROVEEDOR" required>
                                                 </div>
+
+                                                
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Precio Unitario (MXN)</label>

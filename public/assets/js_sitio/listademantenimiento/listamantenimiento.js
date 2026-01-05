@@ -317,18 +317,20 @@ $('#Tablamantenimiento tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
-       let fechaAdquisicion = row.data().FECHA_ADQUISICION || "";
-    if (fechaAdquisicion === "2024-12-31") {
-        $("#ANTES_2024").show();
-        $("#DESPUES_2024").hide();
+     if (row.data().PROVEEDOR_ALTA === '1') {
 
-        $("#PROVEEDOR_ANTESDEL2024").val(row.data().PROVEEDOR_EQUIPO || "");
+    $('#PROVEEDORES_ACTIVOS').show();
+    $('#ESCRIBIR_PROVEEDOR').hide();
+
+    } else if (row.data().PROVEEDOR_ALTA === '2') {
+
+        $('#PROVEEDORES_ACTIVOS').hide();
+        $('#ESCRIBIR_PROVEEDOR').show();
+
     } else {
-        $("#ANTES_2024").hide();
-        $("#DESPUES_2024").show();
-        $("#PROVEEDOR_EQUIPO").val(row.data().PROVEEDOR_EQUIPO || "");
+        $('#PROVEEDORES_ACTIVOS').show();
+        $('#ESCRIBIR_PROVEEDOR').hide();
     }
-
        
     if (row.data().TIPO_EQUIPO === 'Vehículos') {
         $('#DATOS_VEHICULOS').show();
@@ -440,19 +442,20 @@ $(document).ready(function() {
         calcularTotal();
                    
         
-       let fechaAdquisicion = row.data().FECHA_ADQUISICION || "";
-        if (fechaAdquisicion === "2024-12-31") {
-            $("#ANTES_2024").show();
-            $("#DESPUES_2024").hide();
+       if (row.data().PROVEEDOR_ALTA === '1') {
 
-            $("#PROVEEDOR_ANTESDEL2024").val(row.data().PROVEEDOR_EQUIPO || "");
-        } else {
-            $("#ANTES_2024").hide();
-            $("#DESPUES_2024").show();
+    $('#PROVEEDORES_ACTIVOS').show();
+    $('#ESCRIBIR_PROVEEDOR').hide();
 
-            $("#PROVEEDOR_EQUIPO").val(row.data().PROVEEDOR_EQUIPO || "");
-        }
+    } else if (row.data().PROVEEDOR_ALTA === '2') {
 
+        $('#PROVEEDORES_ACTIVOS').hide();
+        $('#ESCRIBIR_PROVEEDOR').show();
+
+    } else {
+        $('#PROVEEDORES_ACTIVOS').show();
+        $('#ESCRIBIR_PROVEEDOR').hide();
+    }
         
         
 
@@ -501,6 +504,29 @@ document.addEventListener("DOMContentLoaded", function () {
     unitario.addEventListener("input", calcularTotal);
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const proveedorAlta = document.getElementById("PROVEEDOR_ALTA");
+    const proveedoresActivos = document.getElementById("PROVEEDORES_ACTIVOS");
+    const escribirProveedor = document.getElementById("ESCRIBIR_PROVEEDOR");
+
+    proveedoresActivos.style.display = "none";
+    escribirProveedor.style.display = "none";
+
+    proveedorAlta.addEventListener("change", function () {
+
+        if (this.value === "1") {
+            proveedoresActivos.style.display = "block";
+            escribirProveedor.style.display = "none";
+        }
+
+        if (this.value === "2") {
+            proveedoresActivos.style.display = "none";
+            escribirProveedor.style.display = "block";
+        }
+
+    });
+});
 
 
 ////////////////////////  ENTRADA INVENTARIO TAB 2 ////////////////////////
