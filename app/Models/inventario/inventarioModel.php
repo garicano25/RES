@@ -35,8 +35,12 @@ class inventarioModel extends Model
         'PLACAS_VEHICULOS',
         'COLOR_VEHICULO',
         'NUMERO_POLIZA',
-        'ASIGNADO'
-
+        'ASIGNADO',
+        'ENTIDAD_POLIZA',
+        'INICIOVIGENCIA_POLIZA',
+        'FINVIGENCIA_POLIZA',
+        'PROVEEDOR_ALTA',
+        'NOMBRE_PROVEEDOR'
 
     ];
 }

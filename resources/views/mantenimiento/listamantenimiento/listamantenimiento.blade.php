@@ -209,24 +209,49 @@
                                                 <div class="col-12 mt-2" id="DATOS_VEHICULOS" style="display: none;">
                                                     <div class="row">
 
-                                                        <div class="col-4 mt-2">
+                                                        <div class="col-6 mt-2">
                                                             <div class="form-group">
                                                                 <label>Placas *</label>
                                                                 <input type="text" class="form-control" id="PLACAS_VEHICULOS" name="PLACAS_VEHICULOS" required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-4 mt-2">
+                                                        <div class="col-6 mt-2">
                                                             <div class="form-group">
                                                                 <label>Color *</label>
                                                                 <input type="text" class="form-control" id="COLOR_VEHICULO" name="COLOR_VEHICULO" required>
                                                             </div>
                                                         </div>
-                                                        <div class="col-4 mt-2">
+                                                        <div class="col-3 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Entidad *</label>
+                                                                <input type="text" class="form-control" id="ENTIDAD_POLIZA" name="ENTIDAD_POLIZA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 mt-2">
                                                             <div class="form-group">
                                                                 <label>Número de Póliza *</label>
                                                                 <input type="text" class="form-control" id="NUMERO_POLIZA" name="NUMERO_POLIZA" required>
                                                             </div>
                                                         </div>
+                                                        <div class="col-3 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Inicio de Vigencia *</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="INICIOVIGENCIA_POLIZA" name="INICIOVIGENCIA_POLIZA" required>
+                                                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Fin de Vigencia *</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FINVIGENCIA_POLIZA" name="FINVIGENCIA_POLIZA" required>
+                                                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-2 mt-2">

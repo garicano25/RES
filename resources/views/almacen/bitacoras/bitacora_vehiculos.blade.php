@@ -163,15 +163,46 @@
 
                     <div class="col-12 mt-3">
                         <div class="row">
-                            <div class="col-4">
-                                <label class="form-label">Número de Póliza</label>
-                                <input type="text" class="form-control" id="NUMERO_POLIZA" name="NUMERO_POLIZA">
+
+
+
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Entidad póliza *</label>
+                                    <input type="text" class="form-control" id="ENTIDAD_POLIZA" name="ENTIDAD_POLIZA" required>
+                                </div>
                             </div>
-                            <div class="col-4">
+                            <div class="col-3 ">
+                                <div class="form-group">
+                                    <label>Número de póliza *</label>
+                                    <input type="text" class="form-control" id="NUMERO_POLIZA" name="NUMERO_POLIZA" required>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Inicio de Vigencia *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="INICIOVIGENCIA_POLIZA" name="INICIOVIGENCIA_POLIZA" required>
+                                        <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <div class="form-group">
+                                    <label>Fin de Vigencia *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FINVIGENCIA_POLIZA" name="FINVIGENCIA_POLIZA" required>
+                                        <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="col-6  mt-3">
                                 <label class="form-label">No. de licencia</label>
                                 <input type="text" class="form-control" id="NOLICENCIA_VEHICULO" name="NOLICENCIA_VEHICULO">
                             </div>
-                            <div class="col-4">
+                            <div class="col-6 mt-3">
                                 <label class="form-label">Fecha de vencimiento </label>
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAVENCIMIENTO_VEHICULO" name="FECHAVENCIMIENTO_VEHICULO">

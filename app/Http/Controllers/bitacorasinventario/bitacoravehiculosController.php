@@ -382,6 +382,11 @@ class bitacoravehiculosController extends Controller
                     'CODIGO_EQUIPO'  => $inventario->CODIGO_EQUIPO ?? '',
                     'NUMERO_POLIZA'  => $inventario->NUMERO_POLIZA ?? '',
 
+                    'ENTIDAD_POLIZA'  => $inventario->ENTIDAD_POLIZA ?? '',
+                    'INICIOVIGENCIA_POLIZA'  => $inventario->INICIOVIGENCIA_POLIZA ?? '',
+                    'FINVIGENCIA_POLIZA'  => $inventario->FINVIGENCIA_POLIZA ?? '',
+
+
                 ]
             ]);
         } catch (\Exception $e) {
@@ -433,6 +438,9 @@ class bitacoravehiculosController extends Controller
                         'PLACAS_VEHICULO' => $bitacora->PLACAS_VEHICULO,
                         'NOINVENTARIO_VEHICULO'  => $bitacora->NOINVENTARIO_VEHICULO,
                         'NUMERO_POLIZA'  => $bitacora->NUMERO_POLIZA,
+                        'ENTIDAD_POLIZA'  => $bitacora->ENTIDAD_POLIZA,
+                        'INICIOVIGENCIA_POLIZA'  => $bitacora->INICIOVIGENCIA_POLIZA,
+                        'FINVIGENCIA_POLIZA'  => $bitacora->FINVIGENCIA_POLIZA,
                         'NOLICENCIA_VEHICULO'  => $bitacora->NOLICENCIA_VEHICULO,
                         'FECHAVENCIMIENTO_VEHICULO' => $bitacora->FECHAVENCIMIENTO_VEHICULO,
                         'KILOMETRAJE_SALIDA_VEHICULOS' => $bitacora->KILOMETRAJE_SALIDA_VEHICULOS,

@@ -16,12 +16,10 @@
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
         <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-card-list"></i>&nbsp;Bitácora de consumibles</h3>
-
     </ol>
 
     <div class="card-body">
         <table id="Tablabitacoraconsumibles" class="table table-hover table-bordered text-center w-100 TableCustom">
-
         </table>
     </div>
 

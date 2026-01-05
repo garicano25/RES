@@ -226,6 +226,23 @@ $(document).on('click', '.editarMaterial', function () {
                         if (!$("#NUMERO_POLIZA").val()) {
                             $("#NUMERO_POLIZA").val(resp.data.NUMERO_POLIZA);
                         }
+
+
+                         if (!$("#ENTIDAD_POLIZA").val()) {
+                            $("#ENTIDAD_POLIZA").val(resp.data.ENTIDAD_POLIZA);
+                        }
+
+
+                         if (!$("#INICIOVIGENCIA_POLIZA").val()) {
+                            $("#INICIOVIGENCIA_POLIZA").val(resp.data.INICIOVIGENCIA_POLIZA);
+                        }
+
+
+                         if (!$("#FINVIGENCIA_POLIZA").val()) {
+                            $("#FINVIGENCIA_POLIZA").val(resp.data.FINVIGENCIA_POLIZA);
+                        }
+
+
                     }
                 });
                     
@@ -285,6 +302,9 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#PLACAS_VEHICULO").val(material.PLACAS_VEHICULO);
                 $("#NOINVENTARIO_VEHICULO").val(material.NOINVENTARIO_VEHICULO);
                 $("#NUMERO_POLIZA").val(material.NUMERO_POLIZA);
+                $("#ENTIDAD_POLIZA").val(material.ENTIDAD_POLIZA);
+                $("#INICIOVIGENCIA_POLIZA").val(material.INICIOVIGENCIA_POLIZA);
+                $("#FINVIGENCIA_POLIZA").val(material.FINVIGENCIA_POLIZA);
                 $("#NOLICENCIA_VEHICULO").val(material.NOLICENCIA_VEHICULO);
                 $("#FECHAVENCIMIENTO_VEHICULO").val(material.FECHAVENCIMIENTO_VEHICULO);
                 $("#KILOMETRAJE_SALIDA_VEHICULOS").val(material.KILOMETRAJE_SALIDA_VEHICULOS);
@@ -501,8 +521,20 @@ $(document).on('click', '.visualizarMaterial', function () {
                             $("#NOINVENTARIO_VEHICULO").val(resp.data.CODIGO_EQUIPO);
                         }
 
-                         if (!$("#NUMERO_POLIZA").val()) {
+                        if (!$("#NUMERO_POLIZA").val()) {
                             $("#NUMERO_POLIZA").val(resp.data.NUMERO_POLIZA);
+                        }
+
+                        if (!$("#ENTIDAD_POLIZA").val()) {
+                            $("#ENTIDAD_POLIZA").val(resp.data.ENTIDAD_POLIZA);
+                        }
+
+                        if (!$("#INICIOVIGENCIA_POLIZA").val()) {
+                            $("#INICIOVIGENCIA_POLIZA").val(resp.data.INICIOVIGENCIA_POLIZA);
+                        }
+
+                        if (!$("#FINVIGENCIA_POLIZA").val()) {
+                            $("#FINVIGENCIA_POLIZA").val(resp.data.FINVIGENCIA_POLIZA);
                         }
                     }
                 });
@@ -563,6 +595,9 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#PLACAS_VEHICULO").val(material.PLACAS_VEHICULO);
                 $("#NOINVENTARIO_VEHICULO").val(material.NOINVENTARIO_VEHICULO);
                 $("#NUMERO_POLIZA").val(material.NUMERO_POLIZA);
+                $("#ENTIDAD_POLIZA").val(material.ENTIDAD_POLIZA);
+                $("#INICIOVIGENCIA_POLIZA").val(material.INICIOVIGENCIA_POLIZA);
+                $("#FINVIGENCIA_POLIZA").val(material.FINVIGENCIA_POLIZA);
                 $("#NOLICENCIA_VEHICULO").val(material.NOLICENCIA_VEHICULO);
                 $("#FECHAVENCIMIENTO_VEHICULO").val(material.FECHAVENCIMIENTO_VEHICULO);
                 $("#KILOMETRAJE_SALIDA_VEHICULOS").val(material.KILOMETRAJE_SALIDA_VEHICULOS);

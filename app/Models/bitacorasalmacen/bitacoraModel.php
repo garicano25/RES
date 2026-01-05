@@ -125,7 +125,10 @@ class bitacoraModel extends Model
         'FIRMA_VALIDADO_POR',
         'RETORNO_VEHICULOS',
         'DANIOS_UNIDAD_JSON',
-        'NUMERO_POLIZA'
+        'NUMERO_POLIZA',
+        'ENTIDAD_POLIZA',
+        'INICIOVIGENCIA_POLIZA',
+        'FINVIGENCIA_POLIZA'
 
 
 
