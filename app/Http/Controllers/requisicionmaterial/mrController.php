@@ -455,23 +455,43 @@ class mrController extends Controller
             $tabla = mrModel::whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
                 ->where(function ($query) use ($fechaInicio, $fechaFin) {
 
+                    /*
+                |--------------------------------------------------------------------------
+                | 🔴 RECHAZADAS
+                | - SOLO aparecen si están DENTRO del rango de fecha
+                |--------------------------------------------------------------------------
+                */
                     $query->where(function ($q) use ($fechaInicio, $fechaFin) {
                         $q->where('ESTADO_APROBACION', 'Rechazada')
                             ->whereBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin]);
                     })
 
+                        /*
+                |--------------------------------------------------------------------------
+                | 🟢 APROBADAS
+                |--------------------------------------------------------------------------
+                */
                         ->orWhere(function ($q) use ($fechaInicio, $fechaFin) {
 
+                            /*
+                    | Aprobadas DENTRO del rango → SIEMPRE aparecen
+                    */
                             $q->where(function ($x) use ($fechaInicio, $fechaFin) {
                                 $x->where('ESTADO_APROBACION', 'Aprobada')
                                     ->whereBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin]);
                             })
 
+                                /*
+                    | Aprobadas FUERA del rango → reglas especiales
+                    */
                                 ->orWhere(function ($x) use ($fechaInicio, $fechaFin) {
                                     $x->where('ESTADO_APROBACION', 'Aprobada')
                                         ->whereNotBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin])
                                         ->where(function ($y) {
 
+                                            /*
+                              | 1️⃣ NO tiene registros en hoja_trabajo → APARECE
+                              */
                                             $y->whereNotExists(function ($sub) {
                                                 $sub->select(DB::raw(1))
                                                     ->from('hoja_trabajo')
@@ -481,15 +501,25 @@ class mrController extends Controller
                                                     );
                                             })
 
-                                                ->orWhere(function ($sub2) {
-                                                    $sub2->whereExists(function ($s1) {
+                                                /*
+                              | 2️⃣ Tiene hoja_trabajo PERO:
+                              |     - Existe al menos UNA hoja APROBADA
+                              |     - Y NO tiene registros en formulario_bitacoragr
+                              */
+                                                ->orWhere(function ($z) {
+
+                                                    // ✔ Existe al menos una hoja APROBADA
+                                                    $z->whereExists(function ($s1) {
                                                         $s1->select(DB::raw(1))
                                                             ->from('hoja_trabajo')
                                                             ->whereColumn(
                                                                 'hoja_trabajo.NO_MR',
                                                                 'formulario_requisiconmaterial.NO_MR'
-                                                            );
+                                                            )
+                                                            ->where('ESTADO_APROBACION', 'Aprobada');
                                                     })
+
+                                                        // ❌ NO tiene GR
                                                         ->whereNotExists(function ($s2) {
                                                             $s2->select(DB::raw(1))
                                                                 ->from('formulario_bitacoragr')
