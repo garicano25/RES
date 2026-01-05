@@ -444,7 +444,7 @@
     </script>
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.30"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.31"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))
@@ -492,7 +492,7 @@
     @endif
 
     @if(request()->is('bitacoravehiculos'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.32"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.33"></script>
     @endif
 
     @if(request()->is('bitacoraasignacion'))
