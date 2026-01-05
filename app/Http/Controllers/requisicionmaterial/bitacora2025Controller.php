@@ -40,11 +40,25 @@ class bitacora2025Controller extends Controller
 
 
 
-    public function Tablabitacoramrhistorial()
+    public function Tablabitacoramrhistorial(Request $request)
     {
         try {
-             $tabla = mrModel::whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])->get();
-                
+            // ===============================
+            // CONSULTA BASE (ANTES ERA UNA SOLA LÍNEA)
+            // ===============================
+            $query = mrModel::whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+
+            // ===============================
+            // FILTRO POR FECHA_SOLICITUD_MR
+            // ===============================
+            if ($request->filled('FECHA_INICIO') && $request->filled('FECHA_FIN')) {
+                $query->whereBetween(
+                    DB::raw('DATE(FECHA_SOLICITUD_MR)'),
+                    [$request->FECHA_INICIO, $request->FECHA_FIN]
+                );
+            }
+
+            $tabla = $query->get();                
 
             foreach ($tabla as $value) {
                 $no_mr = $value->NO_MR;
@@ -66,8 +80,6 @@ class bitacora2025Controller extends Controller
                     $value->NO_GR = '—';
                     $value->FECHA_GR = '—';
                 }
-
-
 
                 $hojas = DB::table('hoja_trabajo')->where('NO_MR', $no_mr)->get();
                 $total = $hojas->count();
@@ -128,8 +140,6 @@ class bitacora2025Controller extends Controller
                     } else {
                         $value->COLOR = '#fff3cd';
                     }
-
-
 
 
                     $value->DISABLED_SELECT = false;

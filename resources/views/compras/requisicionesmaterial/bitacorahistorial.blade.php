@@ -25,7 +25,7 @@
 
 
     /* ========== TABLA BITÁCORA GENERAL ========== */
- 
+
 
     /* ========== EXCEPCIÓN: COLUMNA JUSTIFICACIÓN ========== */
     #Tablabitacoramrhistorial td.col-justificacion {
@@ -113,6 +113,17 @@
         color: #721c24 !important;
         font-weight: bold;
     }
+
+    .btn-circle {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
 </style>
 
 <div class="contenedor-contenido">
@@ -121,9 +132,41 @@
         <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de consecutivos MR - Historial</h3>
     </ol>
 
+    <div class="row justify-content-center align-items-end mb-4">
+        <div class="col-md-3 text-center">
+            <label>Fecha inicio</label>
+            <div class="input-group">
+                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO">
+                <span class="input-group-text">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <label>Fecha fin</label>
+            <div class="input-group">
+                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FIN">
+                <span class="input-group-text">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2 d-flex">
+            <button
+                type="button"
+                class="btn btn-primary btn-circle"
+                id="btnFiltrarMR"
+                title="Filtrar"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top">
+                <i class="bi bi-filter"></i>
+            </button>
+        </div>
+
+
+    </div>
 
     <div class="card-body">
-
         <div class="tabla-scroll-wrapper">
             <div class="tabla-scroll-top">
                 <div class="scroll-inner"></div>
@@ -157,7 +200,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 

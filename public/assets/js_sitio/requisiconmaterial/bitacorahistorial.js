@@ -42,22 +42,27 @@ var Tablabitacoramrhistorial = $("#Tablabitacoramrhistorial").DataTable({
     scrollCollapse: false,
     fixedHeader: false,
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
-    ajax: {
-        dataType: 'json',
-        method: 'GET',
-        url: '/Tablabitacoramrhistorial',
-        beforeSend: function () {
-            mostrarCarga();
-        },
-        complete: function () {
-            Tablabitacoramrhistorial.columns.adjust().draw();
-            ocultarCarga();
-        },
-        error: function (jqXHR, textStatus, errorThrown) {
-            alertErrorAJAX(jqXHR, textStatus, errorThrown);
-        },
-        dataSrc: 'data'
-    },
+      ajax: {
+      dataType: 'json',
+      method: 'GET',
+      url: '/Tablabitacoramrhistorial',
+      beforeSend: function () {
+          mostrarCarga();
+      },
+      complete: function () {
+          Tablabitacoramrhistorial.columns.adjust().draw();
+          ocultarCarga();
+      },
+      error: function (jqXHR, textStatus, errorThrown) {
+          alertErrorAJAX(jqXHR, textStatus, errorThrown);
+      },
+      data: function (d) {
+          d.FECHA_INICIO = $('#FECHA_INICIO').val();
+          d.FECHA_FIN = $('#FECHA_FIN').val();
+      },
+      dataSrc: 'data'
+  },
+
   columnDefs: [
     { targets: '_all', className: 'text-center' }, 
         { targets: 0,  width:   '70px'  },                                                                       
@@ -170,9 +175,23 @@ drawCallback: function () {
 
 
 
+$('#btnFiltrarMR').on('click', function () {
 
+    const inicio = $('#FECHA_INICIO').val();
+    const fin = $('#FECHA_FIN').val();
 
+    if ((inicio && !fin) || (!inicio && fin)) {
+        alertToast('Seleccione ambas fechas o deje ambas vacías', 'warning', 2000);
+        return;
+    }
 
+    if (inicio && fin && inicio > fin) {
+        alertToast('La fecha inicio no puede ser mayor a la fecha fin', 'error', 2000);
+        return;
+    }
+
+    Tablabitacoramrhistorial.ajax.reload();
+});
 
 
 $('#Tablabitacoramrhistorial tbody').on('click', 'td>button.EDITAR', function () {

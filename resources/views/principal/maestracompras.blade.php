@@ -594,7 +594,7 @@
     @endif
 
     @if(request()->is('bitacoramrhistorial'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacorahistorial.js"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacorahistorial.js?v=1.0"></script>
     @endif
 
     @if(request()->is('bancoproveedores'))
