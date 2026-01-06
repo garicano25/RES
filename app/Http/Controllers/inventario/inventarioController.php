@@ -77,7 +77,6 @@ class inventarioController extends Controller
                     'UBICACION_EQUIPO',
                     'ESTADO_EQUIPO',
                     'FECHA_ADQUISICION',
-                    'PROVEEDOR_EQUIPO',
                     'UNITARIO_EQUIPO',
                     'TOTAL_EQUIPO',
                     'TIPO_EQUIPO',
