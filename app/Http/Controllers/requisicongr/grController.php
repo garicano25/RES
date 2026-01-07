@@ -57,8 +57,9 @@ class grController extends Controller
                     'po.FECHA_ENTREGA',
                     'po.PROVEEDOR_SELECCIONADO',
                     'po.MATERIALES_JSON',
-                    'po.ESTADO_APROBACION'
-                )
+                    'po.ESTADO_APROBACION',
+                    'po.CANCELACION_PO' 
+            )
                 ->join(
                     DB::raw('(
             SELECT 
@@ -97,6 +98,10 @@ class grController extends Controller
                 })
                 ->whereNotNull('po.NO_PO')
                 ->where('po.ESTADO_APROBACION', 'Aprobada')
+                ->where(function ($q) {
+                    $q->whereNull('po.CANCELACION_PO')
+                        ->orWhere('po.CANCELACION_PO', '!=', 1);
+                })
                 ->select([
                     DB::raw('COALESCE(po.NO_PO, CONCAT("HT-", ht.id)) as AGRUPADOR'),
                     'mr.NO_MR',
@@ -129,7 +134,7 @@ class grController extends Controller
                     DB::raw('NULL as PRECIO_UNITARIOQ1'),
                     DB::raw('NULL as PRECIO_UNITARIOQ2'),
                     DB::raw('NULL as PRECIO_UNITARIOQ3'),
-                     DB::raw('NULL as UNIDAD_MEDIDA')
+                    DB::raw('NULL as UNIDAD_MEDIDA')
 
 
             ])
