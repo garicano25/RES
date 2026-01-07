@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class poModel extends Model
 {
+
     use HasFactory;
     protected $primaryKey = 'ID_FORMULARIO_PO';
     protected $table = 'formulario_ordencompra';
@@ -32,10 +33,15 @@ class poModel extends Model
         'MOTIVO_RECHAZO',
         'APROBO_ID',
         'FECHA_SOLCITIUD',
-        
         'REVISION_PO',
         'MOTIVO_REVISION_PO',
-        'OBSERVACIONES_INDICACIONES'
+        'OBSERVACIONES_INDICACIONES',
+
+
+        'CANCELACION_PO',
+        'MOTIVO_CANCELACION',
+        'CANCELO_ID',
+        'FECHA_CANCELACION_PO'
 
     ];
 }

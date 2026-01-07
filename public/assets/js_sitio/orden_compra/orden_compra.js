@@ -264,10 +264,14 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
         data = row.data();
         $('#guardarPO').show();
         $('#crearREVISION').show();
+        $('#cancelarPO').show();
+
     } else {
         data = $(this).data('revision');
         $('#guardarPO').hide();
         $('#crearREVISION').hide();
+        $('#cancelarPO').hide();
+
     }
 
     ID_FORMULARIO_PO = data.ID_FORMULARIO_PO;
@@ -289,17 +293,22 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
     $('#MOTIVO_RECHAZO').val(data.MOTIVO_RECHAZO || '');
 
 
+    $('#MOTIVO_CANCELACION').val(data.MOTIVO_CANCELACION || '');
+    $('#FECHA_CANCELACION_PO').val(data.FECHA_CANCELACION_PO || '');
+
     const estado = $('#ESTADO_APROBACION').val();
 
     if (estado === 'Aprobada' || estado === 'Rechazada') {
         $('#guardarPO').hide();
         $('#crearREVISION').show();
+        $('#cancelarPO').show();
 
     } else {
         $('#guardarPO').show();
         $('#crearREVISION').hide();
+        $('#cancelarPO').hide();
 
-        }
+    }
         
 
 
@@ -311,6 +320,16 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
     } else {
         $('#COMENTARIO_SOLICITUD_PO').hide();
     }
+
+ if (data.CANCELACION_PO == 1) {
+        $('#DIV_CANCELACION_PO').show();
+      
+         
+    } else {
+        $('#DIV_CANCELACION_PO').hide();
+       
+    }
+
 
     const porcentaje = data.PORCENTAJE_IVA;
     $(`input[name="PORCENTAJE_IVA"][value="${porcentaje}"]`).prop('checked', true);
@@ -328,8 +347,18 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
             $('#APROBADO_POR').val(res.nombre_completo);
         }).fail(() => $('#APROBADO_POR').val(''));
     } else {
-        $('#APROBADO_POR').val('No se ha solicitado una aprobación');
+        $('#APROBADO_POR').val('');
     }
+
+
+    if (data.CANCELO_ID) {
+        $.get(`/obtenerNombreUsuario/${data.CANCELO_ID}`, function (res) {
+            $('#CANCELO_POR').val(res.nombre_completo);
+        }).fail(() => $('#CANCELO_POR').val(''));
+    } else {
+        $('#CANCELO_POR').val('');
+    }
+
 
     $(".materialesdiv").empty();
 
@@ -393,6 +422,11 @@ $(document).ready(function() {
         
     $('#USUARIO_ID').val(data.USUARIO_ID);
 
+        
+        
+    $('#MOTIVO_CANCELACION').val(data.MOTIVO_CANCELACION || '');
+    $('#FECHA_CANCELACION_PO').val(data.FECHA_CANCELACION_PO || '');
+        
 
     if (data.USUARIO_ID) {
         $.ajax({
@@ -406,9 +440,10 @@ $(document).ready(function() {
             }
         });
     } else {
-        $('#SOLICITADO_POR').val('');
+           $('#SOLICITADO_POR').val('');
     }
-    
+        
+
     if (data.APROBO_ID) {
         $.ajax({
             url: `/obtenerNombreUsuario/${data.APROBO_ID}`,
@@ -421,9 +456,27 @@ $(document).ready(function() {
             }
         });
     } else {
+            $('#APROBADO_POR').val('');
+
     }
     
-        
+       
+    if (data.CANCELO_ID) {
+        $.ajax({
+            url: `/obtenerNombreUsuario/${data.CANCELO_ID}`,
+            method: 'GET',
+            success: function (response) {
+                $('#CANCELO_POR').val(response.nombre_completo);
+            },
+            error: function () {
+                $('#CANCELO_POR').val('');
+            }
+        });
+
+    } else {
+        $('#CANCELO_POR').val('');
+
+    }
         
     $('#ESTADO_APROBACION').val(data.ESTADO_APROBACION || '');
     $('#MOTIVO_RECHAZO').val(data.MOTIVO_RECHAZO || '');
@@ -438,8 +491,18 @@ $(document).ready(function() {
         $('#COMENTARIO_SOLICITUD_PO').show();
     } else {
         $('#COMENTARIO_SOLICITUD_PO').hide();
-        }
+    }
         
+        
+    if (data.CANCELACION_PO == 1) {
+        $('#DIV_CANCELACION_PO').show();
+      
+         
+    } else {
+        $('#DIV_CANCELACION_PO').hide();
+       
+    }
+
 
     const porcentaje = data.PORCENTAJE_IVA;
     $(`input[name="PORCENTAJE_IVA"][value="${porcentaje}"]`).prop('checked', true);
@@ -671,6 +734,78 @@ $("#confirmarMotivoRevision").click(function () {
 
             } else {
                 Swal.fire("Error", "Error al crear la revisión.", "error");
+            }
+        },
+        error: function () {
+            Swal.fire("Error", "Ocurrió un error en la petición AJAX.", "error");
+        }
+    });
+});
+
+//// CANCELAR PO
+
+
+$("#cancelarPO").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormularioV1('formularioPO');
+
+    if (formularioValido) {
+        $("#modalMotivoCancelacion").modal("show");
+    } else {
+        Swal.fire("Error", "Por favor, complete todos los campos del formulario.", "error");
+    }
+});
+
+$("#confirmarCancelacion").click(function () {
+
+    let motivoCancelacion = $("#motivoCancelacionInput").val().trim();
+
+    if (motivoCancelacion === "") {
+        Swal.fire("Error", "El motivo de la cancelación es obligatorio.", "error");
+        return;
+    }
+
+    let csrfToken = $('meta[name="csrf-token"]').attr('content');
+
+    $.ajax({
+        url: 'PoSave',
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': csrfToken
+        },
+        data: {
+            api: 4, 
+            ID_FORMULARIO_PO: ID_FORMULARIO_PO,
+            MOTIVO_CANCELACION_PO: motivoCancelacion,
+            _token: csrfToken
+        },
+        beforeSend: function () {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Cancelando orden',
+                text: 'Espere un momento...',
+                showConfirmButton: false,
+                allowOutsideClick: false
+            });
+        },
+        success: function (response) {
+
+            if (response.code === 1) {
+
+                $("#modalMotivoCancelacion").modal("hide");
+                $("#miModal_PO").modal("hide");
+
+                Swal.fire(
+                    "Orden cancelada",
+                    "La orden de compra ha sido cancelada correctamente.",
+                    "success"
+                ).then(() => {
+                    Tablaordencompra.ajax.reload();
+                });
+
+            } else {
+                Swal.fire("Error", response.message || "No se pudo cancelar la orden.", "error");
             }
         },
         error: function () {

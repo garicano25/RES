@@ -623,7 +623,7 @@
     @endif
 
     @if(request()->is('ordencompra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.14"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.15"></script>
     @endif
 
     @if(request()->is('ordencompraaprobacion'))

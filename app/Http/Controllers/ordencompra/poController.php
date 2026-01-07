@@ -67,17 +67,27 @@ class poController extends Controller
 
 
             foreach ($tabla as $value) {
-                if ($value->ESTADO_APROBACION == 'Aprobada') {
+
+
+                if ($value->CANCELACION_PO == 1) {
+
+                    $value->ESTADO_BADGE = '<span class="badge bg-danger">Cancelada</span>';
+                } elseif ($value->ESTADO_APROBACION == 'Aprobada') {
+
                     $value->ESTADO_BADGE = '<span class="badge bg-success">Aprobado</span>';
                 } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+
                     $value->ESTADO_BADGE = '<span class="badge bg-danger">Rechazado</span>';
                 } elseif ($value->SOLICITAR_AUTORIZACION == 'Sí') {
+
                     $value->ESTADO_BADGE = '<span class="badge bg-warning text-dark">En revisión</span>';
                 } else {
+
                     $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>';
                 }
 
-                if ($value->ACTIVO == 0) {
+                
+                if ($value->CANCELACION_PO == 1) {
                     $value->BTN_EDITAR = '<button class="btn btn-secondary rounded-pill" disabled><i class="bi bi-ban"></i></button>';
                 } else {
                     $value->BTN_EDITAR = '<button class="btn btn-warning rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
@@ -354,8 +364,30 @@ class poController extends Controller
                     return response()->json($response);
                     break;
 
+                case 4:
+                    $po = poModel::find($request->ID_FORMULARIO_PO);
 
-                    
+                    if ($po) {
+
+                        $po->CANCELACION_PO = 1;
+                        $po->MOTIVO_CANCELACION = $request->MOTIVO_CANCELACION_PO; 
+                        $po->CANCELO_ID = auth()->user()->ID_USUARIO;
+                        $po->FECHA_CANCELACION_PO = now();
+
+                        $po->save();
+
+                        $response['code'] = 1;
+                        $response['compra'] = $po;
+                    } else {
+                        $response['code'] = 0;
+                        $response['message'] = 'PO no encontrada';
+                    }
+
+                    return response()->json($response);
+                    break;
+
+
+
                 default:
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';

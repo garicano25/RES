@@ -232,32 +232,64 @@
                             <div class="col-12  mt-4">
                                 <div class="row">
                                     <div class="col-12 mb-3">
-                                        <label>Aprobado por:</label>
+                                        <label class="form-label fw-bold">Aprobado por:</label>
                                         <input type="text" class="form-control" id="APROBADO_POR" name="APROBADO_POR" readonly>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
 
 
 
-                        <div class="col-12 text-center">
-                            <div class="col-md-6 mx-auto">
-                                <button type="button" id="crearREVISION" class="btn btn-warning w-100">
-                                    Crear Revisión
-                                </button>
+
+                        <div class="mt-3" id="DIV_CANCELACION_PO" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-12 mb-3">
+                                    <label class="form-label fw-bold">Motivo de la cancelación</label>
+                                    <textarea class="form-control" name="MOTIVO_CANCELACION" id="MOTIVO_CANCELACION" rows="3"></textarea>
+                                </div>
+
+
+                                <div class="col-6 mb-3">
+                                    <label class="form-label fw-bold">Cancelada por :</label>
+                                    <input type="text" class="form-control" id="CANCELO_POR" name="CANCELO_POR" readonly>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-bold">Fecha de cancelación *</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control mydatepicker fecha-aprobacion" placeholder="aaaa-mm-dd" name="FECHA_CANCELACION_PO" id="FECHA_CANCELACION_PO">
+                                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
 
 
+                        <div class="col-12 text-center mb-3">
+                            <div class="row">
+                                <div class="col-md-6 mx-auto">
+                                    <button type="button" id="crearREVISION" class="btn btn-warning w-100">
+                                        Crear Revisión
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-12 text-center">
+                            <div class="row">
+                                <div class="col-md-6 mx-auto">
+                                    <button type="button" id="cancelarPO" class="btn btn-primary w-100">
+                                        Cancelar orden de compra
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </div>
-
                 </div>
-
                 <div class="modal-footer mx-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success" id="guardarPO">Guardar</button>
@@ -276,16 +308,33 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modalMotivoLabel">Motivo de la Revisión</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <textarea id="motivoRevisionInput" class="form-control" rows="4" placeholder="Escriba el motivo de la revisión..."></textarea>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" id="confirmarMotivoRevision" class="btn btn-primary">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modalMotivoCancelacion" tabindex="-1" aria-labelledby="modalMotivoLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalMotivoLabel">Motivo de la cancelación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <textarea id="motivoCancelacionInput" class="form-control" rows="4" placeholder="Escriba el motivo de la cancelación..."></textarea>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" id="confirmarCancelacion" class="btn btn-primary">Confirmar</button>
             </div>
         </div>
     </div>
