@@ -102,7 +102,7 @@
     </ol>
 
     <div class="row justify-content-center align-items-end mb-4">
-        <div class="col-md-3 text-center">
+        <div class="col-md-6 text-center">
             <label>Ubicación</label>
             <select class="form-select" id="UBICACIONES_INVENTARIO" name="UBICACIONES_INVENTARIO" >
                 <option value="" disabled selected>Seleccione una opción</option>
