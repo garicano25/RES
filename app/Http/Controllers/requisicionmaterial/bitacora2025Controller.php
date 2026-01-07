@@ -43,14 +43,10 @@ class bitacora2025Controller extends Controller
     public function Tablabitacoramrhistorial(Request $request)
     {
         try {
-            // ===============================
-            // CONSULTA BASE (ANTES ERA UNA SOLA LÍNEA)
-            // ===============================
+           
             $query = mrModel::whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
 
-            // ===============================
-            // FILTRO POR FECHA_SOLICITUD_MR
-            // ===============================
+           
             if ($request->filled('FECHA_INICIO') && $request->filled('FECHA_FIN')) {
                 $query->whereBetween(
                     DB::raw('DATE(FECHA_SOLICITUD_MR)'),

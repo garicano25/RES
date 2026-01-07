@@ -36,8 +36,6 @@ class poModel extends Model
         'REVISION_PO',
         'MOTIVO_REVISION_PO',
         'OBSERVACIONES_INDICACIONES',
-
-
         'CANCELACION_PO',
         'MOTIVO_CANCELACION',
         'CANCELO_ID',

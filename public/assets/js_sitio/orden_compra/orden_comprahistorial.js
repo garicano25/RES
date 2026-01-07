@@ -4,7 +4,7 @@
 ID_FORMULARIO_PO = 0
 
 
-var Tablaordencompra = $("#Tablaordencompra").DataTable({
+var Tablaordencomprahistorial = $("#Tablaordencomprahistorial").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -20,19 +20,22 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
     responsive: true,
     ajax: {
         dataType: 'json',
-        data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablaordencompra',
+        url: '/Tablaordencomprahistorial',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablaordencompra.columns.adjust().draw();
+            Tablaordencomprahistorial.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        data: function (d) {
+            d.FECHA_INICIO = $('#FECHA_INICIO').val();
+            d.FECHA_FIN = $('#FECHA_FIN').val();
         },
         dataSrc: 'data'
     },
@@ -81,12 +84,29 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
     ]
 });
 
+$('#btnFiltrarMR').on('click', function () {
+
+    const inicio = $('#FECHA_INICIO').val();
+    const fin = $('#FECHA_FIN').val();
+
+    if ((inicio && !fin) || (!inicio && fin)) {
+        alertToast('Seleccione ambas fechas o deje ambas vacías', 'warning', 2000);
+        return;
+    }
+
+    if (inicio && fin && inicio > fin) {
+        alertToast('La fecha inicio no puede ser mayor a la fecha fin', 'error', 2000);
+        return;
+    }
+
+    Tablaordencomprahistorial.ajax.reload();
+});
 
 
-$("#Tablaordencompra tbody").on("click", ".ver-revisiones-po", function () {
+$("#Tablaordencomprahistorial tbody").on("click", ".ver-revisiones-po", function () {
     let btn = $(this);
     let tr = btn.closest("tr");
-    let row = Tablaordencompra.row(tr);
+    let row = Tablaordencomprahistorial.row(tr);
     let revisiones = btn.data("revisiones");
 
     if (!revisiones.length) {
@@ -198,7 +218,7 @@ $("#guardarPO").click(function (e) {
                         alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                         $('#miModal_PO').modal('hide')
                         document.getElementById('formularioPO').reset();
-                        Tablaordencompra.ajax.reload()
+                        Tablaordencomprahistorial.ajax.reload()
 
             
                 })
@@ -236,7 +256,7 @@ $("#guardarPO").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_PO').modal('hide')
                     document.getElementById('formularioPO').reset();
-                    Tablaordencompra.ajax.reload()
+                    Tablaordencomprahistorial.ajax.reload()
 
 
                 }, 300);  
@@ -254,23 +274,19 @@ $("#guardarPO").click(function (e) {
 
 
 
-$('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablaordencomprahistorial tbody').on('click', 'td>button.EDITAR', function () {
     const tr = $(this).closest('tr');
-    const row = Tablaordencompra.row(tr);
+    const row = Tablaordencomprahistorial.row(tr);
 
     let data;
 
     if (row.data()) {
         data = row.data();
         $('#guardarPO').show();
-       $('#crearREVISION').show();
-        $('#cancelarPO').show();
 
     } else {
         data = $(this).data('revision');
         $('#guardarPO').hide();
-        $('#crearREVISION').hide();
-        $('#cancelarPO').hide();
 
     }
 
@@ -411,9 +427,9 @@ $('input[name="PORCENTAJE_IVA"]').on('change', function () {
 
 $(document).ready(function() {
 
-    $('#Tablaordencompra tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablaordencomprahistorial tbody').on('click', 'td>button.VISUALIZAR', function () {
         const tr = $(this).closest('tr');
-    const row = Tablaordencompra.row(tr);
+    const row = Tablaordencomprahistorial.row(tr);
     const data = row.data();
     ID_FORMULARIO_PO = data.ID_FORMULARIO_PO;
         
@@ -749,7 +765,7 @@ $("#confirmarMotivoRevision").click(function () {
                     "Se ha generado una nueva versión de la oferta.",
                     "success"
                 ).then(() => {
-                    Tablaordencompra.ajax.reload(); 
+                    Tablaordencomprahistorial.ajax.reload(); 
                 });
 
             } else {
@@ -821,7 +837,7 @@ $("#confirmarCancelacion").click(function () {
                     "La orden de compra ha sido cancelada correctamente.",
                     "success"
                 ).then(() => {
-                    Tablaordencompra.ajax.reload();
+                    Tablaordencomprahistorial.ajax.reload();
                 });
 
             } else {

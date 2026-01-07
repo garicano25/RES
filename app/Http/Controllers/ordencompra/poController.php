@@ -49,20 +49,46 @@ class poController extends Controller
     public function Tablaordencompra()
     {
         try {
-    
+
+            $fechaInicio = Carbon::now('America/Mexico_City')->startOfYear()->toDateString();
+            $fechaFin    = Carbon::now('America/Mexico_City')->endOfYear()->toDateString();
+
 
             $tabla = DB::table('formulario_ordencompra as po')
                 ->leftJoin('formulario_altaproveedor as p', 'po.PROVEEDOR_SELECCIONADO', '=', 'p.RFC_ALTA')
+
+                ->where(function ($q) use ($fechaInicio, $fechaFin) {
+
+                    $q->whereBetween('po.FECHA_EMISION', [$fechaInicio, $fechaFin])
+                        ->orWhere(function ($x) use ($fechaInicio, $fechaFin) {
+                            $x->whereNotBetween('po.FECHA_EMISION', [$fechaInicio, $fechaFin])
+                                ->where(function ($y) {
+                                    $y->whereNull('po.ESTADO_APROBACION')
+                                        ->orWhereNotIn('po.ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
+                                });
+                        });
+                })
+
                 ->whereIn('po.ID_FORMULARIO_PO', function ($query) {
                     $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
                         ->from('formulario_ordencompra')
                         ->groupBy(DB::raw("SUBSTRING_INDEX(NO_PO, '-Rev', 1)"));
                 })
+
                 ->select(
                     'po.*',
                     DB::raw("CONCAT(p.RAZON_SOCIAL_ALTA, ' (', p.RFC_ALTA, ')') as PROVEEDORES")
                 )
-                ->orderByRaw("CAST(SUBSTRING_INDEX(SUBSTRING_INDEX(po.NO_PO, '-', -1), '-Rev', 1) AS UNSIGNED)")
+
+                ->orderByRaw("
+                CAST(
+                    SUBSTRING_INDEX(
+                        SUBSTRING_INDEX(po.NO_PO, '-', -1),
+                        '-Rev', 1
+                    ) AS UNSIGNED
+                )
+            ")
+
                 ->get();
 
 

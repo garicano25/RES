@@ -116,6 +116,7 @@ use App\Http\Controllers\proveedor\listaproveedorescriticosController;
 // CONTROLADORES DE PO 
 use App\Http\Controllers\ordencompra\poController;
 use App\Http\Controllers\ordencompra\pdfpoController;
+use App\Http\Controllers\ordencompra\pohistorialController;
 
 // CONTROLADORES DE MATRIZ COMPARATIVA
 use App\Http\Controllers\matrizcomparativa\matrizController;
@@ -752,11 +753,7 @@ Route::get('/Tablaproveedorescriticos', [listaproveedorescriticosController::cla
 Route::get('/listaproveedores', [listaproveedorController::class, 'index']);
 Route::get('/Tablalistaproveedores', [listaproveedorController::class, 'Tablalistaproveedores']);
 Route::post('/AltaSave1', [listaproveedorController::class, 'store']);
-
 Route::get('/listaproveedorDelete', [listaproveedorController::class, 'store']);
-
-
-
 Route::get('/Tablacuentas', [listaproveedorController::class, 'Tablacuentas']);
 Route::get('/Tablacontactos', [listaproveedorController::class, 'Tablacontactos']);
 Route::get('/Tablacertificaciones', [listaproveedorController::class, 'Tablacertificaciones']);
@@ -775,7 +772,7 @@ Route::get('/Tablaproveedortemporal', [proveedortempController::class, 'Tablapro
 Route::get('/TempDelete', [proveedortempController::class, 'store']);
 Route::get('/mostrarequierecontrato/{id}', [proveedortempController::class, 'mostrarequierecontrato']);
 
-//==============================================    ORDEN DE COMPRA  ============================================== 
+//==============================================    ORDEN DE COMPRA - ACTUALES  ============================================== 
 
 Route::get('/ordencompra', [poController::class, 'index']);
 Route::get('/Tablaordencompra', [poController::class, 'Tablaordencompra']);
@@ -784,6 +781,11 @@ Route::get('/Tablaordencompraprobacion', [poController::class, 'Tablaordencompra
 Route::post('/PoSave', [poController::class, 'store']);
 Route::get('/obtenerNombreUsuario/{id}', [poController::class, 'obtenerNombreUsuario']);
 Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
+
+//==============================================    ORDEN DE COMPRA - HISTORIAL  ============================================== 
+Route::get('/ordencomprahistorial', [pohistorialController::class, 'index']);
+Route::get('/Tablaordencomprahistorial', [pohistorialController::class, 'Tablaordencomprahistorial']);
+
 
 //==============================================    MATRIZ COMPARATIVA  ============================================== 
 

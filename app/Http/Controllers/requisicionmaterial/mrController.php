@@ -449,8 +449,7 @@ class mrController extends Controller
     {
         try {
 
-            // $fechaInicio = '2026-01-01';
-            // $fechaFin    = '2026-12-31';
+          
 
             $fechaInicio = Carbon::now('America/Mexico_City')->startOfYear()->toDateString();
             $fechaFin    = Carbon::now('America/Mexico_City')->endOfYear()->toDateString();

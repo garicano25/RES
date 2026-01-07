@@ -413,7 +413,13 @@
                                     {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/ordencompra') }}">
-                                            Orden de compra
+                                            Actual
+                                        </a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/ordencomprahistorial') }}">
+                                            Historial
                                         </a>
                                     </li>
                                     {{-- Solo Superusuario y Administrador --}}
@@ -623,7 +629,11 @@
     @endif
 
     @if(request()->is('ordencompra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.17"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.18"></script>
+    @endif
+
+    @if(request()->is('ordencomprahistorial'))
+    <script src="/assets/js_sitio/orden_compra/orden_comprahistorial.js"></script>
     @endif
 
     @if(request()->is('ordencompraaprobacion'))
