@@ -298,6 +298,8 @@
                         </ul>
                     </li>
                     @endif
+
+                    
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
