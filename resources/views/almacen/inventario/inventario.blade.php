@@ -89,15 +89,12 @@
                 id="boton_cargarExcelEquipos">
                 Importar <i class="bi bi-file-earmark-excel-fill"></i>
             </button>
-
-
             <button type="button"
                 class="btn btn-light waves-effect waves-light"
                 id="NUEVO_EQUIPO">
                 Nuevo <i class="bi bi-plus-circle"></i>
             </button>
             @endif
-
         </div>
     </ol>
 

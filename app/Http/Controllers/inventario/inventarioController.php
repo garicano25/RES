@@ -89,7 +89,12 @@ class inventarioController extends Controller
                     'UNITARIO_EQUIPO',
                     'TOTAL_EQUIPO',
                     'TIPO_EQUIPO',
-                    'OBSERVACION_EQUIPO'
+                    'OBSERVACION_EQUIPO',
+                    'FOTO_EQUIPO',
+                    'UNIDAD_MEDIDA',
+                    'ITEM_CRITICO',
+                    'PROVEEDOR_ALTA',
+                    'REQUIERE_ARTICULO'
                 ];
 
                 $completo = true;
