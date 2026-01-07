@@ -101,7 +101,7 @@
     <div class="row justify-content-center align-items-end mb-4">
         <div class="col-md-6 text-center">
             <label>Ubicación</label>
-            <select class="form-select" id="UBICACIONES_INVENTARIO" name="UBICACIONES_INVENTARIO" >
+            <select class="form-select" id="UBICACIONES_INVENTARIO" name="UBICACIONES_INVENTARIO">
                 <option value="" disabled selected>Seleccione una opción</option>
                 @foreach ($ubicacioninventario as $ubicacion)
                 <option value="{{ $ubicacion->UBICACION_EQUIPO }}">
@@ -197,7 +197,7 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label> Foto del ítem </label>
-                                                        <input type="file" accept="image/jpeg,image/x-png,image/gif" id="FOTO_EQUIPO" name="FOTO_EQUIPO" data-allowed-file-extensions="jpg png JPG PNG" data-height="240" data-default-file="" />
+                                                        <input type="file" accept="image/jpeg,image/x-png,image/gif/" id="FOTO_EQUIPO" name="FOTO_EQUIPO" data-allowed-file-extensions="jpg png JPG PNG jpeg JPEG" data-height="240" data-default-file="" />
                                                     </div>
 
 
