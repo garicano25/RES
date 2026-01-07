@@ -449,48 +449,35 @@ class mrController extends Controller
     {
         try {
 
-            $fechaInicio = '2026-01-01';
-            $fechaFin    = '2026-12-31';
+            // $fechaInicio = '2026-01-01';
+            // $fechaFin    = '2026-12-31';
+
+            $fechaInicio = Carbon::now('America/Mexico_City')->startOfYear()->toDateString();
+            $fechaFin    = Carbon::now('America/Mexico_City')->endOfYear()->toDateString();
+
 
             $tabla = mrModel::whereIn('ESTADO_APROBACION', ['Aprobada', 'Rechazada'])
                 ->where(function ($query) use ($fechaInicio, $fechaFin) {
 
-                    /*
-                |--------------------------------------------------------------------------
-                | 🔴 RECHAZADAS → SOLO DENTRO DE FECHA
-                |--------------------------------------------------------------------------
-                */
                     $query->where(function ($q) use ($fechaInicio, $fechaFin) {
                         $q->where('ESTADO_APROBACION', 'Rechazada')
                             ->whereBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin]);
                     })
 
-                        /*
-                |--------------------------------------------------------------------------
-                | 🟢 APROBADAS
-                |--------------------------------------------------------------------------
-                */
+                  
                         ->orWhere(function ($q) use ($fechaInicio, $fechaFin) {
 
-                            // ✅ Aprobadas dentro de fecha → siempre
                             $q->where(function ($x) use ($fechaInicio, $fechaFin) {
                                 $x->where('ESTADO_APROBACION', 'Aprobada')
                                     ->whereBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin]);
                             })
 
-                                // ⚠️ Aprobadas fuera de fecha → reglas especiales
                                 ->orWhere(function ($x) use ($fechaInicio, $fechaFin) {
                                     $x->where('ESTADO_APROBACION', 'Aprobada')
                                         ->whereNotBetween('FECHA_SOLICITUD_MR', [$fechaInicio, $fechaFin])
                                         ->where(function ($y) {
 
-                                            /*
-                              | ❌ EXCLUIR SOLO SI:
-                              | - Tiene hoja_trabajo
-                              | - Y TODAS están Rechazadas
-                              */
 
-                                            // ✅ NO tiene hojas → aparece
                                             $y->whereNotExists(function ($sub) {
                                                 $sub->select(DB::raw(1))
                                                     ->from('hoja_trabajo')
@@ -500,7 +487,6 @@ class mrController extends Controller
                                                     );
                                             })
 
-                                                // ✅ Tiene hojas y al menos UNA NO es Rechazada
                                                 ->orWhereExists(function ($sub) {
                                                     $sub->select(DB::raw(1))
                                                         ->from('hoja_trabajo')
@@ -515,7 +501,6 @@ class mrController extends Controller
                                                 });
                                         })
 
-                                        // ❌ Y además NO debe tener GR
                                         ->whereNotExists(function ($sub) {
                                             $sub->select(DB::raw(1))
                                                 ->from('formulario_bitacoragr')

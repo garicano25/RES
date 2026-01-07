@@ -191,7 +191,7 @@ class notificacionController extends Controller
 
             $notiEntrega = collect([]);
 
-            $usuariosQuePuedenEntregar = [1,3,52];
+            $usuariosQuePuedenEntregar = [1,3,10];
 
             if (in_array($idUsuario, $usuariosQuePuedenEntregar)) {
 
