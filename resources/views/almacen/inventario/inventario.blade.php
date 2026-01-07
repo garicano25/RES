@@ -101,6 +101,31 @@
         </div>
     </ol>
 
+    <div class="row justify-content-center align-items-end mb-4">
+        <div class="col-md-3 text-center">
+            <label>Ubicación</label>
+            <select class="form-select" id="UBICACIONES_INVENTARIO" name="UBICACIONES_INVENTARIO" >
+                <option value="" disabled selected>Seleccione una opción</option>
+                @foreach ($ubicacioninventario as $ubicacion)
+                <option value="{{ $ubicacion->UBICACION_EQUIPO }}">
+                    {{ $ubicacion->UBICACION_EQUIPO }}
+                </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="col-md-2 d-flex">
+            <button
+                type="button"
+                class="btn btn-primary btn-circle"
+                id="btnFiltrarMR"
+                title="Filtrar"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top">
+                <i class="bi bi-filter"></i>
+            </button>
+        </div>
+    </div>
 
     <div class="card-body">
         <div class="tabla-scroll-wrapper">

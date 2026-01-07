@@ -20,6 +20,16 @@ Modalinventario.addEventListener('hidden.bs.modal', event => {
 
 })
 
+
+$(document).ready(function () {
+    $('#UBICACIONES_INVENTARIO').select2({
+        placeholder: 'Seleccione una ubicación',
+        allowClear: true,
+        width: '100%'
+    });
+});
+
+
 $(document).ready(function() {
     $('#NUEVO_EQUIPO').on('click', function() {
         limpiarFormularioInventario(); 
@@ -161,7 +171,7 @@ $("#guardarINVENTARIO").click(function (e) {
 
 
 var Tablainventario = $("#Tablainventario").DataTable({
-    language: {
+      language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
     scrollX: true,
@@ -169,8 +179,12 @@ var Tablainventario = $("#Tablainventario").DataTable({
     responsive: false,
     paging: true,
     searching: true,
-    info: false,
+    filtering: true,
     lengthChange: true,
+    info: true,   
+    scrollY: false,
+    scrollCollapse: false,
+    fixedHeader: false,    
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',
@@ -186,6 +200,11 @@ var Tablainventario = $("#Tablainventario").DataTable({
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
+
+        data: function (d) {
+            d.UBICACION_EQUIPO = $('#UBICACIONES_INVENTARIO').val();
+        },
+
         dataSrc: 'data'
     },
     columnDefs: [
@@ -240,7 +259,9 @@ var Tablainventario = $("#Tablainventario").DataTable({
      createdRow: function (row, data) {
         $(row).addClass(data.ROW_CLASS);
     },
-
+infoCallback: function (settings, start, end, max, total, pre) {
+        return `Total de ${total} registros`;
+    },
 drawCallback: function () {
     const topScroll = document.querySelector('.tabla-scroll-top');
     const scrollInner = document.querySelector('.tabla-scroll-top .scroll-inner');
@@ -274,7 +295,9 @@ drawCallback: function () {
 
 });
 
-
+$('#btnFiltrarMR').on('click', function () {
+    Tablainventario.ajax.reload();
+});
 
 document.getElementById('TIPO_EQUIPO').addEventListener('change', function () {
     const tipo = this.value;

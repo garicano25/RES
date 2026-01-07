@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Artisan;
 use Exception;
-use App\Models\inventario\inventarioModel;
 
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -17,12 +16,11 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\MemoryDrawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
+
+use App\Models\inventario\inventarioModel;
 use App\Models\inventario\catalogotipoinventarioModel;
 use App\Models\inventario\documentosarticulosModel;
-
 use App\Models\inventario\entradasinventarioModel;
-
-
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\proveedortempModel;
 
@@ -40,21 +38,32 @@ class inventarioController extends Controller
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
 
-        
 
-        return view('almacen.inventario.inventario', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales'));
+        $ubicacioninventario = inventarioModel::select('UBICACION_EQUIPO')
+            ->distinct()
+            ->orderBy('UBICACION_EQUIPO')
+            ->get();
+
+
+        return view('almacen.inventario.inventario', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'ubicacioninventario'));
     }
 
 
-    public function Tablainventario()
+
+    public function Tablainventario(Request $request)
     {
         try {
-            $tabla = inventarioModel::get();
+
+            $query = inventarioModel::query();
+
+            if ($request->filled('UBICACION_EQUIPO')) {
+                $query->where('UBICACION_EQUIPO', $request->UBICACION_EQUIPO);
+            }
+
+            $tabla = $query->get();
 
             foreach ($tabla as $value) {
 
-
-                
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '"><span class="slider round"></span></label>';
