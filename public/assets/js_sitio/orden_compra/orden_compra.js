@@ -588,10 +588,10 @@ function cargarMaterialesDesdeJSON(serviciosJson) {
                     <label class="form-label">Descripción</label>
                     <input type="text" class="form-control" name="DESCRIPCION" value="${escapeHtml(servicio.DESCRIPCION)}" required>
                 </div>
-                 <div class="col-2">
-                    <label class="form-label">U.M.</label>
-                    <input type="text"  class="form-control" name="UNIDAD_MEDIDA" value="${servicio.UNIDAD_MEDIDA}" required>
-                </div>
+                <div class="col-2">
+                  <label class="form-label">U.M.</label>
+                  <input type="text" class="form-control" name="UNIDAD_MEDIDA" value="${servicio.UNIDAD_MEDIDA ?? ''}" required> </div>
+
                 <div class="col-2">
                     <label class="form-label">Cantidad</label>
                     <input type="number" step="any" class="form-control cantidad-input" name="CANTIDAD_" value="${servicio.CANTIDAD_}" required>
