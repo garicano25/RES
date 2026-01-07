@@ -933,14 +933,14 @@
                         $tieneSoloRolAmadellaves = $user->roles->count() === 1 && $user->hasRole('Ama de llaves');
                         $tieneSoloRolLideOperaciones = $user->roles->count() === 1 && $user->hasRole('Líder de Operaciones');
 
-                        $tieneRolRestringidoUnico = $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion || $tieneSoloRolHSEQ || $tieneSoloRolSoftware || $tieneSoloRolAmadellaves ;
+                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion || $tieneSoloRolHSEQ || $tieneSoloRolSoftware || $tieneSoloRolAmadellaves ;
 
                         @endphp
 
                         <div class="modules">
 
                             {{-- RRHH --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones || $tieneSoloRolIntendent)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <a href="{{ url('/recempleado') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
