@@ -4,7 +4,7 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0;">&nbsp;Orden de compra</h3>
+        <h3 style="color: #ffffff; margin: 0;">&nbsp;Orden de compra - Actual</h3>
 
     </ol>
 

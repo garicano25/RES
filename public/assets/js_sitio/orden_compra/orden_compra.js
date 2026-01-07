@@ -263,14 +263,10 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
     if (row.data()) {
         data = row.data();
         $('#guardarPO').show();
-        $('#crearREVISION').show();
-        $('#cancelarPO').show();
 
     } else {
         data = $(this).data('revision');
         $('#guardarPO').hide();
-        $('#crearREVISION').hide();
-        $('#cancelarPO').hide();
 
     }
 
@@ -298,18 +294,38 @@ $('#Tablaordencompra tbody').on('click', 'td>button.EDITAR', function () {
 
     const estado = $('#ESTADO_APROBACION').val();
 
-    if (estado === 'Aprobada' || estado === 'Rechazada') {
-        $('#guardarPO').hide();
-        $('#crearREVISION').show();
-        $('#cancelarPO').show();
+    // if (estado === 'Aprobada' || estado === 'Rechazada') {
+    //     $('#guardarPO').hide();
+    //     $('#crearREVISION').show();
+    //     $('#cancelarPO').show();
 
-    } else {
-        $('#guardarPO').show();
-        $('#crearREVISION').hide();
-        $('#cancelarPO').hide();
+    // } else {
+    //     $('#guardarPO').show();
+    //     $('#crearREVISION').hide();
+    //     $('#cancelarPO').hide();
 
-    }
+    // }
         
+
+        if (estado === 'Aprobada') {
+
+            $('#guardarPO').hide();
+            $('#crearREVISION').show();
+            $('#cancelarPO').show();
+
+        } else if (estado === 'Rechazada') {
+
+            $('#guardarPO').hide();
+            $('#crearREVISION').show();
+            $('#cancelarPO').hide();
+
+        } else {
+
+            $('#guardarPO').show();
+            $('#crearREVISION').hide();
+            $('#cancelarPO').hide();
+        }
+
 
 
     togglerechazo();
