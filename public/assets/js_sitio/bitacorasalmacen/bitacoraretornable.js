@@ -471,7 +471,7 @@ $("#guardaBITACORA").click(function (e) {
 
                         $('#miModal_BITACORA').modal('hide')
                         document.getElementById('formularioBITACORA').reset();
-                        Tablabitacoravehiculos.ajax.reload()
+                        Tablabitacoraretornable.ajax.reload()
                     }
                 )
 
@@ -554,7 +554,7 @@ $("#guardaBITACORA").click(function (e) {
 
                             $('#miModal_BITACORA').modal('hide')
                             document.getElementById('formularioBITACORA').reset();
-                            Tablabitacoravehiculos.ajax.reload()
+                            Tablabitacoraretornable.ajax.reload()
 
                         }, 300);
 
