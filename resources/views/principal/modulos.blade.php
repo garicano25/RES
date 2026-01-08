@@ -781,147 +781,8 @@
                             </style>
 
                         </div>
-                        <!-- 
-                        @php
-                        $user = auth()->user();
 
-                        $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
-                        $tieneSoloRolSSTJunior = $user->roles->count() === 1 && $user->hasRole('Consultor-Instructor (Junior/Senior)');
-                        $tieneSoloRolAsistentePlaneacion = $user->roles->count() === 1 && $user->hasRole('Asistente de planeación y logística');
-
-                        $tieneRolRestringidoUnico = $tieneSoloRolIntendente || $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion;
-                        @endphp
-
-
-
-
-                        <div class="modules">
-
-                            {{-- RRHH --}}
-                            @if($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('RRHH')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
-                                <h2 class="modules__text">RRHH</h2>
-                            </div>
-                            @else
-                            <a href="{{ url('/tablero') }}" class="modules__link">
-                                <div class="modules__card">
-                                    <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
-                                    <h2 class="modules__text">RRHH</h2>
-                                </div>
-                            </a>
-                            @endif
-
-                            {{-- Compras (libre) --}}
-                            <a href="{{ url('/Requisición_Materiales') }}" class="modules__link">
-                                <div class="modules__card">
-                                    <div class="modules__circle"><img src="assets/Modulos/img/Compras.png" alt=""></div>
-                                    <h2 class="modules__text">Compras</h2>
-                                </div>
-                            </a>
-
-                            {{-- Ventas --}}
-                            @if($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Ventas')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Ventas.png" alt=""></div>
-                                <h2 class="modules__text">Ventas</h2>
-                            </div>
-                            @else
-                            <a href="{{ url('/Clientes') }}" class="modules__link">
-                                <div class="modules__card">
-                                    <div class="modules__circle"><img src="assets/Modulos/img/Ventas.png" alt=""></div>
-                                    <h2 class="modules__text">Ventas</h2>
-                                </div>
-                            </a>
-                            @endif
-
-
-
-                            {{-- Admón --}}
-                            @if($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Admón')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Admon.png" alt=""></div>
-                                <h2 class="modules__text">Admón</h2>
-                            </div>
-                            @else
-                            <div class="modules__card">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Admon.png" alt=""></div>
-                                <h2 class="modules__text">Admón</h2>
-                            </div>
-                            @endif
-
-                            {{-- Almacén --}}
-                            @if($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Almacén')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
-                                <h2 class="modules__text">Almacén</h2>
-                            </div>
-                            @else
-                            <div class="modules__card">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
-                                <h2 class="modules__text">Almacén</h2>
-                            </div>
-                            @endif
-
-                            {{-- Mantenimiento --}}
-                            @if($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Mantenimiento')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
-                                <h2 class="modules__text">Mantenimiento</h2>
-                            </div>
-                            @else
-                            <div class="modules__card">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
-                                <h2 class="modules__text">Mantenimiento</h2>
-                            </div>
-                            @endif
-
-                            {{-- HSE --}}
-                            @if($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('HSE')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
-                                <h2 class="modules__text">HSE</h2>
-                            </div>
-                            @else
-                            <div class="modules__card">
-                                <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
-                                <h2 class="modules__text">HSE</h2>
-                            </div>
-                            @endif
-
-                            {{-- Calidad --}}
-                            @if($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Calidad')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Calidad.png" alt=""></div>
-                                <h2 class="modules__text">Calidad</h2>
-                            </div>
-                            @else
-                            <div class="modules__card">
-                                <div class="modules__circle"><img src="assets/Modulos/img/Calidad.png" alt=""></div>
-                                <h2 class="modules__text">Calidad</h2>
-                            </div>
-                            @endif
-
-
-                            {{-- Página web --}}
-                            @if($tieneRolRestringidoUnico)
-                            <div class="modules__card" onclick="noPermiso('Ventas')">
-                                <div class="modules__circle"><img src="assets/Modulos/img/sitoweb.png" alt=""></div>
-                                <h2 class="modules__text">Página web</h2>
-                            </div>
-                            @else
-                            <a href="{{ url('/Mensajes_paginaweb') }}" class="modules__link">
-                                <div class="modules__card">
-                                    <div class="modules__circle"><img src="assets/Modulos/img/sitoweb2.png" alt=""></div>
-                                    <h2 class="modules__text">Página web</h2>
-                                </div>
-                            </a>
-                            @endif
-
-
-
-                        </div> -->
-                        @php
+                        <!-- @php
                         $user = auth()->user();
 
                         $tieneSoloRolIntendente = $user->roles->count() === 1 && $user->hasRole('Intendente');
@@ -932,13 +793,49 @@
                         $tieneSoloRolSoftware = $user->roles->count() === 1 && $user->hasRole('Desarrollador de Software Junior');
                         $tieneSoloRolAmadellaves = $user->roles->count() === 1 && $user->hasRole('Ama de llaves');
                         $tieneSoloRolLideOperaciones = $user->roles->count() === 1 && $user->hasRole('Líder de Operaciones');
-
                         $tieneRolRestringidoUnico = $tieneSoloRolSSTJunior || $tieneSoloRolAsistentePlaneacion || $tieneSoloRolHSEQ || $tieneSoloRolSoftware || $tieneSoloRolAmadellaves ;
 
+                        @endphp -->
+
+                        @php
+                        $user = auth()->user();
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Roles especiales (por PRESENCIA, no por exclusividad)
+                        |--------------------------------------------------------------------------
+                        */
+                        $tieneSoloRolIntendente = $user->hasRole('Intendente');
+                        $tieneSoloRolAlmacenista = $user->hasRole('Almacenista');
+                        $tieneSoloRolLideOperaciones = $user->hasRole('Líder de Operaciones');
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Roles restringidos “administrativos”
+                        |--------------------------------------------------------------------------
+                        */
+                        $tieneSoloRolSSTJunior = $user->hasRole('Consultor-Instructor Junior');
+                        $tieneSoloRolAsistentePlaneacion = $user->hasRole('Asistente de planeación y logística');
+                        $tieneSoloRolHSEQ = $user->hasRole('Analista HSEQ');
+                        $tieneSoloRolSoftware = $user->hasRole('Desarrollador de Software Junior');
+                        $tieneSoloRolAmadellaves = $user->hasRole('Ama de llaves');
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Agrupador de roles restringidos
+                        |--------------------------------------------------------------------------
+                        */
+                        $tieneRolRestringidoUnico =
+                        $tieneSoloRolSSTJunior ||
+                        $tieneSoloRolAsistentePlaneacion ||
+                        $tieneSoloRolHSEQ ||
+                        $tieneSoloRolSoftware ||
+                        $tieneSoloRolAmadellaves;
                         @endphp
 
-                        <div class="modules">
 
+                        
+                        <div class="modules">
                             {{-- RRHH --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones || $tieneSoloRolIntendente )
                             <a href="{{ url('/recempleado') }}" class="modules__link">
@@ -1039,8 +936,6 @@
                                 </div>
                             </a>
                             @endif
-
-
                             {{-- HSE --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('HSE')">
@@ -1053,7 +948,6 @@
                                 <h2 class="modules__text">HSE</h2>
                             </div>
                             @endif
-
                             {{-- Calidad --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Calidad')">
@@ -1066,7 +960,6 @@
                                 <h2 class="modules__text">Calidad</h2>
                             </div>
                             @endif
-
                             {{-- Página web --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
                             <div class="modules__card" onclick="noPermiso('Página web')">
@@ -1081,8 +974,8 @@
                                 </div>
                             </a>
                             @endif
-
                         </div>
+
 
                     </div>
 
