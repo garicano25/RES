@@ -363,6 +363,24 @@
 
                         <ul class="dropdown-menu">
 
+                            {{-- ORGANIGRAMA --}}
+                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                            <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
+                            <hr class="dropdown-divider">
+                            @endif
+
+                            {{-- PPT --}}
+                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                            <li><a class="dropdown-item" href="{{ url('/ppt') }}">PPT</a></li>
+                            <hr class="dropdown-divider">
+                            @endif
+
+                            {{-- DPT --}}
+                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                            <li><a class="dropdown-item" href="{{ url('/dpt') }}">DPT</a></li>
+                            <hr class="dropdown-divider">
+                            @endif
+
                             <li class="dropdown-submenu">
                                 <a class="dropdown-item dropdown-toggle" href="#">
                                     Requisición de personal
@@ -399,7 +417,6 @@
                         </ul>
                     </li>
                     @endif
-
 
 
 
