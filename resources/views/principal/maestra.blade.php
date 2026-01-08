@@ -363,18 +363,6 @@
 
                         <ul class="dropdown-menu">
 
-                            {{-- SOLO SUPER / ADMIN --}}
-                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
-                            <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
-                            <hr class="dropdown-divider">
-
-                            <li><a class="dropdown-item" href="{{ url('/ppt') }}">PPT</a></li>
-                            <hr class="dropdown-divider">
-
-                            <li><a class="dropdown-item" href="{{ url('/dpt') }}">DPT</a></li>
-                            <hr class="dropdown-divider">
-                            @endif
-
                             <li class="dropdown-submenu">
                                 <a class="dropdown-item dropdown-toggle" href="#">
                                     Requisición de personal
@@ -394,13 +382,16 @@
                                             Solicitud de requisición de personal
                                         </a>
                                     </li>
-                                    <hr class="dropdown-divider">
                                     @endif
+
+                                    @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                                    <hr class="dropdown-divider">
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/requisiciondepersonal') }}">
                                             Requisición de personal
                                         </a>
                                     </li>
+                                    @endif
 
                                 </ul>
                             </li>
@@ -408,6 +399,7 @@
                         </ul>
                     </li>
                     @endif
+
 
 
 
