@@ -426,7 +426,23 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+document.addEventListener('DOMContentLoaded', function () {
 
+    const selectRequisicion = document.getElementById('REQUISICION_ID');
+    const selectCategoria   = document.getElementById('CATEGORIA_VACANTE');
+
+    selectRequisicion.addEventListener('change', function () {
+
+        const optionSeleccionada = this.options[this.selectedIndex];
+        const puestoRP = optionSeleccionada.getAttribute('data-puesto');
+
+        if (puestoRP) {
+            selectCategoria.value = puestoRP;
+        }
+
+    });
+
+});
 
 
 

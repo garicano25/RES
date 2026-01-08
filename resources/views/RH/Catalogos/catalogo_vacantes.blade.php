@@ -40,8 +40,25 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label>Seleccionar requisición *</label>
+                        <select class="form-control" id="REQUISICION_ID" name="REQUISICION_ID" required>
+                            <option selected disabled>Seleccione una opción</option>
+
+                            @foreach ($requerimientos as $req)
+                            <option
+                                value="{{ $req->ID_FORMULARO_REQUERIMIENTO }}"
+                                data-puesto="{{ $req->PUESTO_RP }}">
+                                {{ $req->NOMBRE_CATEGORIA }} — {{ $req->FECHA_EFECTIVA }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+
+
+                    <div class="mb-3">
                         <label>Categoría *</label>
-                        <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required>
+                        <select class="form-control" id="CATEGORIA_VACANTE" name="CATEGORIA_VACANTE" required style="pointer-events:none; background-color:#e9ecef;">
                             <option selected disabled>Seleccione una opción</option>
                             @foreach ($areas as $area)
                             <option value="{{ $area->ID_CATALOGO_CATEGORIA }}">{{ $area->NOMBRE_CATEGORIA }} </option>
@@ -55,11 +72,11 @@
                     <div class="row  mb-3">
                         <div class="col-3">
                             <label>N° vacante *</label>
-                            <input  type="text" name="NUMERO_VACANTE" id="NUMERO_VACANTE" class="form-control" required>
+                            <input type="text" name="NUMERO_VACANTE" id="NUMERO_VACANTE" class="form-control" required>
                         </div>
                         <div class="col-9">
                             <label>Lugar de la vacante *</label>
-                            <input  type="text" name="LUGAR_VACANTE" id="LUGAR_VACANTE" class="form-control" required>
+                            <input type="text" name="LUGAR_VACANTE" id="LUGAR_VACANTE" class="form-control" required>
                         </div>
                     </div>
                     <div class="mb-3">
@@ -69,16 +86,16 @@
                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                         </div>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label>Requerimiento de vacantes:</label>
                         <button id="botonAgregar" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar requerimiento"><i class="bi bi-plus-circle-fill"></i></button>
                         <div id="inputs-container" class="mt-3"></div>
-                        
-                    </div>
-                    
 
-                
+                    </div>
+
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>

@@ -18,6 +18,7 @@ class catalogovacantesModel extends Model
         'NUMERO_VACANTE',
         'FECHA_EXPIRACION',
         'DESCRIPCION',
+        'REQUISICION_ID',
         'ACTIVO'   
     ];
 

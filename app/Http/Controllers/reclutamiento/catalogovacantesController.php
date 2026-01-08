@@ -31,11 +31,27 @@ class catalogovacantesController extends Controller
     ->orderBy('NOMBRE_CATEGORIA', 'ASC')
     ->get();
 
-    
 
-       
+        $requerimientos = DB::table('formulario_requerimientos as fr')
+            ->join('catalogo_categorias as cat', 'cat.ID_CATALOGO_CATEGORIA', '=', 'fr.PUESTO_RP')
+            ->select(
+                'fr.ID_FORMULARO_REQUERIMIENTO',
+                'fr.PUESTO_RP',
+                'cat.NOMBRE_CATEGORIA',
+                DB::raw("
+            CASE 
+                WHEN fr.ANTES_DE1 = 1 THEN fr.FECHA_CREACION
+                ELSE fr.FECHA_RP
+            END AS FECHA_EFECTIVA
+        ")
+            )
+            ->where('fr.ESTADO_SOLICITUD', 'Aprobada')
+            ->orderBy('FECHA_EFECTIVA', 'DESC')
+            ->get();
 
-        return view('RH.Catalogos.catalogo_vacantes', compact('areas'));
+
+
+        return view('RH.Catalogos.catalogo_vacantes', compact('areas', 'requerimientos'));
    
     }
 

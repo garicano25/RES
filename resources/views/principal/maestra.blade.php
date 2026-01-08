@@ -363,19 +363,16 @@
 
                         <ul class="dropdown-menu">
 
-                            {{-- ORGANIGRAMA --}}
                             @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
                             @endif
 
-                            {{-- PPT --}}
                             @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
                             <li><a class="dropdown-item" href="{{ url('/ppt') }}">PPT</a></li>
                             <hr class="dropdown-divider">
                             @endif
 
-                            {{-- DPT --}}
                             @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
                             <li><a class="dropdown-item" href="{{ url('/dpt') }}">DPT</a></li>
                             <hr class="dropdown-divider">
@@ -700,7 +697,7 @@
     @endif
 
     @if(request()->is('catalogodevacantes'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js?v=1.0"></script>
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js?v=1.1"></script>
     @endif
 
     @if(request()->is('categorias'))
