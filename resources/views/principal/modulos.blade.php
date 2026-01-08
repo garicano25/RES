@@ -797,28 +797,36 @@
 
                         @endphp -->
 
+
                         @php
                         $user = auth()->user();
 
                         /*
                         |--------------------------------------------------------------------------
-                        | Roles especiales (por PRESENCIA, no por exclusividad)
+                        | Rol con prioridad absoluta
                         |--------------------------------------------------------------------------
                         */
-                        $tieneSoloRolIntendente = $user->hasRole('Intendente');
-                        $tieneSoloRolAlmacenista = $user->hasRole('Almacenista');
-                        $tieneSoloRolLideOperaciones = $user->hasRole('Líder de Operaciones');
+                        $esSuperusuario = $user->hasAnyRole(['Superusuario', 'Administrador']);
 
                         /*
                         |--------------------------------------------------------------------------
-                        | Roles restringidos “administrativos”
+                        | Roles operativos (solo aplican si NO es Superusuario/Admin)
                         |--------------------------------------------------------------------------
                         */
-                        $tieneSoloRolSSTJunior = $user->hasRole('Consultor-Instructor Junior');
-                        $tieneSoloRolAsistentePlaneacion = $user->hasRole('Asistente de planeación y logística');
-                        $tieneSoloRolHSEQ = $user->hasRole('Analista HSEQ');
-                        $tieneSoloRolSoftware = $user->hasRole('Desarrollador de Software Junior');
-                        $tieneSoloRolAmadellaves = $user->hasRole('Ama de llaves');
+                        $tieneSoloRolIntendente = !$esSuperusuario && $user->hasRole('Intendente');
+                        $tieneSoloRolAlmacenista = !$esSuperusuario && $user->hasRole('Almacenista');
+                        $tieneSoloRolLideOperaciones = !$esSuperusuario && $user->hasRole('Líder de Operaciones');
+
+                        /*
+                        |--------------------------------------------------------------------------
+                        | Roles restringidos administrativos
+                        |--------------------------------------------------------------------------
+                        */
+                        $tieneSoloRolSSTJunior = !$esSuperusuario && $user->hasRole('Consultor-Instructor Junior');
+                        $tieneSoloRolAsistentePlaneacion = !$esSuperusuario && $user->hasRole('Asistente de planeación y logística');
+                        $tieneSoloRolHSEQ = !$esSuperusuario && $user->hasRole('Analista HSEQ');
+                        $tieneSoloRolSoftware = !$esSuperusuario && $user->hasRole('Desarrollador de Software Junior');
+                        $tieneSoloRolAmadellaves = !$esSuperusuario && $user->hasRole('Ama de llaves');
 
                         /*
                         |--------------------------------------------------------------------------
@@ -831,10 +839,11 @@
                         $tieneSoloRolHSEQ ||
                         $tieneSoloRolSoftware ||
                         $tieneSoloRolAmadellaves;
+                        
                         @endphp
 
 
-                        
+
                         <div class="modules">
                             {{-- RRHH --}}
                             @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones || $tieneSoloRolIntendente )
