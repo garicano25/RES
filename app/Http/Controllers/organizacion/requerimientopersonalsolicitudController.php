@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Artisan;
 use Exception;
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\organizacion\areasModel;
 use App\Models\organizacion\formulariorequerimientoModel;
 use App\Models\organizacion\departamentosAreasModel;
@@ -16,8 +18,7 @@ use App\Models\organizacion\catalogotipovacanteModel;
 use App\Models\organizacion\catalogomotivovacanteModel;
 
 use DB;
-
-class requerimientoPersonalController extends Controller
+class requerimientopersonalsolicitudController extends Controller
 {
     public function index()
     {
@@ -28,7 +29,7 @@ class requerimientoPersonalController extends Controller
         INNER JOIN formulario_dpt f ON c.ID_CATALOGO_CATEGORIA = f.DEPARTAMENTOS_AREAS_ID
         WHERE c.ACTIVO = 1
     ");
-    
+
 
         $todascategoria = DB::select("SELECT ID_CATALOGO_CATEGORIA  AS ID_CATALOGO_CATEGORIA, NOMBRE_CATEGORIA AS NOMBRE
         FROM catalogo_categorias
@@ -49,23 +50,29 @@ class requerimientoPersonalController extends Controller
 
 
 
-        return view('RH.organizacion.requerimiento_personal', compact('areas','categoria','tipos','motivos','todascategoria','areas1'));
-        
+        return view('RH.organizacion.requerimientopersonal_solicitud', compact('areas', 'categoria', 'tipos', 'motivos', 'todascategoria', 'areas1'));
     }
 
 
-    public function Tablarequerimiento()
+
+    public function Tablasolicitudrequerimientopersonal()
     {
         try {
-            $tabla = DB::select("SELECT rec.*, cat.NOMBRE_CATEGORIA
-                            FROM formulario_requerimientos rec
-                            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.PUESTO_RP");
+            $userid = Auth::user()->ID_USUARIO;
+
+            $tabla = DB::select(
+                    "SELECT rec.*, cat.NOMBRE_CATEGORIA
+            FROM formulario_requerimientos rec
+            LEFT JOIN catalogo_categorias cat 
+                ON cat.ID_CATALOGO_CATEGORIA = rec.PUESTO_RP
+            WHERE rec.USUARIO_ID = ?",
+                    [$userid]
+                );
 
 
 
             foreach ($tabla as $value) {
-
-                if ($value->ESTADO_SOLICITUD == 'Aprobada' || $value->ESTADO_SOLICITUD == 'Rechazada')  {
+                if ($value->ESTADO_SOLICITUD == 'Aprobada' || $value->ESTADO_SOLICITUD == 'Rechazada') {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARO_REQUERIMIENTO . '"><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
@@ -83,6 +90,7 @@ class requerimientoPersonalController extends Controller
                     $value->ESTATUS = '<span class="badge bg-secondary">Sin estatus</span>';
                 }
 
+                
             }
 
             return response()->json([
@@ -96,13 +104,6 @@ class requerimientoPersonalController extends Controller
             ]);
         }
     }
-  
-
-public function mostrardocumentorequisicion($id)
-{
-    $archivo = formulariorequerimientoModel::findOrFail($id)->DOCUMENTO_REQUISICION;
-    return Storage::response($archivo);
-}
 
 
     public function store(Request $request)
@@ -111,18 +112,22 @@ public function mostrardocumentorequisicion($id)
             switch (intval($request->api)) {
                 case 1:
                     if ($request->ID_FORMULARO_REQUERIMIENTO == 0) {
+
                         DB::statement('ALTER TABLE formulario_requerimientos AUTO_INCREMENT=1;');
-                        
-                        $requerimientos = formulariorequerimientoModel::create($request->all());
-                        
+
+                        $datos = $request->all();
+                        $datos['USUARIO_ID'] = auth()->user()->ID_USUARIO;
+
+                        $requerimientos = formulariorequerimientoModel::create($datos);
+
                         if ($request->hasFile('DOCUMENTO_REQUISICION')) {
                             $file = $request->file('DOCUMENTO_REQUISICION');
-                            
+
                             $folderPath = "Requisición de personal/{$requerimientos->ID_FORMULARO_REQUERIMIENTO}";
                             $fileName = $file->getClientOriginalName();
-                            
+
                             $filePath = $file->storeAs($folderPath, $fileName);
-        
+
                             $requerimientos->DOCUMENTO_REQUISICION = $filePath;
                             $requerimientos->save();
                         }
@@ -140,13 +145,7 @@ public function mostrardocumentorequisicion($id)
                         } else {
                             $requerimientos = formulariorequerimientoModel::find($request->ID_FORMULARO_REQUERIMIENTO);
 
-                            $datos = $request->all();
-
-                            if (empty($requerimientos->APROBO_ID)) {
-                                $datos['APROBO_ID'] = auth()->user()->ID_USUARIO;
-                            }
-
-                            $requerimientos->update($datos);
+                            $requerimientos->update($request->all());
 
                             if ($request->hasFile('DOCUMENTO_REQUISICION')) {
                                 $file = $request->file('DOCUMENTO_REQUISICION');
@@ -163,21 +162,18 @@ public function mostrardocumentorequisicion($id)
                                 $requerimientos->DOCUMENTO_REQUISICION = $filePath;
                                 $requerimientos->save();
                             }
-
                             $response['code'] = 1;
                             $response['requerimiento'] = 'Actualizada';
                         }
                         return response()->json($response);
                     }
-        
+
                     $response['code']  = 1;
                     $response['requerimiento']  = $requerimientos;
                     return response()->json($response);
-        
+
                     break;
 
-
-        
                 default:
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';
@@ -186,9 +182,9 @@ public function mostrardocumentorequisicion($id)
         } catch (Exception $e) {
             return response()->json(['error' => 'Error al guardar las relaciones', 'message' => $e->getMessage()]);
         }
-        
-        
     }
 
-}
 
+
+
+}

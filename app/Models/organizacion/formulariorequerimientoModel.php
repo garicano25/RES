@@ -39,7 +39,14 @@ class formulariorequerimientoModel extends Model
         'FECHA_CREACION',
         'DOCUMENTO_REQUISICION',
         'ANTES_DE1',
-         'ACTIVO'
+        'ACTIVO',
+
+        'USUARIO_ID',
+        'ESTADO_SOLICITUD',
+        'NOMBRE_APROBO_RP',
+        'FECHA_APROBO_RP',
+        'APROBO_ID',
+        'MOTIVO_RECHAZO_RP'
         
     ];
 }

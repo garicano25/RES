@@ -74,6 +74,21 @@
         .dropdown-item span.badge {
             font-size: 0.85rem;
         }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu>.dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-left: .1rem;
+            display: none;
+        }
+
+        .dropdown-submenu:hover>.dropdown-menu {
+            display: block;
+        }
     </style>
 
 
@@ -283,23 +298,124 @@
                             <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Información empresa</span><span class="d-none d-lg-inline">Información empresa</span>
                         </a>
                     </li>
+                    @endif
+
+                    <!-- @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Organización</span><span class="d-none d-lg-inline">Organización</span>
+                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i>
+                            <span class="d-lg-none">Organización</span>
+                            <span class="d-none d-lg-inline">Organización</span>
                         </a>
+
                         <ul class="dropdown-menu">
+
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
+
                             <li><a class="dropdown-item" href="{{url('/ppt')}}">PPT</a></li>
                             <hr class="dropdown-divider">
+
                             <li><a class="dropdown-item" href="{{url('/dpt')}}">DPT</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/requisiciondepersonal')}}">Requisición de personal </a></li>
+
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">
+                                    Requisición de personal
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="{{url('/requisiciondepersonalsolicitud')}}">
+                                            Solicitud de requisición de personal
+                                        </a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li>
+                                        <a class="dropdown-item" href="{{url('/requisiciondepersonal')}}">
+                                            Requisición de personal
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+                    @endif -->
+
+
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                    <li class="nav-item dropdown" style="margin-left: -2px;">
+                        <a class="nav-link dropdown-toggle BOTON" href="#"
+                            style="color: #fff; font-weight: bold; text-decoration: none;"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i>
+                            <span class="d-lg-none">Organización</span>
+                            <span class="d-none d-lg-inline">Organización</span>
+                        </a>
+
+                        <ul class="dropdown-menu">
+
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/organigrama') }}">
+                                    Organigrama
+                                </a>
+                            </li>
+                            <hr class="dropdown-divider">
+
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/ppt') }}">
+                                    PPT
+                                </a>
+                            </li>
+                            <hr class="dropdown-divider">
+
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/dpt') }}">
+                                    DPT
+                                </a>
+                            </li>
+                            <hr class="dropdown-divider">
+
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">
+                                    Requisición de personal
+                                </a>
+
+                                <ul class="dropdown-menu">
+
+                                    @if(auth()->check() && auth()->user()->hasRoles([
+                                    'Superusuario',
+                                    'Administrador',
+                                    'Líder RRHH y Administración',
+                                    'Líder de Operaciones',
+                                    'Líder RRHH y Administración Director'
+                                    ]))
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/requisiciondepersonalsolicitud') }}">
+                                            Solicitud de requisición de personal
+                                        </a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    @endif
+
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/requisiciondepersonal') }}">
+                                            Requisición de personal
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+
                         </ul>
                     </li>
                     @endif
 
-                    
+
+
+
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -575,7 +691,7 @@
     @endif
 
     @if(request()->is('requisiciondepersonal'))
-    <script src="/assets/js_sitio/organizacion/requerimiento.js?v=3.0"></script>
+    <script src="/assets/js_sitio/organizacion/requerimiento.js?v=4.0"></script>
     @endif
 
     @if(request()->is('catalogodevacantes'))
@@ -672,7 +788,9 @@
     <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.17"></script>
     @endif
 
-
+    @if(request()->is('requisiciondepersonalsolicitud'))
+    <script src="/assets/js_sitio/organizacion/requerimientosolicitud.js"></script>
+    @endif
 
 
 </body>

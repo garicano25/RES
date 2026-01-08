@@ -40,6 +40,7 @@ use App\Http\Controllers\organizacion\catalogotipovacanteController;
 use App\Http\Controllers\organizacion\catalogoCompotenciasGerencialesController;
 use App\Http\Controllers\organizacion\catalogomotivovacanteControlller;
 use App\Http\Controllers\organizacion\catalogoanuncioController;
+use App\Http\Controllers\organizacion\requerimientopersonalsolicitudController;
 
 // CONTROLADORES DE RECLUTAMIENO 
 use App\Http\Controllers\reclutamiento\catalogovacantesController;
@@ -250,12 +251,20 @@ Route::get('/infoReportan/{ID}/{LIDER}', [dptController::class, 'infoReportan'])
 Route::get('/consultarfuncionescargo/{areaId}', [dptController::class, 'consultarfuncionescargo']);
 
 // REQUERIMIENTO PERSONAL 
+
+Route::get('/requisiciondepersonalsolicitud', [requerimientopersonalsolicitudController::class, 'index']);
+Route::post('/RequisiconPerSolicitudSave', [requerimientopersonalsolicitudController::class, 'store']);
+Route::get('/Tablasolicitudrequerimientopersonal', [requerimientopersonalsolicitudController::class, 'Tablasolicitudrequerimientopersonal']);
+
+
+// REQUERIMIENTO PERSONAL 
 Route::get('/requisiciondepersonal', [requerimientoPersonalController::class, 'index'])->middleware('role:Superusuario,Administrador');
 Route::post('/RequerimientoSave', [requerimientoPersonalController::class, 'store']);
 Route::get('/RequerimientoDelete', [requerimientoPersonalController::class, 'store']);
 Route::get('/Tablarequerimiento', [requerimientoPersonalController::class, 'Tablarequerimiento']);
 Route::get('/makeExcelRP/{id_formulario}', [makeExcelController::class, 'makeExcelRP']);
 Route::get('/mostrardocumentorequisicion/{id}', [requerimientoPersonalController::class, 'mostrardocumentorequisicion']);
+
 
 // CATÁLOGO DE JERARQUÍA
 Route::get('/jerarquico', function () {return view('RH.Catalogos.catalogo_Jerárquico');});

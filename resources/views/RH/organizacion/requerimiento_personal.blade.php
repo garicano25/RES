@@ -5,12 +5,8 @@
 
 
 <div class="contenedor-contenido">
-  <ol class="breadcrumb mb-5">
-    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;Requisición de personal </h3>
-
-    <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_departamento" id="NUEVO_REQUISICION" style="margin-left: auto;">
-      Nuevo <i class="bi bi-plus-circle"></i>
-    </button>
+  <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
+    <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-earmark-fill"></i>&nbsp;Requisición de personal</h3>
 
   </ol>
 
@@ -38,8 +34,11 @@
 
             <div class="row mb-3">
 
-              <span class="mb-3 text-danger col-7"><i class="bi bi-info-circle"></i>&nbsp; Si la requisición de personal se realizó antes del 2024-11-01</span>
-              <button type="button" class="btn btn-info col-2" id="PRESIONAR_AQUI" style="">Presione aquí</button>
+              <div class="mb-3" id="BOTON_2024" style="display: none;">
+
+                <span class="mb-3 text-danger col-7"><i class="bi bi-info-circle"></i>&nbsp; Si la requisición de personal se realizó antes del 2024-11-01</span>
+                <button type="button" class="btn btn-info col-2" id="PRESIONAR_AQUI">Presione aquí</button>
+              </div>
 
               <input type="hidden" class="form-control" id="ANTES_DE1" name="ANTES_DE1" value="0">
             </div>
@@ -108,8 +107,9 @@
                 </div>
                 <div class="col-6">
                   <label>Categoría a sustituir</label>
-                  <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP" >
+                  <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP">
                     <option selected disabled>Seleccione una opción</option>
+                    <option value="N/A">N/A</option>
                     @foreach ($todascategoria as $cat)
                     <option value="{{ $cat->ID_CATALOGO_CATEGORIA }}">{{ $cat->NOMBRE }}</option>
                     @endforeach
@@ -119,7 +119,7 @@
               </div>
 
               <div class="row mb-3">
-                
+
                 <div class="col-2 text-center">
                   <div class="form-group">
                     <label>No. de vacantes</label>
@@ -249,62 +249,57 @@
                 </div>
               </div>
 
+
+
+
               <div class="row mb-3">
-                <div class="col-6 text-center">
-                  <label><b>Solicita</b></label>
-                </div>
-                <div class="col-6 text-center">
-                  <label><b>Autoriza</b></label>
+                <div class="col-12">
+                  <label>Nombre del solicitante *</label>
+                  <input type="text" class="form-control " id="NOMBRE_SOLICITA_RP" name="NOMBRE_SOLICITA_RP" readonly>
                 </div>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-1">
-                  <label></label>
-                </div>
-                <div class="col-4">
-                  <input type="text" class="form-control text-center" id="SOLICITA_RP" name="SOLICITA_RP" placeholder="Firma" required>
-                </div>
-                <div class="col-2">
-                  <label></label>
 
-                </div>
-                <div class="col-4">
-                  <input type="text" class="form-control text-center" id="AUTORIZA_RP" name="AUTORIZA_RP" placeholder="Firma">
+              <div class="mb-3 mt-2">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label> Estado de aprobación:</label>
+                      <select class="form-control" id="ESTADO_SOLICITUD" name="ESTADO_SOLICITUD" required>
+                        <option selected disabled>Seleccione una opción</option>
+                        <option value="Aprobada">Aprobada</option>
+                        <option value="Rechazada">Rechazada</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-6 mt-2">
+                    <label>Quien aprobó/rechazo *</label>
+                    <input type="text" class="form-control " id="NOMBRE_APROBO_RP" readonly>
+                  </div>
+                  <div class="col-6 mt-2">
+                    <label>Fecha de aprobación*</label>
+                    <div class="input-group">
+                      <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APROBO_RP" name="FECHA_APROBO_RP" required>
+                      <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-1">
-                  <label></label>
-                </div>
-                <div class="col-4">
-                  <input type="text" class="form-control text-center" id="NOMBRE_SOLICITA_RP" name="NOMBRE_SOLICITA_RP" placeholder="Nombre del solicitante" required>
-                </div>
-                <div class="col-2">
-                  <label></label>
 
-                </div>
-                <div class="col-4 ">
-                  <input type="text" class="form-control text-center" id="NOMBRE_AUTORIZA_RP" name="NOMBRE_AUTORIZA_RP" placeholder="Nombre del que Autoriza">
+
+              <div class="mb-3 mt-2" id="DIV_APROBACION_RECHAZO" style="display: none;">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label>Motivo del rechazo</label>
+                      <textarea class="form-control" id="MOTIVO_RECHAZO_RP" name="MOTIVO_RECHAZO_RP" rows="3" placeholder="Escriba el motivo de rechazo..."></textarea>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div class="row mb-3">
-                <div class="col-1">
-                  <label></label>
-                </div>
-                <div class="col-4">
-                  <input type="text" class="form-control text-center" id="CARGO_SOLICITA_RP" name="CARGO_SOLICITA_RP" placeholder="Cargo del Solicitante" required>
-                </div>
-                <div class="col-2">
-                  <label></label>
 
-                </div>
-                <div class="col-4">
-                  <input type="text" class="form-control text-center" id="CARGO_AUTORIZA_RP" name="CARGO_AUTORIZA_RP" placeholder="Cargo del que Autoriza">
-                </div>
-              </div>
             </div>
 
 
@@ -320,9 +315,6 @@
                       <option value="{{ $area2->ID }}">{{ $area2->NOMBRE }}</option>
                       @endforeach
                     </select>
-
-
-
                   </div>
                 </div>
                 <div class="col-4">
@@ -341,9 +333,7 @@
                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                   </div>
                 </div>
-
               </div>
-
             </div>
 
 
@@ -355,12 +345,12 @@
 
 
 
+
           </div>
-        </div>
-        <div class="modal-footer mx-5">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-          <button type="submit" class="btn btn-success" id="guardarFormRP"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar Requisición de personal"></i> Guardar</button>
-        </div>
+          <div class="modal-footer mx-5">
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+            <button type="submit" class="btn btn-success" id="guardarFormRP"><i class="bi bi-floppy-fill" data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="Guardar Requisición de personal"></i> Guardar</button>
+          </div>
       </form>
     </div>
   </div>
@@ -378,7 +368,8 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/th"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/th">
+</script>
 
 
 

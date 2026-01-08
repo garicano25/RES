@@ -1,6 +1,6 @@
 //VARIABLES
 ID_FORMULARO_REQUERIMIENTO = 0
-Tablarequerimiento = null
+Tablasolicitudrequerimientopersonal = null
 
 
 $("#NUEVO_REQUISICION").click(function (e) {
@@ -9,8 +9,7 @@ $("#NUEVO_REQUISICION").click(function (e) {
     $("#miModal_REQUERIMIENTO").modal("show");
 
     $("#MOSTRAR_TODO").show();
-    $("#MOSTRAR_ANTES").hide();
-    $("#BOTON_2024").hide();
+  
 
    
 });
@@ -30,9 +29,8 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
 
     $("#MOSTRAR_TODO").show();
-    $("#MOSTRAR_ANTES").hide();
-    $("#BOTON_2024").hide();
-
+    $("#DIV_APROBACION").hide();
+    $("#DIV_APROBACION_RECHAZO").hide();
   
 });
 
@@ -60,7 +58,7 @@ $("#guardarFormRP").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarFormRP')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARO_REQUERIMIENTO: ID_FORMULARO_REQUERIMIENTO }, 'RequerimientoSave', 'formularioRP', 'guardarFormRP', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARO_REQUERIMIENTO: ID_FORMULARO_REQUERIMIENTO }, 'RequisiconPerSolicitudSave', 'formularioRP', 'guardarFormRP', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -81,7 +79,7 @@ $("#guardarFormRP").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_REQUERIMIENTO').modal('hide')
                     document.getElementById('formularioRP').reset();
-                    Tablarequerimiento.ajax.reload()
+                    Tablasolicitudrequerimientopersonal.ajax.reload()
 
            
                 
@@ -100,7 +98,7 @@ $("#guardarFormRP").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarFormRP')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARO_REQUERIMIENTO: ID_FORMULARO_REQUERIMIENTO }, 'RequerimientoSave', 'formularioRP', 'guardarFormRP', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 1, ID_FORMULARO_REQUERIMIENTO: ID_FORMULARO_REQUERIMIENTO }, 'RequisiconPerSolicitudSave', 'formularioRP', 'guardarFormRP', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -121,7 +119,7 @@ $("#guardarFormRP").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_REQUERIMIENTO').modal('hide')
                     document.getElementById('formularioRP').reset();
-                    Tablarequerimiento.ajax.reload()
+                    Tablasolicitudrequerimientopersonal.ajax.reload()
 
 
                 }, 300);  
@@ -137,7 +135,7 @@ $("#guardarFormRP").click(function (e) {
 });
 
 
-var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
+var Tablasolicitudrequerimientopersonal = $("#Tablasolicitudrequerimientopersonal").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -156,12 +154,12 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablarequerimiento',
+        url: '/Tablasolicitudrequerimientopersonal',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablarequerimiento.columns.adjust().draw();
+            Tablasolicitudrequerimientopersonal.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -205,11 +203,9 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
 
             }
         },
-        { data: 'NOMBRE_SOLICITA_RP' },
         { data: 'ESTATUS' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' }
-
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -218,18 +214,17 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         { targets: 3, title: 'Tipo de vacante', className: 'all text-center' },
         { targets: 4, title: 'Motivo', className: 'all text-center' },
         { targets: 5, title: 'Fecha de creación', className: 'all text-center' },
-        { targets: 6, title: 'Nombre del solicitante', className: 'all text-center' },
-        { targets: 7, title: 'Nombre del solicitante', className: 'all text-center' },
-        { targets: 8, title: 'Estatus', className: 'all text-center' },
-        { targets: 9, title: 'Visualizar', className: 'all text-center' }
+        { targets: 6, title: 'Estatus', className: 'all text-center' },
+        { targets: 7, title: 'Editar', className: 'all text-center' },
+        { targets: 8, title: 'Visualizar', className: 'all text-center' },
     ]
 });
 
 
 
-$('#Tablarequerimiento tbody').on('change', 'td>label>input.ELIMINAR', function () {
+$('#Tablasolicitudrequerimientopersonal tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablarequerimiento.row(tr);
+    var row = Tablasolicitudrequerimientopersonal.row(tr);
 
     var estado = $(this).is(':checked') ? 1 : 0;
 
@@ -239,36 +234,20 @@ $('#Tablarequerimiento tbody').on('change', 'td>label>input.ELIMINAR', function 
         ID_FORMULARO_REQUERIMIENTO: row.data().ID_FORMULARO_REQUERIMIENTO
     };
 
-    eliminarDatoTabla(data, [Tablarequerimiento], 'RequerimientoDelete');
+    eliminarDatoTabla(data, [Tablasolicitudrequerimientopersonal], 'RequerimientoDelete');
 });
 
 
 
 
-$('#Tablarequerimiento tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablasolicitudrequerimientopersonal tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablarequerimiento.row(tr);
+    var row = Tablasolicitudrequerimientopersonal.row(tr);
     ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO;
 
     editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO', 1);
 
-    if (row.data().ANTES_DE1 == 1) {
-        $('#MOSTRAR_ANTES').show();
-        $('#MOSTRAR_TODO').hide();
-        $('#BOTON_2024').show();
-        $('#MOSTRAR_TODO').find('[required]').removeAttr('required');
-        
-    } else {
-        $('#MOSTRAR_TODO').show();
-        $('#MOSTRAR_ANTES').hide();
-        $('#BOTON_2024').hide();
-        $('#MOSTRAR_ANTES').find('[required]').removeAttr('required');
-
-    }
-
-
-
-      if (row.data().APROBO_ID) {
+    if (row.data().APROBO_ID) {
         $.get(`/obtenerNombreUsuario/${row.data().APROBO_ID}`, function (res) {
             $('#NOMBRE_APROBO_RP').val(res.nombre_completo);
         }).fail(() => $('#NOMBRE_APROBO_RP').val(''));
@@ -276,20 +255,21 @@ $('#Tablarequerimiento tbody').on('click', 'td>button.EDITAR', function () {
         $('#NOMBRE_APROBO_RP').val('No se ha aprobado');
     }
 
-
     
-   if (row.data().ESTADO_SOLICITUD === "Aprobada") {
-        
-        $("#DIV_APROBACION_RECHAZO").hide();
-
-    } else if (row.data().ESTADO_SOLICITUD === "Rechazada") {
+    if (row.data().ESTADO_SOLICITUD === "Aprobada") {
      
+        $("#DIV_APROBACION").show();
+        $("#DIV_APROBACION_RECHAZO").hide();
+       
+    } else if (row.data().ESTADO_SOLICITUD === "Rechazada") {
+       
+        $("#DIV_APROBACION").show();
         $("#DIV_APROBACION_RECHAZO").show();
                  
-     } else {
-               
-       $("#DIV_APROBACION_RECHAZO").hide();
-   
+    } else {
+        $("#DIV_APROBACION").hide();
+        $("#DIV_APROBACION_RECHAZO").hide();
+          
     }
 
 
@@ -300,31 +280,16 @@ $('#Tablarequerimiento tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    $('#Tablarequerimiento tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablasolicitudrequerimientopersonal tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablarequerimiento.row(tr);
+        var row = Tablasolicitudrequerimientopersonal.row(tr);
         
         hacerSoloLectura2(row.data(), '#miModal_REQUERIMIENTO');
 
         ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO;
         editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO',1);
 
-    if (row.data().ANTES_DE1 == 1) {
-        $('#MOSTRAR_ANTES').show();
-        $('#MOSTRAR_TODO').hide();
-        $('#BOTON_2024').show();
-        $('#MOSTRAR_TODO').find('[required]').removeAttr('required');
-        
-    } else {
-        $('#MOSTRAR_TODO').show();
-        $('#MOSTRAR_ANTES').hide();
-        $('#BOTON_2024').hide();
-        $('#MOSTRAR_ANTES').find('[required]').removeAttr('required');
-
-    }
-        
-        
-     if (row.data().APROBO_ID) {
+    if (row.data().APROBO_ID) {
         $.get(`/obtenerNombreUsuario/${row.data().APROBO_ID}`, function (res) {
             $('#NOMBRE_APROBO_RP').val(res.nombre_completo);
         }).fail(() => $('#NOMBRE_APROBO_RP').val(''));
@@ -332,19 +297,25 @@ $(document).ready(function() {
         $('#NOMBRE_APROBO_RP').val('No se ha aprobado');
     }
         
- if (row.data().ESTADO_SOLICITUD === "Aprobada") {
         
-        $("#DIV_APROBACION_RECHAZO").hide();
-
-    } else if (row.data().ESTADO_SOLICITUD === "Rechazada") {
+           
+    if (row.data().ESTADO_SOLICITUD === "Aprobada") {
      
+        $("#DIV_APROBACION").show();
+        $("#DIV_APROBACION_RECHAZO").hide();
+       
+    } else if (row.data().ESTADO_SOLICITUD === "Rechazada") {
+       
+        $("#DIV_APROBACION").show();
         $("#DIV_APROBACION_RECHAZO").show();
                  
-     } else {
-        
+    } else {
+        $("#DIV_APROBACION").hide();
         $("#DIV_APROBACION_RECHAZO").hide();
           
     }
+
+        
         
     });
 
@@ -357,30 +328,15 @@ $(document).ready(function() {
 
 
 
-document.addEventListener('DOMContentLoaded', function () {
-
-    const estadoSelect = document.getElementById('ESTADO_SOLICITUD');
-    const divRechazo   = document.getElementById('DIV_APROBACION_RECHAZO');
-
-    estadoSelect.addEventListener('change', function () {
-
-        if (this.value === 'Rechazada') {
-            divRechazo.style.display = 'block'; 
-        } else {
-            divRechazo.style.display = 'none';
-        }
-
-    });
-
-});
 
 
 
-$('#Tablarequerimiento tbody').on('click', 'td>button.RP', function () {
+
+$('#Tablasolicitudrequerimientopersonal tbody').on('click', 'td>button.RP', function () {
 
 
     var tr = $(this).closest('tr');
-    var row = Tablarequerimiento.row(tr);
+    var row = Tablasolicitudrequerimientopersonal.row(tr);
     ID_FORMULARO_REQUERIMIENTO = row.data().ID_FORMULARO_REQUERIMIENTO
 
    
@@ -398,9 +354,9 @@ $('#Tablarequerimiento tbody').on('click', 'td>button.RP', function () {
 })
 
 
-$('#Tablarequerimiento').on('click', '.ver-archivo-requerimiento', function () {
+$('#Tablasolicitudrequerimientopersonal').on('click', '.ver-archivo-requerimiento', function () {
     var tr = $(this).closest('tr');
-    var row = Tablarequerimiento.row(tr);
+    var row = Tablasolicitudrequerimientopersonal.row(tr);
     var id = $(this).data('id');
 
     if (!id) {
@@ -446,28 +402,6 @@ quitarFormatoBtn.addEventListener('click', function () {
 });
 
 
-$(document).ready(function () {
-    $("#PRESIONAR_AQUI").click(function () {
-        $("#MOSTRAR_TODO").hide();
 
-        $("#MOSTRAR_TODO").find("[required]").removeAttr("required");
-
-        $("#MOSTRAR_ANTES").show();
-
-        $("#ANTES_DE1").val("1");
-    });
-});
-
-
-
-$(document).ready(function () {
-    $('#FECHA_CREACION').datepicker({
-        format: "yyyy-mm-dd", 
-        endDate: "2024-11-01",
-        autoclose: true, 
-        todayHighlight: true, 
-        language: 'es' 
-    });
-});
 
 
