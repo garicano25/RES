@@ -6555,6 +6555,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('MOSTRAR_TODO').style.display = "block";
     document.getElementById('MOSTRAR_ANTES').style.display = "none";
+    document.getElementById("APROBO_ID").value = "";
 
   
 });
@@ -6601,17 +6602,14 @@ $("#guardarFormRP").click(function (e) {
                     
 
                 ID_CONTRATACION_REQUERIMIENTO = data.requerimiento.ID_CONTRATACION_REQUERIMIENTO
-                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#miModal_REQUERIMIENTO').modal('hide')
+                alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                $('#miModal_REQUERIMIENTO').modal('hide')
                 document.getElementById('formularioRP').reset();
                 
-
-
                 if ($.fn.DataTable.isDataTable('#Tablarequisicioncontratacion')) {
                     Tablarequisicioncontratacion.ajax.reload(null, false); 
                 }
 
-        
                 
             })
             
@@ -6785,6 +6783,13 @@ $('#Tablarequisicioncontratacion').on('click', 'td>button.EDITAR', function () {
     }
 
 
+    if (row.data().APROBO_ID) {
+        $.get(`/obtenerNombreUsuario/${row.data().APROBO_ID}`, function (res) {
+            $('#NOMBRE_APROBO_RP').val(res.nombre_completo);
+        }).fail(() => $('#NOMBRE_APROBO_RP').val(''));
+    } else {
+        $('#NOMBRE_APROBO_RP').val('No se ha aprobado');
+    }
 
     $("#miModal_REQUERIMIENTO").modal("show");
  
@@ -6854,15 +6859,19 @@ $('#SELECCIONAR_CATEGORIA_RP').on('change', function () {
                     // VEHÍCULO
                     $('input[name="VEHICULO_EMPRESA_RP"][value="' + data.VEHICULO_EMPRESA_RP + '"]').prop('checked', true);
 
-
-                    $('#SOLICITA_RP').val(data.SOLICITA_RP);
-                    $('#AUTORIZA_RP').val(data.AUTORIZA_RP);
                     $('#NOMBRE_SOLICITA_RP').val(data.NOMBRE_SOLICITA_RP);
-                    $('#NOMBRE_AUTORIZA_RP').val(data.NOMBRE_AUTORIZA_RP);
-                    $('#CARGO_SOLICITA_RP').val(data.CARGO_SOLICITA_RP);
-                    $('#CARGO_AUTORIZA_RP').val(data.CARGO_AUTORIZA_RP);
+                   
                     $('#FECHA_CREACION').val(data.FECHA_CREACION);
                     $('#DOCUMENTO_REQUISICION').val(data.DOCUMENTO_REQUISICION);
+
+                    $('#ESTADO_SOLICITUD').val(data.ESTADO_SOLICITUD);
+                    $('#FECHA_APROBO_RP').val(data.FECHA_APROBO_RP);
+                    $('#APROBO_ID').val(data.APROBO_ID);
+
+
+                    $('#NOMBRE_APROBO_RP').val(data.NOMBRE_APROBO ?? '');
+
+
                 }
             } else {
                 alert(response.message);

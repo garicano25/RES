@@ -12,10 +12,8 @@ Modalinventario.addEventListener('hidden.bs.modal', event => {
     ID_FORMULARIO_INVENTARIO = 0
     document.getElementById('formularioINVENTARIO').reset();
    
-        $('#CANTIDAD_EQUIPO').prop('readonly', false);
+    $('#CANTIDAD_EQUIPO').prop('readonly', false);
 
-    
-    
     $('#Modal_inventario .modal-title').html('Equipo');
 
 })

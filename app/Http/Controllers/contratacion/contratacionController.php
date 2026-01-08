@@ -52,18 +52,19 @@ class contratacionController extends Controller
 
         $areas2 = areasModel::orderBy('NOMBRE', 'ASC')->get();
 
-
         $requisicioncategoria = DB::select("
-            SELECT 
-                rec.*, 
-                cat.NOMBRE_CATEGORIA,
-                CASE 
-                    WHEN rec.ANTES_DE1 = 1 THEN rec.FECHA_CREACION
-                    ELSE rec.FECHA_RP
-                END AS FECHA_MOSTRAR
-            FROM formulario_requerimientos rec
-            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = rec.PUESTO_RP
-        ");
+                SELECT 
+                    rec.*, 
+                    cat.NOMBRE_CATEGORIA,
+                    CASE 
+                        WHEN rec.ANTES_DE1 = 1 THEN rec.FECHA_CREACION
+                        ELSE rec.FECHA_RP
+                    END AS FECHA_MOSTRAR
+                FROM formulario_requerimientos rec
+                LEFT JOIN catalogo_categorias cat 
+                    ON cat.ID_CATALOGO_CATEGORIA = rec.PUESTO_RP
+                WHERE rec.ESTADO_SOLICITUD = 'Aprobada'
+            ");
 
 
         $tipos = catalogotipovacanteModel::orderBy('NOMBRE_TIPOVACANTE', 'ASC')->get();
@@ -1120,20 +1121,35 @@ public function obtenerdocumentosoportescontratos(Request $request)
     }
 
 
- 
+
 
     public function obtenerDatosCategoria(Request $request)
     {
-        $id = $request->get('categoria'); 
+        $id = $request->get('categoria');
 
         $registro = DB::table('formulario_requerimientos as rec')
             ->leftJoin('catalogo_categorias as cat', 'cat.ID_CATALOGO_CATEGORIA', '=', 'rec.PUESTO_RP')
+            ->leftJoin('usuarios as u', 'u.ID_USUARIO', '=', 'rec.APROBO_ID')
             ->where('rec.ID_FORMULARO_REQUERIMIENTO', $id)
-            ->select('rec.*', 'cat.NOMBRE_CATEGORIA')
+            ->select(
+                'rec.*',
+                'cat.NOMBRE_CATEGORIA',
+                'u.ID_USUARIO as APROBO_ID_USUARIO',
+                DB::raw("
+                CONCAT(
+                    u.EMPLEADO_NOMBRE, ' ',
+                    u.EMPLEADO_APELLIDOPATERNO, ' ',
+                    u.EMPLEADO_APELLIDOMATERNO
+                ) as NOMBRE_APROBO
+            ")
+            )
             ->first();
 
         if (!$registro) {
-            return response()->json(['success' => false, 'message' => 'No se encontraron datos.']);
+            return response()->json([
+                'success' => false,
+                'message' => 'No se encontraron datos.'
+            ]);
         }
 
         return response()->json([
@@ -1141,6 +1157,7 @@ public function obtenerdocumentosoportescontratos(Request $request)
             'data' => $registro
         ]);
     }
+
 
 
 

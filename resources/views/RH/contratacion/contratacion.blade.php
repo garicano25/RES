@@ -440,7 +440,7 @@
                                 <div class="listadedocumentoficial mt-4"></div>
 
 
-                                
+
                                 <div class="col-12 mb-3 text-center mt-4">
                                     <h5><b>Domicilio</b></h5>
                                 </div>
@@ -1183,7 +1183,7 @@
 
                     <div class="mb-3">
                         <label>Nombre del documento *</label>
-                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_SOPORTECONTRATO" name="NOMBRE_DOCUMENTO_SOPORTECONTRATO"  required>
+                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO_SOPORTECONTRATO" name="NOMBRE_DOCUMENTO_SOPORTECONTRATO" required>
                     </div>
 
 
@@ -2179,6 +2179,7 @@
                                     <label>Categoría a sustituir</label>
                                     <select class="form-control" id="SUSTITUYE_CATEGORIA_RP" name="SUSTITUYE_CATEGORIA_RP">
                                         <option selected disabled>Seleccione una opción</option>
+                                        <option value="N/A">N/A</option>
                                         @foreach ($todascategoria as $cat)
                                         <option value="{{ $cat->ID_CATALOGO_CATEGORIA }}">{{ $cat->NOMBRE }}</option>
                                         @endforeach
@@ -2319,61 +2320,42 @@
                             </div>
 
                             <div class="row mb-3">
-                                <div class="col-6 text-center">
-                                    <label><b>Solicita</b></label>
-                                </div>
-                                <div class="col-6 text-center">
-                                    <label><b>Autoriza</b></label>
+                                <div class="col-12">
+                                    <label>Nombre del solicitante *</label>
+                                    <input type="text" class="form-control " id="NOMBRE_SOLICITA_RP" name="NOMBRE_SOLICITA_RP" readonly>
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-1">
-                                    <label></label>
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control text-center" id="SOLICITA_RP" name="SOLICITA_RP" placeholder="Firma" required>
-                                </div>
-                                <div class="col-2">
-                                    <label></label>
+                            <div class="mb-3 mt-2">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label> Estado de aprobación:</label>
+                                            <select class="form-control" id="ESTADO_SOLICITUD" name="ESTADO_SOLICITUD" required>
+                                                <option selected disabled>Seleccione una opción</option>
+                                                <option value="Aprobada">Aprobada</option>
+                                                <option value="Rechazada">Rechazada</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 mt-2">
+                                        <label>Quien aprobó/rechazo *</label>
+                                        <input type="text" class="form-control " id="NOMBRE_APROBO_RP" readonly>
 
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control text-center" id="AUTORIZA_RP" name="AUTORIZA_RP" placeholder="Firma">
+                                        <input type="hidden" class="form-control " id="APROBO_ID" name="APROBO_ID" >
+
+                                    </div>
+                                    <div class="col-6 mt-2">
+                                        <label>Fecha de aprobación*</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APROBO_RP" name="FECHA_APROBO_RP" required>
+                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="row mb-3">
-                                <div class="col-1">
-                                    <label></label>
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control text-center" id="NOMBRE_SOLICITA_RP" name="NOMBRE_SOLICITA_RP" placeholder="Nombre del solicitante" required>
-                                </div>
-                                <div class="col-2">
-                                    <label></label>
 
-                                </div>
-                                <div class="col-4 ">
-                                    <input type="text" class="form-control text-center" id="NOMBRE_AUTORIZA_RP" name="NOMBRE_AUTORIZA_RP" placeholder="Nombre del que Autoriza">
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-1">
-                                    <label></label>
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control text-center" id="CARGO_SOLICITA_RP" name="CARGO_SOLICITA_RP" placeholder="Cargo del Solicitante" required>
-                                </div>
-                                <div class="col-2">
-                                    <label></label>
-
-                                </div>
-                                <div class="col-4">
-                                    <input type="text" class="form-control text-center" id="CARGO_AUTORIZA_RP" name="CARGO_AUTORIZA_RP" placeholder="Cargo del que Autoriza">
-                                </div>
-                            </div>
                         </div>
 
 
