@@ -345,7 +345,13 @@
                     @endif -->
 
 
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                    @if(auth()->check() && auth()->user()->hasRoles([
+                    'Superusuario',
+                    'Administrador',
+                    'Líder RRHH y Administración',
+                    'Líder de Operaciones',
+                    'Líder RRHH y Administración Director'
+                    ]))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#"
                             style="color: #fff; font-weight: bold; text-decoration: none;"
@@ -357,26 +363,17 @@
 
                         <ul class="dropdown-menu">
 
-                            <li>
-                                <a class="dropdown-item" href="{{ url('/organigrama') }}">
-                                    Organigrama
-                                </a>
-                            </li>
+                            {{-- SOLO SUPER / ADMIN --}}
+                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                            <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
 
-                            <li>
-                                <a class="dropdown-item" href="{{ url('/ppt') }}">
-                                    PPT
-                                </a>
-                            </li>
+                            <li><a class="dropdown-item" href="{{ url('/ppt') }}">PPT</a></li>
                             <hr class="dropdown-divider">
 
-                            <li>
-                                <a class="dropdown-item" href="{{ url('/dpt') }}">
-                                    DPT
-                                </a>
-                            </li>
+                            <li><a class="dropdown-item" href="{{ url('/dpt') }}">DPT</a></li>
                             <hr class="dropdown-divider">
+                            @endif
 
                             <li class="dropdown-submenu">
                                 <a class="dropdown-item dropdown-toggle" href="#">
@@ -385,7 +382,7 @@
 
                                 <ul class="dropdown-menu">
 
-                                    @if(auth()->check() && auth()->user()->hasRoles([
+                                    @if(auth()->user()->hasRoles([
                                     'Superusuario',
                                     'Administrador',
                                     'Líder RRHH y Administración',
@@ -399,7 +396,6 @@
                                     </li>
                                     <hr class="dropdown-divider">
                                     @endif
-
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/requisiciondepersonal') }}">
                                             Requisición de personal
