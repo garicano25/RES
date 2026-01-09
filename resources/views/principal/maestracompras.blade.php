@@ -588,11 +588,11 @@
     @endif
 
     @if(request()->is('requisicionmaterialeslideres'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.11"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.12"></script>
     @endif
 
     @if(request()->is('requisicionmaterialesaprobacion'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=2.3"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=2.4"></script>
     @endif
 
     @if(request()->is('bitacora'))

@@ -129,18 +129,14 @@
                                 <div class="row">
                                     <div class="col-8">
                                         <label for="VISTO_BUENO">Visto bueno</label>
-
                                         <input type="text" class="form-control" id="VISTO_BUENO" name="VISTO_BUENO" readonly>
-
                                         <meta name="usuario-autenticado" content="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
-
-
                                     </div>
 
                                     <div class="col-4">
                                         <label>Fecha *</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_MR" name="FECHA_VISTO_MR" required>
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_MR" name="FECHA_VISTO_MR"  style="pointer-events:none; background-color:#e9ecef;" required>
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                         </div>
                                     </div>

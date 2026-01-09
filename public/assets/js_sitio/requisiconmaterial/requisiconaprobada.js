@@ -358,30 +358,23 @@ $('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () 
     ID_FORMULARIO_MR = row.data().ID_FORMULARIO_MR;
 
 
-        cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
+    cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-    
-    
     editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
     
 
-     if (row.data().DAR_BUENO === "2") {
-        $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-      
+    if (row.data().DAR_BUENO === "2") {
+        $('#MOTIVO_RECHAZO_JEFE_DIV').show();  
     } else {
     }
 
-
-
-
-        if (row.data().ESTADO_APROBACION === "Rechazada") {
+    if (row.data().ESTADO_APROBACION === "Rechazada") {
         $('#motivo-rechazo-container').show();
-      
     } else {
     }
 
 
-      var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
+    var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
     if (!row.data().QUIEN_APROBACION) {
         $('#QUIEN_APROBACION').val(nombreAutenticado);
     } else {
@@ -390,31 +383,31 @@ $('#Tablarequsicionaprobada tbody').on('click', 'td>button.EDITAR', function () 
 
 
 
-      if (row.data().DAR_BUENO === "1") {
-          $('#VISTO_BUENO_JEFE').show();
-          
+    if (row.data().DAR_BUENO === "1") {
+        $('#VISTO_BUENO_JEFE').show();
         $('#APROBACION_DIRECCION').show();
-
-         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-          $('#BOTON_VISTO_BUENO').hide();
-          
-
-      
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+        $('#BOTON_VISTO_BUENO').hide();
+    
     } else if (row.data().DAR_BUENO === "2") {
         $('#VISTO_BUENO_JEFE').show();
-          $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').show();
         $('#APROBACION_DIRECCION').show();
           
-         
-        
      } else {
-         $('#VISTO_BUENO_JEFE').hide();
+        $('#VISTO_BUENO_JEFE').hide();
         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-       
         $('#APROBACION_DIRECCION').hide();
-          
-          
     }
+
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    const fechaHoy = `${yyyy}-${mm}-${dd}`;
+
+    $("#FECHA_APRUEBA_MR").val(fechaHoy);
+
 
 
 

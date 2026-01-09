@@ -1,5 +1,4 @@
-//VARIABLES
-ID_FORMULARIO_MR = 0
+//VARIABLESID_FORMULARIO_MR = 0
 
 
 
@@ -353,8 +352,6 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
 
     cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-
-
     editarDatoTabla(row.data(), 'formularioMR', 'miModal_MR', 1);
 
     var nombreAutenticado = $('meta[name="usuario-autenticado"]').attr('content');
@@ -364,39 +361,32 @@ $('#Tablarequisicion tbody').on('click', 'td>button.EDITAR', function () {
         $('#VISTO_BUENO').val(row.data().VISTO_BUENO);
     }
 
-
-       if (row.data().ESTADO_APROBACION === "Aprobada") {
-         $('#motivo-rechazo-container').hide();
+    if (row.data().ESTADO_APROBACION === "Aprobada") {
+        $('#motivo-rechazo-container').hide();
         $('#APROBACION_DIRECCION').show();
-    
-           
-           
-      } else {
+    } else {
           
         $('#motivo-rechazo-container').show();
-        $('#APROBACION_DIRECCION').show();
-           
-      
+        $('#APROBACION_DIRECCION').show();      
     }
-
 
     if (row.data().DAR_BUENO === "1") {
         $('#BOTON_VISTO_BUENO').hide();
-
- 
     } else if (row.data().DAR_BUENO === "2") {
          $('#BOTON_VISTO_BUENO').hide();
-         
-    
-        
      } else {
-         $('#BOTON_VISTO_BUENO').show();
-       
-          
+         $('#BOTON_VISTO_BUENO').show();          
     }
 
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    const fechaHoy = `${yyyy}-${mm}-${dd}`;
 
+    $("#FECHA_VISTO_MR").val(fechaHoy);
 
+    
 });
 
 
