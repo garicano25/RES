@@ -279,7 +279,8 @@
                   <div class="col-6 mt-2">
                     <label>Fecha de aprobación*</label>
                     <div class="input-group">
-                      <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APROBO_RP" name="FECHA_APROBO_RP" required>
+                      <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APROBO_RP" name="FECHA_APROBO_RP"
+                        style="pointer-events:none; background-color:#e9ecef;" required>
                       <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                     </div>
                   </div>

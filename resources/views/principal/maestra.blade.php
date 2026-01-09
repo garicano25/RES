@@ -693,7 +693,7 @@
     @endif
 
     @if(request()->is('requisiciondepersonal'))
-    <script src="/assets/js_sitio/organizacion/requerimiento.js?v=4.0"></script>
+    <script src="/assets/js_sitio/organizacion/requerimiento.js?v=5.0"></script>
     @endif
 
     @if(request()->is('catalogodevacantes'))
@@ -791,7 +791,7 @@
     @endif
 
     @if(request()->is('requisiciondepersonalsolicitud'))
-    <script src="/assets/js_sitio/organizacion/requerimientosolicitud.js?v=1.0"></script>
+    <script src="/assets/js_sitio/organizacion/requerimientosolicitud.js?v=2.0"></script>
     @endif
 
 
