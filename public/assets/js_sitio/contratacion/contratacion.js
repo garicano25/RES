@@ -1611,8 +1611,10 @@ document.addEventListener('DOMContentLoaded', function() {
 $("#guardarDOCUMENTOSOPORTE").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormularioV1('formularioDOCUMENTOS');
 
+    formularioValido = validarFormulario3($('#formularioDOCUMENTOS'))
+
+    
     if (formularioValido) {
 
     if (ID_DOCUMENTO_SOPORTE == 0) {
@@ -1822,24 +1824,6 @@ $('#Tabladocumentosoporte').on('click', '.ver-archivo-documentosoporte', functio
     abrirModal(url, nombreDocumentoSoporte);
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    const selectTipoDocumento = document.getElementById('TIPO_DOCUMENTO');
-    const divFechasSoporte = document.getElementById('FECHAS_SOPORTEDOCUMENTOS');
-
-    const valoresPermitidos = ['1', '2', '3','14'];
-
-    selectTipoDocumento.addEventListener('change', function () {
-        const valorSeleccionado = this.value;
-
-        if (valoresPermitidos.includes(valorSeleccionado)) {
-            divFechasSoporte.style.display = 'block';
-        } else {
-            divFechasSoporte.style.display = 'none';
-        }
-    });
-});
-
-
 
 
 const Modaldocumentosoporte = document.getElementById('miModal_DOCUMENTOS_SOPORTE')
@@ -1860,40 +1844,29 @@ Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
 
-    document.getElementById('REQUIERE_FECHA').style.display = 'none';
 
 
 
 })
 
 
-document.addEventListener("DOMContentLoaded", function () {
-    const tipoDocumento = document.getElementById("TIPO_DOCUMENTO");
-    const requiereFecha = document.getElementById("REQUIERE_FECHA");
-    const fechasSoporte = document.getElementById("FECHAS_SOPORTEDOCUMENTOS");
+document.addEventListener('DOMContentLoaded', function () {
 
-    tipoDocumento.addEventListener("change", function () {
-        if (this.value === "13") {
-            requiereFecha.style.display = "block";
-        } else {
-            requiereFecha.style.display = "none";
-            fechasSoporte.style.display = "none"; 
-            document.querySelectorAll('input[name="PROCEDE_FECHA_DOC"]').forEach(r => r.checked = false);
-        }
-    });
+    const contenedorFechas = document.getElementById('FECHAS_SOPORTEDOCUMENTOS');
 
-    document.querySelectorAll('input[name="PROCEDE_FECHA_DOC"]').forEach(radio => {
-        radio.addEventListener("change", function () {
+    document.querySelectorAll('input[name="PROCEDE_FECHA_DOC"]').forEach(function (radio) {
+        radio.addEventListener('change', function () {
+
             if (this.value === "1") {
-                fechasSoporte.style.display = "block";
+                contenedorFechas.style.display = 'block';
             } else {
-                fechasSoporte.style.display = "none";
+                contenedorFechas.style.display = 'none';
             }
+
         });
     });
 
 });
-
 
 $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -1908,45 +1881,49 @@ $('#Tabladocumentosoporte').on('click', 'td>button.EDITAR', function () {
     $('#TIPO_DOCUMENTO').prop('disabled', true); 
     $('#NOMBRE_DOCUMENTO').prop('readonly', true); 
 
-
-     const mostrarDivTipos = ['1', '2', '3', '14'];
-     const tipoSeleccionado = String(row.data().TIPO_DOCUMENTO); 
- 
-     if (mostrarDivTipos.includes(tipoSeleccionado)) {
-         document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'block';
-     } else {
-         document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
+  
+    if (row.data().PROCEDE_FECHA_DOC === "1") {
+        $('#FECHAS_SOPORTEDOCUMENTOS').show();
+    } else {
+        $('#FECHAS_SOPORTEDOCUMENTOS').hide();
     }
-    
-
-    manejarTipoDocumento13(row.data());
 
 
 });
 
 
-function manejarTipoDocumento13(data) {
-    const tipo = String(data.TIPO_DOCUMENTO);
-    const procede = String(data.PROCEDE_FECHA_DOC);
 
-    if (tipo === "13") {
-        $('#REQUIERE_FECHA').show();
 
-        if (procede === "1") {
-            $('#procedesfechadocsi').prop('checked', true);
-            $('#FECHAS_SOPORTEDOCUMENTOS').show();
-        } else if (procede === "2") {
-            $('#procedesfechadocno').prop('checked', true);
-            $('#FECHAS_SOPORTEDOCUMENTOS').hide();
-        } else {
-            $('input[name="PROCEDE_FECHA_DOC"]').prop('checked', false);
-            $('#FECHAS_SOPORTEDOCUMENTOS').hide();
-        }
 
-    } else {
-        $('#REQUIERE_FECHA').hide();
-        $('input[name="PROCEDE_FECHA_DOC"]').prop('checked', false);
+function cargarDocumentosGuardados() {
+    if (!curpSeleccionada || curpSeleccionada.trim() === '') {
+        console.error('CURP no definida');
+        return;
     }
+
+    $.ajax({
+        url: '/obtenerguardados',
+        method: 'POST',
+        data: {
+            CURP: curpSeleccionada, 
+            _token: $('input[name="_token"]').val() 
+        },
+        success: function (data) {
+            let select = $('#TIPO_DOCUMENTO');
+
+            select.find('option').prop('disabled', false);
+
+            data.forEach(function (tipoDocumento) {
+                if (tipoDocumento !== "13") {  // No bloquear la opción 3
+                    select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
+                }
+            });
+
+        },
+        error: function (xhr, status, error) {
+            console.error('Error al cargar documentos guardados:', error);
+        }
+    });
 }
 
 
@@ -1960,59 +1937,27 @@ function manejarTipoDocumento13(data) {
 //         url: '/obtenerguardados',
 //         method: 'POST',
 //         data: {
-//             CURP: curpSeleccionada, 
-//             _token: $('input[name="_token"]').val() 
+//             CURP: curpSeleccionada,
+//             _token: $('input[name="_token"]').val()
 //         },
 //         success: function (data) {
 //             let select = $('#TIPO_DOCUMENTO');
 
-//             select.find('option').prop('disabled', false);
-
-//             data.forEach(function (tipoDocumento) {
-//                 if (tipoDocumento !== "13") {  // No bloquear la opción 3
-//                     select.find(`option[value="${tipoDocumento}"]`).prop('disabled', true);
-//                 }
+//             select.find('option').each(function () {
+//                 $(this).prop('disabled', true).css('color', ''); 
 //             });
 
+//             data.forEach(function (tipoDocumento) {
+//                 select.find(`option[value="${tipoDocumento}"]`)
+//                     .prop('disabled', false)
+//                     .css('color', 'green');
+//             });
 //         },
 //         error: function (xhr, status, error) {
 //             console.error('Error al cargar documentos guardados:', error);
 //         }
 //     });
 // }
-
-
-function cargarDocumentosGuardados() {
-    if (!curpSeleccionada || curpSeleccionada.trim() === '') {
-        console.error('CURP no definida');
-        return;
-    }
-
-    $.ajax({
-        url: '/obtenerguardados',
-        method: 'POST',
-        data: {
-            CURP: curpSeleccionada,
-            _token: $('input[name="_token"]').val()
-        },
-        success: function (data) {
-            let select = $('#TIPO_DOCUMENTO');
-
-            select.find('option').each(function () {
-                $(this).prop('disabled', false).css('color', ''); 
-            });
-
-            data.forEach(function (tipoDocumento) {
-                select.find(`option[value="${tipoDocumento}"]`)
-                    .prop('disabled', false)
-                    .css('color', 'green');
-            });
-        },
-        error: function (xhr, status, error) {
-            console.error('Error al cargar documentos guardados:', error);
-        }
-    });
-}
 
 
 

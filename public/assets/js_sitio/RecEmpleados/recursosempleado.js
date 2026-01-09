@@ -218,20 +218,7 @@ document.addEventListener("DOMContentLoaded", function () {
         contadorMateriales = nuevoContador;
 }
     
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
+   
 $("#guardaRECEMPLEADOS").click(function (e) {
     e.preventDefault();
 

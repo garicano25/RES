@@ -915,7 +915,7 @@
 
                     <div class="mb-3">
                         <label>Tipo de documento *</label>
-                        <select class="form-select" id="TIPO_DOCUMENTO" name="TIPO_DOCUMENTO" required>
+                        <select class="form-select" id="TIPO_DOCUMENTO" name="TIPO_DOCUMENTO" >
                             <option value="0" disabled selected>Seleccione una opción</option>
                             <option value="1">Copia del INE</option>
                             <option value="2">Copia del Pasaporte</option>
@@ -939,12 +939,12 @@
                     </div>
 
 
-                    <div class="col-12 mt-4" id="REQUIERE_FECHA" style="display: none;">
+                    <div class="col-12 mt-4" id="REQUIERE_FECHA" style="display: block;">
                         <div class="row">
                             <div class="col-md-12 mb-3 text-center">
                                 <h5 class="form-label"><b>Requiere fecha </b></h5>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="PROCEDE_FECHA_DOC" id="procedesfechadocsi" value="1">
+                                    <input class="form-check-input" type="radio" name="PROCEDE_FECHA_DOC" id="procedesfechadocsi" value="1" required>
                                     <label class="form-check-label" for="procedesfechadocsi">Sí</label>
                                 </div>
 
@@ -965,7 +965,7 @@
                             <div class="col-6">
                                 <label>Fecha Inicio *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTOSOPORTE" name="FECHAI_DOCUMENTOSOPORTE">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTOSOPORTE" name="FECHAI_DOCUMENTOSOPORTE" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
 
                                 </div>
@@ -973,7 +973,7 @@
                             <div class="col-6">
                                 <label>Fecha Fin *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTE" name="FECHAF_DOCUMENTOSOPORTE">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTE" name="FECHAF_DOCUMENTOSOPORTE" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
 
                                 </div>
@@ -2342,7 +2342,7 @@
                                         <label>Quien aprobó/rechazo *</label>
                                         <input type="text" class="form-control " id="NOMBRE_APROBO_RP" readonly>
 
-                                        <input type="hidden" class="form-control " id="APROBO_ID" name="APROBO_ID" >
+                                        <input type="hidden" class="form-control " id="APROBO_ID" name="APROBO_ID">
 
                                     </div>
                                     <div class="col-6 mt-2">
