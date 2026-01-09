@@ -748,7 +748,7 @@ class inventarioController extends Controller
                                 $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
                                 $nombreArchivo = $nombreLimpio . '.' . $extension;
 
-                                $ruta = "compras/{$articuloId}/verificacion del proveedor/{$registroId}";
+                                $ruta = "Almacén/Inventario/{$articuloId}/Documento del equipo/{$registroId}";
                                 $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
 
                                 $cliente->DOCUMENTO_ARTICULO = $rutaCompleta;
