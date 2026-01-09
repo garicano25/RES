@@ -58,7 +58,8 @@
                             <div class="col-3">
                                 <label class="form-label">Fecha de solicitud *</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SALIDA" name="FECHA_SALIDA" required>
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_SALIDA" name="FECHA_SALIDA"
+                                        style="pointer-events:none; background-color:#e9ecef;" required >
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                 </div>
                             </div>
@@ -210,13 +211,13 @@
 
                                 <div class="col-3 mt-3">
                                     <label class="form-label">Año de servicio </label>
-                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES" required >
+                                    <input type="number" class="form-control" id="ANIO_SERVICIO_VACACIONES" name="ANIO_SERVICIO_VACACIONES" required>
                                 </div>
 
 
                                 <div class="col-3 mt-3">
                                     <label class="form-label">Días que corresponden</label>
-                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES" required >
+                                    <input type="number" class="form-control" id="DIAS_CORRESPONDEN_VACACIONES" name="DIAS_CORRESPONDEN_VACACIONES" required>
                                 </div>
 
 
@@ -264,7 +265,7 @@
                                 </div>
 
 
-                             
+
 
 
                             </div>
@@ -274,7 +275,7 @@
 
                     <div class="mt-3">
                         <label>Observaciones </label>
-                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" ></textarea>
+                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3"></textarea>
                     </div>
 
 

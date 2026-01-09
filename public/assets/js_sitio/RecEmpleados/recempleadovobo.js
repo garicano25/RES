@@ -270,19 +270,12 @@ $(document).ready(function() {
 
         ID_FORMULARIO_RECURSOS_EMPLEADOS = row.data().ID_FORMULARIO_RECURSOS_EMPLEADOS;
         
-
-
         
         cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-    
-    
         editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
-        
-        
-        // === Para TIPO_SOLICITUD ===
         if (row.data().TIPO_SOLICITUD === "1") {
             $('#PERMISO_AUSENCIA').show();
             $('#SOLIDA_ALMACEN').hide();
@@ -297,66 +290,26 @@ $(document).ready(function() {
             $('#SOLIDA_ALMACEN').hide();
         }
 
-        // === Para CONCEPTO_PERMISO ===
         if (row.data().CONCEPTO_PERMISO === "9") {
             $('#EXPLIQUE_PERMISO').show();
         } else {
             $('#EXPLIQUE_PERMISO').hide();
         }
 
-        // === Para MATERIAL_RETORNA_SALIDA ===
         if (row.data().MATERIAL_RETORNA_SALIDA === "Sí") {
             $('#FECHA_ESTIMADA').css("display", "inline-flex");
         } else {
             $('#FECHA_ESTIMADA').hide();
         }
 
-        // === Para ocultar la firma si ya esta firmado ===
 
         if (row.data().FIRMO_USUARIO === "1") {
             $('#DIV_FIRMAR').hide();
         } else  {
-              $('#DIV_FIRMAR').show();
-            } 
+            $('#DIV_FIRMAR').show();
+        } 
         
         
-        
-//      if (row.data().DAR_BUENO === "1") {
-//         $('#VISTO_BUENO_JEFE').show();
-//          $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-//          $('#BOTON_VISTO_BUENO').hide();
-//          $('#guardaRECEMPLEADOS').hide();
-
-      
-//     } else if (row.data().DAR_BUENO === "2") {
-//         $('#VISTO_BUENO_JEFE').show();
-//          $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-//          $('#guardaRECEMPLEADOS').show();
-         
-        
-//      } else {
-//          $('#VISTO_BUENO_JEFE').hide();
-//         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-       
-          
-//     }
-
-
-//    if (row.data().ESTADO_APROBACION === "Aprobada") {
-//          $('#motivo-rechazo-container').hide();   
-//          $('#APROBACION_DIRECCION').show();
-//          $('#guardaRECEMPLEADOS').hide();
-
-//     } else if (row.data().ESTADO_APROBACION === "Rechazada") {
-//         $('#APROBACION_DIRECCION').show();
-//         $('#motivo-rechazo-container').show();
-//          $('#guardaRECEMPLEADOS').hide();
-                 
-//      } else {
-       
-          
-//     }
-
     
 
 
@@ -383,28 +336,27 @@ $('#Tablarecempleadovobo tbody').on('click', 'td>button.EDITAR', function () {
     editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
-        const dias = document.getElementById("NODIAS_PERMISO");
-        const horas = document.getElementById("NOHORAS_PERMISO");
+    const dias = document.getElementById("NODIAS_PERMISO");
+    const horas = document.getElementById("NOHORAS_PERMISO");
 
-        if (row.data().NODIAS_PERMISO && parseInt(row.data().NODIAS_PERMISO) > 0) {
-            dias.disabled = false;
-            horas.value = "";
-            horas.disabled = true;
-        }
+    if (row.data().NODIAS_PERMISO && parseInt(row.data().NODIAS_PERMISO) > 0) {
+        dias.disabled = false;
+        horas.value = "";
+        horas.disabled = true;
+    }
 
-        else if (row.data().NOHORAS_PERMISO && parseInt(row.data().NOHORAS_PERMISO) > 0) {
-            horas.disabled = false;
-            dias.value = "";
-            dias.disabled = true;
-        }
+    else if (row.data().NOHORAS_PERMISO && parseInt(row.data().NOHORAS_PERMISO) > 0) {
+        horas.disabled = false;
+        dias.value = "";
+        dias.disabled = true;
+    }
 
-        else {
-            dias.disabled = false;
-            horas.disabled = false;
+    else {
+        dias.disabled = false;
+        horas.disabled = false;
     }
     
     
-                // === Para TIPO_SOLICITUD ===
     if (row.data().TIPO_SOLICITUD === "1") {
         $('#PERMISO_AUSENCIA').show();
         $('#SOLIDA_ALMACEN').hide();
@@ -419,14 +371,12 @@ $('#Tablarecempleadovobo tbody').on('click', 'td>button.EDITAR', function () {
         $('#SOLIDA_ALMACEN').hide();
     }
 
-    // === Para CONCEPTO_PERMISO ===
     if (row.data().CONCEPTO_PERMISO === "9") {
         $('#EXPLIQUE_PERMISO').show();
     } else {
         $('#EXPLIQUE_PERMISO').hide();
     }
 
-    // === Para MATERIAL_RETORNA_SALIDA ===
     if (row.data().MATERIAL_RETORNA_SALIDA === "Sí") {
         $('#FECHA_ESTIMADA').css("display", "inline-flex");
     } else {
@@ -440,6 +390,14 @@ $('#Tablarecempleadovobo tbody').on('click', 'td>button.EDITAR', function () {
     } 
         
     
+
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    const fechaHoy = `${yyyy}-${mm}-${dd}`;
+
+    $("#FECHA_VISTO_SOLICITUD").val(fechaHoy);
 
   
 });

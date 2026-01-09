@@ -39,6 +39,8 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     if (typeof Swal !== "undefined") {
         Swal.close();
     }
+
+    
 });
 
 
@@ -120,6 +122,15 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
         }
       });
 
+    
+    
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    const fechaHoy = `${yyyy}-${mm}-${dd}`;
+
+    $("#FECHA_SALIDA").val(fechaHoy);
    
 });
 
