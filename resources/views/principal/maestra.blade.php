@@ -697,7 +697,7 @@
     @endif
 
     @if(request()->is('catalogodevacantes'))
-    <script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js?v=1.1"></script>
+    <script src="/assets/js_sitio/organizacion/catalogos/catalogovacantes.js?v=1.2"></script>
     @endif
 
     @if(request()->is('categorias'))
