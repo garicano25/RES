@@ -38,32 +38,34 @@ $("#NUEVO_MR").click(function (e) {
     e.preventDefault();
 
 
-       
-    $('#formularioMR').each(function(){
+    $('#formularioMR').each(function () {
         this.reset();
     });
 
     $(".materialesdiv").empty();
 
+    const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    const fechaHoy = `${yyyy}-${mm}-${dd}`;
+
+    $("#FECHA_SOLICITUD_MR").val(fechaHoy);
+
 
     $("#miModal_MR").modal("show");
 
-
     $.get('/obtenerAreaSolicitante', function(response) {
-    if (response.area) {
-        $("#AREA_SOLICITANTE_MR").val(response.area);
-    } else {
-        $("#AREA_SOLICITANTE_MR").val("Área no encontrada");
+        if (response.area) {
+            $("#AREA_SOLICITANTE_MR").val(response.area);
+        } else {
+            $("#AREA_SOLICITANTE_MR").val("Área no encontrada");
         }
-        
+    });
+
+    cambiarColor();
 });
 
-
-    
-
-cambiarColor();
-   
-});
 
 
 

@@ -791,7 +791,7 @@
     @endif
 
     @if(request()->is('requisiciondepersonalsolicitud'))
-    <script src="/assets/js_sitio/organizacion/requerimientosolicitud.js"></script>
+    <script src="/assets/js_sitio/organizacion/requerimientosolicitud.js?v=1.0"></script>
     @endif
 
 

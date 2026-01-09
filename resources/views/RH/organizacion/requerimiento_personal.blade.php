@@ -49,7 +49,7 @@
                 <div class="col-4">
                   <label>Fecha *</label>
                   <div class="input-group">
-                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_RP" name="FECHA_RP" required>
+                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_RP" name="FECHA_RP" required style="pointer-events:none; background-color:#e9ecef;">
                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                   </div>
                 </div>
