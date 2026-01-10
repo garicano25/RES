@@ -253,7 +253,7 @@
 
                     <div class="mt-3">
                         <label class="form-label">Observaciones *</label>
-                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3" ></textarea>
+                        <textarea class="form-control" id="OBSERVACIONES_REC" name="OBSERVACIONES_REC" rows="3"></textarea>
                     </div>
 
 
@@ -354,7 +354,7 @@
                                 <div class="col-4">
                                     <label>Fecha *</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_SOLICITUD" name="FECHA_APRUEBA_SOLICITUD" required>
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_APRUEBA_SOLICITUD" name="FECHA_APRUEBA_SOLICITUD" name="FECHA_SOLICITUD_MR" style="pointer-events:none; background-color:#e9ecef;" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>
