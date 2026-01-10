@@ -89,7 +89,9 @@ class DenyRoleGlobalMiddleware
         'bitacoravehiculos',
         'bitacoraasignacion',
         'informacionempresa',
-        'bitacoramrhistorial'
+        'bitacoramrhistorial',
+        'requisiciondepersonalsolicitud',
+        'mantenimiento'
         
     ];
 

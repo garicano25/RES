@@ -1022,6 +1022,7 @@ Route::post('/MantenimientoSave', [listamantenimientoController::class, 'store']
 Route::get('/MantenimientoDelete', [listamantenimientoController::class, 'store']);
 Route::get('/mostrarFotoEquipoMan/{id}', [listamantenimientoController::class, 'mostrarFotoEquipoMan'])->name('mostrarFotoEquipoMan');
 Route::get('/cantidadEquipoReadonlyMan', [listamantenimientoController::class, 'cantidadEquipoReadonlyMan']);
+Route::post('/guardarRequiereCalibracion', [listamantenimientoController::class, 'guardarRequiereCalibracion']);
 
 /// VISUALIZAR FECHAS DE DOCUMENTOS 
 Route::get('/obtenerDocumentosPorMantenimiento/{inventario_id}', [listamantenimientoController::class, 'obtenerDocumentosPorMantenimiento']);
@@ -1029,15 +1030,13 @@ Route::get('/obtenerDocumentosPorMantenimiento/{inventario_id}', [listamantenimi
 /// DOCUMENTOS DEL MANTENIMIENTO
 Route::get('/Tabladocumentomantenimiento', [listamantenimientoController::class, 'Tabladocumentomantenimiento']);
 Route::get('/mostrardocumentomantenimiento/{id}', [listamantenimientoController::class, 'mostrardocumentomantenimiento']);
+Route::get('/FotosDocMtto/{id}', [listamantenimientoController::class, 'FotosDocMtto'])->name('FotosDocMtto');
 
-
-
-
+/// CALIBRACION EQUIPO
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////PAGINA WEB///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 
 Route::get('/mensajespaginaweb', function () {    return view('pagina_web.mensajespagina');});
 Route::get('/Tablamensajepaginaweb', [mensajespaginaController::class, 'Tablamensajepaginaweb']);

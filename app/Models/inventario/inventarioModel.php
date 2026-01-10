@@ -40,7 +40,8 @@ class inventarioModel extends Model
         'INICIOVIGENCIA_POLIZA',
         'FINVIGENCIA_POLIZA',
         'PROVEEDOR_ALTA',
-        'NOMBRE_PROVEEDOR'
+        'NOMBRE_PROVEEDOR',
+        'REQUIERE_CALIBRACION'
 
     ];
 }

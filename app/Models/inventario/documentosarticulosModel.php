@@ -17,7 +17,10 @@ class documentosarticulosModel extends Model
         'FECHAI_DOCUMENTO',
         'FECHAF_DOCUMENTO',
         'DOCUMENTO_ARTICULO',
-        'ACTIVO'
+        'ACTIVO',
+        'TIPO_DOCUMENTO',
+        'FOTO_DOCUMENTO'
+
     ];
 
     

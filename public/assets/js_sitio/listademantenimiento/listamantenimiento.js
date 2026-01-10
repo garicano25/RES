@@ -1,7 +1,7 @@
 ID_FORMULARIO_INVENTARIO = 0
 ID_ENTRADA_FORMULARIO = 0
 ID_DOCUMENTO_ARTICULO = 0
-
+ID_CALIBRACION_ARTICULO = 0
 
 var inventario_id = null; 
 
@@ -529,7 +529,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-////////////////////////  ENTRADA INVENTARIO TAB 2 ////////////////////////
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -576,10 +575,40 @@ $("#NUEVA_DOCUMENTACION").click(function (e) {
         this.reset();
     });
 
+
+    var drEvent = $('#FOTO_DOCUMENTO').dropify({
+        messages: {
+            'default': 'Arrastre la imagen aquí o haga clic',
+            'replace': 'Arrastre la imagen aquí o haga clic para reemplazar',
+            'remove': 'Quitar',
+            'error': 'Ooops, ha ocurrido un error.'
+        },
+        error: {
+            'fileSize': 'El archivo es demasiado grande (máx. {{ value }}).',
+            'minWidth': 'El ancho de la imagen es demasiado pequeño (mín. {{ value }}px).',
+            'maxWidth': 'El ancho de la imagen es demasiado grande (máx. {{ value }}px).',
+            'minHeight': 'La altura de la imagen es demasiado pequeña (mín. {{ value }}px).',
+            'maxHeight': 'La altura de la imagen es demasiado grande (máx. {{ value }}px).',
+            'imageFormat': 'Formato no permitido, sólo se aceptan: ({{ value }}).'
+        }
+    });
+
+        
+
+    drEvent = drEvent.data('dropify');
+    drEvent.resetPreview();  
+    drEvent.clearElement();  
+    
+
     $("#miModal_DOCUMENTOS").modal("show");
    
+    $('#FECHAF_DOCUMENTO').prop('required', false).removeClass('validar');
 
-        $('#FECHAF_DOCUMENTO').prop('required', false).removeClass('validar');
+    $('#DIV_REQUIERE_FECHA').hide();
+    $('#FECHA_DOCUMENTO').hide();
+    $('#SUBIR_DOCUMENTO').hide();
+    $('#IMAGEN_DOCUMENTOS').hide();
+
 
 });
 
@@ -751,23 +780,77 @@ function cargarTablaDocumentosEquipo() {
             dataSrc: 'data'
         },
         columns: [
-            { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: null, render: function (data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'TIPO_DOCUMENTO_TEXTO', className: 'text-center' },
             { data: 'NOMBRE_DOCUMENTO', className: 'text-center' },
             { data: 'FECHAS_DOCUMENTOS' },
-            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            {
+                data: null,
+                className: 'text-center',
+                render: function (data, type, row) {
+
+                    if (row.TIPO_DOCUMENTO == 1) {
+                        return row.BTN_DOCUMENTO;
+                    }
+
+                    if (row.TIPO_DOCUMENTO == 2) {
+                        return row.FOTO_DOCUMENTOS_HTML;
+                    }
+
+                    return '';
+                }
+            },
             { data: 'BTN_EDITAR', className: 'text-center' },
+            { data: 'BTN_VISUALIZAR', className: 'text-center' },
+            { data: 'BTN_ELIMINAR', className: 'text-center' },
+
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'Nombre del documento:', className: 'all text-center' },  
-            { targets: 2, title: 'Fecha documentos:', className: 'all text-center' },  
-            { targets: 3, title: 'Documento', className: 'all text-center' },  
-            { targets: 4, title: 'Editar', className: 'all text-center' }, 
+            { targets: 1, title: 'Tipo de documento:', className: 'all text-center' },  
+            { targets: 2, title: 'Nombre del documento:', className: 'all text-center' },  
+            { targets: 3, title: 'Fecha documentos:', className: 'all text-center' },  
+            { targets: 4, title: 'Documento/imagen', className: 'all text-center' },  
+            { targets: 5, title: 'Editar', className: 'all text-center' }, 
+            { targets: 6, title: 'Visualizar', className: 'all text-center' }, 
+            { targets: 7, title: 'Activo', className: 'all text-center' }, 
+
 
         ],
        
     });
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const selectTipo = document.getElementById('TIPO_DOCUMENTO');
+
+    const divRequiereFecha = document.getElementById('DIV_REQUIERE_FECHA');
+    const divSubirDocumento = document.getElementById('SUBIR_DOCUMENTO');
+    const divImagen = document.getElementById('IMAGEN_DOCUMENTOS');
+    const divfechadocumento = document.getElementById('FECHA_DOCUMENTO');
+
+    selectTipo.addEventListener('change', function () {
+
+        if (this.value === "1") {
+            // Documento
+            divRequiereFecha.style.display = 'block';
+            divSubirDocumento.style.display = 'block';
+            divImagen.style.display = 'none';
+        }
+
+        if (this.value === "2") {
+            // Imagen
+            divRequiereFecha.style.display = 'none';
+            divSubirDocumento.style.display = 'none';
+            divfechadocumento.style.display = 'none';
+            divImagen.style.display = 'block';
+        }
+
+    });
+
+});
+
 
 $('#Tabladocumentomantenimiento').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -798,15 +881,150 @@ $('#Tabladocumentomantenimiento').on('click', 'td>button.EDITAR', function () {
         $('#indeterminadono').prop('checked', true);
         $('#FECHAF_DOCUMENTO').prop('disabled', false);
         $('#FECHAF_DOCUMENTO').prop('required', true);
-
-
     } else {
         $('#FECHAF_DOCUMENTO').prop('disabled', false);
     }
 
+    if (row.data().TIPO_DOCUMENTO == 1) {
+        $('#DIV_REQUIERE_FECHA').show();
+        $('#SUBIR_DOCUMENTO').show();
+        $('#IMAGEN_DOCUMENTOS').hide();
+        
+    } else {
+        $('#DIV_REQUIERE_FECHA').hide();
+        $('#FECHA_DOCUMENTO').hide();
+        $('#SUBIR_DOCUMENTO').hide();
+        $('#IMAGEN_DOCUMENTOS').show();
+    
+    if (row.data().FOTO_DOCUMENTO) {
+        var archivo = row.data().FOTO_DOCUMENTO;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/FotosDocMtto/' + row.data().ID_DOCUMENTO_ARTICULO + extension;
 
+        if ($('#FOTO_DOCUMENTO').data('dropify')) {
+            $('#FOTO_DOCUMENTO').dropify().data('dropify').destroy();
+            $('#FOTO_DOCUMENTO').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_DOCUMENTO').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_DOCUMENTO').attr('data-default-file', imagenUrl);
+            $('#FOTO_DOCUMENTO').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_DOCUMENTO').dropify().data('dropify').resetPreview();
+        $('#FOTO_DOCUMENTO').dropify().data('dropify').clearElement();
+        }
+        
+    }
+    
 
 });
+
+
+
+
+$(document).ready(function() {
+    $('#Tabladocumentomantenimiento').on('click', 'td>button.VISUALIZAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tabladocumentomantenimiento.row(tr);
+        
+    hacerSoloLecturainventario(row.data(), '#miModal_DOCUMENTOS');
+
+    ID_DOCUMENTO_ARTICULO = row.data().ID_DOCUMENTO_ARTICULO;
+
+    editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_DOCUMENTOS', 1);
+        
+
+    if (row.data().REQUIERE_FECHA == 1) {
+        $('#FECHA_DOCUMENTO').show();
+        $('#fechasi').prop('checked', true);
+    } else {
+        $('#FECHA_DOCUMENTO').hide();
+        $('#fechano').prop('checked', true);
+    }
+
+
+    if (row.data().INDETERMINADO_DOCUMENTO == 1) {
+        $('#indeterminadosi').prop('checked', true);
+        $('#FECHAF_DOCUMENTO').prop('disabled', true).val('');
+        $('#FECHAF_DOCUMENTO').prop('required', false);
+
+    } else if (row.data().INDETERMINADO_DOCUMENTO == 2) {
+        $('#indeterminadono').prop('checked', true);
+        $('#FECHAF_DOCUMENTO').prop('disabled', false);
+        $('#FECHAF_DOCUMENTO').prop('required', true);
+    } else {
+        $('#FECHAF_DOCUMENTO').prop('disabled', false);
+    }
+
+    if (row.data().TIPO_DOCUMENTO == 1) {
+        $('#DIV_REQUIERE_FECHA').show();
+        $('#SUBIR_DOCUMENTO').show();
+        $('#IMAGEN_DOCUMENTOS').hide();
+    } else {
+        $('#DIV_REQUIERE_FECHA').hide();
+        $('#FECHA_DOCUMENTO').hide();
+        $('#SUBIR_DOCUMENTO').hide();
+        $('#IMAGEN_DOCUMENTOS').show();
+    
+
+    if (row.data().FOTO_DOCUMENTO) {
+        var archivo = row.data().FOTO_DOCUMENTO;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/FotosDocMtto/' + row.data().ID_DOCUMENTO_ARTICULO + extension;
+
+        if ($('#FOTO_DOCUMENTO').data('dropify')) {
+            $('#FOTO_DOCUMENTO').dropify().data('dropify').destroy();
+            $('#FOTO_DOCUMENTO').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_DOCUMENTO').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_DOCUMENTO').attr('data-default-file', imagenUrl);
+            $('#FOTO_DOCUMENTO').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_DOCUMENTO').dropify().data('dropify').resetPreview();
+        $('#FOTO_DOCUMENTO').dropify().data('dropify').clearElement();
+        }
+        
+    }
+
+        
+        
+    });
+
+    $('#miModal_DOCUMENTOS').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_DOCUMENTOS');
+    });
+});
+
+$('#Tabladocumentomantenimiento').on('change', 'td>label>input.ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tabladocumentomantenimiento.row(tr);
+
+    var estado = $(this).is(':checked') ? 1 : 0;
+
+    data = {
+        api: 3,
+        ELIMINAR: estado == 0 ? 1 : 0, 
+        ID_DOCUMENTO_ARTICULO: row.data().ID_DOCUMENTO_ARTICULO
+    };
+
+    eliminarDatoTabla(data, [Tabladocumentomantenimiento], 'MantenimientoDelete');
+});
+
 
 $('#Tabladocumentomantenimiento').on('click', '.ver-archivo-documentosequipo', function (e) {
     e.preventDefault(); 
@@ -829,6 +1047,7 @@ $('#Tabladocumentomantenimiento').on('click', '.ver-archivo-documentosequipo', f
 
     window.open(url, '_blank');
 });
+
 
 ////////////////////////////////// FECHAS DOCUMENTOS //////////////////////////////////
 
@@ -887,3 +1106,73 @@ function cargarDocumentos(inventario_id) {
     });
 }
 
+////////////////////////////////// CALIBRACION EQUIPO  //////////////////////////////////
+
+
+const Modalcalibracion = document.getElementById('miModal_CALIBRACION')
+Modalcalibracion.addEventListener('hidden.bs.modal', event => {
+     
+    ID_CALIBRACION_ARTICULO = 0
+    document.getElementById('formularioCALIBRACION').reset();
+    $('#miModal_CALIBRACION .modal-title').html('Nueva calibración');
+
+})
+
+$("#NUEVA_CALIBRACION").click(function (e) {
+    e.preventDefault();
+
+    $('#formularioCALIBRACION').each(function(){
+        this.reset();
+    });
+
+    $("#miModal_CALIBRACION").modal("show");
+   
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const selectCalibracion = document.getElementById('REQUIERE_CALIBRACION');
+    const tabCalibracion = document.getElementById('tab3-calibracion');
+
+    selectCalibracion.addEventListener('change', function () {
+
+        if (this.value === "1") {
+            tabCalibracion.style.display = 'block';
+        } else {
+            tabCalibracion.style.display = 'none';
+        }
+
+    });
+
+});
+
+
+function guardarRequiereCalibracion() {
+
+    const valor = document.getElementById('REQUIERE_CALIBRACION').value;
+
+    if (!inventario_id || !valor) {
+        return;
+    }
+
+    fetch('/guardarRequiereCalibracion', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            ID_FORMULARIO_INVENTARIO: inventario_id,
+            REQUIERE_CALIBRACION: valor
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.code !== 1) {
+            alert('Error al guardar calibración');
+        }
+    })
+    .catch(error => {
+        console.error(error);
+    });
+}

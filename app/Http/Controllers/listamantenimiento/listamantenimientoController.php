@@ -79,20 +79,12 @@ class listamantenimientoController extends Controller
         }
     }
 
-
-
-
-
     public function cantidadEquipoReadonlyMan()
     {
         return response()->json([
             'readonly' => Auth::user()->ID_USUARIO == 52
         ]);
     }
-
-
-
-
 
     public function mostrarFotoEquipoMan($usuario_id)
     {
@@ -101,11 +93,7 @@ class listamantenimientoController extends Controller
     }
 
 
-
-
-
-
-    ///// DOCUMENTOS DEL EQUIPO 
+    ///////////////// DOCUMENTOS DEL EQUIPO  ///////////////// 
 
     public function Tabladocumentomantenimiento(Request $request)
     {
@@ -117,22 +105,36 @@ class listamantenimientoController extends Controller
             $tabla = documentosarticulosModel::where('INVENTARIO_ID', $equipo)->get();
             $fecha_actual = date('Y-m-d');
 
-
-
-
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
 
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                     $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacionproveedor" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 } else {
 
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosequipo" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
                 }
 
+                $value->FOTO_DOCUMENTOS_HTML = '<img src="/FotosDocMtto/' . $value->ID_DOCUMENTO_ARTICULO . '" alt="Foto" class="img-fluid" width="130">';
 
 
+                if ($value->TIPO_DOCUMENTO == 1) {
+                    $value->TIPO_DOCUMENTO_TEXTO = "Documento";
+                } elseif ($value->TIPO_DOCUMENTO == 2) {
+                    $value->TIPO_DOCUMENTO_TEXTO = "Imagen";
+                } else {
+                    $value->TIPO_DOCUMENTO_TEXTO = "N/A";
+                }
+
+                
                 if ($value->REQUIERE_FECHA == 1) {
 
                     if ($value->INDETERMINADO_DOCUMENTO == 1) {
@@ -215,6 +217,29 @@ class listamantenimientoController extends Controller
         return response()->json($documentos);
     }
 
+    public function FotosDocMtto($imagen_id)
+    {
+        $foto = documentosarticulosModel::findOrFail($imagen_id);
+        return Storage::response($foto->FOTO_DOCUMENTO);
+    }
+
+    ///////////////// CALIBRACION DEL EQUIPO  ///////////////// 
+
+    public function guardarRequiereCalibracion(Request $request)
+    {
+        DB::table('formulario_inventario')
+            ->where('ID_FORMULARIO_INVENTARIO', $request->ID_FORMULARIO_INVENTARIO)
+            ->update([
+                'REQUIERE_CALIBRACION' => $request->REQUIERE_CALIBRACION
+            ]);
+
+        return response()->json([
+            'code' => 1,
+            'message' => 'Guardado correctamente'
+        ]);
+    }
+
+    
 
     public function  store(Request $request)
     {
@@ -222,7 +247,6 @@ class listamantenimientoController extends Controller
             switch (intval($request->api)) {
 
                 case 1:
-
 
                     if ($request->ID_FORMULARIO_INVENTARIO == 0) {
                         DB::statement('ALTER TABLE formulario_inventario AUTO_INCREMENT=1;');
@@ -292,59 +316,175 @@ class listamantenimientoController extends Controller
                         }
                     }
                     break;
+
+                // case 3:
+                //     if ($request->ID_DOCUMENTO_ARTICULO == 0) {
+                //         DB::statement('ALTER TABLE documentos_articulosalmacen AUTO_INCREMENT=1;');
+                //         $cliente = documentosarticulosModel::create($request->all());
+
+                //         if ($request->hasFile('DOCUMENTO_ARTICULO')) {
+                //             $documento = $request->file('DOCUMENTO_ARTICULO');
+                //             $articuloId = $cliente->INVENTARIO_ID;
+                //             $registroId = $cliente->ID_DOCUMENTO_ARTICULO;
+
+                //             $extension = $documento->getClientOriginalExtension();
+                //             $nombreBase = pathinfo($documento->getClientOriginalName(), PATHINFO_FILENAME);
+                //             $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
+                //             $nombreArchivo = $nombreLimpio . '.' . $extension;
+
+                //             $ruta = "Mantenimiento/Equipo/{$articuloId}/Documento del equipo/{$registroId}";
+                //             $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
+
+                //             $cliente->DOCUMENTO_ARTICULO = $rutaCompleta;
+                //             $cliente->save();
+                //         }
+                //     } else {
+                //         if (isset($request->ELIMINAR)) {
+                //             if ($request->ELIMINAR == 1) {
+                //                 $cliente = documentosarticulosModel::where('ID_DOCUMENTO_ARTICULO', $request['ID_DOCUMENTO_ARTICULO'])->update(['ACTIVO' => 0]);
+                //                 $response['code'] = 1;
+                //                 $response['cliente'] = 'Desactivada';
+                //             } else {
+                //                 $cliente = documentosarticulosModel::where('ID_DOCUMENTO_ARTICULO', $request['ID_DOCUMENTO_ARTICULO'])->update(['ACTIVO' => 1]);
+                //                 $response['code'] = 1;
+                //                 $response['cliente'] = 'Activada';
+                //             }
+                //         } else {
+                //             $cliente = documentosarticulosModel::find($request->ID_DOCUMENTO_ARTICULO);
+                //             $cliente->update($request->all());
+
+                //             if ($request->hasFile('DOCUMENTO_ARTICULO')) {
+                //                 $documento = $request->file('DOCUMENTO_ARTICULO');
+                //                 $articuloId = $cliente->INVENTARIO_ID;
+                //                 $registroId = $cliente->ID_DOCUMENTO_ARTICULO;
+
+                //                 $extension = $documento->getClientOriginalExtension();
+                //                 $nombreBase = pathinfo($documento->getClientOriginalName(), PATHINFO_FILENAME);
+                //                 $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
+                //                 $nombreArchivo = $nombreLimpio . '.' . $extension;
+
+                //                 $ruta = "Mantenimiento/Equipo/{$articuloId}/Documento del equipo/{$registroId}";
+                //                 $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
+
+                //                 $cliente->DOCUMENTO_ARTICULO = $rutaCompleta;
+                //                 $cliente->save();
+                //             }
+
+
+                //             $response['code'] = 1;
+                //             $response['cliente'] = 'Actualizada';
+                //         }
+
+                //         return response()->json($response);
+                //     }
+
+                //     $response['code'] = 1;
+                //     $response['cliente'] = $cliente;
+                //     return response()->json($response);
+                //     break;
+
                 case 3:
+
                     if ($request->ID_DOCUMENTO_ARTICULO == 0) {
+
                         DB::statement('ALTER TABLE documentos_articulosalmacen AUTO_INCREMENT=1;');
                         $cliente = documentosarticulosModel::create($request->all());
 
+                        $articuloId = $cliente->INVENTARIO_ID;
+                        $registroId = $cliente->ID_DOCUMENTO_ARTICULO;
+
+                        // ================= DOCUMENTO =================
+
                         if ($request->hasFile('DOCUMENTO_ARTICULO')) {
+
                             $documento = $request->file('DOCUMENTO_ARTICULO');
-                            $articuloId = $cliente->INVENTARIO_ID;
-                            $registroId = $cliente->ID_DOCUMENTO_ARTICULO;
-
                             $extension = $documento->getClientOriginalExtension();
-                            $nombreBase = pathinfo($documento->getClientOriginalName(), PATHINFO_FILENAME);
-                            $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
+                            $nombreBase = $request->NOMBRE_DOCUMENTO ?? 'documento';
+                            $nombreLimpio = iconv('UTF-8', 'ASCII//TRANSLIT', $nombreBase);
+                            $nombreLimpio = preg_replace('/[^A-Za-z0-9\-]/', '_', $nombreLimpio);
+                            $nombreLimpio = trim($nombreLimpio, '_');
                             $nombreArchivo = $nombreLimpio . '.' . $extension;
-
-                            $ruta = "Almacén/Inventario/{$articuloId}/Documento del equipo/{$registroId}";
+                            $ruta = "Mantenimiento/Equipo/{$articuloId}/Documento del equipo/{$registroId}";
                             $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
-
                             $cliente->DOCUMENTO_ARTICULO = $rutaCompleta;
-                            $cliente->save();
                         }
+
+                        // ================= FOTO =================
+
+                        if ($request->hasFile('FOTO_DOCUMENTO')) {
+
+                            $foto = $request->file('FOTO_DOCUMENTO');
+                            $extension = $foto->getClientOriginalExtension();
+                            $nombreBase = $request->NOMBRE_DOCUMENTO ?? 'foto';
+                            $nombreLimpio = iconv('UTF-8', 'ASCII//TRANSLIT', $nombreBase);
+                            $nombreLimpio = preg_replace('/[^A-Za-z0-9\-]/', '_', $nombreLimpio);
+                            $nombreLimpio = trim($nombreLimpio, '_');
+                            $nombreArchivo = $nombreLimpio . '.' . $extension;
+                            $rutaFoto = "Mantenimiento/Equipo/{$articuloId}/Fotos adicionales/{$registroId}";
+                            $rutaFotoCompleta = $foto->storeAs($rutaFoto, $nombreArchivo);
+                            $cliente->FOTO_DOCUMENTO = $rutaFotoCompleta;
+                        }
+
+                        $cliente->save();
+
                     } else {
+
                         if (isset($request->ELIMINAR)) {
+
                             if ($request->ELIMINAR == 1) {
-                                $cliente = documentosarticulosModel::where('ID_DOCUMENTO_ARTICULO', $request['ID_DOCUMENTO_ARTICULO'])->update(['ACTIVO' => 0]);
+                                documentosarticulosModel::where('ID_DOCUMENTO_ARTICULO', $request['ID_DOCUMENTO_ARTICULO'])
+                                    ->update(['ACTIVO' => 0]);
+
                                 $response['code'] = 1;
                                 $response['cliente'] = 'Desactivada';
                             } else {
-                                $cliente = documentosarticulosModel::where('ID_DOCUMENTO_ARTICULO', $request['ID_DOCUMENTO_ARTICULO'])->update(['ACTIVO' => 1]);
+
+                                documentosarticulosModel::where('ID_DOCUMENTO_ARTICULO', $request['ID_DOCUMENTO_ARTICULO'])
+                                    ->update(['ACTIVO' => 1]);
+
                                 $response['code'] = 1;
                                 $response['cliente'] = 'Activada';
                             }
                         } else {
+
                             $cliente = documentosarticulosModel::find($request->ID_DOCUMENTO_ARTICULO);
                             $cliente->update($request->all());
 
+                            $articuloId = $cliente->INVENTARIO_ID;
+                            $registroId = $cliente->ID_DOCUMENTO_ARTICULO;
+
+                            // ================= DOCUMENTO =================
                             if ($request->hasFile('DOCUMENTO_ARTICULO')) {
+
                                 $documento = $request->file('DOCUMENTO_ARTICULO');
-                                $articuloId = $cliente->INVENTARIO_ID;
-                                $registroId = $cliente->ID_DOCUMENTO_ARTICULO;
-
                                 $extension = $documento->getClientOriginalExtension();
-                                $nombreBase = pathinfo($documento->getClientOriginalName(), PATHINFO_FILENAME);
-                                $nombreLimpio = preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $nombreBase);
+                                $nombreBase = $request->NOMBRE_DOCUMENTO ?? 'documento';
+                                $nombreLimpio = iconv('UTF-8', 'ASCII//TRANSLIT', $nombreBase);
+                                $nombreLimpio = preg_replace('/[^A-Za-z0-9\-]/', '_', $nombreLimpio);
+                                $nombreLimpio = trim($nombreLimpio, '_');
                                 $nombreArchivo = $nombreLimpio . '.' . $extension;
-
-                                $ruta = "compras/{$articuloId}/verificacion del proveedor/{$registroId}";
+                                $ruta = "Mantenimiento/Equipo/{$articuloId}/Documento del equipo/{$registroId}";
                                 $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
-
                                 $cliente->DOCUMENTO_ARTICULO = $rutaCompleta;
-                                $cliente->save();
                             }
 
+                            // ================= FOTO =================
+                            if ($request->hasFile('FOTO_DOCUMENTO')) {
+
+                                $foto = $request->file('FOTO_DOCUMENTO');
+                                $extension = $foto->getClientOriginalExtension();
+                                $nombreBase = $request->NOMBRE_DOCUMENTO ?? 'foto';
+                                $nombreLimpio = iconv('UTF-8', 'ASCII//TRANSLIT', $nombreBase);
+                                $nombreLimpio = preg_replace('/[^A-Za-z0-9\-]/', '_', $nombreLimpio);
+                                $nombreLimpio = trim($nombreLimpio, '_');
+                                $nombreArchivo = $nombreLimpio . '.' . $extension;
+                                $rutaFoto = "Mantenimiento/Equipo/{$articuloId}/Fotos adicionales/{$registroId}";
+                                $rutaFotoCompleta = $foto->storeAs($rutaFoto, $nombreArchivo);
+                                $cliente->FOTO_DOCUMENTO = $rutaFotoCompleta;
+                            }
+
+
+                            $cliente->save();
 
                             $response['code'] = 1;
                             $response['cliente'] = 'Actualizada';
@@ -356,8 +496,8 @@ class listamantenimientoController extends Controller
                     $response['code'] = 1;
                     $response['cliente'] = $cliente;
                     return response()->json($response);
-                    break;
 
+                    break;
 
 
                 case 2:
