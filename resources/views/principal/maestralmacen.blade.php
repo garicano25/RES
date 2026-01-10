@@ -456,7 +456,7 @@
     @endif
 
     @if(request()->is('aprobacionalmacen'))
-    <script src="/assets/js_sitio/aprobacionsalidalmacen/aprobacionsalidalmacen.js?v=1.0"></script>
+    <script src="/assets/js_sitio/aprobacionsalidalmacen/aprobacionsalidalmacen.js?v=2.0"></script>
     @endif
 
     @if(request()->is('listadeaf'))

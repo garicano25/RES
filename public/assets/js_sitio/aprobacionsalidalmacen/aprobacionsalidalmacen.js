@@ -287,7 +287,6 @@ $(document).ready(function() {
         editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
-        // === Para TIPO_SOLICITUD ===
         if (row.data().TIPO_SOLICITUD === "1") {
             $('#PERMISO_AUSENCIA').show();
             $('#SOLIDA_ALMACEN').hide();
@@ -302,7 +301,6 @@ $(document).ready(function() {
             $('#SOLIDA_ALMACEN').hide();
         }
 
-        // === Para CONCEPTO_PERMISO ===
         if (row.data().CONCEPTO_PERMISO === "9") {
             $('#EXPLIQUE_PERMISO').show();
         } else {
@@ -310,7 +308,6 @@ $(document).ready(function() {
         }
 
    
-        // === Para ocultar la firma si ya esta firmado ===
 
         if (row.data().FIRMO_USUARIO === "1") {
             $('#DIV_FIRMAR').hide();
@@ -359,7 +356,6 @@ $('#Tablaaprobacionalmacen tbody').on('click', 'td>button.EDITAR', function () {
     
 
 
-                // === Para TIPO_SOLICITUD ===
     if (row.data().TIPO_SOLICITUD === "1") {
         $('#PERMISO_AUSENCIA').show();
         $('#SOLIDA_ALMACEN').hide();
@@ -374,7 +370,6 @@ $('#Tablaaprobacionalmacen tbody').on('click', 'td>button.EDITAR', function () {
         $('#SOLIDA_ALMACEN').hide();
     }
 
-    // === Para CONCEPTO_PERMISO ===
     if (row.data().CONCEPTO_PERMISO === "9") {
         $('#EXPLIQUE_PERMISO').show();
     } else {
@@ -402,6 +397,14 @@ $('#Tablaaprobacionalmacen tbody').on('click', 'td>button.EDITAR', function () {
     $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
 }
 
+    
+     const hoy = new Date();
+    const yyyy = hoy.getFullYear();
+    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    const dd = String(hoy.getDate()).padStart(2, '0');
+    const fechaHoy = `${yyyy}-${mm}-${dd}`;
+
+    $("#FECHA_APRUEBA_SOLICITUD").val(fechaHoy);
 
 });
 
