@@ -271,6 +271,7 @@ var Tabladesvinculacion = $("#Tabladesvinculacion").DataTable({
             }
         },
         { data: 'NOMBRE_COLABORADOR' },
+        { data: 'FECHA_BAJA' },
         { data: 'BTN_BAJA' },
         { data: 'BTN_CONVENIO' },
         { data: 'BTN_ADEUDO' },
@@ -279,10 +280,11 @@ var Tabladesvinculacion = $("#Tabladesvinculacion").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Nombre del colaborador', className: 'all text-center' },
-        { targets: 2, title: 'Documento baja', className: 'all text-center ' },
-        { targets: 3, title: 'Documento convenio', className: 'all text-center ' },
-        { targets: 4, title: 'Documento no adeudo', className: 'all text-center ' },
-        { targets: 5, title: 'Editar', className: 'all text-center' },
+        { targets: 2, title: 'Fecha desvinculación ', className: 'all text-center' },
+        { targets: 3, title: 'Documento baja', className: 'all text-center ' },
+        { targets: 4, title: 'Documento convenio', className: 'all text-center ' },
+        { targets: 5, title: 'Documento no adeudo', className: 'all text-center ' },
+        { targets: 6, title: 'Editar', className: 'all text-center' },
     ]
 });
 

@@ -771,7 +771,7 @@
     @endif
 
     @if(request()->is('desvinculacion'))
-    <script src="/assets/js_sitio/desvinculacion/desvinculacion.js"></script>
+    <script src="/assets/js_sitio/desvinculacion/desvinculacion.js?v=1.0"></script>
     @endif
 
     @if(request()->is('brechacompetencia'))
