@@ -28,10 +28,29 @@ $(document).ready(function () {
 });
 
 
+function initSelectProveedor() {
+
+    if ($('#PROVEEDOR_EQUIPO').hasClass("select2-hidden-accessible")) {
+        $('#PROVEEDOR_EQUIPO').select2('destroy');
+    }
+
+    $('#PROVEEDOR_EQUIPO').select2({
+        dropdownParent: $('#Modal_inventario'),
+        width: '100%',
+        placeholder: 'Seleccionar proveedor',
+        allowClear: true
+    });
+}
+
+
+
 $(document).ready(function() {
     $('#NUEVO_EQUIPO').on('click', function() {
         limpiarFormularioInventario(); 
 
+        initSelectProveedor();
+
+        
         $('#FOTO_EQUIPO').dropify({
             messages: {
                 'default': 'Arrastre la imagen aquí o haga clic',
@@ -165,8 +184,6 @@ $("#guardarINVENTARIO").click(function (e) {
 }
     
 });
-
-
 
 var Tablainventario = $("#Tablainventario").DataTable({
       language: {
@@ -309,13 +326,10 @@ document.getElementById('TIPO_EQUIPO').addEventListener('change', function () {
 });
 
 
-
 $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablainventario.row(tr);
     ID_FORMULARIO_INVENTARIO = row.data().ID_FORMULARIO_INVENTARIO;
-
-
 
     inventario_id = row.data().ID_FORMULARIO_INVENTARIO;
 
@@ -378,13 +392,9 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     unitario.addEventListener("input", calcularTotal);
 
     calcularTotal();
-
-
-
    
-        $("#tab2-entrada").show();
-        
-    
+    $("#tab2-entrada").show();
+            
    if (row.data().REQUIERE_ARTICULO === "1") {
        $("#tab3-documentos").show();
        $("#MOSTRAR_ALERTA_DOCUMENTOS").show();
@@ -407,8 +417,8 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
     
     if (row.data().PROVEEDOR_ALTA === '1') {
 
-    $('#PROVEEDORES_ACTIVOS').show();
-    $('#ESCRIBIR_PROVEEDOR').hide();
+        $('#PROVEEDORES_ACTIVOS').show();
+        $('#ESCRIBIR_PROVEEDOR').hide();
 
     } else if (row.data().PROVEEDOR_ALTA === '2') {
 
@@ -420,18 +430,15 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
         $('#ESCRIBIR_PROVEEDOR').hide();
     }
 
-    
     if (row.data().TIPO_EQUIPO === 'Vehículos') {
         $('#DATOS_VEHICULOS').show();
     } else {
         $('#DATOS_VEHICULOS').hide();
     }
-
     
     $("#tab3-documentos").off("click").on("click", function () {
         cargarTablaDocumentosEquipo();
     });
-
 
 
     $.get('/cantidadEquipoReadonly', function (resp) {
@@ -446,8 +453,17 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
     }
 
-});
+    });
 
+
+    initSelectProveedor();
+
+    if (row.data().PROVEEDOR_EQUIPO) {
+    $('#PROVEEDOR_EQUIPO')
+        .val(row.data().PROVEEDOR_EQUIPO)
+        .trigger('change');
+    }
+    
 
 });
 
@@ -581,12 +597,20 @@ $(document).ready(function() {
     }
 
 
+    $("#tab3-documentos").off("click").on("click", function () {
+        cargarTablaDocumentosEquipo();
+    });
 
+        
+        
+        
+    initSelectProveedor();
 
-        $("#tab3-documentos").off("click").on("click", function () {
-            cargarTablaDocumentosEquipo();
-        });
-
+    if (row.data().PROVEEDOR_EQUIPO) {
+    $('#PROVEEDOR_EQUIPO')
+        .val(row.data().PROVEEDOR_EQUIPO)
+        .trigger('change');
+    }
 
     });
 
