@@ -66,7 +66,7 @@
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label>Descripción de la vacante *</label>
+                        <label>Descripción, requisitos y beneficios de la vacante *</label>
                         <textarea name="DESCRIPCION_VACANTE" id="DESCRIPCION_VACANTE" class="form-control" rows="8" placeholder="Escribe la descripción de la vacante aquí" required></textarea>
                     </div>
                     <div class="row  mb-3">

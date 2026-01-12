@@ -335,77 +335,6 @@
 
 
 
-    {{-- <div class="container mt-5">
-    <h2 class="text-center">¡ESTAS SON NUESTRAS <b>VACANTES</b> DISPONIBLES!</h2>
-    <br><br>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table table-borderless" id="tabla-vacantes">
-                <thead>
-                    <tr>
-                        <th>Vacantes</th>
-                        <th>Lugar de trabajo</th>
-                        <th>Fecha de publicación</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($vacantes as $vacante)
-                    @php
-                        $slug = $vacante->ID_CATALOGO_VACANTE;  
-                        $fechaFormateada = Carbon::parse($vacante->created_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
-                    @endphp
-                    <tr>
-                        <td><a href="javascript:void(0)" onclick="showDetails('{{ $slug }}')">{{ $vacante->NOMBRE_CATEGORIA  }}</a></td>
-    <td>{{ $vacante->LUGAR_VACANTE }}</td>
-    <td>{{ $fechaFormateada }}</td>
-    </tr>
-    @endforeach
-    </tbody>
-    </table>
-    </div>
-    </div>
-    </div> --}}
-
-
-
-
-    {{-- <div id="details-container" class="col-md-8 position-relative mx-auto" style="display: none;">
-    @foreach($vacantes as $vacante)
-        @php
-            $slug = $vacante->ID_CATALOGO_VACANTE;
-            $fechaFormateada = Carbon::parse($vacante->updated_at)->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
-        @endphp
-        <div class="details-pane card" id="details-{{ $slug }}" style="display: none; width: 80%; max-width: 1100px; margin: 0 auto;">
-    <div class="text-start mb-3">
-        <a href="#" onclick="volverATabla()" style="color: red; text-decoration: none;">
-            <span style="font-size: 1.2em; font-weight: bold;">&#x2190;</span> Volver
-        </a>
-    </div>
-
-    <h5 class="card-title text-center">{{ $vacante->NOMBRE_CATEGORIA }}</h5> <br>
-    <label><b>Lugar de trabajo:</b> </label>
-    <label>{{ $vacante->LUGAR_VACANTE }}</label> <br>
-    <label><b>Fecha de publicación:</b></label>
-    <label class="mb-1">{{ $fechaFormateada }}</label>
-    <hr>
-    <p><strong>Descripción:</strong></p>
-    <p>{{ $vacante->DESCRIPCION_VACANTE }}</p>
-    <p><strong>Requisitos:</strong></p>
-    <ul>
-        @foreach($vacante->requerimientos as $requerimiento)
-        <li>{{ $requerimiento }}</li>
-        @endforeach
-    </ul>
-    <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
-    </div>
-    @endforeach
-    </div> --}}
-
-
-
-
-
-
 
     <div id="details-container" class="position-relative" style="display: none; background-color: rgb(50 95 131); padding: 30px; min-height: 100vh; width: 100%; position: fixed; top: 0; left: 0; z-index: 9999; overflow-y: auto;">
         <div class="content-wrapper" style="display: flex; width: 100%; position: relative;">
@@ -429,13 +358,8 @@
                     <span style="color: #555; font-size: 1.2em;">{{ $fechaFormateada }}</span>
                 </div>
                 <br><br>
+                <p style="color: #A4D65E; font-size: 1.2em;"><strong>Descripción, requisitos y beneficios de la vacante:</strong></p>
                 <p style="color: #555; line-height: 1.6;">{{ $vacante->DESCRIPCION_VACANTE }}</p>
-                <p style="color: #A4D65E; font-size: 1.2em;"><strong>Requisitos:</strong></p>
-                <ul style="color: #555;">
-                    @foreach($vacante->requerimientos as $requerimiento)
-                    <li>{{ $requerimiento }}</li>
-                    @endforeach
-                </ul>
                 <div class="text-end mt-4">
                     <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
                 </div>
