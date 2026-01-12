@@ -360,6 +360,12 @@
                 <br><br>
                 <p style="color: #A4D65E; font-size: 1.2em;"><strong>Descripción, requisitos y beneficios de la vacante:</strong></p>
                 <p style="color: #555; line-height: 1.6;">{{ $vacante->DESCRIPCION_VACANTE }}</p>
+                <!-- <p style="color: #A4D65E; font-size: 1.2em;"><strong>Requisitos:</strong></p>
+                <ul style="color: #555;">
+                    @foreach($vacante->requerimientos as $requerimiento)
+                    <li>{{ $requerimiento }}</li>
+                    @endforeach
+                </ul> -->
                 <div class="text-end mt-4">
                     <button type="button" class="btn btn-primary postularse-btn" data-bs-toggle="modal" data-bs-target="#postularseModal" data-vacante="{{ $slug }}">Postularse</button>
                 </div>
