@@ -242,7 +242,7 @@ class inventarioController extends Controller
     public function cantidadEquipoReadonly()
     {
         return response()->json([
-            'readonly' => Auth::user()->ID_USUARIO == 52
+            'readonly' => Auth::user()->ID_USUARIO == 10
         ]);
     }
 

@@ -20,6 +20,7 @@ use App\Models\inventario\catalogotipoinventarioModel;
 use App\Models\inventario\documentosarticulosModel;
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\proveedortempModel;
+use App\Models\inventario\documentoscalibracionModel;
 
 use DB;
 
@@ -82,7 +83,7 @@ class listamantenimientoController extends Controller
     public function cantidadEquipoReadonlyMan()
     {
         return response()->json([
-            'readonly' => Auth::user()->ID_USUARIO == 52
+            'readonly' => Auth::user()->ID_USUARIO == 10
         ]);
     }
 
