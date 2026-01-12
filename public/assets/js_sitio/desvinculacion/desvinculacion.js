@@ -262,7 +262,7 @@ var Tabladesvinculacion = $("#Tabladesvinculacion").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']],
+    order: [[2, 'desc']],
     columns: [
         { 
             data: null,
