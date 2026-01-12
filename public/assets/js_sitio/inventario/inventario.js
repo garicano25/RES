@@ -28,19 +28,40 @@ $(document).ready(function () {
 });
 
 
-function initSelectProveedor() {
+function obtenerModalPadre(elemento) {
+    const modalBody = $(elemento).closest(".modal-body");
 
-    if ($('#PROVEEDOR_EQUIPO').hasClass("select2-hidden-accessible")) {
-        $('#PROVEEDOR_EQUIPO').select2('destroy');
+    if (modalBody.length > 0) {
+        return modalBody; 
     }
 
-    $('#PROVEEDOR_EQUIPO').select2({
-        dropdownParent: $('#Modal_inventario'),
+    const modal = $(elemento).closest(".modal");
+
+    if (modal.length > 0) {
+        return modal;
+    }
+
+    return $("body");
+}
+
+
+
+function initSelectProveedor() {
+
+    const select = $('#PROVEEDOR_EQUIPO');
+
+    if (select.hasClass("select2-hidden-accessible")) {
+        select.select2('destroy');
+    }
+
+    select.select2({
+        dropdownParent: obtenerModalPadre(select),
         width: '100%',
         placeholder: 'Seleccionar proveedor',
         allowClear: true
     });
 }
+
 
 
 

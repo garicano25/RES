@@ -444,7 +444,7 @@
     </script>
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=1.33"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=1.34"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))
