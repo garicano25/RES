@@ -38,7 +38,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-           
+
         }
 
         .card {
@@ -416,14 +416,14 @@
                     </div>
                     <div class="mb-3 d-flex align-items-center">
                         <label id="label-archivo">CURP. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        <input type="file" class="form-control" id="ARCHIVO_CURP_CV" name="ARCHIVO_CURP_CV" accept=".pdf" style="width: auto; flex: 1;">
+                        <input type="file" class="form-control" id="ARCHIVO_CURP_CV" name="ARCHIVO_CURP_CV" accept=".pdf" style="width: auto; flex: 1;" required>
                         <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCURP" style="display:none;">Quitar archivo</button>
                     </div>
                     <div id="CURP_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
 
                     <div class="mb-3 d-flex align-items-center">
                         <label>CV. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-                        <input type="file" class="form-control" id="ARCHIVO_CV" name="ARCHIVO_CV" accept=".pdf" style="width: auto; flex: 1;">
+                        <input type="file" class="form-control" id="ARCHIVO_CV" name="ARCHIVO_CV" accept=".pdf" style="width: auto; flex: 1;" required>
                         <button type="button" class="btn btn-light btn-sm ms-2" id="quitarCV" style="display:none;">Quitar archivo</button>
                     </div>
                     <div id="CV_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
