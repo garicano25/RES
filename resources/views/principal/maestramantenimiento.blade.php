@@ -262,14 +262,14 @@
                     </li>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/mantenimiento') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <a class="nav-link BOTON" href="{{ url('/mantenimientoequipos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Mantenimiento de equipos</span><span class="d-none d-lg-inline">Mantenimiento de equipos</span>
                             </a>
                         </li>
                     </ul>
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown" style="margin-left: -2px;">
-                            <a class="nav-link BOTON" href="{{ url('/#') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
+                            <a class="nav-link BOTON" href="{{ url('/mantenimientoinstalaciones') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-card-list" style="margin-right: 5px;"></i> <span class="d-lg-none">Mantenimiento de instalaciones</span><span class="d-none d-lg-inline">Mantenimiento de instalaciones</span>
                             </a>
                         </li>
@@ -354,7 +354,7 @@
     <!-- Dropify -->
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
+    <script src="/assets/js_sitio/funciones.js?v=5.7"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
@@ -381,11 +381,14 @@
     </script>
 
 
-    @if(request()->is('mantenimiento'))
-    <script src="/assets/js_sitio/listademantenimiento/listamantenimiento.js?v=1.0"></script>
+    @if(request()->is('mantenimientoequipos'))
+    <script src="/assets/js_sitio/listademantenimiento/listamantenimiento.js?v=2.0"></script>
     @endif
 
 
+    @if(request()->is('mantenimientoinstalaciones'))
+    <script src="/assets/js_sitio/listademantenimiento/listamttoinstalacion.js"></script>
+    @endif
 
 </body>
 

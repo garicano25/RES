@@ -839,7 +839,7 @@
                         $tieneSoloRolHSEQ ||
                         $tieneSoloRolSoftware ||
                         $tieneSoloRolAmadellaves;
-                        
+
                         @endphp
 
 
@@ -926,7 +926,7 @@
                             @endif
                             {{-- Mantenimiento --}}
                             @if($tieneSoloRolAlmacenista)
-                            <a href="{{ url('/mantenimiento') }}" class="modules__link">
+                            <a href="{{ url('/mantenimientoequipos') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                     <h2 class="modules__text">Mantenimiento</h2>
@@ -938,7 +938,7 @@
                                 <h2 class="modules__text">Mantenimiento</h2>
                             </div>
                             @else
-                            <a href="{{ url('/mantenimiento') }}" class="modules__link">
+                            <a href="{{ url('/mantenimientoequipos') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                     <h2 class="modules__text">Mantenimiento</h2>

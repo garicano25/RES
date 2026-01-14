@@ -21,6 +21,8 @@ use App\Models\inventario\documentosarticulosModel;
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\proveedortempModel;
 use App\Models\inventario\documentoscalibracionModel;
+use App\Models\inventario\informacionmttoModel;
+
 
 use DB;
 
@@ -112,7 +114,7 @@ class listamantenimientoController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '"><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-verificacionproveedor" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosequipo" data-id="' . $value->ID_DOCUMENTO_ARTICULO . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
 
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                 } else {
@@ -135,55 +137,66 @@ class listamantenimientoController extends Controller
                     $value->TIPO_DOCUMENTO_TEXTO = "N/A";
                 }
 
-                
+
                 if ($value->REQUIERE_FECHA == 1) {
 
                     if ($value->INDETERMINADO_DOCUMENTO == 1) {
+
                         $value->FECHAS_DOCUMENTOS = '
-                        <div>
-                            <strong>' . $value->FECHAI_DOCUMENTO . '</strong><br>
-                            <span class="badge bg-success text-light">Indeterminado</span>
-                        </div>';
+                                <div>
+                                    <strong>' . $value->FECHAI_DOCUMENTO . '</strong><br>
+                                    <span class="badge bg-success text-light">Indeterminado</span>
+                                </div>';
                     } elseif (!empty($value->FECHAI_DOCUMENTO) && !empty($value->FECHAF_DOCUMENTO)) {
 
                         $fechaInicio = strtotime($value->FECHAI_DOCUMENTO);
-                        $fechaFin = strtotime($value->FECHAF_DOCUMENTO);
-                        $hoy = strtotime($fecha_actual);
+                        $fechaFin    = strtotime($value->FECHAF_DOCUMENTO);
+                        $hoy         = strtotime($fecha_actual);
 
                         $total_dias = ($fechaFin - $fechaInicio) / 86400;
-                        $restantes = ($fechaFin - $hoy) / 86400;
+                        $restantes  = ($fechaFin - $hoy) / 86400;
 
                         if ($hoy > $fechaFin) {
                             $restantes = 0;
                         }
 
-                        $transcurrido = $total_dias > 0 ? (($total_dias - $restantes) / $total_dias) * 100 : 100;
+                        $transcurrido = $total_dias > 0
+                            ? (($total_dias - $restantes) / $total_dias) * 100
+                            : 100;
 
                         if ($hoy > $fechaFin) {
                             $color = 'danger';
                             $texto = 'Vencido';
-                        } elseif ($transcurrido < 60) {
-                            $color = 'success';
-                            $texto = 'Vigente';
-                        } elseif ($transcurrido < 80) {
-                            $color = 'warning';
-                            $texto = 'Revisar';
                         } else {
-                            $color = 'danger';
-                            $texto = 'Próximo a vencer';
+
+                            if ($transcurrido <= 40) {
+                                $color = 'success';
+                                $texto = 'Vigente';
+                            } elseif ($transcurrido <= 70) {
+                                $color = 'warning';
+                                $texto = 'Revisar';
+                            } else {
+                                $color = 'danger';
+                                $texto = 'Próximo a vencer';
+                            }
                         }
 
                         $dias_restantes = max(0, floor($restantes));
+                        $porcentaje = round($transcurrido);
 
                         $value->FECHAS_DOCUMENTOS = '
-                        <div>
-                            <strong>' . $value->FECHAI_DOCUMENTO . ' - ' . $value->FECHAF_DOCUMENTO . '</strong><br>
-                            <span class="badge bg-' . $color . ' text-light">' . $texto . ' (' . $dias_restantes . ' días restantes)</span>
-                        </div>';
+                            <div>
+                                <strong>' . $value->FECHAI_DOCUMENTO . ' - ' . $value->FECHAF_DOCUMENTO . '</strong><br>
+                                <span class="badge bg-' . $color . ' text-light">
+                                    ' . $texto . ' (' . $dias_restantes . ' días restantes)
+                                </span>
+                            </div>';
                     } else {
+
                         $value->FECHAS_DOCUMENTOS = 'Sin fecha';
                     }
                 } else {
+
                     $value->FECHAS_DOCUMENTOS = 'N/A';
                 }
             }
@@ -240,7 +253,133 @@ class listamantenimientoController extends Controller
         ]);
     }
 
-    
+
+    public function Tablacalibracionmantenimiento(Request $request)
+    {
+        try {
+
+
+            $equipo = $request->get('equipo');
+
+            $tabla = documentoscalibracionModel::where('MANTENIMIENTO_ID', $equipo)->get();
+            $fecha_actual = date('Y-m-d');
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_DOCUMENTO_CALIBRACION . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentoscalibracion" data-id="' . $value->ID_DOCUMENTO_CALIBRACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                } else {
+
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentoscalibracion" data-id="' . $value->ID_DOCUMENTO_CALIBRACION . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_DOCUMENTO_CALIBRACION . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+
+
+
+                if (!empty($value->FECHAI_DOCUMENTO_CALIBRACION) && !empty($value->FECHAF_DOCUMENTO_CALIBRACION)) {
+
+                    $fechaInicio = strtotime($value->FECHAI_DOCUMENTO_CALIBRACION);
+                    $fechaFin    = strtotime($value->FECHAF_DOCUMENTO_CALIBRACION);
+                    $hoy         = strtotime($fecha_actual);
+
+                    $total_dias = ($fechaFin - $fechaInicio) / 86400;
+                    $restantes  = ($fechaFin - $hoy) / 86400;
+
+                    if ($hoy > $fechaFin) {
+                        $restantes = 0;
+                    }
+
+                    $transcurrido = $total_dias > 0
+                        ? (($total_dias - $restantes) / $total_dias) * 100
+                        : 100;
+
+                    if ($hoy > $fechaFin) {
+                        $color = 'danger';
+                        $texto = 'Vencido';
+                    } else {
+                        if ($transcurrido <= 40) {
+                            $color = 'success';
+                            $texto = 'Vigente';
+                        } elseif ($transcurrido <= 70) {
+                            $color = 'warning';
+                            $texto = 'Revisar';
+                        } else {
+                            $color = 'danger';
+                            $texto = 'Próximo a vencer';
+                        }
+                    }
+
+                    $dias_restantes = max(0, floor($restantes));
+                    $porcentaje = round($transcurrido);
+
+                    $value->FECHAS_CALIBRACION = '
+                    <div>
+                        <strong>' . $value->FECHAI_DOCUMENTO_CALIBRACION . ' - ' . $value->FECHAF_DOCUMENTO_CALIBRACION . '</strong><br>
+                        <span class="badge bg-' . $color . ' text-light">
+                            ' . $texto . ' (' . $dias_restantes . ' días restantes)
+                        </span>
+                    </div>';
+                } else {
+
+                    $value->FECHAS_CALIBRACION = 'Sin fecha';
+                }
+
+
+                }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+
+    public function mostrardocumentocalibracion($id)
+    {
+        $archivo = documentoscalibracionModel::findOrFail($id)->DOCUMENTO_CALIBRACION;
+        return Storage::response($archivo);
+    }
+
+
+    ///////////////// MTTO CRITERIO, PROGRAMACION Y BITACORA   ///////////////// 
+
+
+
+    public function obtenerInformacionMtto(Request $request)
+    {
+        $mantenimientoId = $request->get('MANTENIMIENTO_ID');
+
+        $info = informacionmttoModel::where('MANTENIMIENTO_ID', $mantenimientoId)->first();
+
+        if (!$info) {
+            return response()->json([
+                'success' => false,
+                'data' => null
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $info
+        ]);
+    }
+
+
+
+
 
     public function  store(Request $request)
     {
@@ -499,6 +638,140 @@ class listamantenimientoController extends Controller
                     return response()->json($response);
 
                     break;
+
+
+
+                case 4:
+
+                    if ($request->ID_DOCUMENTO_CALIBRACION == 0) {
+
+                        DB::statement('ALTER TABLE documentos_calibracion_mantenimiento AUTO_INCREMENT=1;');
+                        $cliente = documentoscalibracionModel::create($request->all());
+
+                        $articuloId = $cliente->MANTENIMIENTO_ID;
+                        $registroId = $cliente->ID_DOCUMENTO_CALIBRACION;
+
+
+                        if ($request->hasFile('DOCUMENTO_CALIBRACION')) {
+                            $documento = $request->file('DOCUMENTO_CALIBRACION');
+                            $extension = $documento->getClientOriginalExtension();
+                            $nombreBase = $request->NOMBRE_DOCUMENTO_CALIBRACION ?? 'documento';
+                            $nombreLimpio = iconv('UTF-8', 'ASCII//TRANSLIT', $nombreBase);
+                            $nombreLimpio = preg_replace('/[^A-Za-z0-9\-]/', '_', $nombreLimpio);
+                            $nombreLimpio = trim($nombreLimpio, '_');
+                            $nombreArchivo = $nombreLimpio . '.' . $extension;
+                            $ruta = "Mantenimiento/Equipo/{$articuloId}/Documento de calibración/{$registroId}";
+                            $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
+                            $cliente->DOCUMENTO_CALIBRACION = $rutaCompleta;
+                        }
+
+                        $cliente->save();
+                    } else {
+
+                        if (isset($request->ELIMINAR)) {
+
+                            if ($request->ELIMINAR == 1) {
+                                documentoscalibracionModel::where('ID_DOCUMENTO_CALIBRACION', $request['ID_DOCUMENTO_CALIBRACION'])
+                                    ->update(['ACTIVO' => 0]);
+
+                                $response['code'] = 1;
+                                $response['cliente'] = 'Desactivada';
+                            } else {
+
+                                documentoscalibracionModel::where('ID_DOCUMENTO_CALIBRACION', $request['ID_DOCUMENTO_CALIBRACION'])
+                                    ->update(['ACTIVO' => 1]);
+
+                                $response['code'] = 1;
+                                $response['cliente'] = 'Activada';
+                            }
+                        } else {
+
+                            $cliente = documentoscalibracionModel::find($request->ID_DOCUMENTO_CALIBRACION);
+                            $cliente->update($request->all());
+
+                            $articuloId = $cliente->MANTENIMIENTO_ID;
+                            $registroId = $cliente->ID_DOCUMENTO_CALIBRACION;
+
+                            if ($request->hasFile('DOCUMENTO_CALIBRACION')) {
+
+                                $documento = $request->file('DOCUMENTO_CALIBRACION');
+                                $extension = $documento->getClientOriginalExtension();
+                                $nombreBase = $request->NOMBRE_DOCUMENTO_CALIBRACION ?? 'documento';
+                                $nombreLimpio = iconv('UTF-8', 'ASCII//TRANSLIT', $nombreBase);
+                                $nombreLimpio = preg_replace('/[^A-Za-z0-9\-]/', '_', $nombreLimpio);
+                                $nombreLimpio = trim($nombreLimpio, '_');
+                                $nombreArchivo = $nombreLimpio . '.' . $extension;
+                                $ruta = "Mantenimiento/Equipo/{$articuloId}/Documento de calibración/{$registroId}";
+                                $rutaCompleta = $documento->storeAs($ruta, $nombreArchivo);
+                                $cliente->DOCUMENTO_CALIBRACION = $rutaCompleta;
+                            }
+
+
+                            $cliente->save();
+
+                            $response['code'] = 1;
+                            $response['cliente'] = 'Actualizada';
+                        }
+
+                        return response()->json($response);
+                    }
+
+                    $response['code'] = 1;
+                    $response['cliente'] = $cliente;
+                    return response()->json($response);
+
+                    break;
+
+
+
+
+                case 5:
+
+                    if ($request->ID_INFORMACION_MTTO == 0) {
+
+                        DB::statement('ALTER TABLE informacion_mtto AUTO_INCREMENT=1;');
+                        $cliente = informacionmttoModel::create($request->all());
+
+                        $cliente->save();
+                    } else {
+
+                        if (isset($request->ELIMINAR)) {
+
+                            if ($request->ELIMINAR == 1) {
+                                informacionmttoModel::where('ID_INFORMACION_MTTO', $request['ID_INFORMACION_MTTO'])
+                                    ->update(['ACTIVO' => 0]);
+
+                                $response['code'] = 1;
+                                $response['cliente'] = 'Desactivada';
+                            } else {
+
+                                informacionmttoModel::where('ID_INFORMACION_MTTO', $request['ID_INFORMACION_MTTO'])
+                                    ->update(['ACTIVO' => 1]);
+
+                                $response['code'] = 1;
+                                $response['cliente'] = 'Activada';
+                            }
+                        } else {
+
+                            $cliente = informacionmttoModel::find($request->ID_INFORMACION_MTTO);
+                            $cliente->update($request->all());
+                            $cliente->save();
+
+                            $response['code'] = 1;
+                            $response['cliente'] = 'Actualizada';
+                        }
+
+                        return response()->json($response);
+                    }
+
+                    $response['code'] = 1;
+                    $response['cliente'] = $cliente;
+                    return response()->json($response);
+
+                    break;
+
+
+
 
 
                 case 2:

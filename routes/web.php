@@ -154,8 +154,12 @@ use App\Http\Controllers\bitacorasinventario\bitacoraasignacionController;
 /// NOTIFICACIONES 
 use App\Http\Controllers\notificacion\notificacionController;
 
-/// MANTENIMIENTO 
+/// MANTENIMIENTO EQUIPOS
 use App\Http\Controllers\listamantenimiento\listamantenimientoController;
+
+/// MANTENIMIENTO INSTALACIONES
+
+use App\Http\Controllers\listamantenimiento\listainstalacionController;
 
 
 //==============================================  login  ============================================== 
@@ -1013,10 +1017,9 @@ Route::post('/BitacoraAsignacionSave', [bitacoraasignacionController::class, 'st
 ////////////////////////////////////////////////////////////////MANTENIMIENTO////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-//==============================================    LISTA DE MANTENIMIENTO   ============================================== 
+//==============================================    LISTA DE MANTENIMIENTO DE EQUIPOS   ============================================== 
 
-
-Route::get('/mantenimiento', [listamantenimientoController::class, 'index']);
+Route::get('/mantenimientoequipos', [listamantenimientoController::class, 'index']);
 Route::get('/Tablamantenimiento', [listamantenimientoController::class, 'Tablamantenimiento']);
 Route::post('/MantenimientoSave', [listamantenimientoController::class, 'store']);
 Route::get('/MantenimientoDelete', [listamantenimientoController::class, 'store']);
@@ -1033,6 +1036,22 @@ Route::get('/mostrardocumentomantenimiento/{id}', [listamantenimientoController:
 Route::get('/FotosDocMtto/{id}', [listamantenimientoController::class, 'FotosDocMtto'])->name('FotosDocMtto');
 
 /// CALIBRACION EQUIPO
+Route::get('/Tablacalibracionmantenimiento', [listamantenimientoController::class, 'Tablacalibracionmantenimiento']);
+Route::get('/mostrardocumentocalibracion/{id}', [listamantenimientoController::class, 'mostrardocumentocalibracion']);
+
+/// MTTO CRITERIO, PROGRAMACION Y BITACORA   
+
+Route::get('/obtenerInformacionMtto', [listamantenimientoController::class, 'obtenerInformacionMtto']);
+
+
+//==============================================    LISTA DE MANTENIMIENTO DE INSTALACIONES   ============================================== 
+Route::get('/mantenimientoinstalaciones', [listainstalacionController::class, 'index']);
+Route::post('/MttoInstalacionSave', [listainstalacionController::class, 'store']);
+Route::get('/mostrarFotoInstalacion/{id}', [listainstalacionController::class, 'mostrarFotoInstalacion'])->name('mostrarFotoInstalacion');
+Route::get('/Tablalistainstalacion', [listainstalacionController::class, 'Tablalistainstalacion']);
+Route::get('/MttoInstalacionDelete', [listainstalacionController::class, 'store']);
+
+
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////PAGINA WEB///////////////////////////////////////////////////

@@ -295,38 +295,38 @@ var Tablainventario = $("#Tablainventario").DataTable({
      createdRow: function (row, data) {
         $(row).addClass(data.ROW_CLASS);
     },
-infoCallback: function (settings, start, end, max, total, pre) {
-        return `Total de ${total} registros`;
+    infoCallback: function (settings, start, end, max, total, pre) {
+            return `Total de ${total} registros`;
     },
-drawCallback: function () {
-    const topScroll = document.querySelector('.tabla-scroll-top');
-    const scrollInner = document.querySelector('.tabla-scroll-top .scroll-inner');
-    const table = document.querySelector('#Tablainventario');
-    const scrollBody = document.querySelector('.dataTables_scrollBody');
+    drawCallback: function () {
+        const topScroll = document.querySelector('.tabla-scroll-top');
+        const scrollInner = document.querySelector('.tabla-scroll-top .scroll-inner');
+        const table = document.querySelector('#Tablainventario');
+        const scrollBody = document.querySelector('.dataTables_scrollBody');
 
-    if (!topScroll || !scrollInner || !table || !scrollBody) return;
+        if (!topScroll || !scrollInner || !table || !scrollBody) return;
 
-    const tableWidth = table.scrollWidth;
+        const tableWidth = table.scrollWidth;
 
-    scrollInner.style.width = tableWidth + 'px';
+        scrollInner.style.width = tableWidth + 'px';
 
-    let syncingTop = false;
-    let syncingBottom = false;
+        let syncingTop = false;
+        let syncingBottom = false;
 
-    topScroll.addEventListener('scroll', function () {
-        if (syncingTop) return;
-        syncingBottom = true;
-        scrollBody.scrollLeft = topScroll.scrollLeft;
-        syncingBottom = false;
-    });
+        topScroll.addEventListener('scroll', function () {
+            if (syncingTop) return;
+            syncingBottom = true;
+            scrollBody.scrollLeft = topScroll.scrollLeft;
+            syncingBottom = false;
+        });
 
-    scrollBody.addEventListener('scroll', function () {
-        if (syncingBottom) return;
-        syncingTop = true;
-        topScroll.scrollLeft = scrollBody.scrollLeft;
-        syncingTop = false;
-    });
-}
+        scrollBody.addEventListener('scroll', function () {
+            if (syncingBottom) return;
+            syncingTop = true;
+            topScroll.scrollLeft = scrollBody.scrollLeft;
+            syncingTop = false;
+        });
+    }
 
 
 });

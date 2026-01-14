@@ -3089,7 +3089,7 @@ function hacerSoloLecturainventario(data, modalSelector) {
       }
   });
 
-  modal.find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-documentosequipo').hide();
+  modal.find('button').not('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-documentosequipo, .ver-archivo-documentoscalibracion').hide();
   
   modal.find('.btn-close, .btn-danger, .nav-tabs button, .nav-link, .EDITAR, .ver-archivo-verificacion').prop('disabled', false);
 }

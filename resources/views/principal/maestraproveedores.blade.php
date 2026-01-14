@@ -303,7 +303,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.6"></script>
+    <script src="/assets/js_sitio/funciones.js?v=5.7"></script>
 
 
     <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js"></script>

@@ -91,7 +91,8 @@ class DenyRoleGlobalMiddleware
         'informacionempresa',
         'bitacoramrhistorial',
         'requisiciondepersonalsolicitud',
-        'mantenimiento'
+        'mantenimientoequipos',
+        'mantenimientoinstalaciones'
         
     ];
 

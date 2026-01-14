@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class documentosarticulosModel extends Model
 {
+    use HasFactory;
+
     protected $primaryKey = 'ID_DOCUMENTO_ARTICULO';
     protected $table = 'documentos_articulosalmacen';
     protected $fillable = [

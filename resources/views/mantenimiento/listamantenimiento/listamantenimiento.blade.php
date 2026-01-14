@@ -76,7 +76,7 @@
 <div class="contenedor-contenido">
 
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-card-list"></i>&nbsp;Lista de mantenimiento</h3>
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-card-list"></i>&nbsp;Lista de equipos que requieren mantenimiento</h3>
 
     </ol>
 
@@ -131,10 +131,13 @@
                             <button class="nav-link active" id="tab1-info" data-bs-toggle="tab" data-bs-target="#contenido-info" type="button" role="tab">Información del equipo</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="tab3-documentos" data-bs-toggle="tab" data-bs-target="#contenido-documentos" type="button" role="tab">Documentación</button>
+                            <button class="nav-link" id="tab2-documentos" data-bs-toggle="tab" data-bs-target="#contenido-documentos" type="button" role="tab">Documentación</button>
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab3-calibracion" data-bs-toggle="tab" data-bs-target="#contenido-calibracion" type="button" role="tab" style="display: none;">Calibración</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab4-mtto" data-bs-toggle="tab" data-bs-target="#contenido-mtto" type="button" role="tab">Mantenimiento</button>
                         </li>
                     </ul>
 
@@ -175,8 +178,17 @@
                                                 <div class="col-12">
                                                     {!! csrf_field() !!}
                                                 </div>
+                                                <div class="col-12 text-center">
+                                                    <label>El ítem requiere calibración *</label>
+                                                    <select class="form-control" id="REQUIERE_CALIBRACION" name="REQUIERE_CALIBRACION" onchange="guardarRequiereCalibracion()"
+                                                        required>
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Sí</option>
+                                                        <option value="2">No</option>
+                                                    </select>
+                                                </div>
 
-                                                <div class="col-12">
+                                                <div class="col-12 mt-2">
                                                     <div class="form-group">
                                                         <label> Descripción del ítem*</label>
                                                         <textarea class="form-control" id="DESCRIPCION_EQUIPO" name="DESCRIPCION_EQUIPO" rows="5" required></textarea>
@@ -386,15 +398,6 @@
                                                     </select>
                                                 </div>
 
-                                                <div class="col-6 mt-2">
-                                                    <label>El ítem requiere calibración *</label>
-                                                    <select class="form-control" id="REQUIERE_CALIBRACION" name="REQUIERE_CALIBRACION" onchange="guardarRequiereCalibracion()"
-                                                         required>
-                                                        <option value="" selected disabled>Seleccione una opción</option>
-                                                        <option value="1">Sí</option>
-                                                        <option value="2">No</option>
-                                                    </select>
-                                                </div>
 
 
 
@@ -437,11 +440,108 @@
                             </ol>
                             <div class="card-body">
                                 <div class="card-body position-relative" id="tabla_activo" style="display: block;">
-                                    <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                    <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
                                     <table id="Tablacalibracionmantenimiento" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
                                 </div>
                             </div>
                         </div>
+
+                        <div class="tab-pane fade" id="contenido-mtto" role="tabpanel">
+                            <ol class="breadcrumb mt-3" style="display: flex; justify-content: center; align-items: center;">
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Criterio</h3>
+                            </ol>
+                            <form method="post" enctype="multipart/form-data" id="formularioINVENTARIO" style="background-color: #ffffff;">
+
+                                <div class="col-12">
+                                    <div class="row">
+
+                                        <input type="hidden" class="form-control" name="ID_INFORMACION_MTTO" id="ID_INFORMACION_MTTO" value="0">
+
+                                        <div class="col-4 mt-2">
+                                            <label class="form-label">Definir criterio *</label>
+                                            <input type="text" class="form-control" name="CRITERIO_MTTO" id="CRITERIO_MTTO" required>
+                                        </div>
+                                        <div class="col-4 mt-2">
+                                            <label class="form-label"> Tipo de mantenimiento *</label>
+                                            <select class="form-control" name="TIPO_MTTO" id="TIPO_MTTO" required>
+                                                <option value="" selected disabled>Seleccione una opción</option>
+                                                <option value="1">Preventivo</option>
+                                                <option value="2">Correctivo</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-4 mt-2">
+                                            <label class="form-label">Proveedor interno/externo*</label>
+                                            <select class="form-control" name="PROVEEDOR_INTEXT_MTTO" id="PROVEEDOR_INTEXT_MTTO" required>
+                                                <option value="" selected disabled>Seleccione una opción</option>
+                                                <option value="1">Interno</option>
+                                                <option value="2">Externo</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 mt-3" id="PROVEEDORES_INTERNO" style="display: none;">
+                                            <label class="form-label">Proveedor *</label>
+                                            <select class="form-select text-center" id="PROVEEDOR_INTERNO_MTTO" name="PROVEEDOR_INTERNO_MTTO">
+                                                <option value="">Seleccionar proveedor</option>
+                                                <optgroup label="Proveedor oficial">
+                                                    @foreach ($proveedoresOficiales as $proveedor)
+                                                    <option value="{{ $proveedor->RFC_ALTA }}">
+                                                        {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                                    </option>
+                                                    @endforeach
+                                                </optgroup>
+                                                <optgroup label="Proveedores temporales">
+                                                    @foreach ($proveedoresTemporales as $proveedor)
+                                                    <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                                        {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                                    </option>
+                                                    @endforeach
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                        <div class="col-12 mt-3" id="PROVEEDORES_EXTERNO" style="display: none;">
+                                            <label class="form-label">Proveedor *</label>
+                                            <input type="text" class="form-control" id="PROVEEDOR_EXTERNO_MTTO" name="PROVEEDOR_EXTERNO_MTTO" required>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+
+
+                                <ol class="breadcrumb mt-3" style="display: flex; justify-content: center; align-items: center;">
+                                    <h3 style="color: #ffffff; margin: 0;">&nbsp;Programación</h3>
+                                </ol>
+
+
+                                <div class="mb-3">
+                                    <div class="col-12">
+                                        <div class="row justify-content-center">
+                                            <div class="col-6 mt-3">
+                                                <label class="form-label">Fecha del último mantenimiento *</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ULTIMO_MTTO" name="FECHA_ULTIMO_MTTO" required>
+                                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 mt-3">
+                                    <div class="row justify-content-center">
+                                        <div class="col-6 text-center">
+                                            <button type="submit" class="btn btn-success" id="guardarMTTO">Guardar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                            <ol class="breadcrumb mt-5" style="display: flex; justify-content: center; align-items: center;">
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Bitácora</h3>
+                            </ol>
+
+                        </div>
+
 
                     </div>
                 </div>
@@ -478,7 +578,7 @@
 
                             <div class="col-12 mb-3">
                                 <div class="form-group">
-                                    <label>Tipo de documento *</label>
+                                    <label class="form-label">Tipo de documento *</label>
                                     <select class="custom-select form-control" id="TIPO_DOCUMENTO" name="TIPO_DOCUMENTO" required>
                                         <option value="" selected disabled>Seleccione una opción</option>
                                         <option value="1">Documento</option>
@@ -515,7 +615,7 @@
                                 <div class="col-md-12 mb-3">
                                     <div class="row">
                                         <div class="col-4 mt-3">
-                                            <label>Fecha Inicio *</label>
+                                            <label class="form-label">Fecha Inicio *</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTO" name="FECHAI_DOCUMENTO" required>
                                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
@@ -535,7 +635,7 @@
                                         </div>
 
                                         <div class="col-4 mt-3">
-                                            <label>Fecha Fin *</label>
+                                            <label class="form-label">Fecha Fin *</label>
                                             <div class="input-group">
                                                 <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTO" name="FECHAF_DOCUMENTO" required>
                                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
@@ -548,7 +648,7 @@
                             <div class="col-12 mb-3" id="SUBIR_DOCUMENTO" style="display: none;">
                                 <label class="form-label">Subir Evidencia (PDF) *</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="file" class="form-control me-2" name="DOCUMENTO_ARTICULO" id="DOCUMENTO_ARTICULO" accept=".pdf" required>
+                                    <input type="file" class="form-control me-2" name="DOCUMENTO_ARTICULO" id="DOCUMENTO_ARTICULO" accept=".pdf">
                                     <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
                                         <i class="bi bi-trash"></i>
                                     </button>
@@ -557,7 +657,7 @@
 
                             <div class="col-12" id="IMAGEN_DOCUMENTOS" style="display: none;">
                                 <div class="form-group">
-                                    <label> Foto </label>
+                                    <label class="form-label"> Foto </label>
                                     <input type="file" accept="image/jpeg,image/x-png,image/gif" id="FOTO_DOCUMENTO" name="FOTO_DOCUMENTO" data-allowed-file-extensions="jpg png JPG PNG" data-height="240" data-default-file="" />
                                 </div>
                             </div>
@@ -591,50 +691,80 @@
 
                     <div class="col-12">
                         <div class="row">
-
-                            <div class="col-md-12 mb-3">
+                            <div class="col-12">
                                 <label class="form-label">Nombre *</label>
-                                <input type="text" class="form-control" name="NOMBRE_DOCUMENTO" id="NOMBRE_DOCUMENTO" required>
+                                <input type="text" class="form-control" name="NOMBRE_DOCUMENTO_CALIBRACION" id="NOMBRE_DOCUMENTO_CALIBRACION" required>
                             </div>
-
                             <div class="mb-3">
-                                <div class="col-md-12 mb-3">
+                                <div class="col-12">
                                     <div class="row">
                                         <div class="col-6 mt-3">
-                                            <label>Fecha Inicio *</label>
+                                            <label class="form-label">Fecha Inicio *</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTO" name="FECHAI_DOCUMENTO" required>
+                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTO_CALIBRACION" name="FECHAI_DOCUMENTO_CALIBRACION" required>
                                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                             </div>
                                         </div>
 
                                         <div class="col-6 mt-3">
-                                            <label>Fecha Fin *</label>
+                                            <label class="form-label">Fecha Fin *</label>
                                             <div class="input-group">
-                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTO" name="FECHAF_DOCUMENTO" required>
+                                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTO_CALIBRACION" name="FECHAF_DOCUMENTO_CALIBRACION" required>
                                                 <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-12 mt-2">
+                                <label class="form-label">¿El proveedor está dado de alta? *</label>
+                                <select class="form-control" name="DADO_ALTA_CALIBRACION" id="DADO_ALTA_CALIBRACION" required>
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="1">Sí</option>
+                                    <option value="2">No</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mt-3" id="PROVEEDORES_ALTA" style="display: none;">
+                                <label class="form-label">Proveedor *</label>
+                                <select class="form-select text-center" id="PROVEEDOR_CALIBRACION" name="PROVEEDOR_CALIBRACION" required>
+                                    <option value="">Seleccionar proveedor</option>
+                                    <optgroup label="Proveedor oficial">
+                                        @foreach ($proveedoresOficiales as $proveedor)
+                                        <option value="{{ $proveedor->RFC_ALTA }}">
+                                            {{ $proveedor->RAZON_SOCIAL_ALTA }} ({{ $proveedor->RFC_ALTA }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+                                    <optgroup label="Proveedores temporales">
+                                        @foreach ($proveedoresTemporales as $proveedor)
+                                        <option value="{{ $proveedor->RAZON_PROVEEDORTEMP }}">
+                                            {{ $proveedor->RAZON_PROVEEDORTEMP }} ({{ $proveedor->NOMBRE_PROVEEDORTEMP }})
+                                        </option>
+                                        @endforeach
+                                    </optgroup>
+                                </select>
+                            </div>
 
-                            <div class="col-12 mb-3">
+                            <div class="col-12 mt-3" id="ESCRIBIR_PROVEEDOR_CALIBRACION" style="display: none;">
+                                <label class="form-label">Proveedor *</label>
+                                <input type="text" class="form-control" id="NOMBRE_PROVEEDOR_CALIBRACION" name="NOMBRE_PROVEEDOR_CALIBRACION" required>
+                            </div>
+
+                            <div class="col-12 mt-3">
                                 <label class="form-label">Subir Evidencia (PDF) *</label>
                                 <div class="d-flex align-items-center">
-                                    <input type="file" class="form-control me-2" name="DOCUMENTO_ARTICULO" id="DOCUMENTO_ARTICULO" accept=".pdf" required>
+                                    <input type="file" class="form-control me-2" name="DOCUMENTO_CALIBRACION" id="DOCUMENTO_CALIBRACION" accept=".pdf">
                                     <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarDOCUMENTACION">Guardar</button>
+                    <button type="submit" class="btn btn-success" id="guardarDOCUMENTACIONCALIBRACION">Guardar</button>
                 </div>
             </form>
         </div>
