@@ -391,13 +391,13 @@ $('#Tablarecempleadovobo tbody').on('click', 'td>button.EDITAR', function () {
         
     
 
-    const hoy = new Date();
-    const yyyy = hoy.getFullYear();
-    const mm = String(hoy.getMonth() + 1).padStart(2, '0');
-    const dd = String(hoy.getDate()).padStart(2, '0');
-    const fechaHoy = `${yyyy}-${mm}-${dd}`;
+    // const hoy = new Date();
+    // const yyyy = hoy.getFullYear();
+    // const mm = String(hoy.getMonth() + 1).padStart(2, '0');
+    // const dd = String(hoy.getDate()).padStart(2, '0');
+    // const fechaHoy = `${yyyy}-${mm}-${dd}`;
 
-    $("#FECHA_VISTO_SOLICITUD").val(fechaHoy);
+    // $("#FECHA_VISTO_SOLICITUD").val(fechaHoy);
 
   
 });
