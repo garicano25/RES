@@ -695,12 +695,15 @@ class recempleadoController extends Controller
             //     })
             //     ->orderBy('FECHA_SALIDA', 'asc')
             //     ->get();
-
             $tabla = recemplaedosModel::where('DAR_BUENO', 1)
-                ->where('ESTADO_APROBACION', '!=', 'Rechazada') 
                 ->where(function ($query) {
-                    $query->whereNull('SUBIR_DOCUMENTO')
-                        ->orWhere('SUBIR_DOCUMENTO', '!=', 'Sí');
+                    $query
+                        ->where('ESTADO_APROBACION', 'Rechazada')
+
+                        ->orWhere(function ($q) {
+                            $q->whereNull('SUBIR_DOCUMENTO')
+                                ->orWhereNotIn('SUBIR_DOCUMENTO', ['Sí']);
+                        });
                 })
                 ->where(function ($query) {
                     $query->whereNull('JEFE_ID')
