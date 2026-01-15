@@ -698,13 +698,16 @@ class recempleadoController extends Controller
 
             $tabla = recemplaedosModel::where('DAR_BUENO', 1)
 
-                ->where('ESTADO_APROBACION','Rechazada')
+                // 🚫 Rechazada NUNCA aparece
+                ->where('ESTADO_APROBACION', '!=', 'Rechazada')
 
+                // 📄 Documento solo para NO rechazadas
                 ->where(function ($query) {
                     $query->whereNull('SUBIR_DOCUMENTO')
-                        ->orWhereNotIn('SUBIR_DOCUMENTO', ['Sí']);
+                        ->orWhere('SUBIR_DOCUMENTO', '!=', 'Sí');
                 })
 
+                // 👤 Tu condición de jefe intacta
                 ->where(function ($query) {
                     $query->whereNull('JEFE_ID')
                         ->orWhere('JEFE_ID', '!=', Auth::id());
@@ -712,6 +715,7 @@ class recempleadoController extends Controller
 
                 ->orderBy('FECHA_SALIDA', 'asc')
                 ->get();
+
 
 
 
