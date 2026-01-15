@@ -698,7 +698,7 @@ class recempleadoController extends Controller
 
             $tabla = recemplaedosModel::where('DAR_BUENO', 1)
 
-                ->where('ESTADO_APROBACION', '!=', 'Rechazada')
+                ->where('ESTADO_APROBACION','Rechazada')
 
                 ->where(function ($query) {
                     $query->whereNull('SUBIR_DOCUMENTO')
