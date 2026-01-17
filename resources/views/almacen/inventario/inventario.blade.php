@@ -141,6 +141,7 @@
                                 <th class="text-center">Marca</th>
                                 <th class="text-center">Modelo</th>
                                 <th class="text-center">Serie</th>
+                                <th class="text-center">Estado</th>
                                 <th class="text-center">Ubicación</th>
                                 <th class="text-center">Código de Identificación</th>
                                 <th class="text-center">Editar</th>
