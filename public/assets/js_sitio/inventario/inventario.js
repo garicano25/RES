@@ -251,12 +251,13 @@ var Tablainventario = $("#Tablainventario").DataTable({
         { targets: 3,  width:  '120px'},
         { targets: 4,  width:  '120px'},
         { targets: 5,  width:  '120px'},
-        { targets: 6,  width:  '120px'},
-        { targets: 7,  width:  '250px'},
-        { targets: 8,  width:  '120px'},
-        { targets: 9,  width:  '70px' },
-        { targets: 10, width:  '70px' },
-        { targets: 11, width:  '70px' }                                 
+        { targets: 6, width: '120px' },
+        { targets: 7,  width:  '120px'},
+        { targets: 8,  width:  '250px'},
+        { targets: 9,  width:  '120px'},
+        { targets: 10,  width:  '70px' },
+        { targets: 11, width:  '70px' },
+        { targets: 12, width:  '70px' }                                 
     ],
     columns: [
         { 
@@ -284,6 +285,7 @@ var Tablainventario = $("#Tablainventario").DataTable({
         { data: 'MARCA_EQUIPO' },
         { data: 'MODELO_EQUIPO' },
         { data: 'SERIE_EQUIPO' },
+        { data: 'ESTADO_EQUIPO' },
         { data: 'UBICACION_EQUIPO' },
         { data: 'CODIGO_EQUIPO' },
         { data: 'BTN_EDITAR' },
