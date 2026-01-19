@@ -60,14 +60,19 @@ class poController extends Controller
                 ->where(function ($q) use ($fechaInicio, $fechaFin) {
 
                     $q->whereBetween('po.FECHA_EMISION', [$fechaInicio, $fechaFin])
+
                         ->orWhere(function ($x) use ($fechaInicio, $fechaFin) {
                             $x->whereNotBetween('po.FECHA_EMISION', [$fechaInicio, $fechaFin])
                                 ->where(function ($y) {
                                     $y->whereNull('po.ESTADO_APROBACION')
                                         ->orWhereNotIn('po.ESTADO_APROBACION', ['Aprobada', 'Rechazada']);
                                 });
-                        });
+                        })
+
+                        ->orWhereNull('po.FECHA_EMISION')
+                        ->orWhere('po.FECHA_EMISION', '');
                 })
+
 
                 ->whereIn('po.ID_FORMULARIO_PO', function ($query) {
                     $query->select(DB::raw('MAX(ID_FORMULARIO_PO)'))
