@@ -18,7 +18,7 @@ modalgr.addEventListener('hidden.bs.modal', event => {
 
 
 var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
-    language: {
+   language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
     scrollX: true,
@@ -26,8 +26,12 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
     responsive: false,
     paging: true,
     searching: true,
-    info: false,
+    filtering: true,
     lengthChange: true,
+    info: true,   
+    scrollY: false,
+    scrollCollapse: false,
+    fixedHeader: false,    
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',
@@ -88,6 +92,9 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
     },
     createdRow: function (row, data, dataIndex) {
         $(row).css('background-color', data.COLOR);
+    },
+     infoCallback: function (settings, start, end, max, total, pre) {
+        return `Total de ${total} registros`;
     },
     drawCallback: function () {
         const topScroll = document.querySelector('.tabla-scroll-top');

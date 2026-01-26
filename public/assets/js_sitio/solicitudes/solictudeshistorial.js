@@ -232,7 +232,7 @@ $("#guardarSOLICITUD").click(function (e) {
                     alertMensaje('success', 'Información guardada correctamente', 'Esta información esta lista para usarse', null, null, 1500)
                         $('#miModal_SOLICITUDES').modal('hide')
                         document.getElementById('formularioSOLICITUDES').reset();
-                        Tablasolicitudes.ajax.reload()
+                        Tablasolicitudeshistorial.ajax.reload()
     
     
                 })
@@ -265,7 +265,7 @@ $("#guardarSOLICITUD").click(function (e) {
                         alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                         $('#miModal_SOLICITUDES').modal('hide')
                         document.getElementById('formularioSOLICITUDES').reset();
-                        Tablasolicitudes.ajax.reload()
+                        Tablasolicitudeshistorial.ajax.reload()
     
     
                     }, 300);  
@@ -277,7 +277,7 @@ $("#guardarSOLICITUD").click(function (e) {
     }
 });
 
-var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
+var Tablasolicitudeshistorial = $("#Tablasolicitudeshistorial").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -295,16 +295,20 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
         dataType: 'json',
         method: 'GET',
         cache: false,
-        url: '/Tablasolicitudes',
+        url: '/Tablasolicitudeshistorial',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablasolicitudes.columns.adjust().draw();
+            Tablasolicitudeshistorial.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        data: function (d) {
+            d.FECHA_INICIO = $('#FECHA_INICIO').val();
+            d.FECHA_FIN = $('#FECHA_FIN').val();
         },
         dataSrc: 'data'
     },
@@ -373,8 +377,6 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
         },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_CORREO' },
-        { data: 'BTN_ELIMINAR' }
     ],
     createdRow: function(row, data) {
         if (data.PROCEDE_COTIZAR == 1) {
@@ -401,12 +403,31 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
         { targets: 6, title: 'Estado de verificación', className: 'all text-center' },
         { targets: 7, title: 'Editar', className: 'all text-center' },
         { targets: 8, title: 'Visualizar', className: 'all text-center' },
-        { targets: 9, title: 'Correo', className: 'all text-center' },
-        { targets: 10, title: 'Activo', className: 'all text-center' }
     ]
 });
 
-$('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
+
+$('#btnFiltrarMR').on('click', function () {
+
+    const inicio = $('#FECHA_INICIO').val();
+    const fin = $('#FECHA_FIN').val();
+
+    if ((inicio && !fin) || (!inicio && fin)) {
+        alertToast('Seleccione ambas fechas o deje ambas vacías', 'warning', 2000);
+        return;
+    }
+
+    if (inicio && fin && inicio > fin) {
+        alertToast('La fecha inicio no puede ser mayor a la fecha fin', 'error', 2000);
+        return;
+    }
+
+    Tablasolicitudeshistorial.ajax.reload();
+});
+
+
+
+$('#Tablasolicitudeshistorial tbody').on('change', '.ESTATUS_SOLICITUD', function () {
     const selectedValue = $(this).val(); 
     const solicitudId = $(this).data('id'); 
     const csrfToken = $('meta[name="csrf-token"]').attr('content'); 
@@ -450,7 +471,7 @@ $('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
                                 'El estatus y el motivo fueron actualizados correctamente.',
                                 'success'
                             ).then(() => {
-                                Tablasolicitudes.ajax.reload(); 
+                                Tablasolicitudeshistorial.ajax.reload(); 
                             });
                         } else {
                             Swal.fire('Error', response.message, 'error');
@@ -490,7 +511,7 @@ $('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
                                 'El estatus fue actualizado correctamente.',
                                 'success'
                             ).then(() => {
-                                Tablasolicitudes.ajax.reload();
+                                Tablasolicitudeshistorial.ajax.reload();
                             });
                         } else {
                             Swal.fire('Error', response.message, 'error');
@@ -506,9 +527,9 @@ $('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
 });
 
 
-$('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablasolicitudeshistorial tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablasolicitudes.row(tr);
+    var row = Tablasolicitudeshistorial.row(tr);
     var data = row.data(); 
 
 
@@ -684,9 +705,9 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    $('#Tablasolicitudes tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablasolicitudeshistorial tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablasolicitudes.row(tr);
+        var row = Tablasolicitudeshistorial.row(tr);
         
     hacerSoloLectura(row.data(), '#miModal_SOLICITUDES');
         ID_FORMULARIO_SOLICITUDES = row.data().ID_FORMULARIO_SOLICITUDES;
@@ -777,9 +798,9 @@ $(document).ready(function() {
 
 
 
-$('#Tablasolicitudes tbody').on('change', 'td>label>input.ELIMINAR', function () {
+$('#Tablasolicitudeshistorial tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablasolicitudes.row(tr);
+    var row = Tablasolicitudeshistorial.row(tr);
 
     var estado = $(this).is(':checked') ? 1 : 0;
 
@@ -789,7 +810,7 @@ $('#Tablasolicitudes tbody').on('change', 'td>label>input.ELIMINAR', function ()
         ID_FORMULARIO_SOLICITUDES: row.data().ID_FORMULARIO_SOLICITUDES
     };
 
-    eliminarDatoTabla(data, [Tablasolicitudes], 'solicitudDelete');
+    eliminarDatoTabla(data, [Tablasolicitudeshistorial], 'solicitudDelete');
 });
 
 
@@ -1016,7 +1037,7 @@ $(document).ready(function() {
 
                                 $('#miModal_SOLICITUDES').modal('hide');
 
-                                Tablasolicitudes.ajax.reload();
+                                Tablasolicitudeshistorial.ajax.reload();
                             } else {
                                 Swal.fire({
                                     icon: 'error',

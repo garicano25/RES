@@ -116,7 +116,17 @@
 
                 <div class="col-md-3 mb-3">
                   <label class="form-label">RFC *</label>
-                  <input type="text" class="form-control" id="RFC_SOLICITUD" name="RFC_SOLICITUD" required>
+
+                  <select class="form-select text-center" id="RFC_SOLICITUD" name="RFC_SOLICITUD" required>
+                    <option value="0" disabled selected>Seleccione una opción</option>
+                    @foreach ($clientes as $cliente)
+                    <option value="{{ $cliente->RFC_CLIENTE }}"> {{ $cliente->RAZON_SOCIAL_CLIENTE }} ({{ $cliente->RFC_CLIENTE }})</option>
+                    @endforeach
+
+
+                  </select>
+
+
                 </div>
 
 

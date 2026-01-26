@@ -89,20 +89,22 @@ $(document).ready(function() {
 
 
 var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
-    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-    lengthChange: true,
-    lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-    ],
-    info: false,
+   language: {
+        url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+    },
+    scrollX: true,
+    autoWidth: false,
+    responsive: false,
     paging: true,
     searching: true,
     filtering: true,
-    scrollY: '65vh',
-    scrollCollapse: true,
-    responsive: true,
+    lengthChange: true,
+    info: true,   
+    scrollY: false,
+    scrollCollapse: false,
+    fixedHeader: false,    
     destroy: true,
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',
         data: {},
@@ -160,7 +162,10 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         { targets: 6, title: 'Activo', className: 'all text-center' },
 
 
-    ]
+    ],
+     infoCallback: function (settings, start, end, max, total, pre) {
+        return `Total de ${total} registros`;
+    },
 });
 
 

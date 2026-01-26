@@ -584,27 +584,27 @@
 
 
     @if(request()->is('requisicionmateriales'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.7"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisicionmr.js?v=4.8"></script>
     @endif
 
     @if(request()->is('requisicionmaterialeslideres'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.12"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconlider.js?v=2.13"></script>
     @endif
 
     @if(request()->is('requisicionmaterialesaprobacion'))
-    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=2.4"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/requisiconaprobada.js?v=2.5"></script>
     @endif
 
     @if(request()->is('bitacora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.26"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.27"></script>
     @endif
 
     @if(request()->is('bitacoramrhistorial'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacorahistorial.js?v=1.0"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacorahistorial.js?v=1.1"></script>
     @endif
 
     @if(request()->is('bancoproveedores'))
-    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.12"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorespotenciales.js?v=1.13"></script>
     @endif
 
     @if(request()->is('catalogofunciones'))
@@ -620,32 +620,32 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.19"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=1.20"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
     @if(request()->is('proveedorestemporales'))
-    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.8"></script>
+    <script src="/assets/js_sitio/proveedor/proveedorestemp.js?v=1.9"></script>
     @endif
 
     @if(request()->is('ordencompra'))
-    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.18"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_compra.js?v=1.19"></script>
     @endif
 
     @if(request()->is('ordencomprahistorial'))
-    <script src="/assets/js_sitio/orden_compra/orden_comprahistorial.js"></script>
+    <script src="/assets/js_sitio/orden_compra/orden_comprahistorial.js?v=1.0"></script>
     @endif
 
     @if(request()->is('ordencompraaprobacion'))
-    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.6"></script>
+    <script src="/assets/js_sitio/orden_compra/aprobacioncompra.js?v=1.7"></script>
     @endif
 
     @if(request()->is('matrizcomparativa'))
-    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.3"></script>
+    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.4"></script>
     @endif
 
     @if(request()->is('matrizaprobacion'))
-    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.3"></script>
+    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.4"></script>
     @endif
 
     @if(request()->is('catalogoverificacionproveedor'))
@@ -653,15 +653,15 @@
     @endif
 
     @if(request()->is('bitacoragr'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.49"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.50"></script>
     @endif
 
     @if(request()->is('vobogrusuario'))
-    <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.3"></script>
+    <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.4"></script>
     @endif
 
     @if(request()->is('listaproveedorescriticos'))
-    <script src="/assets/js_sitio/proveedor/listaproveedorescriticos.js"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedorescriticos.js?v=1.0"></script>
     @endif
 
 

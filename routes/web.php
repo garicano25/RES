@@ -83,6 +83,7 @@ use App\Http\Controllers\solicitudes\catalogogiroempresaController;
 use App\Http\Controllers\solicitudes\catalogonecesidadController;
 use App\Http\Controllers\solicitudes\catalogolineanegociosController;
 use App\Http\Controllers\solicitudes\catalogotiposervicioController;
+use App\Http\Controllers\solicitudes\solicitudeshistorialController;
 
 // CONTROLADORES DE OFERTAS 
 use App\Http\Controllers\ofertas\ofertasController;
@@ -627,6 +628,10 @@ Route::get('/mostrarverificacioncliente/{id}', [solicitudesController::class, 'm
 Route::post('/actualizarSolicitud', [solicitudesController::class, 'actualizarSolicitud']);
 Route::get('/buscarCliente', [solicitudesController::class, 'buscarCliente']);
 
+//==============================================  SOLICITUDES  HISTORIAL ============================================== 
+Route::get('/solicitudeshistorial', [solicitudeshistorialController::class, 'index']);
+Route::get('/Tablasolicitudeshistorial', [solicitudeshistorialController::class, 'Tablasolicitudeshistorial']);
+
 
 //==============================================  OFERTAS/COTIZACION  ============================================== 
 
@@ -794,6 +799,7 @@ Route::get('/Tablaordencompraprobacion', [poController::class, 'Tablaordencompra
 Route::post('/PoSave', [poController::class, 'store']);
 Route::get('/obtenerNombreUsuario/{id}', [poController::class, 'obtenerNombreUsuario']);
 Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
+
 
 //==============================================    ORDEN DE COMPRA - HISTORIAL  ============================================== 
 Route::get('/ordencomprahistorial', [pohistorialController::class, 'index']);

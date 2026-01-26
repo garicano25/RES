@@ -45,7 +45,11 @@ class solicitudesController extends Controller
 
         $titulosCuenta = catalogotituloproveedorModel::where('ACTIVO', 1)->get();
 
-        return view('ventas.solicitudes.solicitudes', compact('medios', 'necesidades','giros', 'lineas', 'tipos', 'titulosCuenta'));
+
+        $clientes = clienteModel::where('ACTIVO', 1)->get();
+
+
+        return view('ventas.solicitudes.solicitudes', compact('medios', 'necesidades','giros', 'lineas', 'tipos', 'titulosCuenta', 'clientes'));
 
 
     }
@@ -230,12 +234,94 @@ class solicitudesController extends Controller
             DB::beginTransaction();
 
             switch (intval($request->api)) {
+
+                // case 1:
+                //     if ($request->ID_FORMULARIO_SOLICITUDES == 0) {
+                //         $ultimoRegistro = solicitudesModel::orderBy('ID_FORMULARIO_SOLICITUDES', 'desc')->first();
+                //         $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_SOLICITUD, 0, 3)) + 1 : 1;
+                //         $anioActual = date('Y');
+                //         $ultimoDigitoAnio = substr($anioActual, -2);
+                //         $noSolicitud = str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT) . '-' . $ultimoDigitoAnio;
+
+                //         $request->merge(['NO_SOLICITUD' => $noSolicitud]);
+
+                //         DB::statement('ALTER TABLE formulario_solicitudes AUTO_INCREMENT=1;');
+
+                //         $data = $request->except(['observacion', 'contactos', 'direcciones']);
+                //         $solicitudes = solicitudesModel::create($data);
+
+                //         $solicitudId = $solicitudes->ID_FORMULARIO_SOLICITUDES;
+
+                //         $response['code'] = 1;
+                //         $response['solicitud'] = $solicitudes;
+                //     } else {
+                //         $solicitudes = solicitudesModel::find($request->ID_FORMULARIO_SOLICITUDES);
+                //         if (!$solicitudes) {
+                //             throw new Exception("Solicitud no encontrada");
+                //         }
+                //         $solicitudes->update($request->except('FOTO_USUARIO'));
+                //         $solicitudId = $solicitudes->ID_FORMULARIO_SOLICITUDES;
+                //         $response['code'] = 1;
+                //         $response['solicitud'] = 'Actualizada';
+                //     }
+
+                //     if ($request->has('VERIFICADO_EN')) {
+                //         foreach ($request->VERIFICADO_EN as $index => $verificadoEn) {
+                //             $archivoPath = verificacionsolicitudModel::where('SOLICITUD_ID', $solicitudId)
+                //                 ->where('VERIFICADO_EN', $verificadoEn)
+                //                 ->value('EVIDENCIA_VERIFICACION');
+
+                //             if ($request->hasFile("EVIDENCIA_VERIFICACION.$index")) {
+                //                 $baseFolder = "ventas/solicitudes/$solicitudId/";
+
+                //                 if (!Storage::exists($baseFolder)) {
+                //                     Storage::makeDirectory($baseFolder);
+                //                 }
+
+                //                 $archivoFile = $request->file("EVIDENCIA_VERIFICACION.$index");
+
+                //                 if ($archivoPath && Storage::exists($archivoPath)) {
+                //                     Storage::delete($archivoPath);
+                //                 }
+
+                //                 $archivoFileName = $archivoFile->getClientOriginalName();
+                //                 $archivoFile->storeAs($baseFolder, $archivoFileName);
+
+                //                 $archivoPath = $baseFolder . $archivoFileName;
+                //             }
+
+                //             verificacionsolicitudModel::updateOrCreate(
+                //                 [
+                //                     'SOLICITUD_ID' => $solicitudId,
+                //                     'VERIFICADO_EN' => $verificadoEn,
+                //                 ],
+                //                 [
+                //                     'EVIDENCIA_VERIFICACION' => $archivoPath,
+                //                 ]
+                //             );
+                //         }
+                //     }
+
+                //     DB::commit();
+                //     return response()->json($response);
+                //     break;
+
+
                 case 1:
                     if ($request->ID_FORMULARIO_SOLICITUDES == 0) {
-                        $ultimoRegistro = solicitudesModel::orderBy('ID_FORMULARIO_SOLICITUDES', 'desc')->first();
-                        $numeroIncremental = $ultimoRegistro ? intval(substr($ultimoRegistro->NO_SOLICITUD, 0, 3)) + 1 : 1;
+
+                     
                         $anioActual = date('Y');
                         $ultimoDigitoAnio = substr($anioActual, -2);
+
+                        $ultimoRegistro = solicitudesModel::where('NO_SOLICITUD', 'like', '%-' . $ultimoDigitoAnio)
+                            ->orderBy('ID_FORMULARIO_SOLICITUDES', 'desc')
+                            ->first();
+
+                        $numeroIncremental = $ultimoRegistro
+                            ? intval(substr($ultimoRegistro->NO_SOLICITUD, 0, 3)) + 1
+                            : 1;
+
                         $noSolicitud = str_pad($numeroIncremental, 3, '0', STR_PAD_LEFT) . '-' . $ultimoDigitoAnio;
 
                         $request->merge(['NO_SOLICITUD' => $noSolicitud]);
@@ -250,23 +336,28 @@ class solicitudesController extends Controller
                         $response['code'] = 1;
                         $response['solicitud'] = $solicitudes;
                     } else {
+
                         $solicitudes = solicitudesModel::find($request->ID_FORMULARIO_SOLICITUDES);
                         if (!$solicitudes) {
                             throw new Exception("Solicitud no encontrada");
                         }
+
                         $solicitudes->update($request->except('FOTO_USUARIO'));
                         $solicitudId = $solicitudes->ID_FORMULARIO_SOLICITUDES;
+
                         $response['code'] = 1;
                         $response['solicitud'] = 'Actualizada';
                     }
 
                     if ($request->has('VERIFICADO_EN')) {
                         foreach ($request->VERIFICADO_EN as $index => $verificadoEn) {
+
                             $archivoPath = verificacionsolicitudModel::where('SOLICITUD_ID', $solicitudId)
                                 ->where('VERIFICADO_EN', $verificadoEn)
                                 ->value('EVIDENCIA_VERIFICACION');
 
                             if ($request->hasFile("EVIDENCIA_VERIFICACION.$index")) {
+
                                 $baseFolder = "ventas/solicitudes/$solicitudId/";
 
                                 if (!Storage::exists($baseFolder)) {
@@ -300,6 +391,8 @@ class solicitudesController extends Controller
                     DB::commit();
                     return response()->json($response);
                     break;
+
+
 
                 default:
                     DB::rollback();
