@@ -451,11 +451,11 @@
 
 
     @if(request()->is('clientes'))
-    <script src="/assets/js_sitio/clientes/clientes.js?v=1.8"></script>
+    <script src="/assets/js_sitio/clientes/clientes.js?v=1.9"></script>
     @endif
 
     @if(request()->is('solicitudes'))
-    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.12"></script>
+    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.13"></script>
     @endif
 
     @if(request()->is('ofertas'))
@@ -499,7 +499,7 @@
     @endif
 
     @if(request()->is('solicitudeshistorial'))
-    <script src="/assets/js_sitio/solicitudes/solictudeshistorial.js"></script>
+    <script src="/assets/js_sitio/solicitudes/solictudeshistorial.js?v=1.0"></script>
     @endif
 
 </body>
