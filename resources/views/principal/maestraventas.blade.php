@@ -17,6 +17,7 @@
     <!-- Bootstrap v.5.2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
 
+
     <!-- Datatables 1.13.1  v.5.2 -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
 
@@ -31,8 +32,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.default.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
-    <link rel="stylesheet" href="assets/css/estilos.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+
+    <!-- Select 2 -->
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="assets/css/estilos.css">
 
     <style>
         .dropdown-menu {
@@ -269,11 +276,33 @@
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Clientes</span><span class="d-none d-lg-inline">Clientes</span>
                         </a>
                     </li>
-                    <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/solicitudes') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-pencil-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Solicitudes</span><span class="d-none d-lg-inline">Solicitudes</span>
-                        </a>
-                    </li>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#"
+                                style="color: #fff; font-weight: bold; text-decoration: none;"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-pencil-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Solicitudes</span>
+                                <span class="d-none d-lg-inline">Solicitudes</span>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/solicitudes') }}">
+                                        Actual
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/solicitudeshistorial') }}">
+                                        Historial
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/ofertas') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-currency-dollar" style="margin-right: 5px;"></i> <span class="d-lg-none">Ofertas/Cotizaciones</span><span class="d-none d-lg-inline">Ofertas/Cotizaciones</span>
@@ -386,20 +415,18 @@
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
     <!-- datepicker -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
-
-
-
     <!-- Dropify -->
-
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
-
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=5.7"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
+    <!-- Select 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 
     <script>
@@ -428,7 +455,7 @@
     @endif
 
     @if(request()->is('solicitudes'))
-    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.11"></script>
+    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.12"></script>
     @endif
 
     @if(request()->is('ofertas'))
@@ -469,6 +496,10 @@
 
     @if(request()->is('catalogoclientestitulos'))
     <script src="/assets/js_sitio/solicitudes/catalogos/catalogotitulosclientes.js"></script>
+    @endif
+
+    @if(request()->is('solicitudeshistorial'))
+    <script src="/assets/js_sitio/solicitudes/solictudeshistorial.js"></script>
     @endif
 
 </body>
