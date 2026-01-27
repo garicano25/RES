@@ -92,7 +92,12 @@ class DenyRoleGlobalMiddleware
         'bitacoramrhistorial',
         'requisiciondepersonalsolicitud',
         'mantenimientoequipos',
-        'mantenimientoinstalaciones'
+        'mantenimientoinstalaciones',
+        'ordencomprahistorial',
+        'solicitudeshistorial',
+        'ofertashistorial',
+        'confirmacionhistorial',
+        'ordentrabajohistorial'
         
     ];
 

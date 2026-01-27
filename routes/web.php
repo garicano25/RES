@@ -97,6 +97,8 @@ use App\Http\Controllers\confirmacion\confirmacionhistorialController;
 // CONTROLADORES DE ORDEN DE TRABAJO
 use App\Http\Controllers\ordentrabajo\otController;
 use App\Http\Controllers\ordentrabajo\othistorialController ;
+use App\Http\Controllers\ordentrabajo\pdfotController;
+
 
 
 // CONTROLADORES DE MR
@@ -134,6 +136,8 @@ use App\Http\Controllers\pdf\pdfController;
 use App\Http\Controllers\requisicongr\grController;
 use App\Http\Controllers\requisicongr\vobogrusuarioController;
 use App\Http\Controllers\requisicongr\pdfgrController;
+use App\Http\Controllers\requisicongr\grhistorialController;
+
 
 // CONTROLADORES DE LA PAGINA WEB
 use App\Http\Controllers\paginaweb\mensajespaginaController;
@@ -667,6 +671,10 @@ Route::get('/Tablaordentrabajo', [otController::class, 'Tablaordentrabajo']);
 Route::post('/otSave', [otController::class, 'store']);
 Route::post('/obtenerDatosOferta', [otController::class, 'obtenerDatosOferta']);
 
+
+// routes/web.php
+Route::get('/descargarOT/{id}', [pdfotController::class, 'descargarOT']);
+
 //==============================================   ORDEN DE TRABAJO HISTORIAL  ============================================== 
 Route::get('/ordentrabajohistorial', [othistorialController::class, 'index']);
 Route::get('/Tablaordentrabajohistorial', [othistorialController::class, 'Tablaordentrabajohistorial']);
@@ -835,6 +843,11 @@ Route::get('/vobogrusuario', [vobogrusuarioController::class, 'index']);
 Route::get('/TablaVoBoGRusuarios', [vobogrusuarioController::class, 'TablaVoBoGRusuarios']);
 Route::get('/ConsultarProductosVoBo/{idGR}', [vobogrusuarioController::class, 'ConsultarProductosVoBo']);
 Route::post('/guardarVoBoUsuario', [vobogrusuarioController::class, 'guardarVoBoUsuario']);
+
+//==============================================    RECEPCION DE BIENES Y/O SERVICIOS - GR HISTORIAL ============================================== 
+
+Route::get('/bitacoragrhistorial', [grhistorialController::class, 'index']);
+Route::get('/Tablabitacoragrhistorial', [grhistorialController::class, 'Tablabitacoragrhistorial']);
 
 //==============================================   CATALOGOS PROVEEDORES  ============================================== 
 Route::get('/catalogosproveedores', function () {return view('compras.Catalogos.catalogo_generales');});

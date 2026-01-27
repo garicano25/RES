@@ -18,6 +18,10 @@ Modalorden.addEventListener('hidden.bs.modal', event => {
  
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;    
+
+    
+    $('#miModal_OT .modal-title').html('Orden de trabajo');
+
 })
 
 const Modallinea = document.getElementById('modalMotivoRevision') 
@@ -240,6 +244,7 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
         },
         { data: 'FECHA_EMISION' },
         { data: 'MOTIVO_REVISION_ORDENCOMPRA' },
+        { data: 'DESCARGA_OT' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
@@ -251,14 +256,23 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
         { targets: 3, title: 'N° de OT', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Fecha OT', className: 'all text-center nombre-column' },
         { targets: 5, title: 'Motivo de la revisión', className: 'text-center' },
-        { targets: 6, title: 'Editar', className: 'all text-center' },
-        { targets: 7, title: 'Visualizar', className: 'all text-center' },
-        { targets: 8, title: 'Activo', className: 'all text-center' }
+        { targets: 6, title: 'Descargar OT', className: 'all text-center' },
+        { targets: 7, title: 'Editar', className: 'all text-center' },
+        { targets: 8, title: 'Visualizar', className: 'all text-center' },
+        { targets: 9, title: 'Activo', className: 'all text-center' }
     ],
      infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;
     },
 });
+
+
+$(document).on('click', '.pdf-button', function () {
+    const id = $(this).data('id');
+    window.open(`/descargarOT/${id}`, '_blank');
+});
+
+
 
 $("#Tablaordentrabajo tbody").on("click", ".ver-revisiones", function () {
     let btn = $(this);
@@ -499,6 +513,13 @@ $(document).ready(function() {
             if (data.VERIFICADO_POR) {
                 $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
         }
+
+
+    $(".materialesdiv").empty();
+    cargarMaterialesDesdeJSON(data.SERVICIOS_JSON);
+        
+    $('#miModal_OT .modal-title').html(data.NO_ORDEN_CONFIRMACION);
+
 
     });
 

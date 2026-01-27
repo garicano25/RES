@@ -17,7 +17,11 @@ Modalorden.addEventListener('hidden.bs.modal', event => {
 
  
     document.querySelector('.materialesdiv').innerHTML = '';
-    contadorMateriales = 1;    
+    contadorMateriales = 1;   
+    
+        
+    $('#miModal_OT .modal-title').html('Orden de trabajo');
+
 })
 
 const Modallinea = document.getElementById('modalMotivoRevision') 
@@ -521,6 +525,13 @@ $(document).ready(function() {
             if (data.VERIFICADO_POR) {
                 $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
         }
+
+
+    $(".materialesdiv").empty();
+    cargarMaterialesDesdeJSON(data.SERVICIOS_JSON);
+
+    $('#miModal_OT .modal-title').html(data.NO_ORDEN_CONFIRMACION);
+        
 
     });
 

@@ -242,6 +242,9 @@ class otController extends Controller
                     $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
                     $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-ot" data-id="' . $value->ID_FORMULARIO_ORDEN . '"><i class="bi bi-filetype-pdf"></i></button>';
                 }
+
+                $value->DESCARGA_OT = '<button class="btn btn-danger btn-custom rounded-pill pdf-button " data-id="' . $value->ID_FORMULARIO_ORDEN . '" title="Descargar"><i class="bi bi-filetype-pdf"></i></button>';
+
             }
 
             return response()->json([
