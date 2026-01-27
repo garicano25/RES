@@ -779,15 +779,15 @@
     @endif
 
     @if(request()->is('recempleado'))
-    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.19"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.20"></script>
     @endif
 
     @if(request()->is('solicitudesvobo'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.10"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadovobo.js?v=1.11"></script>
     @endif
 
     @if(request()->is('solicitudesaprobaciones'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.17"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.18"></script>
     @endif
 
     @if(request()->is('requisiciondepersonalsolicitud'))

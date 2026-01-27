@@ -319,8 +319,7 @@
                                 <div class="col-4">
                                     <label class="form-label">Fecha Vo.Bo*</label>
                                     <div class="input-group">
-                                        <!-- <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_SOLICITUD" name="FECHA_VISTO_SOLICITUD" style="pointer-events:none; background-color:#e9ecef;" required> -->
-                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_SOLICITUD" name="FECHA_VISTO_SOLICITUD" required>
+                                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VISTO_SOLICITUD" name="FECHA_VISTO_SOLICITUD" style="pointer-events:none; background-color:#e9ecef;" required>
                                         <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                     </div>
                                 </div>

@@ -346,7 +346,6 @@
 
                         <div class="col-12 mt-3">
                             <div class="row">
-
                                 <div class="col-8">
                                     <label for="APROBACION">Quien aprueba</label>
                                     <input type="text" class="form-control" id="QUIEN_APROBACION" name="QUIEN_APROBACION" readonly required>
@@ -360,6 +359,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
 
 
