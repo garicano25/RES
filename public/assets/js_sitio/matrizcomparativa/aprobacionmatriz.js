@@ -138,7 +138,7 @@ var Tablamatirzaprobada = $("#Tablamatirzaprobada").DataTable({
         },
         dataSrc: 'data'
     },
-    order: [[0, 'asc']], 
+    order: [[0, 'desc']], 
     columns: [
         { 
             data: null,

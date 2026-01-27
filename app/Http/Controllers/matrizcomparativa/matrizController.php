@@ -30,7 +30,7 @@ class matrizController extends Controller
         $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
         $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
 
-        return view('compras.ordencompra.matrizcomparativa', compact('proveedoresOficiales', 'proveedoresTemporales'));
+        return view('compras.matrizcomparativa.matrizcomparativa', compact('proveedoresOficiales', 'proveedoresTemporales'));
 
     }
 

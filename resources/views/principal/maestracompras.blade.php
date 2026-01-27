@@ -383,7 +383,7 @@
                                     {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/matrizcomparativa') }}">
-                                            Matriz comparativa de cotizaciones
+                                            Matriz comparativa
                                         </a>
                                     </li>
                                     {{-- Solo Superusuario y Administrador --}}
@@ -641,11 +641,11 @@
     @endif
 
     @if(request()->is('matrizcomparativa'))
-    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.4"></script>
+    <script src="/assets/js_sitio/matrizcomparativa/matrizcomparativa.js?v=1.5"></script>
     @endif
 
     @if(request()->is('matrizaprobacion'))
-    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.4"></script>
+    <script src="/assets/js_sitio/matrizcomparativa/aprobacionmatriz.js?v=1.5"></script>
     @endif
 
     @if(request()->is('catalogoverificacionproveedor'))

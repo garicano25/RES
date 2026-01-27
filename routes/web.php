@@ -604,7 +604,7 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////VENTAS///////////////////////////////////////////////////////7
+////////////////////////////////////////////////////////////////VENTAS////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //==============================================   CLIENTES ============================================== 
@@ -671,7 +671,6 @@ Route::post('/obtenerDatosOferta', [otController::class, 'obtenerDatosOferta']);
 Route::get('/ordentrabajohistorial', [othistorialController::class, 'index']);
 Route::get('/Tablaordentrabajohistorial', [othistorialController::class, 'Tablaordentrabajohistorial']);
 
-
 //==============================================   CATALOGOS SOLICITUDES ============================================== 
 
 Route::get('/catalogosolicitudes', function () {return view('ventas.Catalogos.catalogos_solicitud');});
@@ -721,9 +720,6 @@ Route::get('/catalogoverificacion', function () {return view('ventas.Catalogos.c
 Route::post('/InformacionSave', [catalagoverificacioninformacionController::class, 'store']);
 Route::get('/InformacionDelete', [catalagoverificacioninformacionController::class, 'store']);
 Route::get('/Tablaverificacioncliente', [catalagoverificacioninformacionController::class, 'Tablaverificacioncliente']);
-
-
-
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
