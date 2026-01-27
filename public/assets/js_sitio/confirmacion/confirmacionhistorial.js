@@ -100,7 +100,7 @@ $("#guardarCONFIRMACION").click(function (e) {
                         alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
                         $('#miModal_CONFIRMACION').modal('hide');
                         document.getElementById('formularioCONFIRMACION').reset();
-                        Tablaconfirmacion.ajax.reload();
+                        Tablaconfirmacionhistorial.ajax.reload();
                     }
                 );
             }, 1);
@@ -137,7 +137,7 @@ $("#guardarCONFIRMACION").click(function (e) {
                             alertMensaje('success', 'Información editada correctamente', 'Información guardada');
                             $('#miModal_CONFIRMACION').modal('hide');
                             document.getElementById('formularioCONFIRMACION').reset();
-                            Tablaconfirmacion.ajax.reload();
+                            Tablaconfirmacionhistorial.ajax.reload();
                         }, 300);  
                     }
                 );
@@ -187,8 +187,8 @@ $(document).ready(function () {
 
 
 
-var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
-        language: {
+var Tablaconfirmacionhistorial = $("#Tablaconfirmacionhistorial").DataTable({
+       language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
     scrollX: true,
@@ -208,16 +208,20 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablaconfirmacion',
+        url: '/Tablaconfirmacionhistorial',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablaconfirmacion.columns.adjust().draw();
+            Tablaconfirmacionhistorial.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        data: function (d) {
+            d.FECHA_INICIO = $('#FECHA_INICIO').val();
+            d.FECHA_FIN = $('#FECHA_FIN').val();
         },
         dataSrc: 'data'
     },
@@ -246,7 +250,6 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
         },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
@@ -256,16 +259,34 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
         { targets: 4, title: 'Evidencias ', className: 'all text-center' },
         { targets: 5, title: 'Editar', className: 'all text-center' },
         { targets: 6, title: 'Visualizar', className: 'all text-center' },
-        { targets: 7, title: 'Activo', className: 'all text-center' }
     ],
       infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;
     },
 });
 
-$('#Tablaconfirmacion').on('click', '.ver-archivo-aceptacion', function () {
+$('#btnFiltrarMR').on('click', function () {
+
+    const inicio = $('#FECHA_INICIO').val();
+    const fin = $('#FECHA_FIN').val();
+
+    if ((inicio && !fin) || (!inicio && fin)) {
+        alertToast('Seleccione ambas fechas o deje ambas vacías', 'warning', 2000);
+        return;
+    }
+
+    if (inicio && fin && inicio > fin) {
+        alertToast('La fecha inicio no puede ser mayor a la fecha fin', 'error', 2000);
+        return;
+    }
+
+    Tablaconfirmacionhistorial.ajax.reload();
+});
+
+
+$('#Tablaconfirmacionhistorial').on('click', '.ver-archivo-aceptacion', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaconfirmacion.row(tr);
+    var row = Tablaconfirmacionhistorial.row(tr);
     var id = $(this).data('id');
 
     if (!id) {
@@ -281,9 +302,9 @@ $('#Tablaconfirmacion').on('click', '.ver-archivo-aceptacion', function () {
 
 
 
-$('#Tablaconfirmacion').on('click', '.ver-archivo-evidencia', function () {
+$('#Tablaconfirmacionhistorial').on('click', '.ver-archivo-evidencia', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaconfirmacion.row(tr);
+    var row = Tablaconfirmacionhistorial.row(tr);
     var id = $(this).data('id');
 
     if (!id) {
@@ -481,9 +502,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-$('#Tablaconfirmacion tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablaconfirmacionhistorial tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaconfirmacion.row(tr);
+    var row = Tablaconfirmacionhistorial.row(tr);
     ID_FORMULARIO_CONFRIMACION = row.data().ID_FORMULARIO_CONFRIMACION;
 
     editarDatoTabla(row.data(), 'formularioCONFIRMACION', 'miModal_CONFIRMACION', 1);
@@ -558,9 +579,9 @@ $('#Tablaconfirmacion tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    $('#Tablaconfirmacion tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablaconfirmacionhistorial tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablaconfirmacion.row(tr);
+        var row = Tablaconfirmacionhistorial.row(tr);
         
         hacerSoloLectura2(row.data(), '#miModal_CONFIRMACION');
 
@@ -631,9 +652,9 @@ $(document).ready(function() {
 });
 
 
-$('#Tablaconfirmacion tbody').on('change', 'td>label>input.ELIMINAR', function () {
+$('#Tablaconfirmacionhistorial tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaconfirmacion.row(tr);
+    var row = Tablaconfirmacionhistorial.row(tr);
 
     var estado = $(this).is(':checked') ? 1 : 0;
 
@@ -643,7 +664,7 @@ $('#Tablaconfirmacion tbody').on('change', 'td>label>input.ELIMINAR', function (
         ID_FORMULARIO_CONFRIMACION: row.data().ID_FORMULARIO_CONFRIMACION
     };
 
-    eliminarDatoTabla(data, [Tablaconfirmacion], 'confirmacionDelete');
+    eliminarDatoTabla(data, [Tablaconfirmacionhistorial], 'confirmacionDelete');
 });
 
 

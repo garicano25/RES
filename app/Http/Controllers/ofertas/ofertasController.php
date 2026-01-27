@@ -46,25 +46,35 @@ class ofertasController extends Controller
     public function Tablaofertas()
     {
         try {
+            $fechaInicio = Carbon::now('America/Mexico_City')->startOfYear()->toDateString();
+            $fechaFin    = Carbon::now('America/Mexico_City')->endOfYear()->toDateString();
+
             $tabla = ofertasModel::select(
-                'formulario_ofertas.*', 
+                'formulario_ofertas.*',
                 'formulario_solicitudes.NO_SOLICITUD',
                 'formulario_solicitudes.NOMBRE_COMERCIAL_SOLICITUD',
                 'formulario_ofertas.SOLICITUD_ID'
             )
-            ->leftJoin(
-                'formulario_solicitudes',
-                'formulario_ofertas.SOLICITUD_ID',
-                '=',
-                'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
-            )
-            ->whereRaw('formulario_ofertas.ID_FORMULARIO_OFERTAS IN (
-                SELECT MAX(ID_FORMULARIO_OFERTAS) 
-                FROM formulario_ofertas 
+                ->leftJoin(
+                    'formulario_solicitudes',
+                    'formulario_ofertas.SOLICITUD_ID',
+                    '=',
+                    'formulario_solicitudes.ID_FORMULARIO_SOLICITUDES'
+                )
+                ->whereRaw('formulario_ofertas.ID_FORMULARIO_OFERTAS IN (
+                SELECT MAX(ID_FORMULARIO_OFERTAS)
+                FROM formulario_ofertas
                 GROUP BY SUBSTRING_INDEX(NO_OFERTA, "-Rev", 1)
             )')
-            ->get();
-    
+
+                ->whereBetween(
+                    DB::raw('DATE(formulario_ofertas.FECHA_OFERTA)'),
+                    [$fechaInicio, $fechaFin]
+                )
+
+                ->get();
+
+
             $solicitudesAceptadas = solicitudesModel::select(
                 'ID_FORMULARIO_SOLICITUDES',
                 'NO_SOLICITUD',

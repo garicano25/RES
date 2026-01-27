@@ -87,13 +87,17 @@ use App\Http\Controllers\solicitudes\solicitudeshistorialController;
 
 // CONTROLADORES DE OFERTAS 
 use App\Http\Controllers\ofertas\ofertasController;
+use App\Http\Controllers\ofertas\ofertashistorialController;
 
 // CONTROLADORES DE CONFIRMACION 
 use App\Http\Controllers\confirmacion\confirmacionController;
 use App\Http\Controllers\confirmacion\catalagoverificacioninformacionController;
+use App\Http\Controllers\confirmacion\confirmacionhistorialController;
 
 // CONTROLADORES DE ORDEN DE TRABAJO
 use App\Http\Controllers\ordentrabajo\otController;
+use App\Http\Controllers\ordentrabajo\othistorialController ;
+
 
 // CONTROLADORES DE MR
 use App\Http\Controllers\requisicionmaterial\mrController;
@@ -604,7 +608,6 @@ Route::get('/mostrardocumenadeudo/{id}', [desvinculacionController::class, 'most
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //==============================================   CLIENTES ============================================== 
-
 Route::get('/clientes', [clientesController::class, 'index']);
 Route::post('/ClienteSave', [clientesController::class, 'store']);
 Route::get('/Tablaclientesventas', [clientesController::class, 'Tablaclientesventas']);
@@ -617,8 +620,6 @@ Route::get('/mostraractaclienteventas/{id}', [clientesController::class, 'mostra
 
 
 //==============================================  SOLICITUDES  ============================================== 
-
-
 Route::get('/solicitudes', [solicitudesController::class, 'index']);
 Route::post('/solicitudSave', [solicitudesController::class, 'store']);
 Route::get('/Tablasolicitudes', [solicitudesController::class, 'Tablasolicitudes']);
@@ -643,9 +644,11 @@ Route::post('/actualizarEstatusOferta', [ofertasController::class, 'actualizarEs
 Route::get('/mostrarcotizacion/{id}', [ofertasController::class, 'mostrarcotizacion']);
 Route::get('/mostrarterminos/{id}', [ofertasController::class, 'mostrarterminos']);
 
+//==============================================  OFERTAS/COTIZACION  HISTORIAL ============================================== 
+Route::get('/ofertashistorial', [ofertashistorialController::class, 'index']);
+Route::get('/Tablaofertashistorial', [ofertashistorialController::class, 'Tablaofertashistorial']);
 
 //==============================================   CONFIRMACION DEL SERVICIO  ============================================== 
-
 Route::get('/confirmacion', [confirmacionController::class, 'index']);
 Route::get('/Tablaconfirmacion', [confirmacionController::class, 'Tablaconfirmacion']);
 Route::post('/ContratacionSave', [confirmacionController::class, 'store']);
@@ -653,13 +656,20 @@ Route::get('/mostraraceptacion/{id}', [confirmacionController::class, 'mostrarac
 Route::get('/confirmacionDelete', [confirmacionController::class, 'store']);
 Route::get('/mostrarevidencias/{id}', [confirmacionController::class, 'mostrarevidencias']);
 
-//==============================================   ORDEN DE TRABAJO  ============================================== 
+//==============================================   CONFIRMACION DEL SERVICIO HISTORIAL  ============================================== 
+Route::get('/confirmacionhistorial', [confirmacionhistorialController::class, 'index']);
+Route::get('/Tablaconfirmacionhistorial', [confirmacionhistorialController::class, 'Tablaconfirmacionhistorial']);
 
+
+//==============================================   ORDEN DE TRABAJO  ============================================== 
 Route::get('/ordentrabajo', [otController::class, 'index']);
 Route::get('/Tablaordentrabajo', [otController::class, 'Tablaordentrabajo']);
 Route::post('/otSave', [otController::class, 'store']);
 Route::post('/obtenerDatosOferta', [otController::class, 'obtenerDatosOferta']);
 
+//==============================================   ORDEN DE TRABAJO HISTORIAL  ============================================== 
+Route::get('/ordentrabajohistorial', [othistorialController::class, 'index']);
+Route::get('/Tablaordentrabajohistorial', [othistorialController::class, 'Tablaordentrabajohistorial']);
 
 
 //==============================================   CATALOGOS SOLICITUDES ============================================== 

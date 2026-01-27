@@ -10,7 +10,6 @@
     </ol>
 
 
-
     <div class="row justify-content-center align-items-end mb-4">
         <div class="col-md-3 text-center">
             <label>Fecha inicio</label>
@@ -42,7 +41,6 @@
             </button>
         </div>
     </div>
-
 
     
     <div class="card-body">

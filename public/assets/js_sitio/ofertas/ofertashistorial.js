@@ -118,7 +118,7 @@ $("#guardarOFERTA").click(function (e) {
                         alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                         $('#miModal_OFERTAS').modal('hide')
                         document.getElementById('formularioOFERTAS').reset();
-                    Tablaofertas.ajax.reload()
+                    Tablaofertashistorial.ajax.reload()
                     $('#NO_SOLICITUD')[0].selectize.clear();
 
     
@@ -153,7 +153,7 @@ $("#guardarOFERTA").click(function (e) {
                         alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                         $('#miModal_OFERTAS').modal('hide')
                         document.getElementById('formularioOFERTAS').reset();
-                        Tablaofertas.ajax.reload()
+                        Tablaofertashistorial.ajax.reload()
                             $('#NO_SOLICITUD')[0].selectize.clear();
 
     
@@ -173,8 +173,8 @@ $("#guardarOFERTA").click(function (e) {
 
 
 
-var Tablaofertas = $("#Tablaofertas").DataTable({
-        language: {
+var Tablaofertashistorial = $("#Tablaofertashistorial").DataTable({
+       language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
     scrollX: true,
@@ -192,10 +192,14 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
     ajax: {
         dataType: 'json',
         method: 'GET',
-        url: '/Tablaofertas',
+        url: '/Tablaofertashistorial',
         beforeSend: function () { mostrarCarga(); },
-        complete: function () { Tablaofertas.columns.adjust().draw(); ocultarCarga(); },
+        complete: function () { Tablaofertashistorial.columns.adjust().draw(); ocultarCarga(); },
         error: function (jqXHR, textStatus, errorThrown) { alertErrorAJAX(jqXHR, textStatus, errorThrown); },
+        data: function (d) {
+            d.FECHA_INICIO = $('#FECHA_INICIO').val();
+            d.FECHA_FIN = $('#FECHA_FIN').val();
+        },
         dataSrc: 'data'
     },
     order: [[0, 'asc']], 
@@ -253,7 +257,6 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'text-center' },
@@ -267,17 +270,35 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         { targets: 8, title: 'Términos y condiciones', className: 'text-center' },
         { targets: 9, title: 'Editar', className: 'text-center' },
         { targets: 10, title: 'Visualizar', className: 'text-center' },
-        { targets: 11, title: 'Activo', className: 'text-center' }
     ],
      infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;
     },
 });
 
-$("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
+$('#btnFiltrarMR').on('click', function () {
+
+    const inicio = $('#FECHA_INICIO').val();
+    const fin = $('#FECHA_FIN').val();
+
+    if ((inicio && !fin) || (!inicio && fin)) {
+        alertToast('Seleccione ambas fechas o deje ambas vacías', 'warning', 2000);
+        return;
+    }
+
+    if (inicio && fin && inicio > fin) {
+        alertToast('La fecha inicio no puede ser mayor a la fecha fin', 'error', 2000);
+        return;
+    }
+
+    Tablaofertashistorial.ajax.reload();
+});
+
+
+$("#Tablaofertashistorial tbody").on("click", ".ver-revisiones", function () {
     let btn = $(this);
     let tr = btn.closest("tr");
-    let row = Tablaofertas.row(tr);
+    let row = Tablaofertashistorial.row(tr);
     let revisiones = btn.data("revisiones");
 
     if (!revisiones.length) {
@@ -337,9 +358,9 @@ $("#Tablaofertas tbody").on("click", ".ver-revisiones", function () {
 
 
 
-$('#Tablaofertas').on('click', '.ver-archivo-cotizacion', function () {
+$('#Tablaofertashistorial').on('click', '.ver-archivo-cotizacion', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaofertas.row(tr);
+    var row = Tablaofertashistorial.row(tr);
     var id = $(this).data('id');
 
     if (!id) {
@@ -353,9 +374,9 @@ $('#Tablaofertas').on('click', '.ver-archivo-cotizacion', function () {
     abrirModal(url, nombreDocumento);
 });
 
-$('#Tablaofertas').on('click', '.ver-archivo-terminos', function () {
+$('#Tablaofertashistorial').on('click', '.ver-archivo-terminos', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaofertas.row(tr);
+    var row = Tablaofertashistorial.row(tr);
     var id = $(this).data('id');
 
     if (!id) {
@@ -416,9 +437,9 @@ function estaExpirada(fechaOferta, diasValidacion) {
 
 
 
-$('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablaofertashistorial tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaofertas.row(tr);
+    var row = Tablaofertashistorial.row(tr);
 
     var rowData;
     if (row.data()) {
@@ -490,9 +511,9 @@ $('#Tablaofertas tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    $('#Tablaofertas tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablaofertashistorial tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablaofertas.row(tr);
+        var row = Tablaofertashistorial.row(tr);
         
         hacerSoloLectura2(row.data(), '#miModal_OFERTAS');
 
@@ -572,9 +593,9 @@ $(document).ready(function() {
 
 
 
-$('#Tablaofertas tbody').on('change', 'td>label>input.ELIMINAR', function () {
+$('#Tablaofertashistorial tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaofertas.row(tr);
+    var row = Tablaofertashistorial.row(tr);
 
     var estado = $(this).is(':checked') ? 1 : 0;
 
@@ -584,12 +605,12 @@ $('#Tablaofertas tbody').on('change', 'td>label>input.ELIMINAR', function () {
         ID_FORMULARIO_OFERTAS: row.data().ID_FORMULARIO_OFERTAS
     };
 
-    eliminarDatoTabla(data, [Tablaofertas], 'ofertaDelete');
+    eliminarDatoTabla(data, [Tablaofertashistorial], 'ofertaDelete');
 });
 
 
 
-$('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
+$('#Tablaofertashistorial tbody').on('change', '.ESTATUS_OFERTA', function () {
     const selectedValue = $(this).val(); 
     const solicitudId = $(this).data('id'); 
     const csrfToken = $('meta[name="csrf-token"]').attr('content'); 
@@ -633,7 +654,7 @@ $('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
                                 'El estatus y el motivo fueron actualizados correctamente.',
                                 'success'
                             ).then(() => {
-                                Tablaofertas.ajax.reload(); 
+                                Tablaofertashistorial.ajax.reload(); 
                             });
                         } else {
                             Swal.fire('Error', response.message, 'error');
@@ -673,7 +694,7 @@ $('#Tablaofertas tbody').on('change', '.ESTATUS_OFERTA', function () {
                                 'El estatus fue actualizado correctamente.',
                                 'success'
                             ).then(() => {
-                                Tablaofertas.ajax.reload();
+                                Tablaofertashistorial.ajax.reload();
                             });
                         } else {
                             Swal.fire('Error', response.message, 'error');
@@ -914,7 +935,7 @@ $("#confirmarMotivoRevision").click(function () {
                     "Se ha generado una nueva versión de la oferta.",
                     "success"
                 ).then(() => {
-                    Tablaofertas.ajax.reload(); 
+                    Tablaofertashistorial.ajax.reload(); 
                 });
 
             } else {

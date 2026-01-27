@@ -135,7 +135,7 @@ $("#guardarOT").click(function (e) {
                         alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                             $('#miModal_OT').modal('hide')
                         document.getElementById('formularioOT').reset();
-                        Tablaordentrabajo.ajax.reload()
+                        Tablaordentrabajohistorial.ajax.reload()
 
                     })
                     
@@ -171,7 +171,7 @@ $("#guardarOT").click(function (e) {
                             alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                             $('#miModal_OT').modal('hide')
                             document.getElementById('formularioOT').reset();
-                            Tablaordentrabajo.ajax.reload()
+                            Tablaordentrabajohistorial.ajax.reload()
 
 
                         }, 300);  
@@ -186,8 +186,8 @@ $("#guardarOT").click(function (e) {
     
 });
 
-var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
-         language: {
+var Tablaordentrabajohistorial = $("#Tablaordentrabajohistorial").DataTable({
+    language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
     scrollX: true,
@@ -207,16 +207,20 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablaordentrabajo',
+        url: '/Tablaordentrabajohistorial',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablaordentrabajo.columns.adjust().draw();
+            Tablaordentrabajohistorial.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        data: function (d) {
+            d.FECHA_INICIO = $('#FECHA_INICIO').val();
+            d.FECHA_FIN = $('#FECHA_FIN').val();
         },
         dataSrc: 'data'
     },
@@ -260,10 +264,28 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
     },
 });
 
-$("#Tablaordentrabajo tbody").on("click", ".ver-revisiones", function () {
+$('#btnFiltrarMR').on('click', function () {
+
+    const inicio = $('#FECHA_INICIO').val();
+    const fin = $('#FECHA_FIN').val();
+
+    if ((inicio && !fin) || (!inicio && fin)) {
+        alertToast('Seleccione ambas fechas o deje ambas vacías', 'warning', 2000);
+        return;
+    }
+
+    if (inicio && fin && inicio > fin) {
+        alertToast('La fecha inicio no puede ser mayor a la fecha fin', 'error', 2000);
+        return;
+    }
+
+    Tablaordentrabajohistorial.ajax.reload();
+});
+
+$("#Tablaordentrabajohistorial tbody").on("click", ".ver-revisiones", function () {
     let btn = $(this);
     let tr = btn.closest("tr");
-    let row = Tablaordentrabajo.row(tr);
+    let row = Tablaordentrabajohistorial.row(tr);
     let revisiones = btn.data("revisiones");
 
     if (!revisiones.length) {
@@ -316,9 +338,9 @@ $("#Tablaordentrabajo tbody").on("click", ".ver-revisiones", function () {
 });
 
 
-// $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
+// $('#Tablaordentrabajohistorial tbody').on('click', 'td>button.EDITAR', function () {
 //     var tr = $(this).closest('tr');
-//     var row = Tablaordentrabajo.row(tr);
+//     var row = Tablaordentrabajohistorial.row(tr);
 //     var data = row.data();
 
 //     ID_FORMULARIO_ORDEN = data.ID_FORMULARIO_ORDEN;
@@ -376,9 +398,9 @@ $("#Tablaordentrabajo tbody").on("click", ".ver-revisiones", function () {
 
 // });
 
-$('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablaordentrabajohistorial tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablaordentrabajo.row(tr);
+    var row = Tablaordentrabajohistorial.row(tr);
 
     var data;
     if (row.data()) {
@@ -449,9 +471,9 @@ $('#Tablaordentrabajo tbody').on('click', 'td>button.EDITAR', function () {
 });
 
 $(document).ready(function() {
-    $('#Tablaordentrabajo tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablaordentrabajohistorial tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablaordentrabajo.row(tr);
+        var row = Tablaordentrabajohistorial.row(tr);
         var data = row.data();
             
         hacerSoloLectura(row.data(), '#miModal_OT');
@@ -793,7 +815,7 @@ $("#confirmarMotivoRevision").click(function () {
                     "Se ha generado una nueva versión de la oferta.",
                     "success"
                 ).then(() => {
-                    Tablaordentrabajo.ajax.reload(); 
+                    Tablaordentrabajohistorial.ajax.reload(); 
                 });
 
             } else {

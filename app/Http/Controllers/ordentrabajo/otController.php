@@ -155,61 +155,22 @@ class otController extends Controller
         ]);
     }
 
-
-
-
-    // public function Tablaordentrabajo()
-    // {
-    //     try {
-    //         $tabla = otModel::select('formulario_ordentrabajo.*')->get();
-
-    //         foreach ($tabla as $value) {
-    //             $ofertaIds = !empty($value->OFERTA_ID) ? json_decode($value->OFERTA_ID, true) : [];
-
-    //             if (!empty($ofertaIds)) {
-    //                 $ofertas = DB::table('formulario_ofertas')
-    //                     ->whereIn('ID_FORMULARIO_OFERTAS', $ofertaIds)
-    //                     ->pluck('NO_OFERTA')
-    //                     ->toArray();
-
-    //                 $value->NO_OFERTA = implode(', ', $ofertas);
-
-    //                 $value->NO_OFERTA_HTML = implode('<br>', $ofertas);
-    //             } else {
-    //                 $value->NO_OFERTA = "Sin oferta";
-    //                 $value->NO_OFERTA_HTML = "Sin oferta";
-    //             }
-
-    //             if ($value->ACTIVO == 0) {
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ORDEN . '"><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-    //                 $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" disabled><i class="bi  bi-ban"></i></button>';
-    //             } else {
-    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ORDEN . '" checked><span class="slider round"></span></label>';
-    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-    //                 $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
-    //             }
-    //         }
-
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj'  => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'msj'  => 'Error ' . $e->getMessage(),
-    //             'data' => 0
-    //         ]);
-    //     }
-    // }
-
-
     public function Tablaordentrabajo()
     {
         try {
+
+            $fechaInicio = Carbon::now('America/Mexico_City')->startOfYear()->toDateString();
+            $fechaFin    = Carbon::now('America/Mexico_City')->endOfYear()->toDateString();
+
             $tabla = otModel::select('formulario_ordentrabajo.*')
+                ->where(function ($query) use ($fechaInicio, $fechaFin) {
+                    $query->whereBetween(
+                        DB::raw('DATE(formulario_ordentrabajo.FECHA_EMISION)'),
+                        [$fechaInicio, $fechaFin]
+                    )
+                        ->orWhereNull('formulario_ordentrabajo.FECHA_EMISION')
+                        ->orWhere('formulario_ordentrabajo.FECHA_EMISION', '');
+                })
                 ->whereRaw('formulario_ordentrabajo.ID_FORMULARIO_ORDEN IN (
                 SELECT MAX(ID_FORMULARIO_ORDEN)
                 FROM formulario_ordentrabajo
@@ -231,6 +192,7 @@ class otController extends Controller
                     ->get();
 
                 $ofertaIds = !empty($value->OFERTA_ID) ? json_decode($value->OFERTA_ID, true) : [];
+
                 if (!empty($ofertaIds)) {
                     $ofertas = DB::table('formulario_ofertas')
                         ->whereIn('ID_FORMULARIO_OFERTAS', $ofertaIds)
@@ -240,12 +202,14 @@ class otController extends Controller
                     $value->NO_OFERTA = implode(', ', $ofertas);
                     $value->NO_OFERTA_HTML = implode('<br>', $ofertas);
                 } else {
-                    $value->NO_OFERTA = "Sin oferta";
-                    $value->NO_OFERTA_HTML = "Sin oferta";
+                    $value->NO_OFERTA = 'Sin oferta';
+                    $value->NO_OFERTA_HTML = 'Sin oferta';
                 }
 
                 foreach ($revisiones as $rev) {
+
                     $ofertaIdsRev = !empty($rev->OFERTA_ID) ? json_decode($rev->OFERTA_ID, true) : [];
+
                     if (!empty($ofertaIdsRev)) {
                         $ofertasRev = DB::table('formulario_ofertas')
                             ->whereIn('ID_FORMULARIO_OFERTAS', $ofertaIdsRev)
@@ -255,30 +219,28 @@ class otController extends Controller
                         $rev->NO_OFERTA = implode(', ', $ofertasRev);
                         $rev->NO_OFERTA_HTML = implode('<br>', $ofertasRev);
                     } else {
-                        $rev->NO_OFERTA = "Sin oferta";
-                        $rev->NO_OFERTA_HTML = "Sin oferta";
+                        $rev->NO_OFERTA = 'Sin oferta';
+                        $rev->NO_OFERTA_HTML = 'Sin oferta';
                     }
 
-                    $rev->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-cotizacion" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-                    $value->BTN_TERMINOS = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-terminos" data-id="' . $value->ID_FORMULARIO_OFERTAS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-                    $rev->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '"><i class="bi bi-pencil-square"></i></button>';
+                    $rev->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $rev->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $rev->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $rev->ID_FORMULARIO_OFERTAS . '" checked><span class="slider round"></span></label>';
+                    $rev->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $rev->ID_FORMULARIO_ORDEN . '" checked><span class="slider round"></span></label>';
                 }
 
                 $value->REVISIONES = $revisiones->isEmpty() ? [] : $revisiones;
 
                 if ($value->ACTIVO == 0) {
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill" disabled><i class="bi bi-ban"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ORDEN . '"><span class="slider round"></span></label>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" disabled><i class="bi  bi-ban"></i></button>';
+                    $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill" disabled><i class="bi bi-ban"></i></button>';
                 } else {
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ORDEN . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_CORREO = '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-ot" data-id="' . $value->ID_FORMULARIO_ORDEN . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-ot" data-id="' . $value->ID_FORMULARIO_ORDEN . '"><i class="bi bi-filetype-pdf"></i></button>';
                 }
             }
 
@@ -294,77 +256,11 @@ class otController extends Controller
         }
     }
 
-
-
-
-
     public function store(Request $request)
     {
         try {
             switch (intval($request->api)) {
-                // case 1:
-                //     if ($request->ID_FORMULARIO_ORDEN == 0) {
-                //         DB::statement('ALTER TABLE formulario_ordentrabajo AUTO_INCREMENT=1;');
-
-                //         $year = date('y');
-                //         $lastOrder = otModel::where('NO_ORDEN_CONFIRMACION', 'like', "RESOT-$year-%")
-                //             ->orderBy('NO_ORDEN_CONFIRMACION', 'desc')
-                //             ->first();
-
-                //         $nextNumber = $lastOrder ? intval(substr($lastOrder->NO_ORDEN_CONFIRMACION, -3)) + 1 : 1;
-                //         $noOrdenConfirmacion = sprintf("RESOT-%s-%03d", $year, $nextNumber);
-
-                //         $ofertaArray = $request->filled('OFERTA_ID') ? json_encode($request->input('OFERTA_ID')) : json_encode([]);
-                //         $serviciosJson = $request->filled('SERVICIOS_JSON') ? $request->input('SERVICIOS_JSON') : json_encode([]);
-
-                //         $ordenes = otModel::create(array_merge($request->all(), [
-                //             'NO_ORDEN_CONFIRMACION' => $noOrdenConfirmacion,
-                //             'OFERTA_ID' => $ofertaArray,
-                //             'SERVICIOS_JSON' => $serviciosJson,
-                //             'REVISION_ORDENCOMPRA' => 0,
-                //             'MOTIVO_REVISION_ORDENCOMPRA' => 'Revisión inicial'
-                //         ]));
-
-
-
-                //         return response()->json([
-                //             'code' => 1,
-                //             'orden' => $ordenes
-                //         ]);
-                //     } else {
-                //         if (isset($request->ELIMINAR)) {
-                //             $estado = $request->ELIMINAR == 1 ? 0 : 1;
-                //             otModel::where('ID_FORMULARIO_ORDEN', $request->ID_FORMULARIO_ORDEN)
-                //                 ->update(['ACTIVO' => $estado]);
-
-                //             return response()->json([
-                //                 'code' => 1,
-                //                 'orden' => $estado == 0 ? 'Desactivada' : 'Activada'
-                //             ]);
-                //         } else {
-                //             $ordenes = otModel::find($request->ID_FORMULARIO_ORDEN);
-                //             if ($ordenes) {
-                //                 $ofertaArray = $request->filled('OFERTA_ID') ? json_encode($request->input('OFERTA_ID')) : json_encode([]);
-                //                 $serviciosJson = $request->filled('SERVICIOS_JSON') ? $request->input('SERVICIOS_JSON') : json_encode([]);
-
-                //                 $ordenes->update(array_merge($request->all(), [
-                //                     'OFERTA_ID' => $ofertaArray,
-                //                     'SERVICIOS_JSON' => $serviciosJson
-                //                 ]));
-
-                //                 return response()->json([
-                //                     'code' => 1,
-                //                     'orden' => 'Actualizada'
-                //                 ]);
-                //             }
-                //             return response()->json([
-                //                 'code' => 0,
-                //                 'msj' => 'Orden no encontrada'
-                //             ], 404);
-                //         }
-                //     }
-                //     break;
-
+               
                 case 1:
                     if ($request->ID_FORMULARIO_ORDEN == 0) {
                         DB::statement('ALTER TABLE formulario_ordentrabajo AUTO_INCREMENT=1;');

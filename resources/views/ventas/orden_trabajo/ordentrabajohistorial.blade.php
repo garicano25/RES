@@ -5,18 +5,44 @@
 
 
 <div class="contenedor-contenido">
-    <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-patch-check-fill"></i>&nbsp;Orden de trabajo </h3>
-
-        <button type="button" class="btn btn-light waves-effect waves-light " id="NUEVA_OT" style="margin-left: auto;">
-            Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-        </button>
-
+    <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-patch-check-fill"></i>&nbsp;Orden de trabajo - Historial </h3>
     </ol>
 
-    <div class="card-body">
-        <table id="Tablaordentrabajo" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+    <div class="row justify-content-center align-items-end mb-4">
+        <div class="col-md-3 text-center">
+            <label>Fecha inicio</label>
+            <div class="input-group">
+                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO">
+                <span class="input-group-text">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <label>Fecha fin</label>
+            <div class="input-group">
+                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FIN">
+                <span class="input-group-text">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2 d-flex">
+            <button
+                type="button"
+                class="btn btn-primary btn-circle"
+                id="btnFiltrarMR"
+                title="Filtrar"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top">
+                <i class="bi bi-filter"></i>
+            </button>
+        </div>
+    </div>
 
+    <div class="card-body">
+        <table id="Tablaordentrabajohistorial" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
         </table>
     </div>
 

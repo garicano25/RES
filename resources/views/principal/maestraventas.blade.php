@@ -303,21 +303,84 @@
                         </li>
                     </ul>
 
-                    <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/ofertas') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-currency-dollar" style="margin-right: 5px;"></i> <span class="d-lg-none">Ofertas/Cotizaciones</span><span class="d-none d-lg-inline">Ofertas/Cotizaciones</span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/confirmacion') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Confirmación del servicio </span><span class="d-none d-lg-inline">Confirmación del servicio </span>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link BOTON" href="{{ url('/ordentrabajo') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Orden de trabajo - OT</span><span class="d-none d-lg-inline">Orden de trabajo - OT</span>
-                        </a>
-                    </li>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#"
+                                style="color: #fff; font-weight: bold; text-decoration: none;"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-currency-dollar" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Ofertas/Cotizaciones</span>
+                                <span class="d-none d-lg-inline">Ofertas/Cotizaciones</span>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/ofertas') }}">
+                                        Actual
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/ofertashistorial') }}">
+                                        Historial
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#"
+                                style="color: #fff; font-weight: bold; text-decoration: none;"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Confirmación del servicio </span>
+                                <span class="d-none d-lg-inline">Confirmación del servicio </span>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/confirmacion') }}">
+                                        Actual
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/confirmacionhistorial') }}">
+                                        Historial
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#"
+                                style="color: #fff; font-weight: bold; text-decoration: none;"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i>
+                                <span class="d-lg-none">Orden de trabajo - OT</span>
+                                <span class="d-none d-lg-inline">Orden de trabajo - OT</span>
+                            </a>
+                            <ul class="dropdown-menu">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/ordentrabajo') }}">
+                                        Actual
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/ordentrabajohistorial') }}">
+                                        Historial
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-aspect-ratio-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">General </span><span class="d-none d-lg-inline">General </span>
@@ -459,11 +522,11 @@
     @endif
 
     @if(request()->is('ofertas'))
-    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.5"></script>
+    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.6"></script>
     @endif
 
     @if(request()->is('confirmacion'))
-    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.3"></script>
+    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.4"></script>
     @endif
 
     @if(request()->is('catalogomediocontacto'))
@@ -479,7 +542,7 @@
     @endif
 
     @if(request()->is('ordentrabajo'))
-    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.3"></script>
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.4"></script>
     @endif
 
     @if(request()->is('catalogolineanegocio'))
@@ -502,6 +565,17 @@
     <script src="/assets/js_sitio/solicitudes/solictudeshistorial.js?v=1.0"></script>
     @endif
 
+    @if(request()->is('ofertashistorial'))
+    <script src="/assets/js_sitio/ofertas/ofertashistorial.js"></script>
+    @endif
+
+    @if(request()->is('confirmacionhistorial'))
+    <script src="/assets/js_sitio/confirmacion/confirmacionhistorial.js"></script>
+    @endif
+
+    @if(request()->is('ordentrabajohistorial'))
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajohistorial.js"></script>
+    @endif
 </body>
 
 </body>
