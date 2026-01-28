@@ -17,9 +17,9 @@ Modalorden.addEventListener('hidden.bs.modal', event => {
 
  
     document.querySelector('.materialesdiv').innerHTML = '';
-    contadorMateriales = 1;   
+    contadorMateriales = 1;    
+
     
-        
     $('#miModal_OT .modal-title').html('Orden de trabajo');
 
 })
@@ -44,7 +44,7 @@ $(document).ready(function () {
     var opcionesOriginales = JSON.parse(JSON.stringify(selectize.options));
     var idsOriginales = Object.keys(opcionesOriginales);
 
-                modoEdicion = false;
+     modoEdicion = false;
 
 
     $("#NUEVA_OT").click(function (e) {
@@ -191,7 +191,7 @@ $("#guardarOT").click(function (e) {
 });
 
 var Tablaordentrabajohistorial = $("#Tablaordentrabajohistorial").DataTable({
-    language: {
+         language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
     scrollX: true,
@@ -222,7 +222,7 @@ var Tablaordentrabajohistorial = $("#Tablaordentrabajohistorial").DataTable({
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
-        data: function (d) {
+         data: function (d) {
             d.FECHA_INICIO = $('#FECHA_INICIO').val();
             d.FECHA_FIN = $('#FECHA_FIN').val();
         },
@@ -250,7 +250,6 @@ var Tablaordentrabajohistorial = $("#Tablaordentrabajohistorial").DataTable({
         { data: 'MOTIVO_REVISION_ORDENCOMPRA' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -261,12 +260,12 @@ var Tablaordentrabajohistorial = $("#Tablaordentrabajohistorial").DataTable({
         { targets: 5, title: 'Motivo de la revisión', className: 'text-center' },
         { targets: 6, title: 'Editar', className: 'all text-center' },
         { targets: 7, title: 'Visualizar', className: 'all text-center' },
-        { targets: 8, title: 'Activo', className: 'all text-center' }
     ],
      infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;
     },
 });
+
 
 $('#btnFiltrarMR').on('click', function () {
 
@@ -285,6 +284,7 @@ $('#btnFiltrarMR').on('click', function () {
 
     Tablaordentrabajohistorial.ajax.reload();
 });
+
 
 $("#Tablaordentrabajohistorial tbody").on("click", ".ver-revisiones", function () {
     let btn = $(this);
@@ -342,65 +342,6 @@ $("#Tablaordentrabajohistorial tbody").on("click", ".ver-revisiones", function (
 });
 
 
-// $('#Tablaordentrabajohistorial tbody').on('click', 'td>button.EDITAR', function () {
-//     var tr = $(this).closest('tr');
-//     var row = Tablaordentrabajohistorial.row(tr);
-//     var data = row.data();
-
-//     ID_FORMULARIO_ORDEN = data.ID_FORMULARIO_ORDEN;
-
-//     editarDatoTabla(data, 'formularioOT', 'miModal_OT', 1);
-
-//         modoEdicion = true;
-
-//         datosEditados = {
-//             direccion: data.DIRECCION_SERVICIO,
-//             solicita: data.PERSONA_SOLICITA,
-//             contacto: {
-//                 nombre: data.CONTACTO,
-//                 telefono: data.TELEFONO_CONTACTO,
-//                 celular: data.CELULAR_CONTACTO,
-//                 correo: data.EMAIL_CONTACTO
-//             }
-//         };
-
-//         var selectize = $('#OFERTA_ID')[0].selectize;
-//         selectize.clear();
-//         selectize.setValue([]);
-
-//         if (data.OFERTA_ID) {
-//             try {
-//                 let ofertaArray = JSON.parse(data.OFERTA_ID);
-//                 let nombres = data.NO_OFERTA.split(',').map(e => e.trim());
-
-//                 if (Array.isArray(ofertaArray)) {
-//                     ofertaArray.forEach((id, index) => {
-//                         if (!selectize.options[id]) {
-//                             selectize.addOption({ value: id, text: nombres[index] || id });
-//                         }
-//                     });
-
-//                     selectize.setValue(ofertaArray); 
-//                 }
-//             } catch (error) {
-//                 console.error("Error al parsear OFERTA_ID:", error);
-//             }
-//         }
-
-//         if (data.VERIFICADO_POR) {
-//             $("#VERIFICADO_POR").val(data.VERIFICADO_POR);
-//     }
-    
-
-//     $(".materialesdiv").empty();
-
-//         cargarMaterialesDesdeJSON(row.data().SERVICIOS_JSON);
-
-    
-   
-
-
-// });
 
 $('#Tablaordentrabajohistorial tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -419,8 +360,6 @@ $('#Tablaordentrabajohistorial tbody').on('click', 'td>button.EDITAR', function 
         document.getElementById('crearREVISION').style.display = 'none';
         document.getElementById('guardarOT').style.display = 'none';
     }
-
-  
 
     ID_FORMULARIO_ORDEN = data.ID_FORMULARIO_ORDEN;
 
@@ -473,6 +412,8 @@ $('#Tablaordentrabajohistorial tbody').on('click', 'td>button.EDITAR', function 
 
     $("#miModal_OT").modal("show");
 });
+
+
 
 $(document).ready(function() {
     $('#Tablaordentrabajohistorial tbody').on('click', 'td>button.VISUALIZAR', function () {
@@ -529,9 +470,9 @@ $(document).ready(function() {
 
     $(".materialesdiv").empty();
     cargarMaterialesDesdeJSON(data.SERVICIOS_JSON);
-
-    $('#miModal_OT .modal-title').html(data.NO_ORDEN_CONFIRMACION);
         
+    $('#miModal_OT .modal-title').html(data.NO_ORDEN_CONFIRMACION);
+
 
     });
 
@@ -636,24 +577,14 @@ $(document).ready(function () {
                         $('#DIRECCION_CONFIRMACION').val('');
                     }
 
-                    // const selectorSolicita = $('#SELECTOR_SOLICITA');
-                    // selectorSolicita.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
-                    // data.contactos.forEach(function (nombre) {
-                    //     selectorSolicita.append('<option value="' + nombre + '">' + nombre + '</option>');
-                    // });
-                    // if (!modoEdicion) {
-                    //     $('#PERSONA_SOLICITA_CONFIRMACION').val('');
-                    // }
-
-
                  const selectorSolicita = $('#SELECTOR_SOLICITA');
-                selectorSolicita.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
+                    selectorSolicita.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
 
-                data.contactos_completos.forEach(function (contacto) {
-                    const titulo = contacto.titulo ? contacto.titulo + '. ' : '';
-                    const textoCompleto = titulo + contacto.nombre;
-                    selectorSolicita.append('<option value="' + textoCompleto + '">' + textoCompleto + '</option>');
-                });
+                    data.contactos_completos.forEach(function (contacto) {
+                        const titulo = contacto.titulo ? contacto.titulo + '. ' : '';
+                        const textoCompleto = titulo + contacto.nombre;
+                        selectorSolicita.append('<option value="' + textoCompleto + '">' + textoCompleto + '</option>');
+                    });
 
                 if (!modoEdicion) {
                     $('#PERSONA_SOLICITA_CONFIRMACION').val('');
@@ -664,10 +595,19 @@ $(document).ready(function () {
                     const selectorContacto = $('#SELECTOR_CONTACTO');
                     selectorContacto.empty().append('<option value="" disabled selected>Seleccione una opción</option>');
                     window.contactosMap = {};
+
                     data.contactos_completos.forEach(function (contacto) {
-                        selectorContacto.append('<option value="' + contacto.nombre + '">' + contacto.nombre + '</option>');
+
+                        const titulo = contacto.titulo ? contacto.titulo + '. ' : '';
+                        const textoCompleto = titulo + contacto.nombre;
+
+                        selectorContacto.append(
+                            '<option value="' + contacto.nombre + '">' + textoCompleto + '</option>'
+                        );
+
                         window.contactosMap[contacto.nombre] = contacto;
                     });
+
 
                     if (!modoEdicion) {
                         $('#TITULO_CONFIRMACION').val('');
@@ -679,6 +619,8 @@ $(document).ready(function () {
 
                     modoEdicion = false;
                 },
+
+                
                 error: function (xhr) {
                     console.error(xhr.responseText);
                     alert('Hubo un error al obtener los datos.');
@@ -716,6 +658,9 @@ $(document).ready(function () {
         }
     });
 });
+
+
+
 
 function cargarMaterialesDesdeJSON(serviciosJson) {
     const contenedorMateriales = document.querySelector('.materialesdiv');

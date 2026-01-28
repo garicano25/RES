@@ -444,6 +444,10 @@ var Tablasolicitudeshistorial = $("#Tablasolicitudeshistorial").DataTable({
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
         },
+         data: function (d) {
+            d.FECHA_INICIO = $('#FECHA_INICIO').val();
+            d.FECHA_FIN = $('#FECHA_FIN').val();
+        },
         dataSrc: 'data'
     },
     order: [[0, 'asc']], 
@@ -542,6 +546,26 @@ var Tablasolicitudeshistorial = $("#Tablasolicitudeshistorial").DataTable({
         { targets: 8, title: 'Visualizar', className: 'all text-center' },
     ]
 });
+
+
+$('#btnFiltrarMR').on('click', function () {
+
+    const inicio = $('#FECHA_INICIO').val();
+    const fin = $('#FECHA_FIN').val();
+
+    if ((inicio && !fin) || (!inicio && fin)) {
+        alertToast('Seleccione ambas fechas o deje ambas vacías', 'warning', 2000);
+        return;
+    }
+
+    if (inicio && fin && inicio > fin) {
+        alertToast('La fecha inicio no puede ser mayor a la fecha fin', 'error', 2000);
+        return;
+    }
+
+    Tablasolicitudeshistorial.ajax.reload();
+});
+
 
 $('#Tablasolicitudeshistorial tbody').on('change', '.ESTATUS_SOLICITUD', function () {
     const selectedValue = $(this).val(); 

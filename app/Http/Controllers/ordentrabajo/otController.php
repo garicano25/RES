@@ -82,62 +82,54 @@ class otController extends Controller
                 'fs.NOMBRE_COMERCIAL_SOLICITUD',
                 'fs.RFC_SOLICITUD',
                 'cg.NOMBRE_GIRO as GIRO_EMPRESA',
-                'fc.DIRECCIONES_JSON', 
-                'fc.CONTACTOS_JSON'   
+                'fs.DIRECCION_SOLICITUDES', 
+                'fc.CONTACTOS_JSON'
             )
             ->whereIn('fo.ID_FORMULARIO_OFERTAS', $ofertaIds)
             ->get();
 
+       
         $razonesSociales = $datos->pluck('RAZON_SOCIAL_SOLICITUD')->unique()->values();
-        $comerciales = $datos->pluck('NOMBRE_COMERCIAL_SOLICITUD')->unique()->values();
-        $rfcs = $datos->pluck('RFC_SOLICITUD')->unique()->values();
-        $giros = $datos->pluck('GIRO_EMPRESA')->unique()->values();
+        $comerciales     = $datos->pluck('NOMBRE_COMERCIAL_SOLICITUD')->unique()->values();
+        $rfcs            = $datos->pluck('RFC_SOLICITUD')->unique()->values();
+        $giros           = $datos->pluck('GIRO_EMPRESA')->unique()->values();
 
-        $direcciones = [];
-        foreach ($datos as $registro) {
-            if ($registro->DIRECCIONES_JSON) {
-                $json = json_decode($registro->DIRECCIONES_JSON, true);
-                if (is_array($json)) {
-                    foreach ($json as $dir) {
-                        $direccionFormateada = trim(
-                            $dir['NOMBRE_VIALIDAD_DOMICILIO'] . ' No. ' . $dir['NUMERO_EXTERIOR_DOMICILIO'] .
-                                (empty($dir['NOMBRE_COLONIA_DOMICILIO']) ? '' : ', Colonia ' . $dir['NOMBRE_COLONIA_DOMICILIO']) .
-                                ', C.P. ' . $dir['CODIGO_POSTAL_DOMICILIO'] .
-                                ', ' . $dir['NOMBRE_LOCALIDAD_DOMICILIO'] .
-                                ', ' . $dir['NOMBRE_ENTIDAD_DOMICILIO'] .
-                                ', ' . $dir['PAIS_CONTRATACION_DOMICILIO']
-                        );
-                        $direcciones[] = $direccionFormateada;
-                    }
-                }
-            }
-        }
-        $direcciones = array_values(array_unique($direcciones));
+      
+        $direcciones = $datos
+            ->pluck('DIRECCION_SOLICITUDES')
+            ->filter(fn($dir) => !empty(trim($dir)))
+            ->unique()
+            ->values();
 
-        $contactosNombres = [];
+   
+        $contactosNombres   = [];
         $contactosCompletos = [];
 
         foreach ($datos as $registro) {
             if ($registro->CONTACTOS_JSON) {
                 $json = json_decode($registro->CONTACTOS_JSON, true);
+
                 if (is_array($json)) {
                     foreach ($json as $contacto) {
                         $nombre = trim($contacto['CONTACTO_SOLICITUD'] ?? '');
-                        if ($nombre !== '') {
-                            if (!in_array($nombre, $contactosNombres)) {
-                                $contactosNombres[] = $nombre;
-                            }
-                            if (!isset($contactosCompletos[$nombre])) {
-                                $contactosCompletos[$nombre] = [
-                                    'nombre' => $nombre,
-                                    'titulo' => $contacto['TITULO_CONTACTO_SOLICITUD'] ?? '',
-                                    'telefono' => $contacto['TELEFONO_SOLICITUD'] ?? '',
-                                    'celular' => $contacto['CELULAR_SOLICITUD'] ?? '',
-                                    'correo' => $contacto['CORREO_SOLICITUD'] ?? '',
-                                    'cargo' => $contacto['CARGO_SOLICITUD'] ?? '',
-                                    'titulo' => $contacto['TITULO_CONTACTO_SOLICITUD'] ?? ''
-                                ];
-                            }
+
+                        if ($nombre === '') {
+                            continue;
+                        }
+
+                        if (!in_array($nombre, $contactosNombres)) {
+                            $contactosNombres[] = $nombre;
+                        }
+
+                        if (!isset($contactosCompletos[$nombre])) {
+                            $contactosCompletos[$nombre] = [
+                                'nombre'   => $nombre,
+                                'titulo'   => $contacto['TITULO_CONTACTO_SOLICITUD'] ?? '',
+                                'telefono' => $contacto['TELEFONO_SOLICITUD'] ?? '',
+                                'celular'  => $contacto['CELULAR_SOLICITUD'] ?? '',
+                                'correo'   => $contacto['CORREO_SOLICITUD'] ?? '',
+                                'cargo'    => $contacto['CARGO_SOLICITUD'] ?? ''
+                            ];
                         }
                     }
                 }
@@ -145,15 +137,17 @@ class otController extends Controller
         }
 
         return response()->json([
-            'razones' => $razonesSociales,
-            'comerciales' => $comerciales,
-            'rfcs' => $rfcs,
-            'giros' => $giros,
-            'direcciones' => $direcciones,
-            'contactos' => $contactosNombres,
-            'contactos_completos' => array_values($contactosCompletos)
+            'razones'              => $razonesSociales,
+            'comerciales'          => $comerciales,
+            'rfcs'                 => $rfcs,
+            'giros'                => $giros,
+            'direcciones'          => $direcciones,
+            'contactos'            => $contactosNombres,
+            'contactos_completos'  => array_values($contactosCompletos)
         ]);
     }
+
+
 
     public function Tablaordentrabajo()
     {

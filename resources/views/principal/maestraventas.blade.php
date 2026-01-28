@@ -542,7 +542,7 @@
     @endif
 
     @if(request()->is('ordentrabajo'))
-    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.5"></script>
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.6"></script>
     @endif
 
     @if(request()->is('catalogolineanegocio'))
@@ -562,7 +562,7 @@
     @endif
 
     @if(request()->is('solicitudeshistorial'))
-    <script src="/assets/js_sitio/solicitudes/solictudeshistorial.js?v=2.0"></script>
+    <script src="/assets/js_sitio/solicitudes/solictudeshistorial.js?v=3.0"></script>
     @endif
 
     @if(request()->is('ofertashistorial'))
@@ -574,7 +574,7 @@
     @endif
 
     @if(request()->is('ordentrabajohistorial'))
-    <script src="/assets/js_sitio/orden_trabajo/orden_trabajohistorial.js?v=1.0"></script>
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajohistorial.js?v=2.0"></script>
     @endif
 </body>
 
