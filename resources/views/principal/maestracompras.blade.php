@@ -449,10 +449,17 @@
                                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Almacenista']))
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/bitacoragr') }}">
-                                            Lista de recepción B.y.S
+                                            Actual
                                         </a>
                                     </li>
                                     <hr class="dropdown-divider">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/bitacoragrhistorial') }}">
+                                            Historial
+                                        </a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+
                                     @endif
                                     {{-- Opción visible para todos los usuarios autenticados --}}
                                     <li>
@@ -653,7 +660,7 @@
     @endif
 
     @if(request()->is('bitacoragr'))
-    <script src="/assets/js_sitio/requisiciongr/requisicongr.js?v=1.50"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisiciongr.js?v=1.52"></script>
     @endif
 
     @if(request()->is('vobogrusuario'))
@@ -664,6 +671,9 @@
     <script src="/assets/js_sitio/proveedor/listaproveedorescriticos.js?v=1.0"></script>
     @endif
 
+    @if(request()->is('bitacoragrhistorial'))
+    <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=2"></script>
+    @endif
 
 </body>
 

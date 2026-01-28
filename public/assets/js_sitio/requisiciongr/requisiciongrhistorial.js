@@ -17,7 +17,7 @@ modalgr.addEventListener('hidden.bs.modal', event => {
 
 
 
-var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
+var Tablabitacoragrhistorial = $("#Tablabitacoragrhistorial").DataTable({
    language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
@@ -36,16 +36,20 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
     ajax: {
         dataType: 'json',
         method: 'GET',
-        url: '/Tablabitacoragr',
+        url: '/Tablabitacoragrhistorial',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablabitacoragr.columns.adjust().draw();
+            Tablabitacoragrhistorial.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+         data: function (d) {
+            d.FECHA_INICIO = $('#FECHA_INICIO').val();
+            d.FECHA_FIN = $('#FECHA_FIN').val();
         },
         dataSrc: 'data'
     },
@@ -99,7 +103,7 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
     drawCallback: function () {
         const topScroll = document.querySelector('.tabla-scroll-top');
         const scrollInner = document.querySelector('.tabla-scroll-top .scroll-inner');
-        const table = document.querySelector('#Tablabitacoragr');
+        const table = document.querySelector('#Tablabitacoragrhistorial');
         const scrollBody = document.querySelector('.dataTables_scrollBody');
 
         if (!topScroll || !scrollInner || !table || !scrollBody) return;
@@ -126,6 +130,25 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
     }
 });
 
+$('#btnFiltrarMR').on('click', function () {
+
+    const inicio = $('#FECHA_INICIO').val();
+    const fin = $('#FECHA_FIN').val();
+
+    if ((inicio && !fin) || (!inicio && fin)) {
+        alertToast('Seleccione ambas fechas o deje ambas vacías', 'warning', 2000);
+        return;
+    }
+
+    if (inicio && fin && inicio > fin) {
+        alertToast('La fecha inicio no puede ser mayor a la fecha fin', 'error', 2000);
+        return;
+    }
+
+    Tablabitacoragrhistorial.ajax.reload();
+});
+
+
 $(document).on('click', '.btn-ver-mas-materiales', function() {
     let $btn = $(this);
     let $extra = $btn.siblings('.extra-materiales');
@@ -143,8 +166,8 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 
 
 
-$('#Tablabitacoragr tbody').on('click', 'button.btn-gr', function () {
-  var data = Tablabitacoragr.row($(this).parents('tr')).data();
+$('#Tablabitacoragrhistorial tbody').on('click', 'button.btn-gr', function () {
+  var data = Tablabitacoragrhistorial.row($(this).parents('tr')).data();
 
   let requestData = {
     NO_MR: data.NO_MR ?? '',
@@ -206,7 +229,6 @@ if (resp.existe) {
 
               <input type="hidden" class="form-control" value="${cab.GENEROGR_ID ?? ''}"  name="GENEROGR_ID">
 
-                  <!-- Cabecera -->
                   <div class="row mb-3">
                       <div class="col-md-3 mt-2">
                           <label>No. MR</label>
@@ -303,7 +325,6 @@ if (resp.existe) {
                           <label class="form-label"> Mandar a Vo.Bo usuario</label>
                               <select class="form-control" name="MANDAR_USUARIO_VOBO" >
                                   <option value="">Seleccione</option>
-                                      <option value="">Seleccione</option>
                                     <option value="Sí" ${cab.MANDAR_USUARIO_VOBO === "Sí" ? "selected" : ""}>Sí</option>
                                   <option value="No" ${cab.MANDAR_USUARIO_VOBO === "No" ? "selected" : ""}>No</option>
                           </select>
@@ -312,8 +333,7 @@ if (resp.existe) {
 
 
                   
-                  <!-- Mandar a VoBo y Parcial -->
-                  <div class="row mb-3">
+                   <div class="row mb-3">
                       <div class="col-md-6">
                           <label class="form-label"> Estado Vo.Bo usuario</label>
                           <select class="form-control" name="VO_BO_USUARIO">
@@ -653,8 +673,7 @@ if (resp.existe) {
                 contenedor.html('<div class="text-muted">No hay bienes o servicios</div>');
           }
           
-
-              $('#VISTOBOUSUARIO').hide();
+            $('#VISTOBOUSUARIO').hide();
 
         }
 
@@ -666,37 +685,33 @@ if (resp.existe) {
 
 
 function calcularTotales(bloque) {
-      let cantidad = parseFloat(bloque.find(".cantidad").val()) || 0;
-      let precioUnit = parseFloat(bloque.find(".precio_unitario").val()) || 0;
-
-    
-      let totalMr = cantidad * precioUnit;
+    let cantidad = parseFloat(bloque.find(".cantidad").val()) || 0;
+    let precioUnit = parseFloat(bloque.find(".precio_unitario").val()) || 0;
+  
+    let totalMr = cantidad * precioUnit;
       bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
       
     let aceptada = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
   
     let almacen = parseFloat(bloque.find(".cantidad_entraalmacen").val()) || 0;
 
+    let precioUnitGr = (almacen > 0) ? (totalMr / almacen) : 0;
+        bloque.find(".precio_unitario_gr").val(precioUnitGr.toFixed(2));
 
-      let precioUnitGr = (almacen > 0) ? (totalMr / almacen) : 0;
-      bloque.find(".precio_unitario_gr").val(precioUnitGr.toFixed(2));
+    let totalGr = almacen * precioUnitGr;
+        bloque.find(".precio_total_gr").val(totalGr.toFixed(2));
+    
+    if (cantidad !== aceptada) {
+        bloque.find(".comentario-diferencia").show();
+    } else {
+        bloque.find(".comentario-diferencia").hide();
+    }
 
-      let totalGr = almacen * precioUnitGr;
-      bloque.find(".precio_total_gr").val(totalGr.toFixed(2));
-  
-  
-      if (cantidad !== aceptada) {
-          bloque.find(".comentario-diferencia").show();
-      } else {
-          bloque.find(".comentario-diferencia").hide();
-  }
-  
-
-   if (cantidad !== almacen) {
-          bloque.find(".comentario-diferencia-almacen").show();
-      } else {
-          bloque.find(".comentario-diferencia-almacen").hide();
-      }
+    if (cantidad !== almacen) {
+        bloque.find(".comentario-diferencia-almacen").show();
+    } else {
+        bloque.find(".comentario-diferencia-almacen").hide();
+    }
 }
 
 
@@ -713,7 +728,6 @@ $('#btnGuardarGR').on('click', function () {
         formData = formData.concat($("#formulariorecepciongr").serializeArray());
     }
 
-    // Token CSRF
     formData.push({
         name: "_token",
         value: $('meta[name="csrf-token"]').attr('content')
@@ -749,7 +763,7 @@ $('#btnGuardarGR').on('click', function () {
                     if (resp.ok) {
                         Swal.fire('Éxito', 'GR guardada', 'success');
                         $('#modalGR').modal('hide');
-                        Tablabitacoragr.ajax.reload();
+                        Tablabitacoragrhistorial.ajax.reload();
                     } else {
                         Swal.fire('Error', resp.msg, 'error');
                     }
@@ -768,7 +782,6 @@ function crearBloqueDetalle(det, resp) {
     let bloque = $(`
           <div class="border rounded p-3 mb-3 bg-light">
                         <div class="row mb-2">
-
                          <div class="col-12 text-center">
                             <h5>Cantidad solicitada</h5>
                           </div>
@@ -793,11 +806,9 @@ function crearBloqueDetalle(det, resp) {
                             <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
                           </div>
                         </div>
-
                         <div class="col-12 text-center">
                           <h5>Cantidad recibida </h5>
                         </div>
-                        
                         <div class="row mb-2">
                           <div class="col-3 mt-2">
                             <label class="form-label">Cantidad Rechazada</label>
@@ -823,22 +834,15 @@ function crearBloqueDetalle(det, resp) {
                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
                           </div>
                         </div>
-                  
-
                          <div class="row mb-2">
                             <div class="col-3 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
                               <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]"   value="${det.CANTIDAD_ENTRA_ALMACEN ?? ''}">
                             </div>
-                       
-
                           <div class="col-3 mt-2">
                               <label class="form-label">U.M</label>
                               <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]"  value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}">
                             </div>
-
-
-
                         <div class="col-3 mt-2">
                             <label class="form-label">Tipo</label>
                             <select class="form-control" name="TIPO_BS[]">
@@ -847,7 +851,6 @@ function crearBloqueDetalle(det, resp) {
                               <option value="Servicio" ${det.TIPO_BS=="Servicio"?"selected":""}>Servicio</option>
                             </select>
                           </div>
-
                                <div class="col-3 mt-2">
                               <label class="form-label">El B o S es parcial</label>
                               <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" style="pointer-events:none; background-color:#e9ecef;">
@@ -855,22 +858,14 @@ function crearBloqueDetalle(det, resp) {
                               <option value="Sí" ${det.BIENS_PARCIAL=="Sí"?"selected":""}>Sí</option>
                               <option value="No" ${det.BIENS_PARCIAL=="No"?"selected":""}>No</option>
                             </select>
-
                             </div>
-
                           </div>
-
-
                         <div class="row mb-2 comentario-diferencia-almacen" style="display:${det.CANTIDAD != det.CANTIDAD_ENTRA_ALMACEN ? 'block' : 'none'};">
                           <div class="col-12 mt-2">
                                 <label class="form-label">Comentario por diferencia en cantidad que entra a almacén</label>
                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA_ALMACEN[]" rows="2">${det.COMENTARIO_DIFERENCIA_ALMACEN ?? ""}</textarea>
                           </div>
                         </div>
-
-
-                
-
                            <div class="row mb-2">
                              <div class="col-4 mt-2">
                             <label class="form-label">¿Está en inventario?</label>
@@ -905,11 +900,6 @@ function crearBloqueDetalle(det, resp) {
                             </div>
                           </div>
                           </div>
-
-
-
-
-                          
                           <div class="row mb-3">
                           <div class="col-12 text-center">
                             <h4>Vo.Bo usuario</h4>
@@ -936,15 +926,10 @@ function crearBloqueDetalle(det, resp) {
                               <option value="MAL_ESTADO" ${det.ESTADO_BS_USUARIO=="MAL_ESTADO"?"selected":""}>Mal estado</option>
                             </select>
                           </div>
-
-                              
-                     
                           <div class="col-3 mt-2">
                             <label class="form-label">Comentario estado usuario</label>
                             <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[]" rows="2">${det.COMENTARIO_ESTADO_USUARIO??""}</textarea>
                           </div>
-
-                          
                            <div class="col-2">
                             <label class="form-label">Vo. Bo</label>
                               <select class="form-control" name="VOBO_USUARIO_PRODUCTO[]">
@@ -953,26 +938,15 @@ function crearBloqueDetalle(det, resp) {
                                 <option value="No" ${det.VOBO_USUARIO_PRODUCTO=="No"?"selected":""}>No</option>
                             </select>
                           </div>
-
                           <div class="col-12 mt-2 comentario-rechazada" 
                               style="display:${det.VOBO_USUARIO_PRODUCTO=="No" ? "block" : "none"};">
                               <label class="form-label">Comentario de rechazo</label>
                               <textarea class="form-control" name="COMENTARIO_VO_RECHAZO[]" rows="2">${det.COMENTARIO_VO_RECHAZO ?? ""}</textarea>
                           </div>
-
-
                         </div>
-
-
-
-                        
-
-
-
                     </div>
     `);
 
-    // 🔹 Eventos
     calcularTotales(bloque);
 
     bloque.find(".cantidad_aceptada").on("input", function () {
@@ -982,17 +956,12 @@ function crearBloqueDetalle(det, resp) {
         bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
     });
 
-  
-  
-  
     bloque.find(".cantidad_entraalmacen").on("input", function () {
         calcularTotales(bloque);
         let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
         let almacen = parseFloat($(this).val()) || 0;
         bloque.find(".comentario-diferencia-almacen").toggle(cant !== almacen);
     });
-  
-  
   
     bloque.find(".en_inventario").on("change", function () {
         if ($(this).val() === "Sí") {
@@ -1021,7 +990,7 @@ function crearBloqueDetalle(det, resp) {
     });
   
   
-   bloque.find(".vobo-usuario").on("change", function () {
+    bloque.find(".vobo-usuario").on("change", function () {
         let selectVal = $(this).val();
         let comentarioDiv = bloque.find(".comentario-rechazada");
 
@@ -1032,12 +1001,12 @@ function crearBloqueDetalle(det, resp) {
             comentarioDiv.hide();
             comentarioDiv.find("textarea").removeAttr("required").val("");
         }
-   });
+    });
   
   
-  bloque.find(".cantidad_entraalmacen").on("input", function () {
-    calcularTotales(bloque);
-});
+    bloque.find(".cantidad_entraalmacen").on("input", function () {
+        calcularTotales(bloque);
+    });
   
   
 
@@ -1074,72 +1043,6 @@ $(document).on('change', '.gr_parcialjs', function () {
         });
     }
 });
-
-
-
-// $('#DescargarGR').on('click', function () {
-//     let idsGR = [];
-
-//     // 🟦 CASO 1: Múltiples GR (Tabs activos)
-//     if ($(".form-gr").length > 0) {
-//         // Solo la pestaña activa
-//         let activeTab = $(".tab-pane.show.active");
-//         if (activeTab.length > 0) {
-//             const id = activeTab.find('input[name="ID_GR[]"]').val();
-//             if (id && id !== "0") idsGR.push(id);
-//         } else {
-//             // Si no hay tab activo, tomar todas (por seguridad)
-//             $(".form-gr").each(function () {
-//                 const id = $(this).find('input[name="ID_GR[]"]').val();
-//                 if (id && id !== "0") idsGR.push(id);
-//             });
-//         }
-//     }
-//     // 🟦 CASO 2: GR normal (sin tabs)
-//     else {
-//         const id = $('#ID_GR').val();
-//         if (id && id !== "0") idsGR.push(id);
-//     }
-
-//     // 🟥 Validación
-//     if (idsGR.length === 0) {
-//         Swal.fire('Atención', 'No hay GR generadas para descargar.', 'warning');
-//         return;
-//     }
-
-//     Swal.fire({
-//         title: 'Descargar PDF de Recepción (GR)',
-//         text: idsGR.length > 1
-//             ? 'Se descargarán varios archivos (uno por cada GR parcial).'
-//             : 'Se descargará el PDF de la GR actual.',
-//         icon: 'question',
-//         showCancelButton: true,
-//         confirmButtonText: 'Sí, descargar',
-//         cancelButtonText: 'Cancelar'
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             Swal.fire({
-//                 title: 'Generando PDF...',
-//                 text: 'Por favor espere unos segundos',
-//                 allowOutsideClick: false,
-//                 allowEscapeKey: false,
-//                 didOpen: () => Swal.showLoading()
-//             });
-
-//             let delay = 700;
-//             idsGR.forEach((id, i) => {
-//                 setTimeout(() => {
-//                     const url = `/generarGRpdf/${id}`;
-//                     window.open(url, '_blank');
-//                 }, i * delay);
-//             });
-
-//             Swal.close();
-//         }
-//     });
-// });
-
-
 
 
 

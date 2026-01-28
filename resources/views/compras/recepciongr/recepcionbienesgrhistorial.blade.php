@@ -116,22 +116,51 @@
 <div class="contenedor-contenido">
 
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de Recepción de bienes y/o servicios - GR - Actual</h3>
+        <h3 style="color: #ffffff; margin: 0;">&nbsp; Bitácora de Recepción de bienes y/o servicios - GR - Historial</h3>
     </ol>
+
+    <div class="row justify-content-center align-items-end mb-4">
+        <div class="col-md-3 text-center">
+            <label>Fecha inicio</label>
+            <div class="input-group">
+                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_INICIO">
+                <span class="input-group-text">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <label>Fecha fin</label>
+            <div class="input-group">
+                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FIN">
+                <span class="input-group-text">
+                    <i class="bi bi-calendar-event"></i>
+                </span>
+            </div>
+        </div>
+        <div class="col-md-2 d-flex">
+            <button
+                type="button"
+                class="btn btn-primary btn-circle"
+                id="btnFiltrarMR"
+                title="Filtrar"
+                data-bs-toggle="tooltip"
+                data-bs-placement="top">
+                <i class="bi bi-filter"></i>
+            </button>
+        </div>
+    </div>
+
 
 
     <div class="card-body">
-
-
-
-
         <div class="tabla-scroll-wrapper">
             <div class="tabla-scroll-top">
                 <div class="scroll-inner"></div>
             </div>
             <div class="tabla-scroll-bottom">
                 <div class="table-responsive">
-                    <table id="Tablabitacoragr" class="table table-hover table-bordered text-center w-100" style="min-width: 3000px; table-layout: fixed;">
+                    <table id="Tablabitacoragrhistorial" class="table table-hover table-bordered text-center w-100" style="min-width: 3000px; table-layout: fixed;">
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">#</th>
@@ -144,8 +173,6 @@
                                 <th class="text-center">Bien o servicio</th>
                                 <th class="text-center">GR</th>
                                 <th class="text-center">No.GR</th>
-
-
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -324,9 +351,9 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-info" id="DescargarGR">Descarga GR</button>
+                    <!-- <button type="button" class="btn btn-info" id="DescargarGR">Descarga GR</button> -->
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button>
+                    <!-- <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button> -->
                 </div>
 
             </form>
@@ -341,7 +368,6 @@
 <script>
     window.tipoinventario = @json($tipoinventario);
     window.inventario = @json($inventario);
-
     window.proveedoresOficiales = @json($proveedoresOficiales);
     window.proveedoresTemporales = @json($proveedoresTemporales);
 </script>
