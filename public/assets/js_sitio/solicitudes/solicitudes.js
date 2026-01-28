@@ -3,9 +3,12 @@ ID_FORMULARIO_SOLICITUDES = 0
 
 
 
+
 $("#NUEVA_SOLICITUD").click(function (e) {
     e.preventDefault();
 
+
+    
     initSelectcliente();
 
        
@@ -18,10 +21,143 @@ $("#NUEVA_SOLICITUD").click(function (e) {
     $(".direcciondiv").empty();
     $(".verifiacionesdiv").empty();
 
+
+$('#RFC_SOLICITUD').on('change', function () {
+    const rfc = $(this).val();
+    cargarDatosClientePorRFC(rfc);
+});
+
+    
     $("#miModal_SOLICITUDES").modal("show");
 
 });
 
+
+
+function cargarDatosClientePorRFC(rfc) {
+
+    if (!rfc) {
+        document.getElementById('RAZON_SOCIAL_SOLICITUD').value = '';
+        document.getElementById('NOMBRE_COMERCIAL_SOLICITUD').value = '';
+        document.getElementById('REPRESENTANTE_LEGAL_SOLICITUD').value = '';
+        document.getElementById('GIRO_EMPRESA_SOLICITUD').value = '0';
+
+        document.getElementById('SELECTOR_DIRECCION').innerHTML =
+            '<option value="" disabled selected>Seleccione una opción</option>';
+        document.getElementById('DIRECCION_SOLICITUDES').value = '';
+
+        document.getElementById('SELECTOR_CONTACTO').innerHTML =
+            '<option value="" disabled selected>Seleccione una opción</option>';
+
+        window.contactosGuardados = [];
+        return Promise.resolve();
+    }
+
+    return fetch(`/buscarCliente?rfc=${encodeURIComponent(rfc)}`)
+        .then(response => response.json())
+        .then(data => {
+
+            if (!data.success) {
+                alert('Cliente no encontrado');
+                return;
+            }
+
+            document.getElementById('RAZON_SOCIAL_SOLICITUD').value =
+                data.data.RAZON_SOCIAL_CLIENTE || '';
+
+            document.getElementById('NOMBRE_COMERCIAL_SOLICITUD').value =
+                data.data.NOMBRE_COMERCIAL_CLIENTE || '';
+
+            document.getElementById('REPRESENTANTE_LEGAL_SOLICITUD').value =
+                data.data.REPRESENTANTE_LEGAL_CLIENTE || '';
+
+            const giroSelect = document.getElementById('GIRO_EMPRESA_SOLICITUD');
+            if (giroSelect) {
+                giroSelect.value = data.data.GIRO_EMPRESA_CLIENTE ?? '0';
+            }
+
+            const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
+            selectorDireccion.innerHTML =
+                '<option value="" disabled selected>Seleccione una opción</option>';
+
+            if (Array.isArray(data.data.DIRECCIONES)) {
+                data.data.DIRECCIONES.forEach(direccion => {
+                    const option = document.createElement('option');
+                    option.value = direccion.direccion;
+                    option.textContent = `${direccion.tipo}: ${direccion.direccion}`;
+                    selectorDireccion.appendChild(option);
+                });
+            }
+
+        
+            const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
+            selectorContacto.innerHTML =
+                '<option value="" disabled selected>Seleccione una opción</option>';
+
+            window.contactosGuardados = [];
+
+            if (Array.isArray(data.data.CONTACTOS)) {
+                data.data.CONTACTOS.forEach((contacto, index) => {
+                    const option = document.createElement('option');
+                    option.value = index;
+                    option.textContent = contacto.CONTACTO_SOLICITUD;
+                    selectorContacto.appendChild(option);
+                });
+
+                window.contactosGuardados = data.data.CONTACTOS;
+            }
+
+            selectorContacto.onchange = function () {
+
+                const contacto = window.contactosGuardados?.[this.value];
+                if (!contacto) return;
+
+                document.getElementById('TITULO_CONTACTO_SOLICITUD').value =
+                    contacto.TITULO_CONTACTO_SOLICITUD || '';
+
+                document.getElementById('CONTACTO_SOLICITUD').value =
+                    contacto.CONTACTO_SOLICITUD || '';
+
+                document.getElementById('CARGO_SOLICITUD').value =
+                    contacto.CARGO_SOLICITUD || '';
+
+                document.getElementById('TELEFONO_SOLICITUD').value =
+                    contacto.TELEFONO_SOLICITUD || '';
+
+                document.getElementById('EXTENSION_SOLICITUD').value =
+                    contacto.EXTENSION_SOLICITUD || '';
+
+                document.getElementById('CELULAR_SOLICITUD').value =
+                    contacto.CELULAR_SOLICITUD || '';
+
+                document.getElementById('CORREO_SOLICITUD').value =
+                    contacto.CORREO_SOLICITUD || '';
+            };
+        })
+        .catch(error => {
+            console.error('Error al buscar el cliente:', error);
+        });
+}
+
+
+document.getElementById('MISMA_DIRRECCION').addEventListener('change', function () {
+
+    const valor = this.value;
+    const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
+    const inputDireccion = document.getElementById('DIRECCION_SOLICITUDES');
+
+    if (valor === 'Sí') {
+
+        if (selectorDireccion.value) {
+            inputDireccion.value = selectorDireccion.value;
+        } else {
+            inputDireccion.value = '';
+        }
+
+    } else {
+        inputDireccion.value = '';
+    }
+});
 
 
 
@@ -511,6 +647,7 @@ $('#Tablasolicitudes tbody').on('change', '.ESTATUS_SOLICITUD', function () {
 });
 
 
+
 $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablasolicitudes.row(tr);
@@ -572,54 +709,6 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
         document.getElementById('servicioPropio').checked = true;
     }
 
-   
-
-
-    const rfcEditado = row.data().RFC_SOLICITUD || '';
-
-        const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
-        selectorDireccion.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
-
-        const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
-        selectorContacto.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
-
-        window.contactosGuardados = []; 
-
-        if (rfcEditado !== '') {
-            fetch(`/buscarCliente?rfc=${encodeURIComponent(rfcEditado)}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                        if (data.data.DIRECCIONES && data.data.DIRECCIONES.length > 0) {
-                            data.data.DIRECCIONES.forEach((direccion) => {
-                                const option = document.createElement('option');
-                                option.value = direccion.direccion;
-                                option.text = `${direccion.tipo}: ${direccion.direccion}`;
-                                selectorDireccion.appendChild(option);
-                            });
-                        }
-
-                        if (data.data.CONTACTOS && data.data.CONTACTOS.length > 0) {
-                            data.data.CONTACTOS.forEach((contacto, index) => {
-                                const option = document.createElement('option');
-                                option.value = index;
-                                option.text = contacto.CONTACTO_SOLICITUD;
-                                selectorContacto.appendChild(option);
-                            });
-
-                            window.contactosGuardados = data.data.CONTACTOS;
-                        }
-                    } else {
-                        console.warn('Cliente no encontrado al editar');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error al buscar el cliente:', error);
-                });
-        }
-
-            
-    
 
     
      if (row.data().CODIGO_POSTAL) {
@@ -681,9 +770,35 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
         .trigger('change');
     }
     
+    const direccionGuardada = row.data().SELECTOR_DIRECCION || '';
+    const contactoGuardado  = row.data().SELECTOR_CONTACTO || '';
+
+
+    if (row.data().RFC_SOLICITUD) {
+
+        $('#RFC_SOLICITUD').val(row.data().RFC_SOLICITUD);
+
+        cargarDatosClientePorRFC(row.data().RFC_SOLICITUD)
+        .then(() => {
+
+            if (direccionGuardada) {
+                document.getElementById('SELECTOR_DIRECCION').value = direccionGuardada;
+            }
+            if (contactoGuardado !== '') {
+                const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
+                selectorContacto.value = contactoGuardado;
+                selectorContacto.dispatchEvent(new Event('change'));
+            }
+        });
+    }
+
+
+    
 
 
 });
+
+
 
 
 
@@ -771,6 +886,30 @@ $(document).ready(function() {
         .trigger('change');
     }
     
+           
+        
+    const direccionGuardada = row.data().SELECTOR_DIRECCION || '';
+    const contactoGuardado  = row.data().SELECTOR_CONTACTO || '';
+
+
+    if (row.data().RFC_SOLICITUD) {
+
+        $('#RFC_SOLICITUD').val(row.data().RFC_SOLICITUD);
+
+        cargarDatosClientePorRFC(row.data().RFC_SOLICITUD)
+        .then(() => {
+
+            if (direccionGuardada) {
+                document.getElementById('SELECTOR_DIRECCION').value = direccionGuardada;
+            }
+            if (contactoGuardado !== '') {
+                const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
+                selectorContacto.value = contactoGuardado;
+                selectorContacto.dispatchEvent(new Event('change'));
+            }
+        });
+    }
+
         
     });
 
@@ -905,15 +1044,6 @@ function obtenerObservaciones(data) {
     });
 
 }
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1064,263 +1194,6 @@ $(document).ready(function() {
 
 
 
-
-// document.addEventListener('DOMContentLoaded', function () {
-
-//     const rfcSelect = document.getElementById('RFC_SOLICITUD');
-
-//     rfcSelect.addEventListener('change', function () {
-
-//         const rfc = rfcSelect.value;
-
-//         if (!rfc) {
-//             limpiarCampos();
-//             return;
-//         }
-
-//         fetch(`/buscarCliente?rfc=${encodeURIComponent(rfc)}`)
-//             .then(response => response.json())
-//             .then(data => {
-
-//                 if (data.success) {
-
-//                     document.getElementById('RAZON_SOCIAL_SOLICITUD').value =
-//                         data.data.RAZON_SOCIAL_CLIENTE || '';
-
-//                     document.getElementById('NOMBRE_COMERCIAL_SOLICITUD').value =
-//                         data.data.NOMBRE_COMERCIAL_CLIENTE || '';
-
-//                     document.getElementById('REPRESENTANTE_LEGAL_SOLICITUD').value =
-//                         data.data.REPRESENTANTE_LEGAL_CLIENTE || '';
-
-//                     const giroSelect = document.getElementById('GIRO_EMPRESA_SOLICITUD');
-//                     if (giroSelect) {
-//                         giroSelect.value = data.data.GIRO_EMPRESA_CLIENTE ?? '0';
-//                     }
-
-//                     /* =========================
-//                        DIRECCIONES
-//                     ========================= */
-//                     const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
-//                     selectorDireccion.innerHTML =
-//                         '<option value="" disabled selected>Seleccione una opción</option>';
-
-//                     if (Array.isArray(data.data.DIRECCIONES)) {
-//                         data.data.DIRECCIONES.forEach(direccion => {
-//                             const option = document.createElement('option');
-//                             option.value = direccion.direccion;
-//                             option.textContent = `${direccion.tipo}: ${direccion.direccion}`;
-//                             selectorDireccion.appendChild(option);
-//                         });
-//                     }
-
-//                     /* =========================
-//                        CONTACTOS
-//                     ========================= */
-//                     const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
-//                     selectorContacto.innerHTML =
-//                         '<option value="" disabled selected>Seleccione una opción</option>';
-
-//                     window.contactosGuardados = [];
-
-//                     if (Array.isArray(data.data.CONTACTOS)) {
-//                         data.data.CONTACTOS.forEach((contacto, index) => {
-//                             const option = document.createElement('option');
-//                             option.value = index;
-//                             option.textContent = contacto.CONTACTO_SOLICITUD;
-//                             selectorContacto.appendChild(option);
-//                         });
-
-//                         window.contactosGuardados = data.data.CONTACTOS;
-//                     }
-
-//                 } else {
-//                     limpiarCampos();
-//                     alert('Cliente no encontrado');
-//                 }
-//             })
-//             .catch(error => {
-//                 console.error('Error al buscar el cliente:', error);
-//             });
-//     });
-
-//     /* =========================
-//        EVENTOS DE SELECTORES
-//     ========================= */
-//     document.getElementById('SELECTOR_DIRECCION')
-//         .addEventListener('change', function () {
-//             document.getElementById('DIRECCION_SOLICITUDES').value = this.value;
-//         });
-
-//     document.getElementById('SELECTOR_CONTACTO')
-//         .addEventListener('change', function () {
-
-//             const contacto = window.contactosGuardados?.[this.value];
-
-//             if (!contacto) return;
-
-//             document.getElementById('TITULO_CONTACTO_SOLICITUD').value = contacto.TITULO_CONTACTO_SOLICITUD || '';
-//             document.getElementById('CONTACTO_SOLICITUD').value = contacto.CONTACTO_SOLICITUD || '';
-//             document.getElementById('CARGO_SOLICITUD').value = contacto.CARGO_SOLICITUD || '';
-//             document.getElementById('TELEFONO_SOLICITUD').value = contacto.TELEFONO_SOLICITUD || '';
-//             document.getElementById('EXTENSION_SOLICITUD').value = contacto.EXTENSION_SOLICITUD || '';
-//             document.getElementById('CELULAR_SOLICITUD').value = contacto.CELULAR_SOLICITUD || '';
-//             document.getElementById('CORREO_SOLICITUD').value = contacto.CORREO_SOLICITUD || '';
-//         });
-
-//     /* =========================
-//        LIMPIAR
-//     ========================= */
-//     function limpiarCampos() {
-
-//         document.getElementById('RAZON_SOCIAL_SOLICITUD').value = '';
-//         document.getElementById('NOMBRE_COMERCIAL_SOLICITUD').value = '';
-//         document.getElementById('REPRESENTANTE_LEGAL_SOLICITUD').value = '';
-//         document.getElementById('GIRO_EMPRESA_SOLICITUD').value = '0';
-
-//         document.getElementById('SELECTOR_DIRECCION').innerHTML =
-//             '<option value="" disabled selected>Seleccione una opción</option>';
-
-//         document.getElementById('DIRECCION_SOLICITUDES').value = '';
-
-//         document.getElementById('SELECTOR_CONTACTO').innerHTML =
-//             '<option value="" disabled selected>Seleccione una opción</option>';
-
-//         window.contactosGuardados = [];
-//     }
-// });
-
-
-
-document.addEventListener('DOMContentLoaded', function () {
-
-  
-    $('#RFC_SOLICITUD').on('change', function () {
-
-        const rfc = $(this).val();
-
-        if (!rfc) {
-            limpiarCampos();
-            return;
-        }
-
-        fetch(`/buscarCliente?rfc=${encodeURIComponent(rfc)}`)
-            .then(response => response.json())
-            .then(data => {
-
-                if (data.success) {
-
-                    document.getElementById('RAZON_SOCIAL_SOLICITUD').value =
-                        data.data.RAZON_SOCIAL_CLIENTE || '';
-
-                    document.getElementById('NOMBRE_COMERCIAL_SOLICITUD').value =
-                        data.data.NOMBRE_COMERCIAL_CLIENTE || '';
-
-                    document.getElementById('REPRESENTANTE_LEGAL_SOLICITUD').value =
-                        data.data.REPRESENTANTE_LEGAL_CLIENTE || '';
-
-                    const giroSelect = document.getElementById('GIRO_EMPRESA_SOLICITUD');
-                    if (giroSelect) {
-                        giroSelect.value = data.data.GIRO_EMPRESA_CLIENTE ?? '0';
-                    }
-
-                   
-                    const selectorDireccion = document.getElementById('SELECTOR_DIRECCION');
-                    selectorDireccion.innerHTML =
-                        '<option value="" disabled selected>Seleccione una opción</option>';
-
-                    if (Array.isArray(data.data.DIRECCIONES)) {
-                        data.data.DIRECCIONES.forEach(direccion => {
-                            const option = document.createElement('option');
-                            option.value = direccion.direccion;
-                            option.textContent = `${direccion.tipo}: ${direccion.direccion}`;
-                            selectorDireccion.appendChild(option);
-                        });
-                    }
-
-                 
-                    const selectorContacto = document.getElementById('SELECTOR_CONTACTO');
-                    selectorContacto.innerHTML =
-                        '<option value="" disabled selected>Seleccione una opción</option>';
-
-                    window.contactosGuardados = [];
-
-                    if (Array.isArray(data.data.CONTACTOS)) {
-                        data.data.CONTACTOS.forEach((contacto, index) => {
-                            const option = document.createElement('option');
-                            option.value = index;
-                            option.textContent = contacto.CONTACTO_SOLICITUD;
-                            selectorContacto.appendChild(option);
-                        });
-
-                        window.contactosGuardados = data.data.CONTACTOS;
-                    }
-
-                } else {
-                    limpiarCampos();
-                    alert('Cliente no encontrado');
-                }
-            })
-            .catch(error => {
-                console.error('Error al buscar el cliente:', error);
-            });
-    });
-
-   
-    document.getElementById('SELECTOR_DIRECCION')
-        .addEventListener('change', function () {
-            document.getElementById('DIRECCION_SOLICITUDES').value = this.value;
-        });
-
-    document.getElementById('SELECTOR_CONTACTO')
-        .addEventListener('change', function () {
-
-            const contacto = window.contactosGuardados?.[this.value];
-
-            if (!contacto) return;
-
-            document.getElementById('TITULO_CONTACTO_SOLICITUD').value =
-                contacto.TITULO_CONTACTO_SOLICITUD || '';
-
-            document.getElementById('CONTACTO_SOLICITUD').value =
-                contacto.CONTACTO_SOLICITUD || '';
-
-            document.getElementById('CARGO_SOLICITUD').value =
-                contacto.CARGO_SOLICITUD || '';
-
-            document.getElementById('TELEFONO_SOLICITUD').value =
-                contacto.TELEFONO_SOLICITUD || '';
-
-            document.getElementById('EXTENSION_SOLICITUD').value =
-                contacto.EXTENSION_SOLICITUD || '';
-
-            document.getElementById('CELULAR_SOLICITUD').value =
-                contacto.CELULAR_SOLICITUD || '';
-
-            document.getElementById('CORREO_SOLICITUD').value =
-                contacto.CORREO_SOLICITUD || '';
-        });
-
-
-    function limpiarCampos() {
-
-        document.getElementById('RAZON_SOCIAL_SOLICITUD').value = '';
-        document.getElementById('NOMBRE_COMERCIAL_SOLICITUD').value = '';
-        document.getElementById('REPRESENTANTE_LEGAL_SOLICITUD').value = '';
-        document.getElementById('GIRO_EMPRESA_SOLICITUD').value = '0';
-
-        document.getElementById('SELECTOR_DIRECCION').innerHTML =
-            '<option value="" disabled selected>Seleccione una opción</option>';
-
-        document.getElementById('DIRECCION_SOLICITUDES').value = '';
-
-        document.getElementById('SELECTOR_CONTACTO').innerHTML =
-            '<option value="" disabled selected>Seleccione una opción</option>';
-
-        window.contactosGuardados = [];
-    }
-
-});
 
 
 

@@ -518,7 +518,7 @@
     @endif
 
     @if(request()->is('solicitudes'))
-    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.13"></script>
+    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.14"></script>
     @endif
 
     @if(request()->is('ofertas'))
@@ -562,7 +562,7 @@
     @endif
 
     @if(request()->is('solicitudeshistorial'))
-    <script src="/assets/js_sitio/solicitudes/solictudeshistorial.js?v=1.0"></script>
+    <script src="/assets/js_sitio/solicitudes/solictudeshistorial.js?v=2.0"></script>
     @endif
 
     @if(request()->is('ofertashistorial'))

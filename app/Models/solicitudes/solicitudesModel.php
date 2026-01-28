@@ -73,7 +73,9 @@ class solicitudesModel extends Model
         'NOMBRE_CONTACTO_SOLICITUD',
         'EXTENSION_SOLICITUD',
         'TITULO_OFERTA',
-
+        'SELECTOR_DIRECCION',
+        'SELECTOR_CONTACTO',
+        'MISMA_DIRRECCION'
     ];
 
 }

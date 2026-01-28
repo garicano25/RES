@@ -164,28 +164,23 @@
             </div>
 
 
-            <!-- <div class="row">
-              <div class="mb-3">
-                <div class="row">
-                  <div class="col-6 mb-3">
-                    <label>Agregar dirección</label>
-                    <button id="botonAgregardomicilio" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                      <i class="bi bi-plus-circle-fill"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="direcciondiv mt-4"></div>
-              </div>
-            </div> -->
 
 
-            <div class="col-12  mt-3">
+            <div class="col-6  mt-3">
               <label>Seleccione dirección </label>
               <select class="form-control" id="SELECTOR_DIRECCION" name="SELECTOR_DIRECCION">
                 <option value="" disabled selected>Seleccione una opción</option>
               </select>
             </div>
 
+            <div class="col-6  mt-3">
+              <label>Usar la misma dirección para el servicio *</label>
+              <select class="form-select " name="MISMA_DIRRECCION" id="MISMA_DIRRECCION">
+                <option value="">Seleccione una opción</option>
+                <option value="Sí">Sí</option>
+                <option value="No">No</option>
+              </select>
+            </div>
 
             <div class="col-12  mt-3">
               <label>Dirección del servicio *</label>
@@ -410,19 +405,7 @@
               </div>
             </div>
 
-            <!-- <div class="row">
-              <div class="mb-3">
-                <div class="row">
-                  <div class="col-6 mb-3">
-                    <label>Agregar contacto</label>
-                    <button id="botonAgregarcontacto" type="button" class="btn btn-danger ml-2 rounded-pill" title="Agregar">
-                      <i class="bi bi-plus-circle-fill"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="contactodiv mt-4"></div>
-              </div>
-            </div> -->
+
 
             <div class="col-12  mt-3">
               <label>Seleccione contacto </label>
