@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', function() {
 $("#guardarFormBancoCV").click(async function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioBANCO'));
+
+    formularioValido = validarFormulario3($('#formularioBANCO'))
 
     if (formularioValido) {
         if (ID_BANCO_CV == 0) {
@@ -164,7 +165,6 @@ $("#guardarFormBancoCV").click(async function (e) {
                     if (labelArchivo) labelArchivo.innerText = 'Pasaporte.  ';
                     if (archivoCurpCv) {
                         archivoCurpCv.setAttribute('name', 'ARCHIVO_PASAPORTE_CV');
-                        archivoCurpCv.removeAttribute('required');
                     }
                     document.getElementById('CURP_CV').setAttribute('name', 'TEMP_CURP');
                 }

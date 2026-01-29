@@ -39,6 +39,7 @@ class areasController extends Controller
 
             $tabla = DB::select("CALL sp_obtener_organigrama_areas_b()");
             $COUNT = 1;
+            
             foreach ($tabla as $key => $value) {
 
                 $value->COUNT = $COUNT;
