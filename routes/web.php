@@ -245,6 +245,9 @@ Route::get('/listaEncagadosAreas/{area_id}', [areasController::class, 'listaEnca
 Route::get('/getDataOrganigrama/{area_id}/{esGeneral}', [areasController::class, 'getDataOrganigrama']);
 Route::get('/mostrarFoto/{id}', [areasController::class, 'mostrarFoto']);
 
+
+Route::post('/activarEncargado', [areasController::class, 'activarEncargado']);
+
 // PPT
 Route::get('/ppt', [pptController::class, 'index'])->middleware('role:Superusuario,Administrador,Analista HSEQ,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor-Instructor (Junior/Senior)');
 Route::post('/pptSave', [pptController::class, 'store']);

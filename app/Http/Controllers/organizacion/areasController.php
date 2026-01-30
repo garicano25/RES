@@ -69,79 +69,139 @@ class areasController extends Controller
         $archivo = areasModel::findOrFail($id)->DOCUMENTO_ORGANIGRAMA;
         return Storage::response($archivo);
     }
-    
+
 
     public function TablaEncargados($area_id)
     {
         try {
 
-            $tabla = DB::select('SELECT cat.NOMBRE_CATEGORIA AS NOMBRE, 
-                                        1 AS LIDER, 
-                                        lideres.LIDER_ID AS ID_CATEGORIA, 
-                                        lideres.ACTIVO
-                                FROM areas_lideres lideres
-                                LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = lideres.LIDER_ID
-                                WHERE lideres.AREA_ID = ?
+            $tabla = DB::select('
 
-                                    UNION
+                        SELECT 
+                            cat.NOMBRE_CATEGORIA AS NOMBRE,
+                            1 AS LIDER,
+                            lideres.ID_AREA_LIDER AS ID_REGISTRO,
+                            "areas_lideres" AS TIPO,
+                            lideres.ACTIVO
+                        FROM areas_lideres lideres
+                        LEFT JOIN catalogo_categorias cat 
+                            ON cat.ID_CATALOGO_CATEGORIA = lideres.LIDER_ID
+                        WHERE lideres.AREA_ID = ?
 
-                                SELECT cat.NOMBRE_CATEGORIA AS NOMBRE, 
-                                        0 LIDER, 
-                                        lideres_cat.CATEGORIA_ID AS ID_CATEGORIA, 
-                                        lideres_cat.ACTIVO
-                                FROM lideres_categorias lideres_cat
-                                LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = lideres_cat.CATEGORIA_ID
-                                WHERE lideres_cat.AREA_ID = ?', [$area_id, $area_id]);
+                        UNION ALL
 
-            $COUNT = 1;
-            foreach ($tabla as $key => $value) {
+                        SELECT 
+                            cat.NOMBRE_CATEGORIA AS NOMBRE,
+                            0 AS LIDER,
+                            lideres_cat.ID_LIDER_CATEGORIAS AS ID_REGISTRO,
+                            "lideres_categorias" AS TIPO,
+                            lideres_cat.ACTIVO
+                        FROM lideres_categorias lideres_cat
+                        LEFT JOIN catalogo_categorias cat 
+                            ON cat.ID_CATALOGO_CATEGORIA = lideres_cat.CATEGORIA_ID
+                        WHERE lideres_cat.AREA_ID = ?
+                    ', [$area_id, $area_id]);
 
-                $value->COUNT = $COUNT;
-                $COUNT += 1;
+                        $COUNT = 1;
 
+            foreach ($tabla as $value) {
 
+                $value->COUNT = $COUNT++;
 
                 if ($value->LIDER == 1) {
-
                     $value->ES_LIDER = '<span class="badge rounded-pill text-bg-success"><i class="bi bi-check-lg"></i></span>';
                 } else {
-
                     $value->ES_LIDER = '<span class="badge rounded-pill text-bg-danger"><i class="bi bi-x-lg"></i></span>';
                 }
 
-              
                 if ($value->ACTIVO == 1) {
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill " ><i class="bi bi-pencil-square EDITAR"></i></button>';
-
-                    $value->BTN_ACTIVO = '<button type="button" class="btn btn-info btn-custom rounded-pill"> <i class="bi bi-toggle-on DESACTIVAR"></i></button>';
+                    $value->BTN_ACTIVO =
+                        '<label class="switch">
+                        <input type="checkbox"
+                               class="ACTIVAR"
+                               data-id="' . $value->ID_REGISTRO . '"
+                               data-tipo="' . $value->TIPO . '"
+                               checked>
+                        <span class="slider round"></span>
+                    </label>';
                 } else {
-
-                    $value->BTN_EDITAR = '<i class="bi bi-ban"></i>';
-                    $value->BTN_ACTIVO = '<button type="button" class="btn btn-info rounded-pill  btn-custom" ><i class="bi bi-toggle-off ACTIVAR"></i></button>';
+                    $value->BTN_ACTIVO =
+                        '<label class="switch">
+                        <input type="checkbox"
+                               class="ACTIVAR"
+                               data-id="' . $value->ID_REGISTRO . '"
+                               data-tipo="' . $value->TIPO . '">
+                        <span class="slider round"></span>
+                    </label>';
                 }
-
-
-
-                // } else {
-
-                //     $value->boton_eliminar = '<button type="button" class="btn btn-secondary btn-circle"><i class="fa fa-ban"></i></button>';
-                // }
             }
 
-            // respuesta
-            $dato['data'] = $tabla;
-            $dato["msj"] = 'Información consultada correctamente';
-            return response()->json($dato);
-        } catch (Exception $e) {
+            return response()->json([
+                'data' => $tabla,
+                'msj'  => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
 
-            $dato["msj"] = 'Error ' . $e->getMessage();
-            $dato['data'] = 0;
-            return response()->json($dato);
+            return response()->json([
+                'data' => [],
+                'msj'  => 'Error: ' . $e->getMessage()
+            ]);
         }
     }
 
 
-  
+
+    public function activarEncargado(Request $request)
+    {
+        try {
+
+            $id     = (int) $request->id;
+            $tipo   = $request->tipo;
+            $activo = $request->activo == 1 ? "b'1'" : "b'0'";
+
+            if (!$id || !$tipo) {
+                return response()->json([
+                    'ok' => false,
+                    'msj' => 'Datos incompletos'
+                ], 400);
+            }
+
+            if ($tipo === 'areas_lideres') {
+
+                DB::table('areas_lideres')
+                    ->where('ID_AREA_LIDER', $id)
+                    ->update([
+                        'ACTIVO' => DB::raw($activo),
+                        'updated_at' => now()
+                    ]);
+            } elseif ($tipo === 'lideres_categorias') {
+
+                DB::table('lideres_categorias')
+                    ->where('ID_LIDER_CATEGORIAS', $id)
+                    ->update([
+                        'ACTIVO' => DB::raw($activo),
+                        'updated_at' => now()
+                    ]);
+            } else {
+                return response()->json([
+                    'ok' => false,
+                    'msj' => 'Tipo inválido'
+                ], 400);
+            }
+
+            return response()->json([
+                'ok' => true,
+                'msj' => 'Estado actualizado correctamente'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'ok' => false,
+                'msj' => $e->getMessage()
+            ], 500);
+        }
+    }
+
 
 
 

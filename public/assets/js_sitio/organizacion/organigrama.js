@@ -607,17 +607,58 @@ function TablaEncargados(id_area) {
             { data: 'COUNT' },
             { data: 'NOMBRE' },
             { data: 'ES_LIDER' },
+            { data: 'BTN_ACTIVO' },
+
 
         ],
         columnDefs: [
             { target: 0, title: '#', className: 'all' },
             { target: 1, title: 'Nombre de la categoría', className: 'all' },
             { target: 2, title: 'Es líder', className: 'all text-center' },
+            { target: 3, title: 'Activo', className: 'all text-center' },
 
         ]
     })
 
 }
+
+
+$(document).on('change', '.ACTIVAR', function () {
+
+    const checkbox = $(this);
+    const id       = checkbox.data('id');
+    const tipo     = checkbox.data('tipo');
+    const activo   = checkbox.is(':checked') ? 1 : 0;
+
+    checkbox.prop('disabled', true);
+
+    $.ajax({
+        url: '/activarEncargado',
+        type: 'POST',
+        data: {
+            id: id,
+            tipo: tipo,
+            activo: activo,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (resp) {
+
+            if (resp.ok) {
+                TablaAreas.ajax.reload(null, false);
+            } else {
+                checkbox.prop('checked', !activo);
+                alert(resp.msj);
+            }
+        },
+        error: function () {
+            checkbox.prop('checked', !activo);
+            alert('Error al actualizar el estado');
+        },
+        complete: function () {
+            checkbox.prop('disabled', false);
+        }
+    });
+});
 
 
 
