@@ -36,7 +36,8 @@ class CheckSession
         'enviar-codigo' ,
         'verificar-codigo',      
         'Proveedor' ,
-        'codigo-postal/*',  
+        'codigo-postal/*',
+        'ActualizarSave'
 
 
         ];

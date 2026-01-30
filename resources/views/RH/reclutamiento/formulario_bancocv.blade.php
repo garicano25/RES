@@ -327,7 +327,7 @@
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label" for="no_titulo">No</label>
-                                <input class="form-check-input" type="radio" name="CUENTA_TITULO_LICENCIATURA_CV" id="no_titulo" value="NO">
+                                <input class="form-check-input" type="radio" name="CUENTA_TITULO_LICENCIATURA_CV" id="no_titulo" value="No">
                             </div>
                         </div>
                     </div>
@@ -340,7 +340,7 @@
                             </div>
                             <div class="form-check">
                                 <label class="form-check-label" for="no_cedula">No</label>
-                                <input class="form-check-input" type="radio" name="CEDULA_TITULO_LICENCIATURA_CV" id="no_cedula" value="NO">
+                                <input class="form-check-input" type="radio" name="CEDULA_TITULO_LICENCIATURA_CV" id="no_cedula" value="No">
                             </div>
                         </div>
                     </div>

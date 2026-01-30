@@ -44,37 +44,112 @@ public function index1()
 
 
 
+    public function Tablabancocv()
+    {
+        try {
 
-public function Tablabancocv()
-{
-    try {
-        $tabla = bancocvModel::get();
+            $tabla = bancocvModel::whereNotIn(
+                'CURP_CV',
+                function ($query) {
+                    $query->select('CURP')
+                        ->from('formulario_contratacion')
+                        ->whereNotNull('CURP');
+                }
+            )->get();
 
-        foreach ($tabla as $value) {
-            // Botones de archivos
-            $value->BTN_CURP = '<button class="btn btn-outline-danger btn-custom rounded-pill pdf-button ver-archivo-curp" data-id="' . $value->ID_BANCO_CV . '" title="Ver CURP"> <i class="bi bi-filetype-pdf"></i></button>';
-            $value->BTN_CV = '<button class="btn btn-outline-danger btn-custom rounded-pill pdf-button ver-archivo-cv" data-id="' . $value->ID_BANCO_CV . '" title="Ver CV"> <i class="bi bi-filetype-pdf"></i></button>';
+            foreach ($tabla as $value) {
 
-            // Botones de acciones
-            $value->BTN_ELIMINAR = '<button type="button" class="btn btn-danger btn-custom rounded-pill ELIMINAR"><i class="bi bi-trash3-fill"></i></button>';
-            $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye-fill"></i></button>';
+                $value->BTN_CURP = '
+                <button class="btn btn-outline-danger btn-custom rounded-pill pdf-button ver-archivo-curp"
+                    data-id="' . $value->ID_BANCO_CV . '" title="Ver CURP">
+                    <i class="bi bi-filetype-pdf"></i>
+                </button>';
+
+                $value->BTN_CV = '
+                <button class="btn btn-outline-danger btn-custom rounded-pill pdf-button ver-archivo-cv"
+                    data-id="' . $value->ID_BANCO_CV . '" title="Ver CV">
+                    <i class="bi bi-filetype-pdf"></i>
+                </button>';
+
+                $value->BTN_ELIMINAR = '
+                <button type="button" class="btn btn-danger btn-custom rounded-pill ELIMINAR">
+                    <i class="bi bi-trash3-fill"></i>
+                </button>';
+
+                $value->BTN_EDITAR = '
+                <button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
+                    <i class="bi bi-eye-fill"></i>
+                </button>';
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj'  => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'msj'  => 'Error: ' . $e->getMessage(),
+                'data' => []
+            ], 500);
         }
-
-        // Respuesta
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
     }
-}
 
 
-public function mostrarCurpCv($id)
+    public function Tablacontratadobancocv()
+    {
+        try {
+
+            $tabla = bancocvModel::query()
+                ->join(
+                    'formulario_contratacion',
+                    'formulario_contratacion.CURP',
+                    '=',
+                    'formulario_bancocv.CURP_CV'
+                )
+                ->select('formulario_bancocv.*')
+                ->get();
+
+            foreach ($tabla as $value) {
+
+                $value->BTN_CURP = '<button class="btn btn-outline-danger btn-custom rounded-pill pdf-button ver-archivo-curp"
+                data-id="' . $value->ID_BANCO_CV . '" title="Ver CURP">
+                <i class="bi bi-filetype-pdf"></i>
+            </button>';
+
+                $value->BTN_CV = '<button class="btn btn-outline-danger btn-custom rounded-pill pdf-button ver-archivo-cv"
+                data-id="' . $value->ID_BANCO_CV . '" title="Ver CV">
+                <i class="bi bi-filetype-pdf"></i>
+            </button>';
+
+                $value->BTN_ELIMINAR = '<button type="button"
+                class="btn btn-danger btn-custom rounded-pill ELIMINAR">
+                <i class="bi bi-trash3-fill"></i>
+            </button>';
+
+                $value->BTN_EDITAR = '<button type="button"
+                class="btn btn-primary btn-custom rounded-pill EDITAR">
+                <i class="bi bi-eye-fill"></i>
+            </button>';
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj'  => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'msj'  => 'Error ' . $e->getMessage(),
+                'data' => []
+            ]);
+        }
+    }
+
+
+
+
+    public function mostrarCurpCv($id)
 {
     $archivo = bancocvModel::findOrFail($id)->ARCHIVO_CURP_CV;
     return Storage::response($archivo);

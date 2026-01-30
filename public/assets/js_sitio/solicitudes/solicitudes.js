@@ -698,6 +698,7 @@ $('#Tablasolicitudes tbody').on('click', 'td>button.EDITAR', function () {
 
 
     editarDatoTabla(row.data(), 'formularioSOLICITUDES', 'miModal_SOLICITUDES', 1);
+    
     $('#miModal_SOLICITUDES .modal-title').html(row.data().NOMBRE_COMERCIAL_SOLICITUD);
 
     const servicioTercero = Number(row.data().SERVICIO_TERCERO);

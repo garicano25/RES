@@ -384,6 +384,11 @@ Route::post('/actualizarinfocv', [formCVController::class, 'actualizarinfocv'])-
 Route::get('/listavacantes', [bancocvController::class, 'index']);
 Route::get('/BancoDelete', [bancocvController::class, 'store']);
 Route::get('/Tablabancocv', [bancocvController::class, 'Tablabancocv']);
+
+
+Route::get('/Tablacontratadobancocv', [bancocvController::class, 'Tablacontratadobancocv']);
+
+
 Route::get('/mostrarCurpCv/{id}', [bancocvController::class, 'mostrarCurpCv']);
 Route::get('/mostrarCv/{id}', [bancocvController::class, 'mostrarCv']);
 

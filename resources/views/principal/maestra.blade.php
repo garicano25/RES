@@ -729,7 +729,7 @@
     @endif
 
     @if(request()->is('listavacantes'))
-    <script src="/assets/js_sitio/reclutamiento/Listavacante.js"></script>
+    <script src="/assets/js_sitio/reclutamiento/Listavacante.js?v=1.0"></script>
     @endif
 
     @if(request()->is('postulaciones'))
