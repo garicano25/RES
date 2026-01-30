@@ -182,19 +182,21 @@ textoInactivo.addEventListener('click', () => {
 
 
 var Tablabancocv = $("#Tablabancocv").DataTable({
-    language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-    lengthChange: true,
-    lengthMenu: [
-        [10, 25, 50, -1],
-        [10, 25, 50, 'All']
-    ],
-    info: false,
+       language: {
+        url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+    },
+    scrollX: true,
+    autoWidth: false,
+    responsive: false,
     paging: true,
     searching: true,
     filtering: true,
-    scrollY: '65vh',
-    scrollCollapse: true,
-    responsive: true,
+    lengthChange: true,
+    info: true,   
+    scrollY: false,
+    scrollCollapse: false,
+    fixedHeader: false,    
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',
         data: {},
@@ -275,7 +277,10 @@ var Tablabancocv = $("#Tablabancocv").DataTable({
         { targets: 7, title: 'CV', className: 'all text-center nombre-column' },
         { targets: 8, title: 'Visualizar', className: 'all text-center' },
         { targets: 9, title: 'Eliminar', className: 'all text-center' }
-    ]
+    ],
+     infoCallback: function (settings, start, end, max, total, pre) {
+        return `Total de ${total} registros`;
+    },
 });
 
 
@@ -835,19 +840,21 @@ function cargarTablacontratados() {
     }
     
     Tablacontratadobancocv = $("#Tablacontratadobancocv").DataTable({
-        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-        lengthChange: true,
-        lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, 'All']
-        ],
-        info: false,
+        language: {
+            url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+        },
+        scrollX: true,
+        autoWidth: false,
+        responsive: false,
         paging: true,
         searching: true,
         filtering: true,
-        scrollY: '65vh',
-        scrollCollapse: true,
-        responsive: true,
+        lengthChange: true,
+        info: true,   
+        scrollY: false,
+        scrollCollapse: false,
+        fixedHeader: false,    
+        lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
         ajax: {
             dataType: 'json',
             data: {},
@@ -925,7 +932,10 @@ function cargarTablacontratados() {
             { targets: 7, title: 'CV', className: 'all text-center nombre-column' },
             { targets: 8, title: 'Visualizar', className: 'all text-center' },
             { targets: 9, title: 'Eliminar', className: 'all text-center' }
-        ]
+        ],
+         infoCallback: function (settings, start, end, max, total, pre) {
+        return `Total de ${total} registros`;
+        },
     });
 
 }
