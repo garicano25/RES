@@ -260,59 +260,7 @@ class salidalmacenController extends Controller
                                 ) {
                                     $materiales = json_decode($mrs->MATERIALES_JSON, true);
 
-                                    // if (is_array($materiales)) {
-                                    //     foreach ($materiales as $mat) {
-                                    //         if (!empty($mat['VARIOS_ARTICULOS']) && $mat['VARIOS_ARTICULOS'] == "1" && isset($mat['ARTICULOS'])) {
-                                    //             foreach ($mat['ARTICULOS'] as $art) {
-                                    //                 $cantidad = intval($art['CANTIDAD_DETALLE'] ?? 0);
-
-                                    //                 if ($cantidad > 0) {
-                                    //                     DB::table('salidas_inventario')->insert([
-                                    //                         'USUARIO_ID'      => $mrs->USUARIO_ID,
-                                    //                         'INVENTARIO_ID'   => $art['INVENTARIO'],
-                                    //                         'CANTIDAD_SALIDA' => $cantidad,
-                                    //                         'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
-                                    //                         'UNIDAD_MEDIDA'   => $art['UNIDAD_DETALLE'],
-                                    //                         'created_at'      => now(),
-                                    //                         'updated_at'      => now()
-                                    //                     ]);
-
-                                    //                     $inventario = inventarioModel::find($art['INVENTARIO']);
-                                    //                     if ($inventario) {
-                                    //                         $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
-                                    //                         $inventario->save();
-                                    //                     }
-                                    //                 }
-                                    //             }
-                                    //         } else {
-                                    //             $cantidad = intval($mat['CANTIDAD_SALIDA'] ?? 0);
-
-                                    //             if ($cantidad > 0) {
-                                    //                 DB::table('salidas_inventario')->insert([
-                                    //                     'USUARIO_ID'      => $mrs->USUARIO_ID,
-                                    //                     'INVENTARIO_ID'   => $mat['INVENTARIO'],
-                                    //                     'CANTIDAD_SALIDA' => $cantidad,
-                                    //                     'FECHA_SALIDA'    => $mrs->FECHA_ALMACEN_SOLICITUD,
-                                    //                     'UNIDAD_MEDIDA'   => $mat['UNIDAD_SALIDA'],
-                                    //                     'created_at'      => now(),
-                                    //                     'updated_at'      => now()
-                                    //                 ]);
-
-                                    //                 $inventario = inventarioModel::find($mat['INVENTARIO']);
-                                    //                 if ($inventario) {
-                                    //                     $inventario->CANTIDAD_EQUIPO = max(0, $inventario->CANTIDAD_EQUIPO - $cantidad);
-                                    //                     $inventario->save();
-                                    //                 }
-                                    //             }
-                                    //         }
-                                    //     }
-
-                                    //     $mrs->update([
-                                    //         'GUARDO_SALIDA_INVENTARIO' => 1
-                                    //     ]);
-                                    // }
-
-
+                                
                                     if (is_array($materiales) && $mrs->GUARDO_SALIDA_INVENTARIO != 1) {
 
                                         foreach ($materiales as $mat) {
@@ -346,7 +294,7 @@ class salidalmacenController extends Controller
                                                         'SALIDA_ASIGNACIONES' => $salidaAsignacion,
                                                         'INVENTARIO_ID'     => $art['INVENTARIO'],
                                                         'CANTIDAD_SALIDA'   => $cantidad,
-                                                        'FECHA_SALIDA'      => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                        'FECHA_SALIDA'      => $mrs->FECHA_SALIDA,
                                                         'UNIDAD_MEDIDA'     => $art['UNIDAD_DETALLE'],
                                                         'created_at'        => now(),
                                                         'updated_at'        => now()
@@ -366,7 +314,7 @@ class salidalmacenController extends Controller
                                                         DB::table('asignaciones_inventario')->insert([
                                                             'ASIGNADO_ID'      => $nombreAsignacionDet,
                                                             'INVENTARIO_ID'    => $art['INVENTARIO'],
-                                                            'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                            'FECHA_ASIGNACION' => $mrs->FECHA_SALIDA,
                                                             'created_at'       => now(),
                                                             'updated_at'       => now()
                                                         ]);
@@ -393,7 +341,7 @@ class salidalmacenController extends Controller
                                                     'SALIDA_ASIGNACIONES' => $salidaAsignacion,
                                                     'INVENTARIO_ID'     => $mat['INVENTARIO'],
                                                     'CANTIDAD_SALIDA'   => $cantidad,
-                                                    'FECHA_SALIDA'      => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                    'FECHA_SALIDA'      => $mrs->FECHA_SALIDA,
                                                     'UNIDAD_MEDIDA'     => $mat['UNIDAD_SALIDA'],
                                                     'created_at'        => now(),
                                                     'updated_at'        => now()
@@ -413,7 +361,7 @@ class salidalmacenController extends Controller
                                                     DB::table('asignaciones_inventario')->insert([
                                                         'ASIGNADO_ID'      => $nombreAsignacionUnico,
                                                         'INVENTARIO_ID'    => $mat['INVENTARIO'],
-                                                        'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                        'FECHA_ASIGNACION' => $mrs->FECHA_SALIDA,
                                                         'created_at'       => now(),
                                                         'updated_at'       => now()
                                                     ]);
@@ -437,7 +385,7 @@ class salidalmacenController extends Controller
                                                 if (!empty($art['RETORNA_DETALLE']) && $art['RETORNA_DETALLE'] == "1") {
                                                     $cantRetorno   = intval($art['CANTIDAD_RETORNO_DETALLE'] ?? 0);
                                                     $unidadRetorna = $art['UNIDAD_DETALLE'] ?? null;
-                                                    $fechaIngreso  = $art['FECHA_DETALLE'] ?? $mrs->FECHA_ALMACEN_SOLICITUD;
+                                                    $fechaIngreso  = $art['FECHA_DETALLE'] ?? $mrs->FECHA_SALIDA;
 
                                                     if ($cantRetorno > 0) {
                                                         $existe = DB::table('entradas_inventario')
@@ -472,7 +420,7 @@ class salidalmacenController extends Controller
                                             if (!empty($mat['ARTICULO_RETORNO']) && $mat['ARTICULO_RETORNO'] == "1") {
                                                 $cantRetorno  = intval($mat['CANTIDAD_RETORNO'] ?? 0);
                                                 $umretorna    = $mat['UNIDAD_SALIDA'] ?? null;
-                                                $fechaIngreso = $mat['FECHA_RETORNO'] ?? $mrs->FECHA_ALMACEN_SOLICITUD;
+                                                $fechaIngreso = $mat['FECHA_RETORNO'] ?? $mrs->FECHA_SALIDA;
 
                                                 if ($cantRetorno > 0) {
                                                     $existe = DB::table('entradas_inventario')
