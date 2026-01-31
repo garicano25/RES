@@ -294,7 +294,7 @@ class salidalmacenController extends Controller
                                                         'SALIDA_ASIGNACIONES' => $salidaAsignacion,
                                                         'INVENTARIO_ID'     => $art['INVENTARIO'],
                                                         'CANTIDAD_SALIDA'   => $cantidad,
-                                                        'FECHA_SALIDA'      => $mrs->FECHA_SALIDA,
+                                                        'FECHA_SALIDA'      => $mrs->FECHA_ALMACEN_SOLICITUD,
                                                         'UNIDAD_MEDIDA'     => $art['UNIDAD_DETALLE'],
                                                         'created_at'        => now(),
                                                         'updated_at'        => now()
@@ -314,7 +314,7 @@ class salidalmacenController extends Controller
                                                         DB::table('asignaciones_inventario')->insert([
                                                             'ASIGNADO_ID'      => $nombreAsignacionDet,
                                                             'INVENTARIO_ID'    => $art['INVENTARIO'],
-                                                            'FECHA_ASIGNACION' => $mrs->FECHA_SALIDA,
+                                                            'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
                                                             'created_at'       => now(),
                                                             'updated_at'       => now()
                                                         ]);
@@ -341,7 +341,7 @@ class salidalmacenController extends Controller
                                                     'SALIDA_ASIGNACIONES' => $salidaAsignacion,
                                                     'INVENTARIO_ID'     => $mat['INVENTARIO'],
                                                     'CANTIDAD_SALIDA'   => $cantidad,
-                                                    'FECHA_SALIDA'      => $mrs->FECHA_SALIDA,
+                                                    'FECHA_SALIDA'      => $mrs->FECHA_ALMACEN_SOLICITUD,
                                                     'UNIDAD_MEDIDA'     => $mat['UNIDAD_SALIDA'],
                                                     'created_at'        => now(),
                                                     'updated_at'        => now()
@@ -361,7 +361,7 @@ class salidalmacenController extends Controller
                                                     DB::table('asignaciones_inventario')->insert([
                                                         'ASIGNADO_ID'      => $nombreAsignacionUnico,
                                                         'INVENTARIO_ID'    => $mat['INVENTARIO'],
-                                                        'FECHA_ASIGNACION' => $mrs->FECHA_SALIDA,
+                                                        'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
                                                         'created_at'       => now(),
                                                         'updated_at'       => now()
                                                     ]);
@@ -385,7 +385,7 @@ class salidalmacenController extends Controller
                                                 if (!empty($art['RETORNA_DETALLE']) && $art['RETORNA_DETALLE'] == "1") {
                                                     $cantRetorno   = intval($art['CANTIDAD_RETORNO_DETALLE'] ?? 0);
                                                     $unidadRetorna = $art['UNIDAD_DETALLE'] ?? null;
-                                                    $fechaIngreso  = $art['FECHA_DETALLE'] ?? $mrs->FECHA_SALIDA;
+                                                    $fechaIngreso  = $art['FECHA_DETALLE'] ?? $mrs->FECHA_ALMACEN_SOLICITUD;
 
                                                     if ($cantRetorno > 0) {
                                                         $existe = DB::table('entradas_inventario')
@@ -420,7 +420,7 @@ class salidalmacenController extends Controller
                                             if (!empty($mat['ARTICULO_RETORNO']) && $mat['ARTICULO_RETORNO'] == "1") {
                                                 $cantRetorno  = intval($mat['CANTIDAD_RETORNO'] ?? 0);
                                                 $umretorna    = $mat['UNIDAD_SALIDA'] ?? null;
-                                                $fechaIngreso = $mat['FECHA_RETORNO'] ?? $mrs->FECHA_SALIDA;
+                                                $fechaIngreso = $mat['FECHA_RETORNO'] ?? $mrs->FECHA_ALMACEN_SOLICITUD;
 
                                                 if ($cantRetorno > 0) {
                                                     $existe = DB::table('entradas_inventario')
