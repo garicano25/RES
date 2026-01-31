@@ -779,7 +779,7 @@
     @endif
 
     @if(request()->is('recempleado'))
-    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.20"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recursosempleado.js?v=1.21"></script>
     @endif
 
     @if(request()->is('solicitudesvobo'))

@@ -41,6 +41,11 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     }
 
     
+    document.getElementById('FIRMO_ALMACENISTA').value = "0"; 
+    document.getElementById('FIRMO_USUARIO').value = "0"; 
+
+    
+
 });
 
 
