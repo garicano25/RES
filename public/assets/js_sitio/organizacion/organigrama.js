@@ -314,13 +314,21 @@ TablaAreas = $("#TablaAreas").DataTable({
         dataSrc: 'data'
     },
     columns: [
-        { data: 'COUNT' },
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            }
+        },
         { data: 'NOMBRE' },
         { data: 'LIDERES' },
         { data: 'CATEGORIAS' },
         { data: 'BTN_ORGANIGRAMA' },
-        { data: 'BTN_EDITAR' },
         { data: 'BTN_DOCUMENTO' },
+        { data: 'BTN_EDITAR' },
+        { data: 'BTN_VISUALIZAR' },
+        { data: 'BTN_ELIMINAR' },
+
 
 
     ],
@@ -330,8 +338,11 @@ TablaAreas = $("#TablaAreas").DataTable({
         { target: 2, title: 'Líderes de categorías', className: 'all' },
         { target: 3, title: 'Categorías', className: 'all' },
         { target: 4, title: 'Organigrama', className: 'all text-center' },
-        { target: 5, title: 'Editar', className: 'all text-center' },
-        { target: 6, title: 'Documento', className: 'all text-center' },
+        { target: 5, title: 'Documento', className: 'all text-center' },
+        { target: 6, title: 'Editar', className: 'all text-center' },
+        { target: 7, title: 'Visualizar', className: 'all text-center' },
+        { target: 8, title: 'Activo', className: 'all text-center' },
+
 
     ]
 })
@@ -363,7 +374,6 @@ $('#TablaAreas tbody').on('click', 'td>button.EDITAR', function () {
     ID_AREA = row.data().ID_AREA
 
 
-    //Rellenamos los datos del formulario
     editarDatoTabla(row.data(), 'formArea', 'ModalArea',1)
 
 
@@ -416,20 +426,93 @@ $('#TablaAreas tbody').on('click', 'td>button.EDITAR', function () {
 })
 
 
-$('#TablaAreas tbody').on('click', 'td>button.ELIMINAR', function () {
+$(document).ready(function() {
+    $('#TablaAreas tbody').on('click', 'td>button.VISUALIZAR', function () {
+        
+        var tr = $(this).closest('tr');
+        var row = TablaAreas.row(tr);
+        ID_AREA = row.data().ID_AREA
+        
+        hacerSoloLectura2(row.data(), '#ModalArea');
 
+         editarDatoTabla(row.data(), 'formArea', 'ModalArea',1)
+
+
+           
+  if (row.data().FOTO_ORGANIGRAMA) {
+        var archivo = row.data().FOTO_ORGANIGRAMA;
+        var extension = archivo.substring(archivo.lastIndexOf("."));
+        var imagenUrl = '/mostrarFoto/' + row.data().ID_AREA + extension;
+        console.log(imagenUrl); 
+
+        if ($('#FOTO_ORGANIGRAMA').data('dropify')) {
+            $('#FOTO_ORGANIGRAMA').dropify().data('dropify').destroy();
+            $('#FOTO_ORGANIGRAMA').dropify().data('dropify').settings.defaultFile = imagenUrl;
+            $('#FOTO_ORGANIGRAMA').dropify().data('dropify').init();
+        } else {
+            $('#FOTO_ORGANIGRAMA').attr('data-default-file', imagenUrl);
+            $('#FOTO_ORGANIGRAMA').dropify({
+                messages: {
+                    'default': 'Arrastre la imagen aquí o haga click',
+                    'replace': 'Arrastre la imagen o haga clic para reemplazar',
+                    'remove': 'Quitar',
+                    'error': 'Ooops, ha ocurrido un error.'
+                },
+                error: {
+                    'fileSize': 'Demasiado grande ({{ value }} max).',
+                    'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
+                    'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
+                    'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
+                    'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
+                    'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
+                }
+            });
+        }
+    } else {
+        $('#FOTO_ORGANIGRAMA').dropify().data('dropify').resetPreview();
+        $('#FOTO_ORGANIGRAMA').dropify().data('dropify').clearElement();
+    }
+
+
+
+    $('#nav-encargados-tab').prop('disabled', false)
+    $('#nav-cargos-tab').prop('disabled', false)
+
+    //CARGAMOS LA TABLA DE LOS DEPARTAMENTOS
+    TablaEncargados(ID_AREA)
+
+        $('#ModalArea .modal-title').html(row.data().NOMBRE);
+        
+
+
+
+    });
+
+    $('#ModalArea').on('hidden.bs.modal', function () {
+        resetFormulario('#ModalArea');
+    });
+});
+
+
+
+$('#TablaAreas tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = TablaAreas.row(tr);
 
+    var estado = $(this).is(':checked') ? 1 : 0;
+
     data = {
         api: 1,
-        ELIMINAR: 1,
+        ELIMINAR: estado == 0 ? 1 : 0, 
         ID_AREA: row.data().ID_AREA
-    }
-    
-    eliminarDatoTabla(data, [TablaAreas], 'areasDelete')
+    };
 
-})
+    eliminarDatoTabla(data, [TablaAreas], 'areasDelete');
+});
+
+
+
+
 
 
 $('#TablaAreas tbody').on('click', 'td>button.ORGANIGRAMA', function () {

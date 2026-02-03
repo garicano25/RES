@@ -41,17 +41,14 @@ class seleccionController extends Controller
     public function index()
     {
         $areas = DB::select("
-        SELECT DISTINCT cat.ID_CATALOGO_CATEGORIA AS ID, cat.NOMBRE_CATEGORIA AS NOMBRE
-        FROM catalogo_categorias cat
-        INNER JOIN catalogo_vacantes vac ON vac.CATEGORIA_VACANTE = cat.ID_CATALOGO_CATEGORIA
-        WHERE cat.ACTIVO = 1
-    ");
-    
-
+            SELECT DISTINCT cat.ID_CATALOGO_CATEGORIA AS ID, cat.NOMBRE_CATEGORIA AS NOMBRE
+            FROM catalogo_categorias cat
+            INNER JOIN catalogo_vacantes vac ON vac.CATEGORIA_VACANTE = cat.ID_CATALOGO_CATEGORIA
+            WHERE cat.ACTIVO = 1
+        ");
 
         $puesto = catalogoexperienciaModel::orderBy('NOMBRE_PUESTO', 'ASC')->get();
         $pruebas = catalogopruebasconocimientosModel::orderBy('NOMBRE_PRUEBA', 'ASC')->get();
-
 
         return view('RH.Selección.seleccion', compact('areas','puesto','pruebas'));
     }
@@ -59,17 +56,14 @@ class seleccionController extends Controller
     public function index2()
     {
         $areas = DB::select("
-        SELECT DISTINCT cat.ID_CATALOGO_CATEGORIA AS ID, cat.NOMBRE_CATEGORIA AS NOMBRE
-        FROM catalogo_categorias cat
-        INNER JOIN catalogo_vacantes vac ON vac.CATEGORIA_VACANTE = cat.ID_CATALOGO_CATEGORIA
-        WHERE cat.ACTIVO = 1
-    ");
-
-
+            SELECT DISTINCT cat.ID_CATALOGO_CATEGORIA AS ID, cat.NOMBRE_CATEGORIA AS NOMBRE
+            FROM catalogo_categorias cat
+            INNER JOIN catalogo_vacantes vac ON vac.CATEGORIA_VACANTE = cat.ID_CATALOGO_CATEGORIA
+            WHERE cat.ACTIVO = 1
+        ");
 
         $puesto = catalogoexperienciaModel::orderBy('NOMBRE_PUESTO', 'ASC')->get();
         $pruebas = catalogopruebasconocimientosModel::orderBy('NOMBRE_PRUEBA', 'ASC')->get();
-
 
         return view('RH.Selección.visualizarseleccion', compact('areas', 'puesto', 'pruebas'));
     }
@@ -78,28 +72,45 @@ class seleccionController extends Controller
     public function Tablaseleccion()
     {
         try {
+
             $vacantes = DB::select("
             SELECT vac.*, 
                    vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
                    cat.NOMBRE_CATEGORIA
             FROM catalogo_vacantes vac
-            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+            LEFT JOIN catalogo_categorias cat 
+                ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
             WHERE vac.ACTIVO = 1
+            AND (
+                vac.FECHA_EXPIRACION >= CURDATE()
+                OR EXISTS (
+                    SELECT 1
+                    FROM formulario_seleccion fs
+                    WHERE fs.VACANTES_ID = vac.ID_CATALOGO_VACANTE
+                    AND fs.ACTIVO = 1
+                )
+            )
         ");
 
             foreach ($vacantes as $vacante) {
+
                 $postulados = DB::table('formulario_seleccion')
-                ->where('VACANTES_ID', $vacante->VACANTES_ID)
+                    ->where('VACANTES_ID', $vacante->VACANTES_ID)
                     ->where('ACTIVO', 1)
-                    ->select('NOMBRE_SELC', 'PRIMER_APELLIDO_SELEC', 'SEGUNDO_APELLIDO_SELEC')
+                    ->select(
+                        'NOMBRE_SELC',
+                        'PRIMER_APELLIDO_SELEC',
+                        'SEGUNDO_APELLIDO_SELEC'
+                    )
                     ->get();
 
-                $listaPostulados = "<ul>";
+                $listaPostulados = '<ul>';
                 foreach ($postulados as $postulado) {
-                    $nombreCompleto = "{$postulado->NOMBRE_SELC} {$postulado->PRIMER_APELLIDO_SELEC} {$postulado->SEGUNDO_APELLIDO_SELEC}";
+                    $nombreCompleto =
+                        "{$postulado->NOMBRE_SELC} {$postulado->PRIMER_APELLIDO_SELEC} {$postulado->SEGUNDO_APELLIDO_SELEC}";
                     $listaPostulados .= "<li>{$nombreCompleto}</li>";
                 }
-                $listaPostulados .= "</ul>";
+                $listaPostulados .= '</ul>';
 
                 $vacante->POSTULADOS = $listaPostulados;
             }
@@ -115,6 +126,7 @@ class seleccionController extends Controller
             ]);
         }
     }
+
 
 
 

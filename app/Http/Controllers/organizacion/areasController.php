@@ -38,20 +38,27 @@ class areasController extends Controller
         try {
 
             $tabla = DB::select("CALL sp_obtener_organigrama_areas_b()");
-            $COUNT = 1;
-            
-            foreach ($tabla as $key => $value) {
-
-                $value->COUNT = $COUNT;
-                $COUNT += 1;
 
 
-                $value->BTN_ELIMINAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill ELIMINAR "><i class="bi bi-power"></i></button>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom EDITAR rounded-pill"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_ORGANIGRAMA = '<button type="button" class="btn btn-success btn-custom ORGANIGRAMA rounded-pill"><i class="bi bi-diagram-3-fill"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-pdf" data-id="' . $value->ID_AREA . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
 
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_AREA . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_ORGANIGRAMA = '<button type="button" class="btn btn-success btn-custom ORGANIGRAMA rounded-pill"><i class="bi bi-diagram-3-fill"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-pdf" data-id="' . $value->ID_AREA . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_AREA . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ORGANIGRAMA = '<button type="button" class="btn btn-success btn-custom ORGANIGRAMA rounded-pill"><i class="bi bi-diagram-3-fill"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-pdf" data-id="' . $value->ID_AREA . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
+                }
             }
+
+
+
 
             $dato['data'] = $tabla;
             $dato["msj"] = 'Información consultada correctamente';

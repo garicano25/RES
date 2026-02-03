@@ -323,6 +323,7 @@ $('#Tablanuncios tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+
 $('#Tablanuncios tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablanuncios.row(tr);
