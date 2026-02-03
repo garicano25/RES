@@ -427,8 +427,9 @@
                             <li><a class="dropdown-item" href="{{ url('/listavacantes') }}">Banco de CV</a></li>
 
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/postulaciones')}}">Vacantes activas</a></li>
-
+                            <li><a class="dropdown-item" href="{{url('/postulaciones')}}">Vacantes Actual</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/postulacioneshistorial')}}">Vacantes Historial</a></li>
                         </ul>
                     </li>
                     @endif
@@ -441,7 +442,7 @@
                             <li><a class="dropdown-item" href="{{ url('/seleccion') }}">Selección</a></li>
                             <hr class="dropdown-divider">
 
-                            <li><a class="dropdown-item" href="{{url('/visualizarseleccion')}}">Visualizar </a></li>
+                            <li><a class="dropdown-item" href="{{url('/visualizarseleccion')}}">Historial</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown" style="margin-left: -2px;">
@@ -733,7 +734,7 @@
     @endif
 
     @if(request()->is('postulaciones'))
-    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=6.1"></script>
+    <script src="/assets/js_sitio/reclutamiento/vacantesactivas.js?v=6.2"></script>
     @endif
 
     @if(request()->is('motivovacante'))
@@ -794,6 +795,9 @@
     <script src="/assets/js_sitio/organizacion/requerimientosolicitud.js?v=2.0"></script>
     @endif
 
+    @if(request()->is('postulacioneshistorial'))
+    <script src="/assets/js_sitio/reclutamiento/vacantesactivashistorial.js"></script>
+    @endif
 
 </body>
 

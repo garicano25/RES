@@ -6,15 +6,12 @@
 
 
 <div class="contenedor-contenido">
-    <ol class="breadcrumb mb-5">
-        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Vacantes</h3>
-        <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_VACANTESACT" style="margin-left: auto;">
-            Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-        </button>
+    <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
+        <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Vacantes - Historial</h3>
     </ol>
 
     <div class="card-body">
-        <table id="Tablapostulaciones" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
+        <table id="Tablapostulacioneshistorial" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
     </div>
 </div>
 
@@ -30,7 +27,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <!-- Contenedor para mostrar el total de resultados -->
 
                 <!-- Tabs -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">

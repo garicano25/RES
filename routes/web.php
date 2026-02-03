@@ -50,6 +50,8 @@ use App\Http\Controllers\reclutamiento\vacantesactivasController;
 use App\Http\Controllers\organizacion\catalogoareainteresController;
 use App\Http\Controllers\organizacion\catalogogeneroControlller;
 use App\Http\Controllers\reclutamiento\formCVController;
+use App\Http\Controllers\reclutamiento\vacanteshistorialController;
+
 
 // CONTROLADORES DE SELECCION
 use App\Http\Controllers\seleccion\seleccionController;
@@ -424,6 +426,10 @@ Route::post('/guardarPreseleccion', [vacantesactivasController::class, 'guardarP
 Route::get('/informacionpreseleccion/{idVacante}', [VacantesactivasController::class, 'informacionpreseleccion']);
 Route::post('/actualizarDisponibilidad', [VacantesactivasController::class, 'actualizarDisponibilidad']);
 
+// HISTORIAL DE VACANTES
+
+Route::get('/postulacioneshistorial', [vacanteshistorialController::class, 'index']);
+Route::get('/Tablapostulacioneshistorial', [vacanteshistorialController::class, 'Tablapostulacioneshistorial']);
 
 
 

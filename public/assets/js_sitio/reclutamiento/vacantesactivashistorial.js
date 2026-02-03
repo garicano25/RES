@@ -51,7 +51,7 @@ $("#guardarFormVACANTESACT").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_VACANTESACT').modal('hide')
                     document.getElementById('formularioVACANTESACT').reset();
-                    Tablapostulaciones.ajax.reload()
+                    Tablapostulacioneshistorial.ajax.reload()
 
            
                 
@@ -91,7 +91,7 @@ $("#guardarFormVACANTESACT").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_VACANTESACT').modal('hide')
                     document.getElementById('formularioVACANTESACT').reset();
-                    Tablapostulaciones.ajax.reload()
+                    Tablapostulacioneshistorial.ajax.reload()
 
 
                 }, 300);  
@@ -107,7 +107,7 @@ $("#guardarFormVACANTESACT").click(function (e) {
 });
 
 
-var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
+var Tablapostulacioneshistorial = $("#Tablapostulacioneshistorial").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -126,12 +126,12 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablapostulaciones',
+        url: '/Tablapostulacioneshistorial',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablapostulaciones.columns.adjust().draw();
+            Tablapostulacioneshistorial.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -187,9 +187,9 @@ var Tablapostulaciones = $("#Tablapostulaciones").DataTable({
 
 
 $(document).ready(function() {
-    $('#Tablapostulaciones tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablapostulacioneshistorial tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablapostulaciones.row(tr);
+        var row = Tablapostulacioneshistorial.row(tr);
         
         hacerSoloLectura(row.data(), '#miModal_vacantes');
 
@@ -327,7 +327,7 @@ function TotalPostulantes(idVacante, categoriaVacante) {
                                         <span id="total-cumplimiento-${personalInfo.CURP_CV}" class="total-porcentaje-circle">0%</span>
                                     </div>
                                     <div class="text-center mt-4">
-                                        <button class="btn btn-success guardar-postulante" data-curp="${personalInfo.CURP_CV}" data-id="${idVacante}" data-categoria="${categoriaVacante}">Guardar Información</button>
+                                        <button class="btn btn-success guardar-postulante" data-curp="${personalInfo.CURP_CV}" data-id="${idVacante}" data-categoria="${categoriaVacante}" disabled>Guardar Información</button>
                                     </div>
                                 </div>
                             </div>
@@ -442,8 +442,8 @@ function guardarInformacionPostulante(idVacante, categoriaVacante, postulante) {
                 success: function (response) {
                     
 
-                    if (typeof Tablapostulaciones !== 'undefined') {
-                        Tablapostulaciones.ajax.reload(null, false);
+                    if (typeof Tablapostulacioneshistorial !== 'undefined') {
+                        Tablapostulacioneshistorial.ajax.reload(null, false);
                     }
                     
 
@@ -641,7 +641,6 @@ $(document).ready(function () {
             },
             success: function(response) {
                 if (isAvailable) {
-                    button.removeAttr('disabled');
                     button.removeClass('btn-secondary').addClass('btn-primary');
                 } else {
                     button.attr('disabled', 'disabled');
@@ -708,12 +707,7 @@ $(document).ready(function () {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     data: data,
-                    success: function (response) {
-                        
-                        if (typeof Tablapostulaciones !== 'undefined') {
-                            Tablapostulaciones.ajax.reload(null, false);
-                        }
-                        
+                    success: function(response) {
                         Swal.fire({
                             icon: 'success',
                             title: 'Preseleccionado ',
@@ -742,8 +736,6 @@ $(document).ready(function () {
             }
         });
     };
-
-
 });
 
 
