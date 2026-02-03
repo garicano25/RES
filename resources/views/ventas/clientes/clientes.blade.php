@@ -157,7 +157,7 @@
                 </div>
 
                 <div class="col-6 mb-3">
-                  <label class="form-label">Constancia de situación fiscal (PDF) *</label>
+                  <label class="form-label">Constancia de situación fiscal (PDF) </label>
                   <div class="d-flex align-items-center">
                     <input type="file" class="form-control me-2" name="CONSTANCIA_DOCUMENTO" accept=".pdf">
                     <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
