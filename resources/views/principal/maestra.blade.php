@@ -439,7 +439,7 @@
                             <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="{{ url('/seleccion') }}">Selección</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/seleccion') }}">Actual</a></li>
                             <hr class="dropdown-divider">
 
                             <li><a class="dropdown-item" href="{{url('/visualizarseleccion')}}">Historial</a></li>
