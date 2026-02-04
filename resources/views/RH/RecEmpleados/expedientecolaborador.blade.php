@@ -3,9 +3,6 @@
 @section('contenido')
 
 
-
-
-
 <style>
     .multisteps-form__progress {
         display: flex;
@@ -16,8 +13,6 @@
         width: 100%;
         height: 40px;
     }
-
-
 
     .multisteps-form__progress-btn {
         position: relative;
@@ -49,8 +44,6 @@
         color: #c9c4c4;
     }
 
-
-
     .texto-seleccionado {
         color: #0d6efd;
         font-weight: bold;
@@ -64,7 +57,6 @@
         text-decoration: underline;
     }
 
-
     .text-warning {
         color: orange !important;
     }
@@ -72,7 +64,6 @@
     .text-success {
         color: green !important;
     }
-
 
     .estado-verde {
         background-color: #d4edda !important;
@@ -98,8 +89,6 @@
         flex-direction: column;
         justify-content: center;
     }
-
-
 
     .bloque-contrato,
     .bloque-adenda-contrato {
@@ -139,7 +128,7 @@
                 <div class="tab-pane fade show active" id="contratos" role="tabpanel" aria-labelledby="contratos-tab">
                     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
                         <h3 style="color: #ffffff; margin: 0;">
-                            <i class="bi bi-folder2-open"></i>&nbsp;&nbsp;Expediente
+                            <i class="bi bi-folder2-open"></i>&nbsp;&nbsp;Expediente {{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}
                         </h3>
                     </ol>
                     <div class="card-body position-relative" style="display: block;">
