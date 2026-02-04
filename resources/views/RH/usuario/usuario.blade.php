@@ -157,7 +157,7 @@
                                         <div class="col-12 campo_dato_empleado">
                                             <div class="form-group">
                                                 <label>Curp *</label>
-                                                <input type="text" class="form-control" id="CURP" name="CURP" >
+                                                <input type="text" class="form-control" id="CURP" name="CURP" required>
                                             </div>
                                         </div>
                                     </div>

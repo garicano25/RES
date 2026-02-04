@@ -106,8 +106,10 @@ Modalusuario.addEventListener('hidden.bs.modal', event => {
 $("#guardarFormUSUARIO").click(function (e) {
     e.preventDefault();
 
+
         formularioValido = validarFormulario3($('#formularioUSUARIO'))
 
+    
     if (formularioValido) {
 
     if (ID_USUARIO == 0) {
