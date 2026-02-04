@@ -189,7 +189,6 @@
             width: 120px;
             height: 120px;
             border-radius: 50%;
-            /* 👈 hace la imagen circular */
             overflow: hidden;
             flex-shrink: 0;
             background-color: #fff;
@@ -439,7 +438,6 @@
                                     border-radius: 10px;
                                     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
                                     display: none;
-                                    /* Oculto por defecto */
                                     z-index: 999;
                                     overflow: hidden;
                                 }
@@ -644,7 +642,6 @@
                                     width: 100%;
                                     height: 100%;
                                 }
-
 
                                 .temperature {
                                     font-size: 1.5vw;
@@ -993,11 +990,9 @@
                             <div class="softwares__top">
                                 <div class="softwares__card">
                                     <a href="https://sehilab-prueba.results-in-performance.com/" target="_blank">
-
                                         <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt="">
                                         <h3 class="content__paragraph">SEHILAB</h3>
                                     </a>
-
                                 </div>
                                 <div class="softwares__greyCard" onclick="window.open('https://wcle.results-in-performance.com/', '_blank')" style="cursor: pointer;">
                                     <h3 class="content__paragraph">WELL CONTROL</h3>
@@ -1006,7 +1001,6 @@
                             </div>
 
                             <div class="softwares__bottom">
-
                                 <div class="softwares__greyCard">
                                     <!-- <img class="softwares__image" src="assets/Modulos/img/sehilab.png" alt=""> -->
                                     <h3 class="content__paragraph">TRAIN+</h3>
@@ -1016,7 +1010,6 @@
                                     <h3 class="content__paragraph">RigCAP</h3>
                                 </div>
                             </div>
-
                             <div class="learning">
                                 <div class="learning__text">
                                     <h2 class="learning__title">E-learning</h2>
@@ -1066,10 +1059,7 @@
 
             <div class="modal-body">
 
-
                 <div id="mensajeGeneralEmpresa" class="mensaje-general" style="display:none;"></div>
-
-
 
                 <!-- DATOS GENERALES -->
                 <section class="info-section">
@@ -1202,9 +1192,7 @@
 
         .contacto-item .info-grid>div span {
             display: block;
-            /* 👈 título arriba */
             color: var(--pantone-azul);
-            /* 👈 azul */
             font-weight: 600;
             font-size: 13px;
             margin-bottom: 4px;
@@ -1222,9 +1210,7 @@
 
         #contenedorContactos .info-grid>div span {
             display: block;
-            /* título arriba */
             color: var(--pantone-azul);
-            /* azul correcto */
             font-weight: 600;
             font-size: 13px;
             margin-bottom: 6px;
@@ -1297,7 +1283,6 @@
             color: var(--pantone-negro);
             line-height: 1.4;
             word-break: break-word;
-            /* ← evita desalineación */
         }
 
 
@@ -1336,7 +1321,6 @@
             display: block;
             font-size: 14px;
             font-weight: 400;
-            /* ← NO negrita */
             color: var(--pantone-negro);
             line-height: 1.4;
         }
@@ -1352,7 +1336,6 @@
                 grid-template-columns: 1fr;
             }
         }
-
 
         .info-section {
             background: #fff;
