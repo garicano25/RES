@@ -250,7 +250,7 @@
                             <h3 style="color: #ffffff; margin: 0;">
                                 <i class="bi bi-person"></i>&nbsp;&nbsp;Información del colaborador
                             </h3>
-                            <button class="btn" style="background-color: #236192; color: #ffffff; border: none; padding: 10px 20px; border-radius: 5px; display: none;" id="DESCARGAR_CREDENCIAL">Crear Credencial</button>
+                        
                         </ol>
 
                         <!-- Formulario de Datos Generales -->
@@ -912,11 +912,19 @@
                 <div class="modal-body">
                     {!! csrf_field() !!}
 
+                    <div class="mb-3">
+                        <label>Este documento se debe actualizar o renovar anualmente *</label>
+                        <select class="form-select" id="RENOVACION_DOCUMENTO" name="RENOVACION_DOCUMENTO" required>
+                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="1">Sí</option>
+                            <option value="2">No</option>
+                        </select>
+                    </div>
 
                     <div class="mb-3">
                         <label>Tipo de documento *</label>
                         <select class="form-select" id="TIPO_DOCUMENTO" name="TIPO_DOCUMENTO" >
-                            <option value="0" disabled selected>Seleccione una opción</option>
+                            <option value="" disabled selected>Seleccione una opción</option>
                             <option value="1">Copia del INE</option>
                             <option value="2">Copia del Pasaporte</option>
                             <option value="3">Copia de la licencia de conducción tipo chofer</option>

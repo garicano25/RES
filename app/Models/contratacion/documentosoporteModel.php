@@ -12,6 +12,7 @@ class documentosoporteModel extends Model
     protected $table = 'documentos_soporte_contratacion';
     protected $fillable = [
         'CURP',
+        'RENOVACION_DOCUMENTO',
         'TIPO_DOCUMENTO',
         'NOMBRE_DOCUMENTO',
         'DOCUMENTO_SOPORTE',

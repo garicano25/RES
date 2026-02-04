@@ -196,7 +196,6 @@ $(document).ready(function() {
         `);
 
 
-    $('#DESCARGAR_CREDENCIAL').css("display", 'none');
 
 
 
@@ -779,16 +778,6 @@ document.getElementById('step1').addEventListener('click', function() {
 });
 
 
-document.getElementById('DESCARGAR_CREDENCIAL').addEventListener('click', function() {
-    if (typeof curpSeleccionada === 'undefined' || !curpSeleccionada) {
-        alert('Por favor seleccione un empleado primero');
-        return;
-    }
-        window.location.href = '/descargar-credencial?curp=' + encodeURIComponent(curpSeleccionada);
-    
-
-});
-
 
 function obtenerCargo() {
     $.ajax({
@@ -931,7 +920,6 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content').css("display", 'none');
 
 
-    $('#DESCARGAR_CREDENCIAL').css("display", 'none');
 
 
     

@@ -49,6 +49,14 @@
     </link>
     @endif
 
+    @if(request()->is('expediente'))
+    <!-- form_wizard_steps -->
+    <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
+    </link>
+    @endif
+
+
+
 
     <style>
         .dropdown-menu {
@@ -470,6 +478,11 @@
                                 <a class="dropdown-item" href="{{ url('/recempleado') }}">
                                     Rec.Empleados </a>
                             </li>
+                            <hr class="dropdown-divider">
+                            <li>
+                                <a class="dropdown-item" href="{{ url('/expediente') }}">
+                                    Expediente </a>
+                            </li>
                             {{-- Para líderes --}}
                             @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Líder de Operaciones', 'Administrador']))
                             <hr class="dropdown-divider">
@@ -762,7 +775,7 @@
     @endif
 
     @if(request()->is('contratacion'))
-    <script src="/assets/js_sitio/contratacion/contratacion.js?v=11.28"></script>
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=11.29"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
@@ -797,6 +810,13 @@
 
     @if(request()->is('postulacioneshistorial'))
     <script src="/assets/js_sitio/reclutamiento/vacantesactivashistorial.js"></script>
+    @endif
+
+
+    @if(request()->is('expediente'))
+    <script src="/assets/js_sitio/RecEmpleados/expediente.js"></script>
+    <!-- Form wizard -->
+    <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
 </body>

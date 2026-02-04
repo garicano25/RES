@@ -303,8 +303,7 @@ columnDefs: [
     { targets: 2, title: 'Nombre del solicitante', className: 'all text-center' }, 
     { targets: 3, title: 'Fecha de solicitud', className: 'all text-center' },
     { targets: 4, title: 'Estatus', className: 'all text-center' }, 
-        { targets: 5, title: 'Pendientes', className: 'all text-center' },
-
+    { targets: 5, title: 'Pendientes', className: 'all text-center' },
     { targets: 6, title: 'Editar', className: 'all text-center' },
     { targets: 7, title: 'Visualizar', className: 'all text-center' },
 
