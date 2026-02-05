@@ -315,6 +315,7 @@ class salidalmacenController extends Controller
                                                             'ASIGNADO_ID'      => $nombreAsignacionDet,
                                                             'INVENTARIO_ID'    => $art['INVENTARIO'],
                                                             'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                            'CANTIDAD_SALIDA'   => $cantidad,
                                                             'created_at'       => now(),
                                                             'updated_at'       => now()
                                                         ]);
@@ -362,6 +363,7 @@ class salidalmacenController extends Controller
                                                         'ASIGNADO_ID'      => $nombreAsignacionUnico,
                                                         'INVENTARIO_ID'    => $mat['INVENTARIO'],
                                                         'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
+                                                        'CANTIDAD_SALIDA'   => $cantidad,
                                                         'created_at'       => now(),
                                                         'updated_at'       => now()
                                                     ]);
