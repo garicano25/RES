@@ -919,10 +919,6 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     $('#step1-content').css("display", 'block');
     $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content').css("display", 'none');
 
-
-
-
-    
     if (row.data().FOTO_USUARIO) {
         var archivo = row.data().FOTO_USUARIO;
         var extension = archivo.substring(archivo.lastIndexOf("."));
@@ -2632,7 +2628,7 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 
 
 
-     cargarInformacionContrato();
+    cargarInformacionContrato();
     cargarTablaDocumentosSoporteContrato();
     cargarTablaRenovacionContrato ();
     cargarTablaInformacionMedica ();
@@ -2641,6 +2637,10 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
     cargarTablaSolicitudvacaciones();
     cargarTablaAccionesDisciplinarias ();
     cargarTablaRecibosNomina();
+    cargarTablaAsignacionesColaborador();
+
+    validarPrimerContrato();
+
 
 });
 
@@ -3355,12 +3355,7 @@ columns: [
         data: 'BTN_EDITAR',
         className: 'text-center'
     }
-],
-
-
-
-
-
+    ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
@@ -4839,6 +4834,98 @@ $('#Tablarecibonomina').on('click', '.ver-archivo-recibonomina', function () {
 
 
 
+function cargarTablaAsignacionesColaborador() {
+    if ($.fn.DataTable.isDataTable('#Tablasignacioncolaborador')) {
+        Tablasignacioncolaborador.clear().destroy();
+    }
+
+    Tablasignacioncolaborador = $("#Tablasignacioncolaborador").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { curp: curpSeleccionada }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablasignacioncolaborador',  
+            beforeSend: function () {
+                $('#loadingIcon16').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon16').css('display', 'none');
+                Tablasignacioncolaborador.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon16').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+        {
+            data: null,
+            render: function (data, type, row, meta) {
+                return meta.row + 1;
+            },
+            className: 'text-center'
+        },
+        { data: 'DESCRIPCION_EQUIPO' },
+        { data: 'CANTIDAD_SALIDA' },
+        { data: 'MARCA_EQUIPO' },
+        { data: 'MODELO_EQUIPO' },
+        { data: 'SERIE_EQUIPO' },
+        { data: 'CODIGO_EQUIPO' },
+        { data: 'BTN_EDITAR' }
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Descripción', className: 'all text-center' },
+            { targets: 2, title: 'Cantidad', className: 'all text-center' },
+            { targets: 3, title: 'Marca', className: 'all text-center' },
+            { targets: 4, title: 'Modelo', className: 'all text-center' },
+            { targets: 5, title: 'No. Serie', className: 'all text-center' },
+            { targets: 6, title: 'No. Inventario', className: 'all text-center' },
+            { targets: 7, title: 'Editar', className: 'all text-center' }
+        ]
+    });
+}
+
+
+function validarPrimerContrato() {
+
+    $('#asignacion_colaborador').hide();
+
+    $.ajax({
+        url: '/validarPrimerContrato',
+        method: 'GET',
+        data: {
+            contrato_id: contrato_id,
+            curp: curpSeleccionada
+        },
+        success: function (response) {
+            if (response.es_primer_contrato) {
+                $('#asignacion_colaborador').show();
+            } else {
+                $('#asignacion_colaborador').hide();
+            }
+        },
+        error: function () {
+            $('#asignacion_colaborador').hide();
+        }
+    });
+}
+
 
 // <!-- ============================================================================================================================ -->
 // <!--                                                          STEP 4                                                              -->
@@ -5200,116 +5287,6 @@ $('#Tablasoportecontrato').on('click', '.ver-archivo-documentocolaboradorsoporte
 });
 
 
-// $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
-//     var tr = $(this).closest('tr');
-//     var row = Tablasoportecontrato.row(tr);
-
-//     ID_DOCUMENTO_COLABORADOR_CONTRATO = row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO;
-
-//     editarDatoTabla(row.data(), 'formularioSOPORTECONTRATO', 'miModal_SOPORTECONTRATO', 1);
-
-//     $('#miModal_SOPORTECONTRATO .modal-title').html(row.data().NOMBRE_DOCUMENTO_SOPORTECONTRATO);
-
-
-//     const mostrarDivdocumentos = ['11','14'];
-
-//     const mostrarfoto = ['7'];
-
-
-//     const tipoSeleccionado1 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); 
-
-//     if (mostrarDivdocumentos.includes(tipoSeleccionado1)) {
-//         document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'block';
-//     } else {
-//         document.getElementById('FECHAS_SOPORTEDOCUMENTOSCONTRATO').style.display = 'none';
-//     }
-
-
-//     const tipoSeleccionado7 = String(row.data().TIPO_DOCUMENTO_SOPORTECONTRATO); 
-
-//      if (mostrarfoto.includes(tipoSeleccionado7)) {
-//         document.getElementById('DIV_FOTO_FIRMA').style.display = 'block';
-//     } else {
-//         document.getElementById('DIV_FOTO_FIRMA').style.display = 'none';
-//     }
- 
-
-
-
-
-//       if (row.data().FOTO_FIRMA) {
-//         var archivo = row.data().FOTO_FIRMA;
-//         var extension = archivo.substring(archivo.lastIndexOf("."));
-//         var imagenUrl = '/firmacolaborador/' + row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO + extension;
-
-//         if ($('#FOTO_FIRMA').data('dropify')) {
-//             $('#FOTO_FIRMA').dropify().data('dropify').destroy();
-//             $('#FOTO_FIRMA').dropify().data('dropify').settings.defaultFile = imagenUrl;
-//             $('#FOTO_FIRMA').dropify().data('dropify').init();
-//         } else {
-//             $('#FOTO_FIRMA').attr('data-default-file', imagenUrl);
-//             $('#FOTO_FIRMA').dropify({
-//                 messages: {
-//                     'default': 'Arrastre la imagen aquí o haga click',
-//                     'replace': 'Arrastre la imagen o haga clic para reemplazar',
-//                     'remove': 'Quitar',
-//                     'error': 'Ooops, ha ocurrido un error.'
-//                 },
-//                 error: {
-//                     'fileSize': 'Demasiado grande ({{ value }} max).',
-//                     'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
-//                     'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
-//                     'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
-//                     'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
-//                     'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
-//                 }
-//             });
-//         }
-//     } else {
-//         $('#FOTO_FIRMA').dropify().data('dropify').resetPreview();
-//         $('#FOTO_FIRMA').dropify().data('dropify').clearElement();
-//     }
-
-
-
-
-
-    
-//       if (row.data().FOTO_FIRMA_RH) {
-//         var archivo = row.data().FOTO_FIRMA_RH;
-//         var extension = archivo.substring(archivo.lastIndexOf("."));
-//         var imagenUrl = '/firmarh/' + row.data().ID_DOCUMENTO_COLABORADOR_CONTRATO + extension;
-
-//         if ($('#FOTO_FIRMA_RH').data('dropify')) {
-//             $('#FOTO_FIRMA_RH').dropify().data('dropify').destroy();
-//             $('#FOTO_FIRMA_RH').dropify().data('dropify').settings.defaultFile = imagenUrl;
-//             $('#FOTO_FIRMA_RH').dropify().data('dropify').init();
-//         } else {
-//             $('#FOTO_FIRMA_RH').attr('data-default-file', imagenUrl);
-//             $('#FOTO_FIRMA_RH').dropify({
-//                 messages: {
-//                     'default': 'Arrastre la imagen aquí o haga click',
-//                     'replace': 'Arrastre la imagen o haga clic para reemplazar',
-//                     'remove': 'Quitar',
-//                     'error': 'Ooops, ha ocurrido un error.'
-//                 },
-//                 error: {
-//                     'fileSize': 'Demasiado grande ({{ value }} max).',
-//                     'minWidth': 'Ancho demasiado pequeño (min {{ value }}}px).',
-//                     'maxWidth': 'Ancho demasiado grande (max {{ value }}}px).',
-//                     'minHeight': 'Alto demasiado pequeño (min {{ value }}}px).',
-//                     'maxHeight': 'Alto demasiado grande (max {{ value }}px max).',
-//                     'imageFormat': 'Formato no permitido, sólo ({{ value }}).'
-//                 }
-//             });
-//         }
-//     } else {
-//         $('#FOTO_FIRMA_RH').dropify().data('dropify').resetPreview();
-//         $('#FOTO_FIRMA_RH').dropify().data('dropify').clearElement();
-//     }
-
-// });
-
 
 $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -5374,21 +5351,19 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_FIRMA').dropify().data('dropify').clearElement();
     }
 
-    // ======= NUEVO: flags y eventos para COLABORADOR =======
-    $('#ELIMINAR_FOTO_FIRMA').val('0'); // reset flag por si venías de otra edición
+    $('#ELIMINAR_FOTO_FIRMA').val('0');
     $('#FOTO_FIRMA')
-        .off('dropify.afterClear._flag change._flag') // evitar handlers duplicados
+        .off('dropify.afterClear._flag change._flag') 
         .on('dropify.afterClear._flag', function () {
-            $('#ELIMINAR_FOTO_FIRMA').val('1'); // pedir borrado en backend
-            $(this).val('');                     // limpiar input file real
+            $('#ELIMINAR_FOTO_FIRMA').val('1'); 
+            $(this).val('');                   
         })
         .on('change._flag', function () {
             if (this.files && this.files.length > 0) {
-                $('#ELIMINAR_FOTO_FIRMA').val('0'); // si elige archivo, no borrar
+                $('#ELIMINAR_FOTO_FIRMA').val('0'); 
             }
         });
 
-    // ======= Firma RH (igual que tenías) =======
     if (row.data().FOTO_FIRMA_RH) {
         var archivo = row.data().FOTO_FIRMA_RH;
         var extension = archivo.substring(archivo.lastIndexOf("."));
@@ -5422,8 +5397,7 @@ $('#Tablasoportecontrato').on('click', 'td>button.EDITAR', function () {
         $('#FOTO_FIRMA_RH').dropify().data('dropify').clearElement();
     }
 
-    // ======= NUEVO: flags y eventos para RH =======
-    $('#ELIMINAR_FOTO_FIRMA_RH').val('0'); // reset flag
+    $('#ELIMINAR_FOTO_FIRMA_RH').val('0'); 
     $('#FOTO_FIRMA_RH')
         .off('dropify.afterClear._flag change._flag')
         .on('dropify.afterClear._flag', function () {

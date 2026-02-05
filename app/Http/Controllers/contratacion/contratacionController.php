@@ -31,6 +31,7 @@ use App\Models\organizacion\catalogotipovacanteModel;
 use App\Models\organizacion\catalogomotivovacanteModel;
 use App\Models\organizacion\areasModel;
 
+use App\Models\inventario\asignacionesinventarioModel;
 
 
 use DB;
@@ -271,95 +272,95 @@ public function activarColaborador(Request $request, $id)
 
 /////////////////////////////////////////// STEP 1  DATOS GENERALES //////////////////////////////////
 
-public function mostrarfotocolaborador($colaborador_id)
-{
-    $foto = contratacionModel::findOrFail($colaborador_id);
-    return Storage::response($foto->FOTO_USUARIO);
-}
-    
-
-
-
-public function obtenerbajasalta(Request $request) {
-    $curp = $request->input('curp');
-
-    if (!$curp) {
-        return response()->json(['error' => 'CURP no proporcionada.'], 400);
+    public function mostrarfotocolaborador($colaborador_id)
+    {
+        $foto = contratacionModel::findOrFail($colaborador_id);
+        return Storage::response($foto->FOTO_USUARIO);
     }
+        
 
-    $altas = DB::table('formulario_contratacion')
-        ->select('FECHA_INGRESO as fecha')
-        ->where('CURP', $curp)
-        ->get();
 
-    $bajas = DB::table('formulario_desvinculacion')
-        ->select('FECHA_BAJA as fecha')
-        ->where('CURP', $curp)
-        ->get();
 
-    $reingresos = DB::table('reingreso_contratacion')
-        ->select('FECHA_REINGRESO as fecha')
-        ->where('CURP', $curp)
-        ->get();
+    public function obtenerbajasalta(Request $request) {
+        $curp = $request->input('curp');
 
-    $eventos = [];
-
-    foreach ($altas as $a) {
-        $eventos[] = ['tipo' => 'ALTA', 'fecha' => $a->fecha];
-    }
-
-    foreach ($bajas as $b) {
-        $eventos[] = ['tipo' => 'BAJA', 'fecha' => $b->fecha];
-    }
-
-    foreach ($reingresos as $r) {
-        $eventos[] = ['tipo' => 'REINGRESO', 'fecha' => $r->fecha];
-    }
-
-    usort($eventos, function ($a, $b) {
-        return strtotime($a['fecha']) - strtotime($b['fecha']);
-    });
-
-    $hoy = date('Y-m-d');
-    $historial = [];
-    $fechaInicio = null;
-    $indiceInicio = null;
-
-    foreach ($eventos as $i => $evento) {
-        if ($evento['tipo'] === 'ALTA' || $evento['tipo'] === 'REINGRESO') {
-            $fechaInicio = $evento['fecha'];
-            $indiceInicio = count($historial);
-            $historial[] = [
-                'tipo' => $evento['tipo'],
-                'fecha' => $evento['fecha'],
-                'fecha_fin' => '-',
-                'dias_transcurridos' => '-'
-            ];
-        } elseif ($evento['tipo'] === 'BAJA' && $fechaInicio !== null) {
-            $fechaFin = $evento['fecha'];
-            $dias = (strtotime($fechaFin) - strtotime($fechaInicio)) / 86400;
-            $historial[] = [
-                'tipo' => 'BAJA',
-                'fecha' => $fechaFin,
-                'fecha_fin' => $fechaFin,
-                'dias_transcurridos' => floor($dias)
-            ];
-            $historial[$indiceInicio]['fecha_fin'] = $fechaFin;
-            $historial[$indiceInicio]['dias_transcurridos'] = floor($dias);
-            $fechaInicio = null;
-            $indiceInicio = null;
+        if (!$curp) {
+            return response()->json(['error' => 'CURP no proporcionada.'], 400);
         }
-    }
 
-    // Si aún está activo
-    if ($fechaInicio !== null && $indiceInicio !== null) {
-        $dias = (strtotime($hoy) - strtotime($fechaInicio)) / 86400;
-        $historial[$indiceInicio]['fecha_fin'] = $hoy;
-        $historial[$indiceInicio]['dias_transcurridos'] = floor($dias);
-    }
+        $altas = DB::table('formulario_contratacion')
+            ->select('FECHA_INGRESO as fecha')
+            ->where('CURP', $curp)
+            ->get();
 
-    return response()->json($historial);
-}
+        $bajas = DB::table('formulario_desvinculacion')
+            ->select('FECHA_BAJA as fecha')
+            ->where('CURP', $curp)
+            ->get();
+
+        $reingresos = DB::table('reingreso_contratacion')
+            ->select('FECHA_REINGRESO as fecha')
+            ->where('CURP', $curp)
+            ->get();
+
+        $eventos = [];
+
+        foreach ($altas as $a) {
+            $eventos[] = ['tipo' => 'ALTA', 'fecha' => $a->fecha];
+        }
+
+        foreach ($bajas as $b) {
+            $eventos[] = ['tipo' => 'BAJA', 'fecha' => $b->fecha];
+        }
+
+        foreach ($reingresos as $r) {
+            $eventos[] = ['tipo' => 'REINGRESO', 'fecha' => $r->fecha];
+        }
+
+        usort($eventos, function ($a, $b) {
+            return strtotime($a['fecha']) - strtotime($b['fecha']);
+        });
+
+        $hoy = date('Y-m-d');
+        $historial = [];
+        $fechaInicio = null;
+        $indiceInicio = null;
+
+        foreach ($eventos as $i => $evento) {
+            if ($evento['tipo'] === 'ALTA' || $evento['tipo'] === 'REINGRESO') {
+                $fechaInicio = $evento['fecha'];
+                $indiceInicio = count($historial);
+                $historial[] = [
+                    'tipo' => $evento['tipo'],
+                    'fecha' => $evento['fecha'],
+                    'fecha_fin' => '-',
+                    'dias_transcurridos' => '-'
+                ];
+            } elseif ($evento['tipo'] === 'BAJA' && $fechaInicio !== null) {
+                $fechaFin = $evento['fecha'];
+                $dias = (strtotime($fechaFin) - strtotime($fechaInicio)) / 86400;
+                $historial[] = [
+                    'tipo' => 'BAJA',
+                    'fecha' => $fechaFin,
+                    'fecha_fin' => $fechaFin,
+                    'dias_transcurridos' => floor($dias)
+                ];
+                $historial[$indiceInicio]['fecha_fin'] = $fechaFin;
+                $historial[$indiceInicio]['dias_transcurridos'] = floor($dias);
+                $fechaInicio = null;
+                $indiceInicio = null;
+            }
+        }
+
+        // Si aún está activo
+        if ($fechaInicio !== null && $indiceInicio !== null) {
+            $dias = (strtotime($hoy) - strtotime($fechaInicio)) / 86400;
+            $historial[$indiceInicio]['fecha_fin'] = $hoy;
+            $historial[$indiceInicio]['dias_transcurridos'] = floor($dias);
+        }
+
+        return response()->json($historial);
+    }
 
 
 /////////////////////////////////////////// STEP 2 DOCUMENTOS DE SOPORTE //////////////////////////////////
@@ -977,11 +978,99 @@ public function mostrarecibosnomina($id)
 
 
 
+    ///// ASIGNACIONES 
 
 
-/////////////////////////////////////////// STEP 4  DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL //////////////////////////////////
+    public function Tablasignacioncolaborador(Request $request)
+    {
+        try {
 
-public function Tablasoportecontrato(Request $request)
+            $curp = $request->get('curp');
+
+            $tabla = DB::table('asignaciones_inventario as ai')
+                ->leftJoin(
+                    'formulario_inventario as fi',
+                    'fi.ID_FORMULARIO_INVENTARIO',
+                    '=',
+                    'ai.INVENTARIO_ID'
+                )
+                ->where('ai.ASIGNADO_ID', $curp)
+                ->select(
+                    'ai.ID_ASIGNACION_FORMULARIO',
+                    'ai.INVENTARIO_ID',
+                    'ai.CANTIDAD_SALIDA',
+                    'ai.ACTIVO',
+                    'fi.DESCRIPCION_EQUIPO',
+                    'fi.MARCA_EQUIPO',
+                    'fi.MODELO_EQUIPO',
+                    'fi.SERIE_EQUIPO',
+                    'fi.CODIGO_EQUIPO'
+                )
+                ->get();
+
+            foreach ($tabla as $value) {
+
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_EDITAR =
+                        '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
+                        <i class="bi bi-eye"></i>
+                    </button>';
+                } else {
+                    $value->BTN_EDITAR =
+                        '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR">
+                        <i class="bi bi-pencil-square"></i>
+                    </button>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => []
+            ]);
+        }
+    }
+
+
+    public function validarPrimerContrato(Request $request)
+    {
+        try {
+
+            $contratoId = $request->get('contrato_id');
+            $curp = $request->get('curp');
+
+            if (!$contratoId || !$curp) {
+                return response()->json([
+                    'es_primer_contrato' => false
+                ]);
+            }
+
+            $primerContratoId = DB::table('contratos_anexos_contratacion')
+                ->where('CURP', $curp)
+                ->orderBy('ID_CONTRATOS_ANEXOS', 'asc')
+                ->value('ID_CONTRATOS_ANEXOS');
+
+            return response()->json([
+                'es_primer_contrato' => ((int)$contratoId === (int)$primerContratoId)
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'es_primer_contrato' => false
+            ]);
+        }
+    }
+
+
+
+
+    /////////////////////////////////////////// STEP 4  DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL //////////////////////////////////
+
+    public function Tablasoportecontrato(Request $request)
 {
     try {
         $curp = $request->get('curp');

@@ -422,10 +422,6 @@
                         </ul>
                     </li>
                     @endif
-
-
-
-
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -462,6 +458,9 @@
                             <hr class="dropdown-divider">
 
                             <li><a class="dropdown-item" href="{{url('/contratacion')}}">Lista de colaboradores</a></li>
+                            <hr class="dropdown-divider">
+                            <li><a class="dropdown-item" href="{{url('/actualizaciondocumentos')}}">Actualización de documentos</a></li>
+
                         </ul>
                     </li>
                     @endif
@@ -775,7 +774,7 @@
     @endif
 
     @if(request()->is('contratacion'))
-    <script src="/assets/js_sitio/contratacion/contratacion.js?v=11.29"></script>
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=11.30  "></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif

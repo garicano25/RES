@@ -550,6 +550,12 @@ Route::get('/mostraracciones/{id}', [contratacionController::class, 'mostraracci
 Route::get('/Tablarecibonomina', [contratacionController::class, 'Tablarecibonomina']);
 Route::get('/mostrarecibosnomina/{id}', [contratacionController::class, 'mostrarecibosnomina']);
 
+// ASIGNACIONES
+
+Route::get('/Tablasignacioncolaborador', [contratacionController::class, 'Tablasignacioncolaborador']);
+Route::get('/validarPrimerContrato', [contratacionController::class, 'validarPrimerContrato']);
+
+
 /////////////////////////////////////// STEP 4 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL
 Route::get('/Tablasoportecontrato', [contratacionController::class, 'Tablasoportecontrato']);
 Route::get('/mostrardocumentocolaboradorcontratosoporte/{id}', [contratacionController::class, 'mostrardocumentocolaboradorcontratosoporte']);
@@ -573,6 +579,10 @@ Route::get('/obtenerDatosCategoria', [contratacionController::class, 'obtenerDat
 Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarrequisicon']);
 
 
+/// ACTUALIZACION DE DOCUMENTO DEL COLABORADOR 
+
+
+Route::get('/actualizaciondocumentos', function () {return view('RH.contratacion.actualizaciondoc');});
 
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 
@@ -1121,9 +1131,10 @@ Route::get('/notificaciones', [notificacionController::class, 'notificaciones'])
 //============================================== C.P ============================================== 
 
 Route::get('codigo-postal/{cp}', function ($cp) {
+
     Log::info('Consulta CP desde: ' . request()->ip() . ', User-Agent: ' . request()->header('User-Agent'));
 
-     $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
+    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     try {

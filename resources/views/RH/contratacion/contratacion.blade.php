@@ -250,7 +250,7 @@
                             <h3 style="color: #ffffff; margin: 0;">
                                 <i class="bi bi-person"></i>&nbsp;&nbsp;Información del colaborador
                             </h3>
-                        
+
                         </ol>
 
                         <!-- Formulario de Datos Generales -->
@@ -883,6 +883,18 @@
                         </div>
                     </div>
 
+
+                    <div id="asignacion_colaborador" style="display: none;">
+                        <ol class="breadcrumb mt-5">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-card-list"></i>&nbsp;Asignaciones colaborador</h3>
+                        </ol>
+                        <div class="card-body position-relative">
+                            <i id="loadingIcon16" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tablasignacioncolaborador" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                        </div>
+                    </div>
+
                 </div> {{-- FINALIZA EL TAB DE CONTRATO --}}
 
 
@@ -923,7 +935,7 @@
 
                     <div class="mb-3">
                         <label>Tipo de documento *</label>
-                        <select class="form-select" id="TIPO_DOCUMENTO" name="TIPO_DOCUMENTO" >
+                        <select class="form-select" id="TIPO_DOCUMENTO" name="TIPO_DOCUMENTO">
                             <option value="" disabled selected>Seleccione una opción</option>
                             <option value="1">Copia del INE</option>
                             <option value="2">Copia del Pasaporte</option>
