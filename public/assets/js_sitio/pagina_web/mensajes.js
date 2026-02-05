@@ -60,6 +60,13 @@ var Tablamensajepaginaweb = $("#Tablamensajepaginaweb").DataTable({
         { data: 'NOMBRE' },
         { data: 'CORREO' },
         { data: 'MENSAJE' },
+          {
+            data: 'created_at',
+            render: function (data) {
+                if (!data) return '';
+                return data.split('T')[0]; 
+            }
+        },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_ELIMINAR' }
     ],
@@ -68,8 +75,9 @@ var Tablamensajepaginaweb = $("#Tablamensajepaginaweb").DataTable({
         { targets: 1, title: 'Nombre', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Correo electrónico', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Mensaje', className: 'all text-center descripcion-column' },
-        { targets: 4, title: 'Visualizar', className: 'all text-center' },
-        { targets: 5, title: 'Activo', className: 'all text-center' }
+        { targets: 4, title: 'Fecha de envío', className: 'all text-center nombre-column' },
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ]
 });
 
