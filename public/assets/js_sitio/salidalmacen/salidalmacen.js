@@ -768,7 +768,13 @@ function cargarMaterialesDesdeJSON(materialesJson) {
 
                             const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
                                 ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
-                                : inv.DESCRIPCION_EQUIPO;
+                                : [
+                                    inv.DESCRIPCION_EQUIPO,
+                                    inv.MARCA_EQUIPO,
+                                    inv.MODELO_EQUIPO,
+                                    inv.SERIE_EQUIPO
+                                ].filter(Boolean).join(" | ");
+
 
                             const estaAsignado = inv.ASIGNADO == 1;
                             const esElGuardado = valorGuardado == inv.ID_FORMULARIO_INVENTARIO;
@@ -1008,9 +1014,14 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                     .sort((a, b) => a.DESCRIPCION_EQUIPO.localeCompare(b.DESCRIPCION_EQUIPO))
                         .map(inv => {
 
-                        const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
-                            ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
-                            : inv.DESCRIPCION_EQUIPO;
+                      const mostrarTexto = (tipoSeleccionado === "AF" || tipoSeleccionado === "ANF")
+                    ? `${inv.DESCRIPCION_EQUIPO} (${inv.CODIGO_EQUIPO || ""})`
+                    : [
+                        inv.DESCRIPCION_EQUIPO,
+                        inv.MARCA_EQUIPO,
+                        inv.MODELO_EQUIPO,
+                        inv.SERIE_EQUIPO
+                    ].filter(Boolean).join(" | ");
 
                         const estaAsignado = inv.ASIGNADO == 1;
 
