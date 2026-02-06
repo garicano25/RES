@@ -845,7 +845,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     btnFirmar.addEventListener("click", function () {
         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
-        let fechaSalida = inputFechaSalida.value; // yyyy-mm-dd
+        let fechaSalida = inputFechaSalida.value; 
 
         // Validar que exista fecha
         if (!fechaSalida) {

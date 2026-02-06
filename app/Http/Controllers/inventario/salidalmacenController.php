@@ -9,8 +9,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Artisan;
 use Exception;
-use Illuminate\Support\Facades\Log;   
+use Illuminate\Support\Facades\Log;
 
+use Illuminate\Support\Facades\Auth;
 
 use DB;
 
@@ -316,6 +317,7 @@ class salidalmacenController extends Controller
                                                             'INVENTARIO_ID'    => $art['INVENTARIO'],
                                                             'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
                                                             'CANTIDAD_SALIDA'   => $cantidad,
+                                                            'ALMACENISTA_ID' => auth()->user()->ID_USUARIO,
                                                             'created_at'       => now(),
                                                             'updated_at'       => now()
                                                         ]);
@@ -364,6 +366,7 @@ class salidalmacenController extends Controller
                                                         'INVENTARIO_ID'    => $mat['INVENTARIO'],
                                                         'FECHA_ASIGNACION' => $mrs->FECHA_ALMACEN_SOLICITUD,
                                                         'CANTIDAD_SALIDA'   => $cantidad,
+                                                        'ALMACENISTA_ID' => auth()->user()->ID_USUARIO,
                                                         'created_at'       => now(),
                                                         'updated_at'       => now()
                                                     ]);

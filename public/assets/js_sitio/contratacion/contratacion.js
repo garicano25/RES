@@ -17,6 +17,7 @@ ID_RECIBOS_NOMINA = 0;
 ID_SOPORTE_CONTRATO = 0;
 ID_RENOVACION_CONTATO = 0;
 ID_CONTRATACION_REQUERIMIENTO = 0;
+ID_ASINGACIONES_CONTRATACION = 0;
 
 
 // TABLAS
@@ -2637,10 +2638,9 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
     cargarTablaSolicitudvacaciones();
     cargarTablaAccionesDisciplinarias ();
     cargarTablaRecibosNomina();
-    cargarTablaAsignacionesColaborador();
 
     validarPrimerContrato();
-
+    cargarTablasingnaciongeneral();
 
 });
 
@@ -4831,76 +4831,39 @@ $('#Tablarecibonomina').on('click', '.ver-archivo-recibonomina', function () {
 });
 
 
+// <!-- ============================================================== -->
+// <!-- ASIGNACION EMPLEADO-->
+// <!-- ============================================================== -->
 
 
 
-function cargarTablaAsignacionesColaborador() {
-    if ($.fn.DataTable.isDataTable('#Tablasignacioncolaborador')) {
-        Tablasignacioncolaborador.clear().destroy();
-    }
+const Modalasignacion = document.getElementById('modalAsignacionColaborador')
+Modalasignacion.addEventListener('hidden.bs.modal', event => {
 
-    Tablasignacioncolaborador = $("#Tablasignacioncolaborador").DataTable({
-        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
-        lengthChange: true,
-        lengthMenu: [
-            [10, 25, 50, -1],
-            [10, 25, 50, 'All']
-        ],
-        info: false,
-        paging: true,
-        searching: true,
-        filtering: true,
-        scrollY: '65vh',
-        scrollCollapse: true,
-        responsive: true,
-        ajax: {
-            dataType: 'json',
-            data: { curp: curpSeleccionada }, 
-            method: 'GET',
-            cache: false,
-            url: '/Tablasignacioncolaborador',  
-            beforeSend: function () {
-                $('#loadingIcon16').css('display', 'inline-block');
-            },
-            complete: function () {
-                $('#loadingIcon16').css('display', 'none');
-                Tablasignacioncolaborador.columns.adjust().draw(); 
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                $('#loadingIcon16').css('display', 'none');
-                alertErrorAJAX(jqXHR, textStatus, errorThrown);
-            },
-            dataSrc: 'data'
-        },
-        columns: [
-        {
-            data: null,
-            render: function (data, type, row, meta) {
-                return meta.row + 1;
-            },
-            className: 'text-center'
-        },
-        { data: 'DESCRIPCION_EQUIPO' },
-        { data: 'CANTIDAD_SALIDA' },
-        { data: 'MARCA_EQUIPO' },
-        { data: 'MODELO_EQUIPO' },
-        { data: 'SERIE_EQUIPO' },
-        { data: 'CODIGO_EQUIPO' },
-        { data: 'BTN_EDITAR' }
-        ],
-        columnDefs: [
-            { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'Descripción', className: 'all text-center' },
-            { targets: 2, title: 'Cantidad', className: 'all text-center' },
-            { targets: 3, title: 'Marca', className: 'all text-center' },
-            { targets: 4, title: 'Modelo', className: 'all text-center' },
-            { targets: 5, title: 'No. Serie', className: 'all text-center' },
-            { targets: 6, title: 'No. Inventario', className: 'all text-center' },
-            { targets: 7, title: 'Editar', className: 'all text-center' }
-        ]
+    ID_ASINGACIONES_CONTRATACION = 0
+
+    document.getElementById('formularioASIGNACIONES').reset();
+    document.getElementById('ASIGNACIONES_ID').value = "0"; 
+
+    $('#FIRMA_ASIGNACION').show();
+    $('#SUBIR_DOCUMENTO_ASIGNACION').hide();
+
+})
+
+$('#NUEVA_ASIGNACION').on('click', function () {
+
+    document.getElementById('formularioASIGNACIONES').reset();
+    ID_ASINGACIONES_CONTRATACION = 0;
+
+    $('#FIRMA_ASIGNACION').show();
+    $('#SUBIR_DOCUMENTO_ASIGNACION').hide();
+
+    $('#modalAsignacionColaborador').modal('show');
+
+    $('#modalAsignacionColaborador').one('shown.bs.modal', function () {
+        cargarTablaAsignacionesModal(); 
     });
-}
-
+});
 
 function validarPrimerContrato() {
 
@@ -4925,6 +4888,425 @@ function validarPrimerContrato() {
         }
     });
 }
+
+
+
+function cargarTablaAsignacionesModal() {
+
+    $('#Tablasignacioncolaborador').DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        destroy: true,
+        autoWidth: false,
+        ajax: {
+            url: '/Tablasignacioncolaborador',
+            data: function (d) {
+                d.curp = curpSeleccionada;
+            },
+            complete: function (xhr) {
+
+                const response = xhr.responseJSON;
+
+                if (response.data && response.data.length > 0) {
+                    $('#ALMACENISTA_ASIGNACION').val(
+                        response.data[0].ALMACENISTA_NOMBRE
+                    );
+                } else {
+                    $('#ALMACENISTA_ASIGNACION').val('');
+                }
+            }
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data) {
+                    return `
+                        <input type="checkbox"
+                               class="form-check-input seleccionar-equipo"
+                               value="${data.ID_ASIGNACION_FORMULARIO}">
+                    `;
+                },
+                orderable: false
+            },
+            { data: 'DESCRIPCION_EQUIPO' },
+            { data: 'CANTIDAD_SALIDA' },
+            { data: 'MARCA_EQUIPO' },
+            { data: 'MODELO_EQUIPO' },
+            { data: 'SERIE_EQUIPO' },
+            { data: 'CODIGO_EQUIPO' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '✔', className: 'all text-center' },
+            { targets: 1, title: 'Descripción', className: 'all text-center' },
+            { targets: 2, title: 'Cantidad', className: 'all text-center' },
+            { targets: 3, title: 'Marca', className: 'all text-center' },
+            { targets: 4, title: 'Modelo', className: 'all text-center' },
+            { targets: 5, title: 'No. Serie', className: 'all text-center' },
+            { targets: 6, title: 'No. Inventario', className: 'all text-center' },
+        ]
+    });
+}
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+     const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
+    const inputFirmadoPor = document.getElementById("PERSONAL_ASIGNA");
+
+    btnFirmar.addEventListener("click", function () {
+        let usuarioNombre = btnFirmar.getAttribute("data-usuario");
+
+       
+
+        inputFirmadoPor.value =  usuarioNombre ;
+    });
+});
+
+function setAsignacionesSeleccionadas() {
+
+    let asignaciones = [];
+
+    $('#Tablasignacioncolaborador tbody input.seleccionar-equipo:checked')
+        .each(function () {
+            asignaciones.push($(this).val());
+        });
+
+    $('#ASIGNACIONES_ID').val(JSON.stringify(asignaciones));
+}
+
+
+
+
+
+$("#guardarASIGNACIONES").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario3($('#formularioASIGNACIONES'))
+
+    if (formularioValido) {
+
+
+    setAsignacionesSeleccionadas();
+
+        
+    if (ID_ASINGACIONES_CONTRATACION == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarASIGNACIONES')
+            await ajaxAwaitFormData({ api: 12, CURP: curpSeleccionada , ID_ASINGACIONES_CONTRATACION: ID_ASINGACIONES_CONTRATACION }, 'contratoSave', 'formularioASIGNACIONES', 'guardarASIGNACIONES', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+                
+            }, function (data) {
+                    
+                ID_ASINGACIONES_CONTRATACION = data.soporte.ID_ASINGACIONES_CONTRATACION
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#modalAsignacionColaborador').modal('hide')
+                    document.getElementById('formularioASIGNACIONES').reset();
+
+                    
+                    if ($.fn.DataTable.isDataTable('#Tablasignacioncolaboradorgeneral')) {
+                        Tablasignacioncolaboradorgeneral.ajax.reload(null, false); 
+                    }
+
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarASIGNACIONES')
+            await ajaxAwaitFormData({ api: 12, CURP: curpSeleccionada ,ID_ASINGACIONES_CONTRATACION: ID_ASINGACIONES_CONTRATACION }, 'contratoSave', 'formularioASIGNACIONES', 'guardarASIGNACIONES', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_ASINGACIONES_CONTRATACION = data.soporte.ID_ASINGACIONES_CONTRATACION
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#modalAsignacionColaborador').modal('hide')
+                    document.getElementById('formularioASIGNACIONES').reset();
+
+                    if ($.fn.DataTable.isDataTable('#Tablasignacioncolaboradorgeneral')) {
+                        Tablasignacioncolaboradorgeneral.ajax.reload(null, false); 
+                    }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+
+
+
+function cargarTablasingnaciongeneral() {
+    if ($.fn.DataTable.isDataTable('#Tablasignacioncolaboradorgeneral')) {
+        Tablasignacioncolaboradorgeneral.clear().destroy();
+    }
+
+    Tablasignacioncolaboradorgeneral = $("#Tablasignacioncolaboradorgeneral").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { curp: curpSeleccionada },
+            method: 'GET',
+            cache: false,
+            url: '/Tablasignacioncolaboradorgeneral',  
+            beforeSend: function () {
+                $('#loadingIcon16').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon16').css('display', 'none');
+                Tablasignacioncolaboradorgeneral.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon16').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+       columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                },
+                className: 'text-center'
+            },
+           { data: 'DESCRIPCION_EQUIPO', className: 'text-center' },
+            { data: 'CANTIDAD_SALIDA', className: 'text-center' },
+            { data: 'MARCA_EQUIPO', className: 'text-center' },
+            { data: 'MODELO_EQUIPO', className: 'text-center' },
+            { data: 'SERIE_EQUIPO', className: 'text-center' },
+            { data: 'CODIGO_EQUIPO', className: 'text-center' },
+            { data: 'DESCARGAR_FORMATOS', className: 'text-center' },
+            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Descripción', className: 'all text-center' },
+            { targets: 2, title: 'Cantidad', className: 'all text-center' },
+            { targets: 3, title: 'Marca', className: 'all text-center' },
+            { targets: 4, title: 'Modelo', className: 'all text-center' },
+            { targets: 5, title: 'No. Serie', className: 'all text-center' },
+            { targets: 6, title: 'No. Inventario', className: 'all text-center' },
+            { targets: 7, title: 'Descargar formato', className: 'all text-center' },
+            { targets: 8, title: 'Documento', className: 'all text-center' },
+            { targets: 9, title: 'Editar', className: 'all text-center' },
+        ],
+        drawCallback: function () {
+
+            const api = this.api();
+            const rows = api.rows({ page: 'current' }).nodes();
+
+            let lastGroup = null;
+            let rowspan = 1;
+            let firstRow = null;
+
+            api.rows({ page: 'current' }).every(function (rowIdx) {
+
+                const data = this.data();
+                const grupoActual = data.GRUPO_ID;
+
+                if (lastGroup === grupoActual) {
+
+                    rowspan++;
+
+                    $(rows).eq(rowIdx).find('td:eq(7)').hide();
+                    $(rows).eq(rowIdx).find('td:eq(8)').hide(); 
+                    $(rows).eq(rowIdx).find('td:eq(9)').hide(); 
+
+                    $(firstRow).find('td:eq(7)').attr('rowspan', rowspan);
+                    $(firstRow).find('td:eq(8)').attr('rowspan', rowspan);
+                    $(firstRow).find('td:eq(9)').attr('rowspan', rowspan);
+
+                } else {
+
+                    lastGroup = grupoActual;
+                    rowspan = 1;
+                    firstRow = rows[rowIdx];
+
+                    $(firstRow).addClass('table-light');
+
+                    
+                }
+            });
+        },
+
+       
+    });
+}
+
+
+$(document).on('click', '.descargar-asignacion', function () {
+    const id = $(this).data('id');
+
+    window.open(
+        `/pdfAsignacion/${id}`,
+        '_blank'
+    );
+});
+
+
+$('#Tablasignacioncolaboradorgeneral').on('click', 'td>button.EDITAR', function () {
+
+    var tr = $(this).closest('tr');
+    var row = Tablasignacioncolaboradorgeneral.row(tr);
+
+    ID_ASINGACIONES_CONTRATACION =
+        row.data().GRUPO_ID || row.data().ID_ASINGACIONES_CONTRATACION;
+
+    console.log('ID EDITAR:', ID_ASINGACIONES_CONTRATACION);
+
+    $('#FIRMA_ASIGNACION').hide();
+    $('#SUBIR_DOCUMENTO_ASIGNACION').show();
+
+    editarDatoTabla(row.data(), 'formularioASIGNACIONES', 'modalAsignacionColaborador', 1);
+
+    $('#modalAsignacionColaborador').modal('show');
+
+    $('#modalAsignacionColaborador').one('shown.bs.modal', function () {
+        cargarTablaAsignacionesModalEditar(); 
+    });
+});
+
+
+
+function cargarTablaAsignacionesModalEditar() {
+
+    $('#Tablasignacioncolaborador').DataTable({
+         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        destroy: true,
+        autoWidth: false,
+        ajax: {
+            url: '/TablasignacioncolaboradorEditar',
+            data: {
+                id_asignacion_contratacion: ID_ASINGACIONES_CONTRATACION
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { 
+                data: null,
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                }
+            },
+            { data: 'DESCRIPCION_EQUIPO' },
+            { data: 'CANTIDAD_SALIDA' },
+            { data: 'MARCA_EQUIPO' },
+            { data: 'MODELO_EQUIPO' },
+            { data: 'SERIE_EQUIPO' },
+            { data: 'CODIGO_EQUIPO' }
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Descripción', className: 'text-center' },
+            { targets: 2, title: 'Cantidad', className: 'text-center' },
+            { targets: 3, title: 'Marca', className: 'text-center' },
+            { targets: 4, title: 'Modelo', className: 'text-center' },
+            { targets: 5, title: 'No. Serie', className: 'text-center' },
+            { targets: 6, title: 'No. Inventario', className: 'text-center' }
+        ]
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivoasignacion = document.getElementById('DOCUMENTO_ASIGNACION');
+    var quitarasignacion = document.getElementById('quitar_asignacion');
+    var errorasignacion = document.getElementById('ASIGNACION_ERROR');
+
+    if (archivoasignacion) {
+        archivoasignacion.addEventListener('change', function() {
+            var archivoasignacion = this.files[0];
+            if (archivoasignacion && archivoasignacion.type === 'application/pdf') {
+                if (errorasignacion) errorasignacion.style.display = 'none';
+                if (quitarasignacion) quitarasignacion.style.display = 'block';
+            } else {
+                if (errorasignacion) errorasignacion.style.display = 'block';
+                this.value = '';
+                if (quitarasignacion) quitarasignacion.style.display = 'none';
+            }
+        });
+        quitarasignacion.addEventListener('click', function() {
+            archivoasignacion.value = ''; 
+            quitarasignacion.style.display = 'none'; 
+            if (errorasignacion) errorasignacion.style.display = 'none'; 
+        });
+    }
+});
+
+
 
 
 // <!-- ============================================================================================================================ -->

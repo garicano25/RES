@@ -63,6 +63,8 @@ use App\Http\Controllers\contratacion\contratacionController;
 use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
+use App\Http\Controllers\contratacion\pdfasingacionController;
+
 
 // CONTROLADORES DE REC.EMPLEADOS
 use App\Http\Controllers\recursosempleado\recempleadoController;
@@ -554,6 +556,12 @@ Route::get('/mostrarecibosnomina/{id}', [contratacionController::class, 'mostrar
 
 Route::get('/Tablasignacioncolaborador', [contratacionController::class, 'Tablasignacioncolaborador']);
 Route::get('/validarPrimerContrato', [contratacionController::class, 'validarPrimerContrato']);
+Route::get('/Tablasignacioncolaboradorgeneral', [contratacionController::class, 'Tablasignacioncolaboradorgeneral']);
+Route::get('/Tablasignacioncolaborador', [contratacionController::class, 'Tablasignacioncolaborador']);
+
+Route::get('/TablasignacioncolaboradorEditar', [contratacionController::class, 'TablasignacioncolaboradorEditar']);
+
+Route::get('/pdfAsignacion/{id}',[pdfasingacionController::class, 'pdfAsignacion']);
 
 
 /////////////////////////////////////// STEP 4 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL
@@ -1134,7 +1142,7 @@ Route::get('codigo-postal/{cp}', function ($cp) {
 
     Log::info('Consulta CP desde: ' . request()->ip() . ', User-Agent: ' . request()->header('User-Agent'));
 
-    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
+   // $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     try {

@@ -26,6 +26,7 @@ use App\Models\contratacion\requisicioncontratacion;
 use App\Models\contratacion\adendacontratoModel;
 use App\Models\recempleados\recemplaedosModel;
 
+use App\Models\contratacion\asignacioncontratacionModel;
 
 use App\Models\organizacion\catalogotipovacanteModel;
 use App\Models\organizacion\catalogomotivovacanteModel;
@@ -987,41 +988,62 @@ public function mostrarecibosnomina($id)
 
             $curp = $request->get('curp');
 
-            $tabla = DB::table('asignaciones_inventario as ai')
+            $idsUsados = DB::table('asignaciones_contratacion')
+                ->where('CURP', $curp)
+                ->whereNotNull('ASIGNACIONES_ID')
+                ->pluck('ASIGNACIONES_ID');
+
+           
+            $idsExcluir = [];
+
+            foreach ($idsUsados as $json) {
+                $array = json_decode($json, true);
+                if (is_array($array)) {
+                    $idsExcluir = array_merge($idsExcluir, $array);
+                }
+            }
+
+            
+            $query = DB::table('asignaciones_inventario as ai')
                 ->leftJoin(
                     'formulario_inventario as fi',
                     'fi.ID_FORMULARIO_INVENTARIO',
                     '=',
                     'ai.INVENTARIO_ID'
                 )
-                ->where('ai.ASIGNADO_ID', $curp)
-                ->select(
-                    'ai.ID_ASIGNACION_FORMULARIO',
-                    'ai.INVENTARIO_ID',
-                    'ai.CANTIDAD_SALIDA',
-                    'ai.ACTIVO',
-                    'fi.DESCRIPCION_EQUIPO',
-                    'fi.MARCA_EQUIPO',
-                    'fi.MODELO_EQUIPO',
-                    'fi.SERIE_EQUIPO',
-                    'fi.CODIGO_EQUIPO'
+                ->leftJoin(
+                    'usuarios as u',
+                    'u.ID_USUARIO',
+                    '=',
+                    'ai.ALMACENISTA_ID'
                 )
-                ->get();
+                ->where('ai.ASIGNADO_ID', $curp);
 
-            foreach ($tabla as $value) {
-
-                if ($value->ACTIVO == 0) {
-                    $value->BTN_EDITAR =
-                        '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
-                        <i class="bi bi-eye"></i>
-                    </button>';
-                } else {
-                    $value->BTN_EDITAR =
-                        '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR">
-                        <i class="bi bi-pencil-square"></i>
-                    </button>';
-                }
+            if (!empty($idsExcluir)) {
+                $query->whereNotIn('ai.ID_ASIGNACION_FORMULARIO', $idsExcluir);
             }
+
+            $tabla = $query->select(
+                'ai.ID_ASIGNACION_FORMULARIO',
+                'ai.INVENTARIO_ID',
+                'ai.CANTIDAD_SALIDA',
+                'ai.ACTIVO',
+                'ai.ALMACENISTA_ID',
+
+                'fi.DESCRIPCION_EQUIPO',
+                'fi.MARCA_EQUIPO',
+                'fi.MODELO_EQUIPO',
+                'fi.SERIE_EQUIPO',
+                'fi.CODIGO_EQUIPO',
+
+                DB::raw("
+                CONCAT(
+                    u.EMPLEADO_NOMBRE, ' ',
+                    u.EMPLEADO_APELLIDOPATERNO, ' ',
+                    u.EMPLEADO_APELLIDOMATERNO
+                ) as ALMACENISTA_NOMBRE
+            ")
+            )->get();
 
             return response()->json([
                 'data' => $tabla,
@@ -1065,6 +1087,173 @@ public function mostrarecibosnomina($id)
         }
     }
 
+
+
+    public function Tablasignacioncolaboradorgeneral(Request $request)
+    {
+        try {
+
+            $curp = $request->get('curp');
+
+            $asignaciones = asignacioncontratacionModel::where('CURP', $curp)->get();
+
+            $resultado = [];
+
+            foreach ($asignaciones as $asignacion) {
+
+                $idsAsignaciones = json_decode($asignacion->ASIGNACIONES_ID, true);
+
+                if (!is_array($idsAsignaciones) || empty($idsAsignaciones)) {
+                    continue;
+                }
+
+                $inventarios = DB::table('asignaciones_inventario as ai')
+                    ->leftJoin(
+                        'formulario_inventario as fi',
+                        'fi.ID_FORMULARIO_INVENTARIO',
+                        '=',
+                        'ai.INVENTARIO_ID'
+                    )
+                    ->whereIn('ai.ID_ASIGNACION_FORMULARIO', $idsAsignaciones)
+                    ->select(
+                        'ai.ID_ASIGNACION_FORMULARIO',
+                        'ai.CANTIDAD_SALIDA',
+                        'fi.DESCRIPCION_EQUIPO',
+                        'fi.MARCA_EQUIPO',
+                        'fi.MODELO_EQUIPO',
+                        'fi.SERIE_EQUIPO',
+                        'fi.CODIGO_EQUIPO'
+                    )
+                    ->get();
+
+                $esPrimera = true;
+
+                foreach ($inventarios as $inv) {
+
+                    $fila = [
+                        'GRUPO_ID'         => $asignacion->ID_ASINGACIONES_CONTRATACION,
+                        'PERSONAL_ASIGNA'  => $asignacion->PERSONAL_ASIGNA,
+                        'FECHA_ASIGNACION' => $asignacion->FECHA_ASIGNACION,
+                        'TIPO_ASIGNACION'  => $asignacion->TIPO_ASIGNACION,
+                        'ALMACENISTA_ASIGNACION'  => $asignacion->ALMACENISTA_ASIGNACION,
+
+                        'CANTIDAD_SALIDA' => $inv->CANTIDAD_SALIDA,
+                        'DESCRIPCION_EQUIPO' => $inv->DESCRIPCION_EQUIPO,
+                        'MARCA_EQUIPO'       => $inv->MARCA_EQUIPO,
+                        'MODELO_EQUIPO'      => $inv->MODELO_EQUIPO,
+                        'SERIE_EQUIPO'       => $inv->SERIE_EQUIPO,
+                        'CODIGO_EQUIPO'      => $inv->CODIGO_EQUIPO,
+                    ];
+
+                    if ($esPrimera) {
+
+                        if ($asignacion->ACTIVO == 0) {
+                            $fila['BTN_EDITAR'] =
+                                '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
+                                <i class="bi bi-eye"></i>
+                            </button>';
+                        } else {
+                            $fila['BTN_EDITAR'] =
+                                '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>';
+                        }
+
+                        if ($asignacion->TIPO_ASIGNACION == 1) {
+                            $fila['DESCARGAR_FORMATOS'] =
+                                        '<button class="btn btn-danger btn-custom rounded-pill pdf-button descargar-asignacion"
+                                data-id="' . $asignacion->ID_ASINGACIONES_CONTRATACION . '">
+                                <i class="bi bi-filetype-pdf"></i>
+                            </button>';
+                        } else {
+                            $fila['DESCARGAR_FORMATOS'] =
+                                '<button type="button" class="btn btn-secondary btn-custom rounded-pill" disabled>
+                                <i class="bi bi-ban"></i>
+                            </button>';
+                        }
+
+                        $fila['BTN_DOCUMENTO'] =
+                            '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentoasignacion"
+                            data-id="' . $asignacion->ID_ASINGACIONES_CONTRATACION . '">
+                            <i class="bi bi-filetype-pdf"></i>
+                        </button>';
+                    } else {
+                        $fila['BTN_EDITAR'] = '';
+                        $fila['DESCARGAR_FORMATOS'] = '';
+                        $fila['BTN_DOCUMENTO'] = '';
+                    }
+
+                    $resultado[] = $fila;
+                    $esPrimera = false;
+                }
+            }
+
+            return response()->json([
+                'data' => $resultado,
+                'msj'  => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'msj'  => 'Error ' . $e->getMessage(),
+                'data' => []
+            ]);
+        }
+    }
+
+    public function TablasignacioncolaboradorEditar(Request $request)
+    {
+        try {
+
+            $idAsignacion = $request->id_asignacion_contratacion;
+
+            if (!$idAsignacion) {
+                return response()->json(['data' => []]);
+            }
+
+            $asignacion = DB::table('asignaciones_contratacion')
+                ->where('ID_ASINGACIONES_CONTRATACION', $idAsignacion)
+                ->first();
+
+            if (!$asignacion || empty($asignacion->ASIGNACIONES_ID)) {
+                return response()->json(['data' => []]);
+            }
+
+            $ids = json_decode($asignacion->ASIGNACIONES_ID, true);
+
+            if (!is_array($ids) || empty($ids)) {
+                return response()->json(['data' => []]);
+            }
+
+            $tabla = DB::table('asignaciones_inventario as ai')
+                ->leftJoin(
+                    'formulario_inventario as fi',
+                    'fi.ID_FORMULARIO_INVENTARIO',
+                    '=',
+                    'ai.INVENTARIO_ID'
+                )
+                ->whereIn('ai.ID_ASIGNACION_FORMULARIO', $ids)
+                ->select(
+                    'ai.ID_ASIGNACION_FORMULARIO',
+                    'ai.CANTIDAD_SALIDA',
+
+                    'fi.DESCRIPCION_EQUIPO',
+                    'fi.MARCA_EQUIPO',
+                    'fi.MODELO_EQUIPO',
+                    'fi.SERIE_EQUIPO',
+                    'fi.CODIGO_EQUIPO'
+                )
+                ->get();
+
+            return response()->json([
+                'data' => $tabla
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'data' => [],
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
 
 
 
@@ -2308,12 +2497,129 @@ public function obtenerdocumentosoportescontratos(Request $request)
                                 break;
 
 
+
+
+
+
+
+                // ASIGNACIONES COLABORADOR 
+                case 12:
+
+                    $asignacionesId = $request->has('ASIGNACIONES_ID')
+                        ? $request->ASIGNACIONES_ID
+                        : null;
+
+                  
+                    if ($request->ID_ASINGACIONES_CONTRATACION == 0) {
+
+                        DB::statement('ALTER TABLE asignaciones_contratacion AUTO_INCREMENT=1;');
+
+                        $soportes = asignacioncontratacionModel::create(
+                            array_merge(
+                                $request->except('DOCUMENTO_ASIGNACION', 'ASIGNACIONES_ID'),
+                                [
+                                    'ASIGNACIONES_ID' => $asignacionesId
+                                ]
+                            )
+                        );
+
+                        if ($request->hasFile('DOCUMENTO_ASIGNACION')) {
+
+                            $documento = $request->file('DOCUMENTO_ASIGNACION');
+                            $curp = $request->CURP;
+                            $idDocumento = $soportes->ID_ASINGACIONES_CONTRATACION;
+
+                            $nombreArchivo = 'Documento de asignacion.' . $documento->getClientOriginalExtension();
+                            $rutaCarpeta = 'reclutamiento/' . $curp . '/Asignaciones/' . $idDocumento;
+
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                            $soportes->DOCUMENTO_ASIGNACION = $rutaCompleta;
+                            $soportes->save();
+                        }
+                    } else {
+
+                      
+                        if (isset($request->ELIMINAR)) {
+
+                            if ($request->ELIMINAR == 1) {
+
+                                asignacioncontratacionModel::where(
+                                    'ID_ASINGACIONES_CONTRATACION',
+                                    $request->ID_ASINGACIONES_CONTRATACION
+                                )->update(['ACTIVO' => 0]);
+
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Desactivada';
+                            } else {
+
+                                asignacioncontratacionModel::where(
+                                    'ID_ASINGACIONES_CONTRATACION',
+                                    $request->ID_ASINGACIONES_CONTRATACION
+                                )->update(['ACTIVO' => 1]);
+
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Activada';
+                            }
+                        } else {
+
                           
+                            $soportes = asignacioncontratacionModel::find(
+                                $request->ID_ASINGACIONES_CONTRATACION
+                            );
 
-                    
+                            $soportes->update(
+                                array_merge(
+                                    $request->except('DOCUMENTO_ASIGNACION', 'ASIGNACIONES_ID'),
+                                    [
+                                        'ASIGNACIONES_ID' => $asignacionesId
+                                    ]
+                                )
+                            );
+
+                            if ($request->hasFile('DOCUMENTO_ASIGNACION')) {
+
+                                if (
+                                    $soportes->DOCUMENTO_ASIGNACION &&
+                                    Storage::exists($soportes->DOCUMENTO_ASIGNACION)
+                                ) {
+                                    Storage::delete($soportes->DOCUMENTO_ASIGNACION);
+                                }
+
+                                $documento = $request->file('DOCUMENTO_ASIGNACION');
+                                $curp = $request->CURP;
+                                $idDocumento = $soportes->ID_ASINGACIONES_CONTRATACION;
+
+                                $nombreArchivo = 'Documento de asignacion.' . $documento->getClientOriginalExtension();
+                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Asignaciones/' . $idDocumento;
+
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                $soportes->DOCUMENTO_ASIGNACION = $rutaCompleta;
+                                $soportes->save();
+                            }
+
+                            $response['code'] = 1;
+                            $response['soporte'] = 'Actualizada';
+                        }
+                    }
+
+                    // =========================
+                    // RESPUESTA FINAL
+                    // =========================
+                    $response['code'] = 1;
+                    $response['soporte'] = $soportes ?? null;
+
+                    return response()->json($response);
+
+                    break;
 
 
-            default:
+
+
+
+
+                default:
                 $response['code'] = 1;
                 $response['msj'] = 'Api no encontrada';
                 return response()->json($response);

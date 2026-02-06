@@ -887,10 +887,13 @@
                     <div id="asignacion_colaborador" style="display: none;">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-card-list"></i>&nbsp;Asignaciones colaborador</h3>
+                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_ASIGNACION" style="margin-left: auto;">
+                                Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
                         </ol>
                         <div class="card-body position-relative">
                             <i id="loadingIcon16" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
-                            <table id="Tablasignacioncolaborador" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            <table id="Tablasignacioncolaboradorgeneral" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                             </table>
                         </div>
                     </div>
@@ -2635,8 +2638,6 @@
 <!-- MODAL SOLICITUD DE VACACIONES  -->
 <!-- ============================================================== -->
 
-
-
 <div class="modal fade" id="miModal_RECURSOSEMPLEADOS" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -2854,6 +2855,115 @@
 </div>
 
 
+
+<!-- ============================================================== -->
+<!-- MODAL ASIGNACIONES EMPLEADOS  -->
+<!-- ============================================================== -->
+
+
+<div class="modal fade" id="modalAsignacionColaborador" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" id="formularioASIGNACIONES" style="background-color: #ffffff;">
+
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title">
+                        <i class="bi bi-box-seam"></i> Asignaciones del colaborador
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <small class="text-muted">
+                                Selecciona los equipos que deseas guardar
+                            </small>
+                        </div>
+                    </div>
+
+                    <table id="Tablasignacioncolaborador"
+                        class="table table-hover table-bordered w-100 text-center">
+                    </table>
+
+                    <input type="hidden" id="ASIGNACIONES_ID" name="ASIGNACIONES_ID">
+
+                    <div class="col-12 mb-3">
+                        <label class="form-label"> Tipo de asignación *</label>
+                        <select class="form-control" id="TIPO_ASIGNACION" name="TIPO_ASIGNACION">
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            <option value="1">Equipos - otros</option>
+                            <option value="2">EPP</option>
+                        </select>
+                    </div>
+
+
+                    <div id="ASIGANCION_EPP" style="display: none;">
+                    </div>
+
+
+                    <div class="col-12 mt-3">
+                        <div class="row">
+                            <div class="col-8">
+                                <label class="form-label">Personal que asigna</label>
+                                <input type="text" class="form-control" id="PERSONAL_ASIGNA" name="PERSONAL_ASIGNA" readonly>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label">Fecha *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ASIGNACION" name="FECHA_ASIGNACION" required>
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3" id="FIRMA_ASIGNACION" style="display:block; margin-top:10px;">
+                                <div class="row justify-content-center">
+                                    <div class="col-6 text-center">
+                                        <button type="button"
+                                            id="FIRMAR_SOLICITUD"
+                                            class="btn btn-info"
+                                            data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
+                                            <i class="bi bi-pen-fill"></i> Firmar asignación
+                                        </button>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <label class="form-label">Almacenista</label>
+                                <input type="text" class="form-control" id="ALMACENISTA_ASIGNACION" name="ALMACENISTA_ASIGNACION">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="mt-3" id="SUBIR_DOCUMENTO_ASIGNACION" style="display: none;">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="DOCUMENTO_ASIGNACION" name="DOCUMENTO_ASIGNACION" accept=".pdf" style="width: auto; flex: 1;">
+                            <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_asignacion" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="ASIGNACION_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+
+
+
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarASIGNACIONES">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 
