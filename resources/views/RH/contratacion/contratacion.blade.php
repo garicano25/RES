@@ -2892,7 +2892,7 @@
 
                     <div class="col-12 mb-3">
                         <label class="form-label"> Tipo de asignación *</label>
-                        <select class="form-control" id="TIPO_ASIGNACION" name="TIPO_ASIGNACION">
+                        <select class="form-control" id="TIPO_ASIGNACION" name="TIPO_ASIGNACION" required>
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Equipos - otros</option>
                             <option value="2">EPP</option>
@@ -2908,7 +2908,7 @@
                         <div class="row">
                             <div class="col-8">
                                 <label class="form-label">Personal que asigna</label>
-                                <input type="text" class="form-control" id="PERSONAL_ASIGNA" name="PERSONAL_ASIGNA" readonly>
+                                <input type="text" class="form-control" id="PERSONAL_ASIGNA" name="PERSONAL_ASIGNA" readonly required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label">Fecha *</label>

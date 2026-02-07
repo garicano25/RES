@@ -1136,6 +1136,7 @@ public function mostrarecibosnomina($id)
                         'FECHA_ASIGNACION' => $asignacion->FECHA_ASIGNACION,
                         'TIPO_ASIGNACION'  => $asignacion->TIPO_ASIGNACION,
                         'ALMACENISTA_ASIGNACION'  => $asignacion->ALMACENISTA_ASIGNACION,
+                        'ASIGNACIONES_ID'  => $asignacion->ASIGNACIONES_ID,
 
                         'CANTIDAD_SALIDA' => $inv->CANTIDAD_SALIDA,
                         'DESCRIPCION_EQUIPO' => $inv->DESCRIPCION_EQUIPO,
@@ -1255,6 +1256,12 @@ public function mostrarecibosnomina($id)
         }
     }
 
+
+    public function mostrarasignacion($id)
+    {
+        $archivo = asignacioncontratacionModel::findOrFail($id)->DOCUMENTO_ASIGNACION;
+        return Storage::response($archivo);
+    }
 
 
     /////////////////////////////////////////// STEP 4  DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL //////////////////////////////////
@@ -1421,6 +1428,8 @@ public function obtenerdocumentosoportescontratos(Request $request)
     }
 
 
+
+ 
 
     /////////////////////////////////////////// STORE //////////////////////////////////
     public function store(Request $request)
@@ -2502,69 +2511,81 @@ public function obtenerdocumentosoportescontratos(Request $request)
 
 
 
-                // ASIGNACIONES COLABORADOR 
+                    // ASIGNACIONES COLABORADOR 
+
+               
+
                 case 12:
 
-                    $asignacionesId = $request->has('ASIGNACIONES_ID')
-                        ? $request->ASIGNACIONES_ID
-                        : null;
+                    try {
 
-                  
-                    if ($request->ID_ASINGACIONES_CONTRATACION == 0) {
+                        function normalizarAsignaciones($value)
+                        {
+                            if (is_array($value)) {
+                                return $value;
+                            }
 
-                        DB::statement('ALTER TABLE asignaciones_contratacion AUTO_INCREMENT=1;');
+                            if (is_string($value)) {
 
-                        $soportes = asignacioncontratacionModel::create(
-                            array_merge(
-                                $request->except('DOCUMENTO_ASIGNACION', 'ASIGNACIONES_ID'),
-                                [
-                                    'ASIGNACIONES_ID' => $asignacionesId
-                                ]
-                            )
+                                $decoded = json_decode($value, true);
+
+                                // Si sigue siendo string, estaba doble encodeado
+                                if (is_string($decoded)) {
+                                    $decoded = json_decode($decoded, true);
+                                }
+
+                                if (is_array($decoded)) {
+                                    return $decoded;
+                                }
+                            }
+
+                            return [];
+                        }
+
+                        
+                        // =========================
+                        // NORMALIZAR ASIGNACIONES_ID
+                        // =========================
+                        $asignacionesArray = normalizarAsignaciones(
+                            $request->ASIGNACIONES_ID ?? null
                         );
 
-                        if ($request->hasFile('DOCUMENTO_ASIGNACION')) {
+                        // SIEMPRE guardar como JSON STRING
+                        $asignacionesJson = json_encode($asignacionesArray);
 
-                            $documento = $request->file('DOCUMENTO_ASIGNACION');
-                            $curp = $request->CURP;
-                            $idDocumento = $soportes->ID_ASINGACIONES_CONTRATACION;
+                        // =========================
+                        // NUEVO
+                        // =========================
+                        if ((int)$request->ID_ASINGACIONES_CONTRATACION === 0) {
 
-                            $nombreArchivo = 'Documento de asignacion.' . $documento->getClientOriginalExtension();
-                            $rutaCarpeta = 'reclutamiento/' . $curp . '/Asignaciones/' . $idDocumento;
+                            DB::statement('ALTER TABLE asignaciones_contratacion AUTO_INCREMENT = 1');
 
-                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+                            $soportes = asignacioncontratacionModel::create(
+                                array_merge(
+                                    $request->except('DOCUMENTO_ASIGNACION', 'ASIGNACIONES_ID'),
+                                    [
+                                        'ASIGNACIONES_ID' => $asignacionesJson
+                                    ]
+                                )
+                            );
 
-                            $soportes->DOCUMENTO_ASIGNACION = $rutaCompleta;
-                            $soportes->save();
-                        }
-                    } else {
+                            if ($request->hasFile('DOCUMENTO_ASIGNACION')) {
 
-                      
-                        if (isset($request->ELIMINAR)) {
+                                $documento = $request->file('DOCUMENTO_ASIGNACION');
+                                $ruta = "reclutamiento/{$request->CURP}/Asignaciones/{$soportes->ID_ASINGACIONES_CONTRATACION}";
+                                $nombre = 'Documento de asignacion.' . $documento->getClientOriginalExtension();
 
-                            if ($request->ELIMINAR == 1) {
-
-                                asignacioncontratacionModel::where(
-                                    'ID_ASINGACIONES_CONTRATACION',
-                                    $request->ID_ASINGACIONES_CONTRATACION
-                                )->update(['ACTIVO' => 0]);
-
-                                $response['code'] = 1;
-                                $response['soporte'] = 'Desactivada';
-                            } else {
-
-                                asignacioncontratacionModel::where(
-                                    'ID_ASINGACIONES_CONTRATACION',
-                                    $request->ID_ASINGACIONES_CONTRATACION
-                                )->update(['ACTIVO' => 1]);
-
-                                $response['code'] = 1;
-                                $response['soporte'] = 'Activada';
+                                $soportes->update([
+                                    'DOCUMENTO_ASIGNACION' => $documento->storeAs($ruta, $nombre)
+                                ]);
                             }
-                        } else {
+                        }
+                        // =========================
+                        // EDITAR
+                        // =========================
+                        else {
 
-                          
-                            $soportes = asignacioncontratacionModel::find(
+                            $soportes = asignacioncontratacionModel::findOrFail(
                                 $request->ID_ASINGACIONES_CONTRATACION
                             );
 
@@ -2572,45 +2593,39 @@ public function obtenerdocumentosoportescontratos(Request $request)
                                 array_merge(
                                     $request->except('DOCUMENTO_ASIGNACION', 'ASIGNACIONES_ID'),
                                     [
-                                        'ASIGNACIONES_ID' => $asignacionesId
+                                        'ASIGNACIONES_ID' => $asignacionesJson
                                     ]
                                 )
                             );
 
                             if ($request->hasFile('DOCUMENTO_ASIGNACION')) {
 
-                                if (
-                                    $soportes->DOCUMENTO_ASIGNACION &&
-                                    Storage::exists($soportes->DOCUMENTO_ASIGNACION)
-                                ) {
+                                if ($soportes->DOCUMENTO_ASIGNACION && Storage::exists($soportes->DOCUMENTO_ASIGNACION)) {
                                     Storage::delete($soportes->DOCUMENTO_ASIGNACION);
                                 }
 
                                 $documento = $request->file('DOCUMENTO_ASIGNACION');
-                                $curp = $request->CURP;
-                                $idDocumento = $soportes->ID_ASINGACIONES_CONTRATACION;
+                                $ruta = "reclutamiento/{$request->CURP}/Asignaciones/{$soportes->ID_ASINGACIONES_CONTRATACION}";
+                                $nombre = 'Documento de asignacion.' . $documento->getClientOriginalExtension();
 
-                                $nombreArchivo = 'Documento de asignacion.' . $documento->getClientOriginalExtension();
-                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Asignaciones/' . $idDocumento;
-
-                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
-
-                                $soportes->DOCUMENTO_ASIGNACION = $rutaCompleta;
-                                $soportes->save();
+                                $soportes->update([
+                                    'DOCUMENTO_ASIGNACION' => $documento->storeAs($ruta, $nombre)
+                                ]);
                             }
-
-                            $response['code'] = 1;
-                            $response['soporte'] = 'Actualizada';
                         }
+
+                        return response()->json([
+                            'code' => 1,
+                            'soporte' => $soportes
+                        ]);
+                    } catch (\Throwable $e) {
+
+                        return response()->json([
+                            'code' => 0,
+                            'error' => 'Error al guardar el contrato',
+                            'detalle' => $e->getMessage()
+                        ], 500);
                     }
-
-                    // =========================
-                    // RESPUESTA FINAL
-                    // =========================
-                    $response['code'] = 1;
-                    $response['soporte'] = $soportes ?? null;
-
-                    return response()->json($response);
 
                     break;
 

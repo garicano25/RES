@@ -4842,8 +4842,7 @@ Modalasignacion.addEventListener('hidden.bs.modal', event => {
 
     ID_ASINGACIONES_CONTRATACION = 0
 
-    document.getElementById('formularioASIGNACIONES').reset();
-    document.getElementById('ASIGNACIONES_ID').value = "0"; 
+$('#ASIGNACIONES_ID').val('');
 
     $('#FIRMA_ASIGNACION').show();
     $('#SUBIR_DOCUMENTO_ASIGNACION').hide();
@@ -4997,7 +4996,9 @@ $("#guardarASIGNACIONES").click(function (e) {
     if (formularioValido) {
 
 
-    setAsignacionesSeleccionadas();
+        if (ID_ASINGACIONES_CONTRATACION == 0) {
+            setAsignacionesSeleccionadas();
+        }
 
         
     if (ID_ASINGACIONES_CONTRATACION == 0) {
@@ -5213,13 +5214,19 @@ $('#Tablasignacioncolaboradorgeneral').on('click', 'td>button.EDITAR', function 
     ID_ASINGACIONES_CONTRATACION =
         row.data().GRUPO_ID || row.data().ID_ASINGACIONES_CONTRATACION;
 
-    console.log('ID EDITAR:', ID_ASINGACIONES_CONTRATACION);
 
     $('#FIRMA_ASIGNACION').hide();
     $('#SUBIR_DOCUMENTO_ASIGNACION').show();
 
     editarDatoTabla(row.data(), 'formularioASIGNACIONES', 'modalAsignacionColaborador', 1);
 
+
+    $('#ASIGNACIONES_ID').val(
+        JSON.stringify(row.data().ASIGNACIONES_ID || [])
+    );
+
+    
+    
     $('#modalAsignacionColaborador').modal('show');
 
     $('#modalAsignacionColaborador').one('shown.bs.modal', function () {
@@ -5307,6 +5314,21 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+$('#Tablasignacioncolaboradorgeneral').on('click', '.ver-archivo-documentoasignacion', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablasignacioncolaboradorgeneral.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = 'Documento de asignación';
+    var url = '/mostrarasignacion/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
 
 
 // <!-- ============================================================================================================================ -->
