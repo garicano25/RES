@@ -565,35 +565,6 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label>Este documento se debe actualizar o renovar anualmente *</label>
-                        <select class="form-select" id="RENOVACION_DOCUMENTO" name="RENOVACION_DOCUMENTO" required>
-                            <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="1">Sí</option>
-                            <option value="2">No</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Tipo de documento *</label>
-                        <select class="form-select" id="TIPO_DOCUMENTO" name="TIPO_DOCUMENTO">
-                            <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="1">Copia del INE</option>
-                            <option value="2">Copia del Pasaporte</option>
-                            <option value="3">Copia de la licencia de conducción tipo chofer</option>
-                            <option value="4">Copia del número de seguridad social (NSS)</option>
-                            <option value="5">Copia del acta de nacimiento</option>
-                            <option value="6">Copia de la CURP</option>
-                            <option value="8">Copia de la cartilla de servicio militar (hombres)</option>
-                            <option value="9">Copia del comprobante de domicilio </option>
-                            <option value="10">Dos (2) cartas de recomendación</option>
-                            <option value="11">Contrato o caratula del estado de cuenta </option>
-                            <option value="12">Constancia de situación fiscal</option>
-                            <option value="14">Visa</option>
-                            <option value="13">Otros</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
                         <label>Nombre del archivo </label>
                         <input type="text" class="form-control" id="NOMBRE_DOCUMENTO" name="NOMBRE_DOCUMENTO" readonly required>
                     </div>

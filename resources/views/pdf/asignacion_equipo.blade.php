@@ -34,7 +34,7 @@
             padding-left: 50px;
             padding-right: 10px;
             font-family: 'Poppins', sans-serif;
-            font-size: 12px;
+            font-size: 11px;
         }
 
 
@@ -68,7 +68,7 @@
         table td {
             border: 1px solid black;
             padding: 5px;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .bg-gray {
@@ -110,7 +110,7 @@
                 <td rowspan="3" class="text-center" style="width:33%">
                     <img src="{{ public_path('assets/images/MARCAREGISTRADA.png') }}" class="logo">
                 </td>
-                <td rowspan="3" class="text-center" style="font-size:16px;">
+                <td rowspan="3" class="text-center" style="font-size:14px;">
                     <strong>Asignación de equipo de cómputo - otros</strong>
                 </td>
                 <td class="text-center bold">PS-RH-FO-11</td>
@@ -130,7 +130,7 @@
     <div class="contenido">
 
 
-        <table style="margin-top: 40px; width: 100%; border-collapse: collapse;">
+        <table style="margin-top: 10px; width: 100%; border-collapse: collapse;">
             <tr>
                 <td style="width: 30%; border: none;">
                     Nombre del empleado
@@ -146,16 +146,16 @@
                 </td>
             </tr>
             <tr>
-                <td style="border: none; padding-top: 10px;">
+                <td style="border: none; padding-top: 2px;">
                     Número de empleado
                 </td>
-                <td style="border: none; border-bottom: 1px solid #000; padding-top: 10px;">
+                <td style="border: none; border-bottom: 1px solid #000; padding-top: 2px;">
                     {{ $empleado->NUMERO_EMPLEADO ?? '' }}
                 </td>
             </tr>
         </table>
 
-        <div class="texto-legal" style="margin-top: 30px;">
+        <div class="texto-legal" style="margin-top: 10px;">
             <strong>Results In Performance S.A. de C.V. (RES)</strong> provee equipo, consumibles y
             materiales necesarios para desempeñar su trabajo. Estos artículos deberán ser usados
             única y exclusivamente para los propósitos de <strong>RES</strong>. Se espera que los
@@ -168,7 +168,7 @@
             equipo propiedad de <strong>RES</strong> debe de ser reportada al jefe inmediato.
         </div>
 
-        <table style="margin-top: 40px;">
+        <table style="margin-top: 10px;">
             <thead>
                 <tr class="bg-gray text-center">
                     <td>Descripción</td>
@@ -182,19 +182,19 @@
             <tbody>
                 @foreach ($inventarios as $item)
                 <tr>
-                    <td>{{ $item->DESCRIPCION_EQUIPO }}</td>
+                    <td class="text-center">{{ $item->DESCRIPCION_EQUIPO }}</td>
                     <td class="text-center">{{ $item->CANTIDAD_SALIDA }}</td>
-                    <td>{{ $item->MARCA_EQUIPO }}</td>
-                    <td>{{ $item->MODELO_EQUIPO }}</td>
-                    <td>{{ $item->SERIE_EQUIPO }}</td>
-                    <td>{{ $item->CODIGO_EQUIPO }}</td>
+                    <td class="text-center">{{ $item->MARCA_EQUIPO }}</td>
+                    <td class="text-center">{{ $item->MODELO_EQUIPO }}</td>
+                    <td class="text-center">{{ $item->SERIE_EQUIPO }}</td>
+                    <td class="text-center">{{ $item->CODIGO_EQUIPO }}</td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
 
 
-        <div class="texto-acuse" style="margin-top: 30px;">
+        <div class="texto-acuse" style="margin-top: 10px;">
             Por este medio, acuso de recibo del equipo descrito anteriormente. Me doy por enterado de la
             responsabilidad que tengo sobre el equipo de protección de <strong>RES</strong>, que tengo
             en mi posesión. Soy responsable de reembolsar el valor total del equipo en caso de que no esté
@@ -221,7 +221,7 @@
                 </tr>
             </table>
 
-            <div style="margin-top:30px; text-align:center; font-weight:bold;">
+            <div style="margin-top:10px; text-align:center; font-weight:bold;">
                 Personal que asigna
             </div>
 
@@ -238,7 +238,7 @@
                 </tr>
             </table>
 
-            <div style="margin-top:30px; text-align:center; font-weight:bold;">
+            <div style="margin-top:10px; text-align:center; font-weight:bold;">
                 Almacenista
             </div>
 

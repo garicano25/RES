@@ -1057,7 +1057,7 @@
                     <div class="row  mb-3" id="CONTRATO" style="display: block">
                         <div class="col-12 mb-3">
                             <label>Cargo</label>
-                            <select class="form-control" id="NOMBRE_CARGO" name="NOMBRE_CARGO">
+                            <select class="form-control" id="NOMBRE_CARGO" name="NOMBRE_CARGO" required>
                                 <option value="0" selected disabled>Seleccione una opción</option>
                                 @foreach ($areas as $area)
                                 <option value="{{ $area->ID }}">{{ $area->NOMBRE }}</option>

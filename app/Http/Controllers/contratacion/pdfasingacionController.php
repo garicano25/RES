@@ -69,7 +69,7 @@ class pdfasingacionController extends Controller
         return Pdf::loadView('pdf.asignacion_equipo', $data)
             ->setPaper('letter', 'portrait')
             ->setOptions([
-                'isPhpEnabled'     => true,   // 🔥 CLAVE
+                'isPhpEnabled'     => true,  
                 'isRemoteEnabled' => true,
                 'chroot'          => public_path()
             ])

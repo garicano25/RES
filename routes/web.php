@@ -509,6 +509,7 @@ Route::post('/activarColaborador/{id}', [contratacionController::class, 'activar
 Route::get('/usuariocolaborador/{id}', [contratacionController::class, 'mostrarfotocolaborador']);
 Route::post('/verificarestadobloqueo', [contratacionController::class, 'verificarestadobloqueo']);
 Route::post('/obtenerUltimoCargo', [contratacionController::class, 'obtenerUltimoCargo']);
+
 // CREAR CREDENCIAL 
 Route::get('/descargar-credencial', [PowerPointController::class, 'descargarCredencial']);
 
@@ -592,6 +593,9 @@ Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarre
 
 
 Route::get('/actualizaciondocumentos', function () {return view('RH.contratacion.actualizaciondoc');});
+
+
+
 
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 
@@ -705,9 +709,6 @@ Route::get('/ordentrabajo', [otController::class, 'index']);
 Route::get('/Tablaordentrabajo', [otController::class, 'Tablaordentrabajo']);
 Route::post('/otSave', [otController::class, 'store']);
 Route::post('/obtenerDatosOferta', [otController::class, 'obtenerDatosOferta']);
-
-
-// routes/web.php
 Route::get('/descargarOT/{id}', [pdfotController::class, 'descargarOT']);
 
 //==============================================   ORDEN DE TRABAJO HISTORIAL  ============================================== 
@@ -1139,11 +1140,12 @@ Route::get('/notificaciones', [notificacionController::class, 'notificaciones'])
 
 //============================================== C.P ============================================== 
 
+
 Route::get('codigo-postal/{cp}', function ($cp) {
 
     Log::info('Consulta CP desde: ' . request()->ip() . ', User-Agent: ' . request()->header('User-Agent'));
 
-   $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
+    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     try {
