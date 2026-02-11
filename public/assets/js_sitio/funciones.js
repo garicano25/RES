@@ -2791,7 +2791,6 @@ function validarFormulario(form) {
 function validarFormulario3(form) {
   var formulario = form;
 
-  // Busca todos los elementos requeridos visibles y no deshabilitados y agrega la clase "validar"
   formulario.find('input[required]:not([disabled]):visible, textarea[required]:not([disabled]):visible, select[required]:not([disabled]):visible')
     .addClass('validar')
     .removeClass('error');
@@ -2803,7 +2802,6 @@ function validarFormulario3(form) {
     var tipoCampo = $(this).attr('type');
     var valorCampo = $(this).val();
 
-    // Verifica si el campo es un radio o checkbox
     if (tipoCampo === 'radio' || tipoCampo === 'checkbox') {
       var nombreGrupo = $(this).attr('name');
       if ($('input[name="' + nombreGrupo + '"]:checked').length === 0 && $(this).is(':visible')) {

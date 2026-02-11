@@ -330,7 +330,7 @@ if (resp.existe) {
                         </div>
 
 
-                        <div class="col-md-12">
+                        <div class="col-md-12 mt-2">
                           <label class="form-label"> Finalizar GR</label>
                           <select class="form-control" name="FINALIZAR_GR">
                               <option value="">Seleccione</option>
@@ -528,10 +528,12 @@ if (resp.existe) {
                             </div>
                             <div class="col-3 mt-2">
                               <label class="form-label">Tipo</label>
-                              <select class="form-control" name="TIPO_BS[]">
+                              <select class="form-control" name="TIPO_BS[]" required>
                                 <option value="">Seleccione</option>
                                 <option value="Bien">Bien</option>
                                 <option value="Servicio">Servicio</option>
+                                <option value="N/A">N/A</option>
+
                               </select>
                             </div>
 
@@ -694,15 +696,89 @@ function calcularTotales(bloque) {
 
 
 
+// $('#btnGuardarGR').on('click', function () {
+//     let formData = [];
+
+//     if ($(".form-gr").length > 0) {
+//         let activeForm = $(".tab-pane.active .form-gr");
+//         formData = formData.concat(activeForm.serializeArray());
+//     } else {
+//         formData = formData.concat($("#formulariorecepciongr").serializeArray());
+//     }
+
+//     formData.push({
+//         name: "_token",
+//         value: $('meta[name="csrf-token"]').attr('content')
+//     });
+
+//     Swal.fire({
+//         title: '¿Desea guardar la GR?',
+//         text: "Confirme para continuar",
+//         icon: 'question',
+//         showCancelButton: true,
+//         confirmButtonText: 'Sí, guardar',
+//         cancelButtonText: 'No, cancelar'
+//     }).then((result) => {
+//         if (result.isConfirmed) {
+//             $.ajax({
+//                 url: '/guardarGR',
+//                 method: 'POST',
+//                 data: $.param(formData),
+//                 beforeSend: function () {
+//                     Swal.fire({
+//                         title: 'Guardando...',
+//                         text: 'Por favor espere',
+//                         allowOutsideClick: false,
+//                         allowEscapeKey: false,
+//                         didOpen: () => {
+//                             Swal.showLoading();
+//                         }
+//                     });
+//                 },
+//                 success: function (resp) {
+//                     Swal.close();
+
+//                     if (resp.ok) {
+//                         Swal.fire('Éxito', 'GR guardada', 'success');
+//                         $('#modalGR').modal('hide');
+//                         Tablabitacoragr.ajax.reload();
+//                     } else {
+//                         Swal.fire('Error', resp.msg, 'error');
+//                     }
+//                 },
+//                 error: function () {
+//                     Swal.close();
+//                     Swal.fire('Error', 'Ocurrió un problema al guardar la GR', 'error');
+//                 }
+//             });
+//         }
+//     });
+// });
+
+
+
 $('#btnGuardarGR').on('click', function () {
-    let formData = [];
+
+    let formActivo;
 
     if ($(".form-gr").length > 0) {
-        let activeForm = $(".tab-pane.active .form-gr");
-        formData = formData.concat(activeForm.serializeArray());
+        formActivo = $(".tab-pane.active .form-gr");
     } else {
-        formData = formData.concat($("#formulariorecepciongr").serializeArray());
+        formActivo = $("#formulariorecepciongr");
     }
+
+    if (!validarFormulariogr(formActivo)) {
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Formulario incompleto',
+            text: 'Debe completar los campos obligatorios.'
+        });
+
+        return; 
+    }
+
+    let formData = formActivo.serializeArray();
 
     formData.push({
         name: "_token",
@@ -717,7 +793,9 @@ $('#btnGuardarGR').on('click', function () {
         confirmButtonText: 'Sí, guardar',
         cancelButtonText: 'No, cancelar'
     }).then((result) => {
+
         if (result.isConfirmed) {
+
             $.ajax({
                 url: '/guardarGR',
                 method: 'POST',
@@ -728,12 +806,11 @@ $('#btnGuardarGR').on('click', function () {
                         text: 'Por favor espere',
                         allowOutsideClick: false,
                         allowEscapeKey: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
+                        didOpen: () => Swal.showLoading()
                     });
                 },
                 success: function (resp) {
+
                     Swal.close();
 
                     if (resp.ok) {
@@ -749,9 +826,50 @@ $('#btnGuardarGR').on('click', function () {
                     Swal.fire('Error', 'Ocurrió un problema al guardar la GR', 'error');
                 }
             });
+
         }
     });
+
 });
+
+
+
+function validarFormulariogr(formulario) {
+
+    let formularioValido = true;
+
+    formulario.find('.error').removeClass('error');
+
+    const campos = formulario.find(
+        'input[required]:not([disabled]):visible, textarea[required]:not([disabled]):visible, select[required]:not([disabled]):visible'
+    );
+
+    campos.each(function () {
+
+        const tipoCampo = $(this).attr('type');
+        const valorCampo = $(this).val();
+
+        if (tipoCampo === 'radio' || tipoCampo === 'checkbox') {
+
+            const nombreGrupo = $(this).attr('name');
+
+            if ($('input[name="' + nombreGrupo + '"]:checked').length === 0) {
+                $('input[name="' + nombreGrupo + '"]').addClass('error');
+                formularioValido = false;
+            }
+
+        } else {
+            if (!valorCampo || valorCampo.trim() === '') {
+                $(this).addClass('error');
+                formularioValido = false;
+            }
+        }
+
+    });
+
+    return formularioValido;
+}
+
 
 
 function crearBloqueDetalle(det, resp) {
@@ -831,10 +949,12 @@ function crearBloqueDetalle(det, resp) {
 
                         <div class="col-3 mt-2">
                             <label class="form-label">Tipo</label>
-                            <select class="form-control" name="TIPO_BS[]">
+                            <select class="form-control" name="TIPO_BS[]" required>
                               <option value="">Seleccione</option>
                               <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
-                              <option value="Servicio" ${det.TIPO_BS=="Servicio"?"selected":""}>Servicio</option>
+                              <option value="Servicio" ${det.TIPO_BS == "Servicio" ? "selected" : ""}>Servicio</option>
+                              <option value="N/A" ${det.TIPO_BS=="N/A"?"selected":""}>N/A</option>
+                              
                             </select>
                           </div>
 
