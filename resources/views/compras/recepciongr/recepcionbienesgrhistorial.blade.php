@@ -351,9 +351,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-info" id="DescargarGR">Descarga GR</button> -->
+                    <button type="button" class="btn btn-info" id="DescargarGR">Descarga GR</button>
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <!-- <button type="button" class="btn btn-success" id="btnGuardarGR">Guardar</button> -->
                 </div>
 
             </form>
