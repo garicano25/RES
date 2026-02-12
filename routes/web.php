@@ -1149,7 +1149,7 @@ Route::get('codigo-postal/{cp}', function ($cp) {
 
     Log::info('Consulta CP desde: ' . request()->ip() . ', User-Agent: ' . request()->header('User-Agent'));
 
-    //$token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
+    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     try {
