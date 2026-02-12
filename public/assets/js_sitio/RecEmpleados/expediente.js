@@ -2,7 +2,7 @@
 var curpSeleccionada; 
 var contrato_id = null; 
 
-
+var documento_id = null; 
 
 // ID DE LOS FORMULARIOS 
 ID_FORMULARIO_CONTRATACION = 0;
@@ -17,6 +17,9 @@ ID_RECIBOS_NOMINA = 0;
 ID_SOPORTE_CONTRATO = 0;
 ID_RENOVACION_CONTATO = 0;
 ID_CONTRATACION_REQUERIMIENTO = 0;
+
+
+ID_DOCUMENTOS_ACTUALIZADOS = 0;
 
 
 // TABLAS
@@ -258,7 +261,7 @@ $("#guardarDatosGenerales").click(function (e) {
             }, async function () {
 
                 await loaderbtn('guardarDatosGenerales');
-                await ajaxAwaitFormData(requestData, 'contratoSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
+                await ajaxAwaitFormData(requestData, 'ExpedienteSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
                     Swal.fire({
                         icon: 'info',
                         title: 'Espere un momento',
@@ -271,7 +274,7 @@ $("#guardarDatosGenerales").click(function (e) {
                 }, function (data) {
                     curpSeleccionada = data.contrato.CURP;
                     ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
-                    $('#step2, #step3, #step4,#step5,#step6').css("display", "flex");
+                    $('#step3, #step4,#step5,#step6').css("display", "flex");
                    
 
                     alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
@@ -287,7 +290,7 @@ $("#guardarDatosGenerales").click(function (e) {
             }, async function () {
 
                 await loaderbtn('guardarDatosGenerales');
-                await ajaxAwaitFormData(requestData, 'contratoSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
+                await ajaxAwaitFormData(requestData, 'ExpedienteSave', 'FormularioCONTRATACION', 'guardarDatosGenerales', { callbackAfter: true, callbackBefore: true }, () => {
                     Swal.fire({
                         icon: 'info',
                         title: 'Espere un momento',
@@ -316,12 +319,16 @@ $('#Tablaexpediente tbody').on('click', 'td>button.EDITAR', function () {
     var row = Tablaexpediente.row(tr);
     ID_FORMULARIO_CONTRATACION = row.data().ID_FORMULARIO_CONTRATACION;
 
+
+    validarPeriodoActualizacionStep();
+
+    
     $('#FormularioCONTRATACION').each(function() {
         this.reset();
     });
 
     $('#datosgenerales-tab').closest('li').css("display", 'block');
-    $('#step2, #step3,#step4,#step5,#step6').css("display", "flex");
+    $('#step3,#step4,#step5,#step6').css("display", "flex");
 
     $('#step1-content').css("display", 'block');
     $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content').css("display", 'none');
@@ -509,6 +516,31 @@ $(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPL
 
     $("#step1").click();
 });
+
+
+
+function validarPeriodoActualizacionStep() {
+
+    return $.ajax({
+        url: '/validarPeriodoActualizacion',
+        method: 'GET'
+    }).done(function (resp) {
+
+        if (resp.ok && resp.mostrar) {
+            $('#step2').css('display', 'flex');
+        } else {
+            $('#step2').css('display', 'none');
+        }
+
+    }).fail(function () {
+        console.error('Error al validar periodo');
+        $('#step2').css('display', 'none');
+    });
+
+}
+
+
+
 
 function calcularEdad(fechaNacimiento) {
     const hoy = new Date();
@@ -769,23 +801,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    var tipoArea = document.getElementById('TIPO_DOCUMENTO');
-    var nombreDocumento = document.getElementById('NOMBRE_DOCUMENTO');
-
-    tipoArea.addEventListener('change', function() {
-        var selectedOption = this.options[this.selectedIndex].text; 
-
-        if (this.value == '13') {
-            nombreDocumento.removeAttribute('readonly');
-            nombreDocumento.value = ''; 
-        } else {
-            nombreDocumento.setAttribute('readonly', true);
-            nombreDocumento.value = selectedOption; 
-        }
-    });
-});
-
 $("#guardarDOCUMENTOSOPORTE").click(function (e) {
     e.preventDefault();
 
@@ -795,7 +810,7 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
     
     if (formularioValido) {
 
-    if (ID_DOCUMENTO_SOPORTE == 0) {
+    if (ID_DOCUMENTOS_ACTUALIZADOS == 0) {
         
         alertMensajeConfirm({
             title: "¿Desea guardar la información?",
@@ -804,7 +819,7 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarDOCUMENTOSOPORTE')
-            await ajaxAwaitFormData({ api: 2, CURP: curpSeleccionada , ID_DOCUMENTO_SOPORTE: ID_DOCUMENTO_SOPORTE }, 'contratoSave', 'formularioDOCUMENTOS', 'guardarDOCUMENTOSOPORTE', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 1, DOCUMENTOS_ID: documento_id, CURP: curpSeleccionada, ID_DOCUMENTOS_ACTUALIZADOS: ID_DOCUMENTOS_ACTUALIZADOS }, 'ExpedienteSave', 'formularioDOCUMENTOS', 'guardarDOCUMENTOSOPORTE', { callbackAfter: true, callbackBefore: true }, () => {
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -816,7 +831,7 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
                 
             }, function (data) {
                     
-                ID_DOCUMENTO_SOPORTE = data.soporte.ID_DOCUMENTO_SOPORTE
+                ID_DOCUMENTOS_ACTUALIZADOS = data.soporte.ID_DOCUMENTOS_ACTUALIZADOS
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_DOCUMENTOS_SOPORTE').modal('hide')
                     document.getElementById('formularioDOCUMENTOS').reset();
@@ -838,7 +853,7 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarDOCUMENTOSOPORTE')
-            await ajaxAwaitFormData({ api: 2, CURP: curpSeleccionada ,ID_DOCUMENTO_SOPORTE: ID_DOCUMENTO_SOPORTE }, 'contratoSave', 'formularioDOCUMENTOS', 'guardarDOCUMENTOSOPORTE', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 1, DOCUMENTOS_ID: documento_id, CURP: curpSeleccionada, ID_DOCUMENTOS_ACTUALIZADOS: ID_DOCUMENTOS_ACTUALIZADOS }, 'ExpedienteSave', 'formularioDOCUMENTOS', 'guardarDOCUMENTOSOPORTE', { callbackAfter: true, callbackBefore: true }, () => {
                 Swal.fire({
                     icon: 'info',
                     title: 'Espere un momento',
@@ -852,7 +867,7 @@ $("#guardarDOCUMENTOSOPORTE").click(function (e) {
                     
                 setTimeout(() => {
 
-                    ID_DOCUMENTO_SOPORTE = data.soporte.ID_DOCUMENTO_SOPORTE
+                    ID_DOCUMENTOS_ACTUALIZADOS = data.soporte.ID_DOCUMENTOS_ACTUALIZADOS
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_DOCUMENTOS_SOPORTE').modal('hide')
                     document.getElementById('formularioDOCUMENTOS').reset();
@@ -919,14 +934,12 @@ function cargarTablaDocumentosSoporte() {
         columns: [
             { data: null, render: function(data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
             { data: 'NOMBRE_DOCUMENTO', className: 'text-center' },  
-            { data: 'BTN_DOCUMENTO' }, 
             { data: 'BTN_EDITAR' }
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Nombre del documento', className: 'all text-center' },  
-            { targets: 2, title: 'Documento de soporte', className: 'all text-center' },  
-            { targets: 3, title: 'Editar', className: 'all text-center' }
+            { targets: 2, title: 'Editar', className: 'all text-center' }
         ]
     });
 }
@@ -954,6 +967,12 @@ const Modaldocumentosoporte = document.getElementById('miModal_DOCUMENTOS_SOPORT
 Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
     
     ID_DOCUMENTO_SOPORTE = 0
+
+
+    ID_DOCUMENTOS_ACTUALIZADOS = 0
+
+
+    
     document.getElementById('formularioDOCUMENTOS').reset();
    
     $('#miModal_DOCUMENTOS_SOPORTE .modal-title').html('Documento de soporte');
@@ -969,7 +988,7 @@ Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
     document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
 
 
-
+    documento_id = 0; 
 
 })
 
@@ -998,6 +1017,10 @@ $('#Tabladocumentosoportexpediente').on('click', 'td>button.EDITAR', function ()
 
     ID_DOCUMENTO_SOPORTE = row.data().ID_DOCUMENTO_SOPORTE;
 
+
+    documento_id = row.data().ID_DOCUMENTO_SOPORTE;
+
+    
     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_DOCUMENTOS_SOPORTE', 1);
 
     $('#miModal_DOCUMENTOS_SOPORTE .modal-title').html(row.data().NOMBRE_DOCUMENTO);
@@ -1005,7 +1028,6 @@ $('#Tabladocumentosoportexpediente').on('click', 'td>button.EDITAR', function ()
     $('#TIPO_DOCUMENTO').prop('disabled', true); 
     $('#NOMBRE_DOCUMENTO').prop('readonly', true); 
 
-  
     if (row.data().PROCEDE_FECHA_DOC === "1") {
         $('#FECHAS_SOPORTEDOCUMENTOS').show();
     } else {

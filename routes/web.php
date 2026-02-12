@@ -64,6 +64,7 @@ use App\Http\Controllers\contratacion\PowerPointController;
 use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 use App\Http\Controllers\contratacion\pdfasingacionController;
+use App\Http\Controllers\contratacion\actualizaciondocsController;
 
 
 // CONTROLADORES DE REC.EMPLEADOS
@@ -591,11 +592,13 @@ Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarre
 
 /// ACTUALIZACION DE DOCUMENTO DEL COLABORADOR 
 
+Route::get('/actualizaciondocumentos', [actualizaciondocsController::class, 'index']);
+Route::post('/ActualizarfechasSave',[actualizaciondocsController::class, 'store']);
+Route::get('/validarPeriodoActualizacion', [actualizaciondocsController::class, 'validarPeriodoActualizacion']);
+Route::get('/Tabladocumentosactualizados', [actualizaciondocsController::class, 'Tabladocumentosactualizados']);
 
-Route::get('/actualizaciondocumentos', function () {return view('RH.contratacion.actualizaciondoc');});
 
-
-
+Route::get('/mostrardocumentoactualizado/{id}', [actualizaciondocsController::class, 'mostrardocumentoactualizado']);
 
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 
@@ -625,6 +628,7 @@ Route::get('/expediente', [expedientecolabController::class, 'index']);
 Route::get('/Tablaexpediente', [expedientecolabController::class, 'Tablaexpediente']);
 Route::get('/Tabladocumentosoportexpediente', [expedientecolabController::class, 'Tabladocumentosoportexpediente']);
 
+Route::post('/ExpedienteSave', [expedientecolabController::class, 'store']);
 
 //==============================================  CAPACITACION  ============================================== 
 
@@ -1145,7 +1149,7 @@ Route::get('codigo-postal/{cp}', function ($cp) {
 
     Log::info('Consulta CP desde: ' . request()->ip() . ', User-Agent: ' . request()->header('User-Agent'));
 
-    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
+    //$token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     try {

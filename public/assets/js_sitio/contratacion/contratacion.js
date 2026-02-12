@@ -2616,6 +2616,8 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
 
 
     contrato_id = row.data().ID_CONTRATOS_ANEXOS;
+
+     
     NOMBRE_CATEGORIA = row.data().NOMBRE_CATEGORIA;
     VIGENCIA_CONTRATO = row.data().VIGENCIA_CONTRATO;
 

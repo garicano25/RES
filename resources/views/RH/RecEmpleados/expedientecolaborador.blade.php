@@ -178,7 +178,7 @@
                                         </div>
                                         <span>Datos generales</span>
                                     </div>
-                                    <div class="multisteps-form__progress-btn" id="step2">
+                                    <div class="multisteps-form__progress-btn" id="step2" style="display: none;">
                                         <div class="step-circle">
                                             <i class="bi bi-file-earmark-text-fill"></i>
                                         </div>

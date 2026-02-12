@@ -9,29 +9,14 @@ use Exception;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
-
 use App\Models\contratacion\contratacionModel;
 use App\Models\contratacion\documentosoporteModel;
-use App\Models\contratacion\contratosanexosModel;
-use App\Models\contratacion\documentoscolaboradorcontratoModel;
-use App\Models\contratacion\reingresocontratoModel;
-
-use App\Models\contratacion\reciboscontratoModel;
-use App\Models\contratacion\informacionmedicaModel;
-use App\Models\contratacion\incidenciasModel;
-use App\Models\contratacion\accionesdisciplinariasModel;
-use App\Models\contratacion\documentosoportecontratoModel;
-use App\Models\contratacion\renovacioncontratoModel;
-use App\Models\contratacion\adendarenovacionModel;
-use App\Models\contratacion\requisicioncontratacion;
-
-use App\Models\contratacion\adendacontratoModel;
-use App\Models\recempleados\recemplaedosModel;
-
-
 use App\Models\organizacion\catalogotipovacanteModel;
 use App\Models\organizacion\catalogomotivovacanteModel;
 use App\Models\organizacion\areasModel;
+
+
+use App\Models\contratacion\documentosactualizadosModel;
 
 use DB;
 
@@ -179,7 +164,12 @@ class expedientecolabController extends Controller
 
             $tabla = documentosoporteModel::where('CURP', $curp)
                 ->where('RENOVACION_DOCUMENTO', 1)
+                ->whereNotIn('ID_DOCUMENTO_SOPORTE', function ($query) {
+                    $query->select('DOCUMENTOS_ID')
+                        ->from('documento_actualizados');
+                })
                 ->get();
+
 
             foreach ($tabla as $value) {
                 if ($value->ACTIVO == 0) {
@@ -208,4 +198,109 @@ class expedientecolabController extends Controller
     }
 
 
+
+
+
+    public function store(Request $request)
+    {
+        try {
+            switch (intval($request->api)) {
+
+
+
+
+                case 1:
+                    if ($request->ID_DOCUMENTOS_ACTUALIZADOS == 0) {
+                        DB::statement('ALTER TABLE documento_actualizados AUTO_INCREMENT=1;');
+                        $soportes = documentosactualizadosModel::create($request->except('DOCUMENTO_SOPORTE'));
+
+                        if ($request->hasFile('DOCUMENTO_SOPORTE')) {
+                            $documento = $request->file('DOCUMENTO_SOPORTE');
+                            $curp = $request->CURP;
+                            $idDocumento = $soportes->DOCUMENTOS_ID;
+
+                            $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
+
+                            $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de actualizados/' . $idDocumento;
+                            $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                            $soportes->DOCUMENTO_SOPORTE = $rutaCompleta;
+                            $soportes->save();
+                        }
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $soportes = documentosactualizadosModel::where('ID_DOCUMENTOS_ACTUALIZADOS', $request['ID_DOCUMENTOS_ACTUALIZADOS'])
+                                    ->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Desactivada';
+                            } else {
+                                $soportes = documentosactualizadosModel::where('ID_DOCUMENTOS_ACTUALIZADOS', $request['ID_DOCUMENTOS_ACTUALIZADOS'])
+                                    ->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['soporte'] = 'Activada';
+                            }
+                        } else {
+                            $soportes = documentosactualizadosModel::find($request->ID_DOCUMENTOS_ACTUALIZADOS);
+                            $soportes->update($request->except('DOCUMENTO_SOPORTE'));
+
+                            if ($request->hasFile('DOCUMENTO_SOPORTE')) {
+
+                                if ($soportes->DOCUMENTO_SOPORTE && Storage::exists($soportes->DOCUMENTO_SOPORTE)) {
+                                    Storage::delete($soportes->DOCUMENTO_SOPORTE);
+                                }
+
+                                $documento = $request->file('DOCUMENTO_SOPORTE');
+                                $curp = $request->CURP;
+                                $idDocumento = $soportes->DOCUMENTOS_ID;
+
+                                $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
+
+                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de actualizados/' . $idDocumento;
+                                $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
+
+                                $soportes->DOCUMENTO_SOPORTE = $rutaCompleta;
+                                $soportes->save();
+                            }
+
+                            $response['code'] = 1;
+                            $response['soporte'] = 'Actualizada';
+                        }
+                    }
+
+                    $response['code'] = 1;
+                    $response['soporte'] = $soportes;
+                    return response()->json($response);
+                    break;
+
+
+
+         
+
+
+      
+
+
+
+
+
+
+
+
+
+
+
+
+
+                default:
+                    $response['code'] = 1;
+                    $response['msj'] = 'Api no encontrada';
+                    return response()->json($response);
+            }
+        } catch (Exception $e) {
+            return response()->json('Error al guardar el contrato');
+        }
     }
+
+
+}
