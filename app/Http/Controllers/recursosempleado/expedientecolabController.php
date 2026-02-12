@@ -221,7 +221,7 @@ class expedientecolabController extends Controller
 
                             $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
 
-                            $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de actualizados/' . $idDocumento;
+                            $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos actualizados/' . $idDocumento;
                             $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
                             $soportes->DOCUMENTO_SOPORTE = $rutaCompleta;
@@ -256,7 +256,7 @@ class expedientecolabController extends Controller
 
                                 $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
 
-                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos de actualizados/' . $idDocumento;
+                                $rutaCarpeta = 'reclutamiento/' . $curp . '/Documentos actualizados/' . $idDocumento;
                                 $rutaCompleta = $documento->storeAs($rutaCarpeta, $nombreArchivo);
 
                                 $soportes->DOCUMENTO_SOPORTE = $rutaCompleta;
