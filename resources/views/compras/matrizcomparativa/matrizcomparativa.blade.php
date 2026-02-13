@@ -316,10 +316,9 @@
                                                         <option value="4">Servicio postventa</option>
                                                         <option value="5">Condiciones de pago</option>
                                                         <option value="6">Condiciones de garantía</option>
-
-
+                                                        <option value="7">Proveedor confiable</option>
+                                                        <option value="8">Valor agregado</option>
                                                     </select>
-
                                                 </div>
                                             </div>
 
