@@ -110,7 +110,7 @@
                 <td rowspan="3" class="text-center" style="width:33%">
                     <img src="{{ public_path('assets/images/MARCAREGISTRADA.png') }}" class="logo">
                 </td>
-                <td rowspan="3" class="text-center" style="font-size:14px;">
+                <td rowspan="3" class="text-center" style="font-size:10px;">
                     <strong>Asignación de equipo de cómputo - otros</strong>
                 </td>
                 <td class="text-center bold">PS-RH-FO-11</td>
