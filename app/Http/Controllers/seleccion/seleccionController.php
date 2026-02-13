@@ -90,6 +90,7 @@ class seleccionController extends Controller
                     AND fs.ACTIVO = 1
                 )
             )
+            ORDER BY vac.FECHA_EXPIRACION DESC
         ");
 
             foreach ($vacantes as $vacante) {
@@ -139,15 +140,22 @@ class seleccionController extends Controller
                    vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
                    cat.NOMBRE_CATEGORIA
             FROM catalogo_vacantes vac
-            LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+            LEFT JOIN catalogo_categorias cat 
+                ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
             WHERE vac.ACTIVO = 1
+            ORDER BY vac.FECHA_EXPIRACION DESC
         ");
 
             foreach ($vacantes as $vacante) {
+
                 $postulados = DB::table('formulario_seleccion')
-                ->where('VACANTES_ID', $vacante->VACANTES_ID)
+                    ->where('VACANTES_ID', $vacante->VACANTES_ID)
                     ->where('ACTIVO', 0)
-                    ->select('NOMBRE_SELC', 'PRIMER_APELLIDO_SELEC', 'SEGUNDO_APELLIDO_SELEC')
+                    ->select(
+                        'NOMBRE_SELC',
+                        'PRIMER_APELLIDO_SELEC',
+                        'SEGUNDO_APELLIDO_SELEC'
+                    )
                     ->get();
 
                 $listaPostulados = "<ul>";
@@ -161,22 +169,23 @@ class seleccionController extends Controller
             }
 
             return response()->json([
-                    'data' => $vacantes,
-                    'msj' => 'Información consultada correctamente'
-                ]);
+                'data' => $vacantes,
+                'msj' => 'Información consultada correctamente'
+            ]);
         } catch (Exception $e) {
             return response()->json([
-                    'msj' => 'Error ' . $e->getMessage(),
-                    'data' => []
-                ]);
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => []
+            ]);
         }
     }
 
 
-/// MANDAR A PENDINENTE POR CONTRATAR 
+
+    /// MANDAR A PENDINENTE POR CONTRATAR 
 
 
-public function guardarPendiente(Request $request)
+    public function guardarPendiente(Request $request)
 {
     try {
         $curp = $request->input('CURP');
