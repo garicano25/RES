@@ -69,6 +69,112 @@ class seleccionController extends Controller
     }
 
 
+    // public function Tablaseleccion()
+    // {
+    //     try {
+
+    //         $vacantes = DB::select("
+    //         SELECT vac.*, 
+    //                vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
+    //                cat.NOMBRE_CATEGORIA
+    //         FROM catalogo_vacantes vac
+    //         LEFT JOIN catalogo_categorias cat 
+    //             ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+    //         WHERE vac.ACTIVO = 1
+    //         AND (
+    //             vac.FECHA_EXPIRACION >= CURDATE()
+    //             OR EXISTS (
+    //                 SELECT 1
+    //                 FROM formulario_seleccion fs
+    //                 WHERE fs.VACANTES_ID = vac.ID_CATALOGO_VACANTE
+    //                 AND fs.ACTIVO = 1
+    //             )
+    //         )
+    //     ");
+
+    //         foreach ($vacantes as $vacante) {
+
+    //             $postulados = DB::table('formulario_seleccion')
+    //                 ->where('VACANTES_ID', $vacante->VACANTES_ID)
+    //                 ->where('ACTIVO', 1)
+    //                 ->select(
+    //                     'NOMBRE_SELC',
+    //                     'PRIMER_APELLIDO_SELEC',
+    //                     'SEGUNDO_APELLIDO_SELEC'
+    //                 )
+    //                 ->get();
+
+    //             $listaPostulados = '<ul>';
+    //             foreach ($postulados as $postulado) {
+    //                 $nombreCompleto =
+    //                     "{$postulado->NOMBRE_SELC} {$postulado->PRIMER_APELLIDO_SELEC} {$postulado->SEGUNDO_APELLIDO_SELEC}";
+    //                 $listaPostulados .= "<li>{$nombreCompleto}</li>";
+    //             }
+    //             $listaPostulados .= '</ul>';
+
+    //             $vacante->POSTULADOS = $listaPostulados;
+    //         }
+
+    //         return response()->json([
+    //             'data' => $vacantes,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => []
+    //         ]);
+    //     }
+    // }
+
+
+
+
+
+    // public function Tablaseleccion2Visualizar()
+    // {
+    //     try {
+    //         $vacantes = DB::select("
+    //         SELECT vac.*, 
+    //                vac.ID_CATALOGO_VACANTE AS VACANTES_ID,
+    //                cat.NOMBRE_CATEGORIA
+    //         FROM catalogo_vacantes vac
+    //         LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+    //         WHERE vac.ACTIVO = 1
+    //     ");
+
+    //         foreach ($vacantes as $vacante) {
+    //             $postulados = DB::table('formulario_seleccion')
+    //             ->where('VACANTES_ID', $vacante->VACANTES_ID)
+    //                 ->where('ACTIVO', 0)
+    //                 ->select('NOMBRE_SELC', 'PRIMER_APELLIDO_SELEC', 'SEGUNDO_APELLIDO_SELEC')
+    //                 ->get();
+
+    //             $listaPostulados = "<ul>";
+    //             foreach ($postulados as $postulado) {
+    //                 $nombreCompleto = "{$postulado->NOMBRE_SELC} {$postulado->PRIMER_APELLIDO_SELEC} {$postulado->SEGUNDO_APELLIDO_SELEC}";
+    //                 $listaPostulados .= "<li>{$nombreCompleto}</li>";
+    //             }
+    //             $listaPostulados .= "</ul>";
+
+    //             $vacante->POSTULADOS = $listaPostulados;
+    //         }
+
+    //         return response()->json([
+    //                 'data' => $vacantes,
+    //                 'msj' => 'Información consultada correctamente'
+    //             ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //                 'msj' => 'Error ' . $e->getMessage(),
+    //                 'data' => []
+    //             ]);
+    //     }
+    // }
+
+
+
+
     public function Tablaseleccion()
     {
         try {
@@ -129,9 +235,6 @@ class seleccionController extends Controller
     }
 
 
-
-
-
     public function Tablaseleccion2Visualizar()
     {
         try {
@@ -180,12 +283,11 @@ class seleccionController extends Controller
         }
     }
 
+    
+/// MANDAR A PENDINENTE POR CONTRATAR 
 
 
-    /// MANDAR A PENDINENTE POR CONTRATAR 
-
-
-    public function guardarPendiente(Request $request)
+public function guardarPendiente(Request $request)
 {
     try {
         $curp = $request->input('CURP');

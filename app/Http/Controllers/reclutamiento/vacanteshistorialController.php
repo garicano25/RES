@@ -45,6 +45,43 @@ class vacanteshistorialController extends Controller
 
 
     // TABLA PARA VER TODAS LAS POSTULACIONES     
+    // public function Tablapostulacioneshistorial()
+    // {
+    //     try {
+    //         $tabla = DB::select("
+    //         SELECT vac.*, 
+    //                 cat.NOMBRE_CATEGORIA, 
+    //                 (SELECT COUNT(lp.VACANTES_ID) 
+    //                 FROM lista_postulantes lp 
+    //                 WHERE lp.VACANTES_ID = vac.ID_CATALOGO_VACANTE AND lp.ACTIVO = 1) AS TOTAL_POSTULANTES
+    //         FROM catalogo_vacantes vac
+    //         LEFT JOIN catalogo_categorias cat ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
+    //         WHERE vac.ACTIVO = 1
+    //     ");
+
+    //         foreach ($tabla as $value) {
+    //             $value->REQUERIMIENTO = requerimientoModel::where('CATALOGO_VACANTES_ID', $value->ID_CATALOGO_VACANTE)->get();
+
+    //             $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR" data-bs-toggle="tooltip" data-bs-placement="top" title="Visualizar registro"><i class="bi bi-eye"></i></button>';
+
+    //             $value->TOTAL_POSTULANTES = '<button type="button" class="btn btn-success btn-custom rounded-pill TOTAL_POSTULANTES" onclick="TotalPostulantes(' . $value->ID_CATALOGO_VACANTE . ', ' . $value->CATEGORIA_VACANTE . ')">' . $value->TOTAL_POSTULANTES . '</button>';
+    //         }
+
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
+
     public function Tablapostulacioneshistorial()
     {
         try {
@@ -103,4 +140,5 @@ class vacanteshistorialController extends Controller
             ]);
         }
     }
+    
 }
