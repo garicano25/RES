@@ -70,20 +70,7 @@ class vacantesactivasController extends Controller
             LEFT JOIN catalogo_categorias cat 
                 ON cat.ID_CATALOGO_CATEGORIA = vac.CATEGORIA_VACANTE
             WHERE vac.ACTIVO = 1
-            AND (
-                vac.FECHA_EXPIRACION >= CURDATE()
-                OR EXISTS (
-                    SELECT 1
-                    FROM lista_postulantes lp
-                    WHERE lp.VACANTES_ID = vac.ID_CATALOGO_VACANTE
-                    AND lp.ACTIVO = 1
-                )
-                OR EXISTS (
-                    SELECT 1
-                    FROM vacantes_activas va
-                    WHERE va.VACANTES_ID = vac.ID_CATALOGO_VACANTE
-                )
-            )
+            AND vac.FECHA_EXPIRACION >= CURDATE()
         ");
 
             foreach ($tabla as $value) {
