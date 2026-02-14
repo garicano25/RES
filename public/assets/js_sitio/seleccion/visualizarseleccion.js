@@ -89,150 +89,6 @@ var Tablaseleccion2Visualizar = $("#Tablaseleccion2Visualizar").DataTable({
 
 
 
-
-
-
-
-
-
-// $('#Tablaseleccion2Visualizar tbody').on('click', 'td.clickable', function() {
-//     var tr = $(this).closest('tr');
-//     var row = Tablaseleccion2Visualizar.row(tr);
-
-//     if (row.child.isShown()) {
-//         row.child.hide();
-//         tr.removeClass('shown');
-//     } else {
-//         Swal.fire({
-//             title: 'Consultando información',
-//             text: 'Por favor, espere...',
-//             allowOutsideClick: false,
-//             showConfirmButton: false,
-//             didOpen: () => {
-//                 Swal.showLoading();
-//             }
-//         });
-
-
-//         categoriaId = row.data().CATEGORIA_VACANTE;
-
-
-//         vacantes_id = row.data().VACANTES_ID;
-
-//         $.ajax({
-//             url: '/consultarSeleccion/' + vacantes_id,
-//             method: 'GET',
-//             success: function(response) {
-//                 Swal.close();
-                
-
-//                 if (response.data.length === 0) {
-//                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
-//                 } else {
-//                     var innerTable = `
-//                         <table class="table text-center">
-//                             <thead class="custom-header">
-//                                 <tr>
-//                                     <th>#</th>
-//                                     <th class="text-center">Nombre Completo</th>
-//                                     <th class="text-center">CURP</th>
-//                                     <th class="text-center">Contacto</th>
-//                                     <th class="text-center">% Inteligencia laboral</th>
-//                                     <th class="text-center">% Buró laboral</th>
-//                                     <th class="text-center">% PPT</th>
-//                                     <th class="text-center">% Referencias laboral</th>
-//                                     <th class="text-center">% Pruebas de conocimientos</th>
-//                                     <th class="text-center">% Entrevista</th>
-//                                     <th class="text-center">% Total</th>
-//                                     <th class="text-center">Mostrar</th>
-//                                     <th class="text-center">Seleccionar</th>
-//                                 </tr>
-//                             </thead>
-//                             <tbody>
-//                     `;
-
-//                     response.data.forEach(function(item, index) {
-//                         var inteligenciaLaboral = item.PORCENTAJE_INTELIGENCIA || '';
-//                         var buroLaboral = item.PORCENTAJE_BURO || '';
-//                         var ppt = item.PORCENTAJE_PPT || '';
-//                         var referenciasLaboral = item.PORCENTAJE_REFERENCIAS || '';
-//                         var pruebaConocimiento = item.PORCENTAJE_PRUEBA || '';
-//                         var entrevista = item.PORCENTAJE_ENTREVISTA || '';
-//                         var total = item.TOTAL || '';
-
-//                         var isComplete =
-//                         inteligenciaLaboral !== '**' &&
-//                         buroLaboral !== '**' &&
-//                         ppt !== '**' &&
-//                         referenciasLaboral !== '**' &&
-//                         pruebaConocimiento !== '**' &&
-//                         entrevista !== '**' &&
-//                         total !== '**';
-                    
-//                         // var isComplete = inteligenciaLaboral && buroLaboral && ppt && referenciasLaboral && pruebaConocimiento && entrevista && total;
-
-//                         innerTable += `
-//                                     <tr>
-//                                         <td>${index + 1}</td>
-//                                         <td>${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}</td>
-//                                         <td style="display: none;">${item.DIA_FECHA_SELECT || ''} ${item.MES_FECHA_SELECT || ''} ${item.ANIO_FECHA_SELECT || ''}</td>
-//                                         <td class="text-center">${item.CURP || ''}</td>
-//                                         <td class="text-center">${item.CORREO_SELEC || ''}<br>${(item.TELEFONO1_SELECT || '') + (item.TELEFONO2_SELECT ? ', ' + item.TELEFONO2_SELECT : '')}</td>
-//                                         <td class="text-center">${inteligenciaLaboral}</td>
-//                                         <td class="text-center">${buroLaboral}</td>
-//                                         <td class="text-center">${ppt}</td>
-//                                         <td class="text-center">${referenciasLaboral}</td>
-//                                         <td class="text-center">${pruebaConocimiento}</td>
-//                                         <td class="text-center">${entrevista}</td>
-//                                         <td class="text-center">${total}</td>
-//                                         <td class="text-center">
-//                                             <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
-//                                                 <i class="bi bi-eye-fill"></i>
-//                                             </button>
-//                                         </td>
-//                                         <td class="text-center">
-//                                           <button type="button" class="btn btn-success MandarContratacion"
-//                                             data-categoria-id="${categoriaId}"
-//                                             data-nombre="${item.NOMBRE_SELC || ''}"
-//                                             data-primer-apellido="${item.PRIMER_APELLIDO_SELEC || ''}"
-//                                             data-segundo-apellido="${item.SEGUNDO_APELLIDO_SELEC || ''}"
-//                                             data-dia-fecha="${item.DIA_FECHA_SELECT || ''}"
-//                                             data-mes-fecha="${item.MES_FECHA_SELECT || ''}"
-//                                             data-anio-fecha="${item.ANIO_FECHA_SELECT || ''}"
-//                                             ${isComplete ? '' : 'disabled'}>
-//                                             <i class="bi bi-check-square-fill"></i>
-//                                         </button>
-//                                         </td>
-//                                     </tr>
-//                                 `;
-
-
-
-                       
-
-//                     });
-
-//                     innerTable += `
-//                             </tbody>
-//                         </table>
-//                     `;
-
-//                     row.child(innerTable).show();
-//                     tr.addClass('shown');
-//                 }
-//             },
-//             error: function(jqXHR, textStatus, errorThrown) {
-//                 Swal.close();
-//                 console.error('Error: ', textStatus, errorThrown);
-//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
-//             }
-//         });
-//     }
-// });
-
-
-
-
 $('#Tablaseleccion2Visualizar tbody').on('click', 'td.clickable', function() {
     var tr = $(this).closest('tr');
     var row = Tablaseleccion2Visualizar.row(tr);
@@ -287,6 +143,7 @@ $('#Tablaseleccion2Visualizar tbody').on('click', 'td.clickable', function() {
                                     <th class="text-center">% Pruebas de conocimientos</th>
                                     <th class="text-center">% Entrevista</th>
                                     <th class="text-center">% Total</th>
+                                    <th class="text-center">Justificación</th> 
                                     <th class="text-center">Mostrar</th>
                                 </tr>
                             </thead>
@@ -302,6 +159,19 @@ $('#Tablaseleccion2Visualizar tbody').on('click', 'td.clickable', function() {
                         var entrevista = item.PORCENTAJE_ENTREVISTA || '';
                         var total = item.TOTAL || '';
 
+
+                        var justificacion = '';
+
+                            if (item.NO_CONTRATAR == 1) {
+                                justificacion = item.JUSTIFICACION 
+                                    ? `<span class="badge bg-danger">${item.JUSTIFICACION}</span>` 
+                                    : '<span class="badge bg-secondary">Sin justificación</span>';
+                            } else {
+                                justificacion = '<span class="badge bg-success">Contratado</span>';
+                            }
+
+                        
+                        
                         var isComplete = 
                             inteligenciaLaboral !== '**' && 
                             buroLaboral !== '**' && 
@@ -324,6 +194,7 @@ $('#Tablaseleccion2Visualizar tbody').on('click', 'td.clickable', function() {
                                 <td class="text-center">${pruebaConocimiento}</td>
                                 <td class="text-center">${entrevista}</td>
                                 <td class="text-center">${total}</td>
+                                <td class="text-center">${justificacion}</td>
                                 <td class="text-center">
                                     <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
                                         <i class="bi bi-eye-fill"></i>
@@ -367,72 +238,10 @@ function calcularTotal(inteligencia, buro, ppt, referencias, prueba, entrevista)
 
 
 
-// $(document).on('click', '.MandarContratacion', function() {
-//     var button = $(this); 
-//     var row = button.closest('tr'); 
-
-//     var curp = row.find('td:eq(3)').text().trim(); 
-//     var nombreCompleto = row.find('td:eq(1)').text().trim(); 
-//     var fechas = row.find('td:eq(2)').text().trim(); 
-
-//     var nombre = nombreCompleto.split(' ')[0] || ''; 
-//     var primerApellido = nombreCompleto.split(' ')[1] || ''; 
-//     var segundoApellido = nombreCompleto.split(' ')[2] || ''; 
-
-//     var diaFecha = fechas.split(' ')[0] || ''; 
-//     var mesFecha = fechas.split(' ')[1] || ''; 
-//     var anioFecha = fechas.split(' ')[2] || ''; 
-
-//     var datos = {
-//         CURP: curp,
-//         NOMBRE_PC: nombre,
-//         PRIMER_APELLIDO_PC: primerApellido,
-//         SEGUNDO_APELLIDO_PC: segundoApellido,
-//         DIA_FECHA_PC: diaFecha,
-//         MES_FECHA_PC: mesFecha,
-//         ANIO_FECHA_PC: anioFecha
-//     };
-
-//     Swal.fire({
-//         title: `¿Está seguro de enviar a pendiente de contratar a ${nombre} ${primerApellido} ${segundoApellido}?`,
-//         text: 'Este registro será guardado como pendiente de contratar.',
-//         icon: 'warning',
-//         showCancelButton: true,
-//         confirmButtonText: 'Sí, guardar',
-//         cancelButtonText: 'Cancelar',
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             $.ajax({
-//                 url: '/guardarPendiente',
-//                 method: 'POST',
-//                 data: datos,
-//                 headers: {
-//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), 
-//                 },
-//                 success: function(response) {
-//                     if (response.status === 'success') {
-//                         Swal.fire('Éxito', response.message, 'success');
-//                         Tablaseleccion2Visualizar.ajax.reload(null, false); 
-//                     } else {
-//                         Swal.fire('Error', response.message, 'error');
-//                     }
-//                 },
-//                 error: function(jqXHR, textStatus, errorThrown) {
-//                     console.error('Error: ', textStatus, errorThrown);
-//                     Swal.fire('Error', 'No se pudo guardar el registro.', 'error');
-//                 }
-//             });
-//         }
-//     });
-// });
-
-
-
 
 $(document).on('click', '.MandarContratacion', function() {
     var button = $(this);
 
-    // Recuperar valores directamente desde los atributos del botón
     var curp = button.closest('tr').find('td:eq(2)').text().trim(); 
     var nombre = button.data('nombre'); 
     var primerApellido = button.data('primer-apellido'); 
@@ -442,7 +251,6 @@ $(document).on('click', '.MandarContratacion', function() {
     var anioFecha = button.data('anio-fecha'); 
     var vacanteId = button.data('categoria-id'); 
 
-    // Datos a enviar al backend
     var datos = {
         CURP: curp,
         NOMBRE_PC: nombre,
@@ -694,7 +502,6 @@ $('#Tablainteligencia').on('click', '.ver-archivo-completo', function () {
 });
 
 
-// Evento para abrir el modal con CV
 $('#Tablainteligencia').on('click', '.ver-archivo-competencias', function () {
     var id = $(this).data('id');
     if (!id) {
@@ -704,11 +511,6 @@ $('#Tablainteligencia').on('click', '.ver-archivo-competencias', function () {
     var url = '/mostrarcompetencias/' + id;
     abrirModal(url, 'Documento competencias');
 });
-
-
-
-
-
 
 
 
@@ -945,20 +747,17 @@ $('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
     cursos.forEach(function (curso, index) {
         const num = index + 1;
 
-        // Textarea del curso
         $('#' + form).find(`#CURSO${num}_PPT`).val(curso.CURSO_PPT);
 
             $('#' + form).find(`input[id='PORCENTAJE_CURSO${num}']`).val(curso.PORCENTAJE_CURSO);
 
         
-        // Radios de Cumple (si/no)
         const cumple = (curso.CURSO_CUMPLE_PPT || '').toLowerCase();
         if (cumple === 'si' || cumple === 'no') {
             const radioId = `#CURSO${num}_CUMPLE_${cumple.toUpperCase()}`;
             $('#' + form).find(`input${radioId}[type='radio']`).prop('checked', true);
         }
 
-        // Checkbox requerido/deseable
         const checkId = curso.CURSO_DESEABLE == null 
                         ? `#CURSO${num}_REQUERIDO_PPT` 
                         : `#CURSO${num}_DESEABLE_PPT`;
@@ -966,7 +765,6 @@ $('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
         $('#' + form).find(`input${checkId}[type='checkbox']`).prop('checked', true);
     });
 
-    // Mostrar colapsables según el total de cursos
     const total = cursos.length;
     if (total <= 10) {
         $('#cursoTemasCollapse').collapse('show');
@@ -1033,7 +831,7 @@ Tablareferencia = $("#Tablareferencia").DataTable({
             data: 'REFERENCIAS',
             render: function (data, type, row) {
                 if (!data || data.length === 0) {
-                    return 'NA'; // Retorna 'NA' si no hay datos
+                    return 'NA'; 
                 }
                 let referenciasHTML = '';
                 data.forEach(function (referencia) {
@@ -1215,7 +1013,7 @@ Tablapruebaconocimientoseleccion = $("#Tablapruebaconocimientoseleccion").DataTa
             data: 'REFERENCIAS',
             render: function (data, type, row) {
                 if (!data || data.length === 0) {
-                    return 'NA'; // Retorna 'NA' si no hay datos
+                    return 'NA'; 
                 }
                 let referenciasHTML = '';
                 data.forEach(function (referencia) {
@@ -1260,10 +1058,8 @@ $('#Tablapruebaconocimientoseleccion tbody').on('click', 'td>button.EDITAR', fun
 
     editarDatoTabla(data, form, 'Modal_pruebas_concimiento', 1);
 
-    // **Limpiar pruebas antes de cargar para evitar duplicados**
     $('#obtenerpruebas').html('');
 
-    // **Cargar pruebas guardadas**
     cargarPruebasGuardadas(data.REFERENCIAS);
 
     if (data.REQUIERE_PRUEBAS === 'si') {
@@ -1333,9 +1129,7 @@ function cargarNuevaPrueba(id_prueba_seleccion) {
             if (response.data.length > 0) {
                 var pruebasHTML = '';
 
-                // **Recorrer todas las pruebas nuevas y agregarlas si no existen**
                 response.data.forEach(function(nuevaPrueba) {
-                    // Verificar si la prueba ya existe en la lista
                     var existePrueba = $('input[name="TIPO_PRUEBA[]"]').filter(function () {
                         return $(this).val() === nuevaPrueba.TIPO_PRUEBA;
                     }).length > 0;
@@ -1371,7 +1165,6 @@ function cargarNuevaPrueba(id_prueba_seleccion) {
                     }
                 });
 
-                // **Añadir todas las nuevas pruebas sin eliminar las anteriores**
                 if (pruebasHTML !== '') {
                     $('#obtenerpruebas').append(pruebasHTML);
                 }
@@ -1730,7 +1523,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const ModalInteligencia = document.getElementById('Modal_inteligencia');
 
 ModalInteligencia.addEventListener('hidden.bs.modal', event => {
-    // Resetear valores
+
     ID_INTELIGENCIA_SELECCION = 0;
     document.getElementById('formularioINTELIGENCIA').reset();
     $('.collapse').collapse('hide');
@@ -1886,7 +1679,6 @@ $("#nuevo_buro").click(function (e) {
 
     reiniciarModalAlAbrir();
 
-    // Mostrar el modal
     $("#Modal_buro").modal("show");
 });
 
@@ -2150,7 +1942,6 @@ $("#guardarFormSeleccionBuro").click(function (e) {
 // <!-- MODAL REFERENCIAS LABORALES -->
 // <!-- ============================================================== -->
 
-// Abrir el modal al hacer clic en el botón
 $("#nuevo_experiencia").click(function (e) {
     e.preventDefault();
     $("#Modal_referencias").modal("show");
@@ -2279,7 +2070,6 @@ function agregarInput() {
 function actualizarPorcentajeCumplimiento() {
     empresasCumplen = 0;
 
-    // Recorremos todos los inputs dinámicos
     for (let i = 1; i <= contador; i++) {
         const radioCumple = document.querySelector(`input[name="CUMPLE_${i}"]:checked`);
         if (radioCumple && radioCumple.value === "Sí") {
@@ -2301,7 +2091,6 @@ function actualizarPorcentajesReferencias() {
     }
 }
 
-// Iniciar todo cuando el DOM esté cargado
 document.addEventListener('DOMContentLoaded', initReferenciasLaborales);
 
 
@@ -2352,9 +2141,6 @@ $("#guardarFormSeleccionReferencias").click(function (e) {
                         if ($.fn.DataTable.isDataTable('#Tablareferencia')) {
                             Tablareferencia.ajax.reload(null, false); 
                         }
-
-
-
 
                     }, 300);
 
@@ -2475,7 +2261,6 @@ function cargarPruebasDeConocimiento(nuevo = false) {
                 var pruebasHTML = '';
 
                 response.data.forEach(function(requerimiento, index) {
-                    // Si es una prueba nueva, mostrar todas las pruebas y ocultar el porcentaje asignado
                     if (nuevo) {
                         pruebasHTML += `
                             <div class="col-12 mb-3">
@@ -2508,7 +2293,6 @@ function cargarPruebasDeConocimiento(nuevo = false) {
                     }
                 });
 
-                // Si es un nuevo registro, se reemplazan las pruebas, si es edición, solo agregamos las nuevas
                 if (nuevo) {
                     $('#obtenerpruebas').html(pruebasHTML);  
                 } else {
@@ -2727,14 +2511,6 @@ ModalEntrevista.addEventListener('hidden.bs.modal', event => {
    
     $('#guardarFormSeleccionEntrevista').css('display', 'block').prop('disabled', false);
 
-
-
-    // // Remueve la clase 'validar' y cualquier otra clase que desees de todos los inputs
-    // $('#formularioENTREVISTA input').each(function() {
-    //     $(this).removeClass('validar'); 
-    // });
-   
-
 });
 
 
@@ -2850,7 +2626,6 @@ $("#nuevo_ppt").click(function (e) {
     $("#NOMBRE_TRABAJADOR_PPT").val(nombreTrabajadorSeleccionado);
 
 
-    // Mostrar el modal
     $('.desabilitado1').css('background','#E2EFDA');
     $("#miModal_ppt").modal("show");
 });
@@ -2873,7 +2648,6 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 });
 
 
-// Solo seleccionar una opcion de word,excel,power point
 $('.word').on('change', function() {
     if ($(this).is(':checked')) {
         $('.word').not(this).prop('checked', false);
@@ -2892,7 +2666,6 @@ $('.power').on('change', function() {
     }
 });
 
-//Solo seleccionar una opcion de los idomas 
 
 $('.idioma1').on('change', function() {
     if ($(this).is(':checked')) {
@@ -2914,7 +2687,6 @@ $('.idioma3').on('change', function() {
 });
 
 
-// Habilidades y competencias funcionales
 $('.innovacion').on('change', function() {
     if ($(this).is(':checked')) {
         $('.innovacion').not(this).prop('checked', false);
@@ -3926,8 +3698,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
                         }
 
 
-
-
                     }, 300);
 
                 });
@@ -3989,13 +3759,11 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
  document.addEventListener("DOMContentLoaded", function () {
-    // Radios del 5%
     const radioButtons = document.querySelectorAll(
         "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
     );
-    const pesoPorSeccion5 = 5 / 4; // 5% dividido entre 4 secciones
+    const pesoPorSeccion5 = 5 / 4; 
 
-    // Pares select-radio para el 20%
     const selectRadioPairs = [
         { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
         { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
@@ -4012,26 +3780,23 @@ $("#guardarFormSeleccionPPT").click(function (e) {
         { radio: "DOCTORADO_CUMPLE_PPT", dependentRadios: ["EGRESADO_DOCTORADO_PPT"] },
     ];
 
-    // Configuración para Word, Excel y PowerPoint
     const tools = [
         { aplica: "WORD_APLICA_PPT", cumple: "WORD_CUMPLE_PPT", peso: 1.5 },
         { aplica: "EXCEL_APLICA_PPT", cumple: "EXCEL_CUMPLE_PPT", peso: 1.5 },
         { aplica: "POWER_APLICA_PPT", cumple: "POWER_CUMPLE_PPT", peso: 3 },
     ];
 
-    // Configuración para Idiomas
     const idiomas = [
         { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT", peso: 1.3333 },
         { aplica: "APLICA_IDIOMA2_PPT", cumple: "IDIOMA2_CUMPLE_PPT", peso: 1.3333 },
         { aplica: "APLICA_IDIOMA3_PPT", cumple: "IDIOMA3_CUMPLE_PPT", peso: 1.3333 },
     ];
 
-    // Configuración para Cursos
     const cursosContainer = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
     const pesoTotalCursos = 25; // 25%
 
       const competencias = [
-        { name: "INNOVACION", peso: 6 / 8 }, // 6% dividido entre los primeros 8
+        { name: "INNOVACION", peso: 6 / 8 }, 
         { name: "PASION", peso: 6 / 8 },
         { name: "SERVICIO_CLIENTE", peso: 6 / 8 },
         { name: "COMUNICACION_EFICAZ", peso: 6 / 8 },
@@ -4039,8 +3804,8 @@ $("#guardarFormSeleccionPPT").click(function (e) {
         { name: "INTEGRIDAD", peso: 6 / 8 },
         { name: "RESPONSABILIDAD_SOCIAL", peso: 6 / 8 },
         { name: "ADAPTABILIDAD", peso: 6 / 8 },
-        { name: "LIDERAZGO", peso: 2 }, // Liderazgo 2%
-        { name: "TOMA_DECISIONES", peso: 2 }, // Toma de decisiones 2%
+        { name: "LIDERAZGO", peso: 2 }, 
+        { name: "TOMA_DECISIONES", peso: 2 }, 
     ];
 
 

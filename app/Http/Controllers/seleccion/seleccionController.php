@@ -742,7 +742,53 @@ public function consultarSeleccion($vacantesId)
 
 
 
-public function consultarSeleccion2Visualizar($vacantesId)
+    public function noSeleccionar(Request $request)
+    {
+        try {
+
+            if (!$request->filled('ID_FORMULARIO_SELECCION')) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'ID no recibido.'
+                ]);
+            }
+
+            $registro = DB::table('formulario_seleccion')
+                ->where('ID_FORMULARIO_SELECCION', $request->ID_FORMULARIO_SELECCION)
+                ->first();
+
+            if (!$registro) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Registro no encontrado.'
+                ]);
+            }
+
+            DB::table('formulario_seleccion')
+                ->where('ID_FORMULARIO_SELECCION', $request->ID_FORMULARIO_SELECCION)
+                ->update([
+                    'ACTIVO' => 0,
+                    'NO_CONTRATAR' => 1,
+                    'JUSTIFICACION' => $request->JUSTIFICACION,
+                    'updated_at' => now()
+                ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Registro actualizado correctamente.'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage() 
+            ]);
+        }
+    }
+
+
+
+    public function consultarSeleccion2Visualizar($vacantesId)
 {
     $consultar = DB::table('formulario_seleccion')
         ->where('VACANTES_ID', $vacantesId)

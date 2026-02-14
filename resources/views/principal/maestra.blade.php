@@ -12,10 +12,12 @@
 
 
     <!-- Bootstrap  iconos v1.11.3 -->
+    <!-- Bootstrap  iconos v1.11.3 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- Bootstrap v.5.2 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
+
 
     <!-- Datatables 1.13.1  v.5.2 -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css" />
@@ -32,6 +34,11 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/css/dropify.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/css/bootstrap-datepicker.min.css"> <!--Archivo css -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+
+    <!-- Select 2 -->
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
 
     <link rel="stylesheet" href="assets/css/estilos.css">
@@ -631,18 +638,19 @@
     <script src="https://cdn.jsdelivr.net/gh/loadingio/ldcover/dist/index.min.js"></script>
     <!-- Select opcion selectize -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
     <!-- datepicker -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/js/bootstrap-datepicker.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-datepicker@1.9.0/dist/locales/bootstrap-datepicker.es.min.js"></script>
-
-
     <!-- Dropify -->
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
-
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=5.7"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+
+    <!-- Select 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 
 
     <script>
@@ -758,11 +766,11 @@
     @endif
 
     @if(request()->is('seleccion'))
-    <script src="/assets/js_sitio/seleccion/seleccion.js?v=22.3"></script>
+    <script src="/assets/js_sitio/seleccion/seleccion.js?v=22.4"></script>
     @endif
 
     @if(request()->is('visualizarseleccion'))
-    <script src="/assets/js_sitio/seleccion/visualizarseleccion.js?v=1.1"></script>
+    <script src="/assets/js_sitio/seleccion/visualizarseleccion.js?v=2.0"></script>
     @endif
 
     @if(request()->is('pruebasconocimientos'))
@@ -780,7 +788,7 @@
     @endif
 
     @if(request()->is('pendientecontratar'))
-    <script src="/assets/js_sitio/contratacion/pendientecontratar.js?v=1.0"></script>
+    <script src="/assets/js_sitio/contratacion/pendientecontratar.js?v=2.0"></script>
     @endif
 
     @if(request()->is('desvinculacion'))

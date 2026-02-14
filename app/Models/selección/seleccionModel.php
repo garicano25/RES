@@ -24,6 +24,8 @@ class seleccionModel extends Model
         'DIA_FECHA_SELECT',
         'MES_FECHA_SELECT',
         'ANIO_FECHA_SELECT',
+        'NO_CONTRATAR',
+        'JUSTIFICACION',
         'ACTIVO'
     ];
 }

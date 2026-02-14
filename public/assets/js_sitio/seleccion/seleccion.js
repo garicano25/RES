@@ -90,149 +90,6 @@ var Tablaseleccion = $("#Tablaseleccion").DataTable({
 
 
 
-
-
-
-
-
-// $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
-//     var tr = $(this).closest('tr');
-//     var row = Tablaseleccion.row(tr);
-
-//     if (row.child.isShown()) {
-//         row.child.hide();
-//         tr.removeClass('shown');
-//     } else {
-//         Swal.fire({
-//             title: 'Consultando información',
-//             text: 'Por favor, espere...',
-//             allowOutsideClick: false,
-//             showConfirmButton: false,
-//             didOpen: () => {
-//                 Swal.showLoading();
-//             }
-//         });
-
-
-//         categoriaId = row.data().CATEGORIA_VACANTE;
-
-
-//         vacantes_id = row.data().VACANTES_ID;
-
-//         $.ajax({
-//             url: '/consultarSeleccion/' + vacantes_id,
-//             method: 'GET',
-//             success: function(response) {
-//                 Swal.close();
-                
-
-//                 if (response.data.length === 0) {
-//                     Swal.fire('Sin información', 'No hay información relacionada para esta categoría.', 'info');
-//                 } else {
-//                     var innerTable = `
-//                         <table class="table text-center">
-//                             <thead class="custom-header">
-//                                 <tr>
-//                                     <th>#</th>
-//                                     <th class="text-center">Nombre Completo</th>
-//                                     <th class="text-center">CURP</th>
-//                                     <th class="text-center">Contacto</th>
-//                                     <th class="text-center">% Inteligencia laboral</th>
-//                                     <th class="text-center">% Buró laboral</th>
-//                                     <th class="text-center">% PPT</th>
-//                                     <th class="text-center">% Referencias laboral</th>
-//                                     <th class="text-center">% Pruebas de conocimientos</th>
-//                                     <th class="text-center">% Entrevista</th>
-//                                     <th class="text-center">% Total</th>
-//                                     <th class="text-center">Mostrar</th>
-//                                     <th class="text-center">Seleccionar</th>
-//                                 </tr>
-//                             </thead>
-//                             <tbody>
-//                     `;
-
-//                     response.data.forEach(function(item, index) {
-//                         var inteligenciaLaboral = item.PORCENTAJE_INTELIGENCIA || '';
-//                         var buroLaboral = item.PORCENTAJE_BURO || '';
-//                         var ppt = item.PORCENTAJE_PPT || '';
-//                         var referenciasLaboral = item.PORCENTAJE_REFERENCIAS || '';
-//                         var pruebaConocimiento = item.PORCENTAJE_PRUEBA || '';
-//                         var entrevista = item.PORCENTAJE_ENTREVISTA || '';
-//                         var total = item.TOTAL || '';
-
-//                         var isComplete =
-//                         inteligenciaLaboral !== '**' &&
-//                         buroLaboral !== '**' &&
-//                         ppt !== '**' &&
-//                         referenciasLaboral !== '**' &&
-//                         pruebaConocimiento !== '**' &&
-//                         entrevista !== '**' &&
-//                         total !== '**';
-                    
-//                         // var isComplete = inteligenciaLaboral && buroLaboral && ppt && referenciasLaboral && pruebaConocimiento && entrevista && total;
-
-//                         innerTable += `
-//                                     <tr>
-//                                         <td>${index + 1}</td>
-//                                         <td>${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}</td>
-//                                         <td style="display: none;">${item.DIA_FECHA_SELECT || ''} ${item.MES_FECHA_SELECT || ''} ${item.ANIO_FECHA_SELECT || ''}</td>
-//                                         <td class="text-center">${item.CURP || ''}</td>
-//                                         <td class="text-center">${item.CORREO_SELEC || ''}<br>${(item.TELEFONO1_SELECT || '') + (item.TELEFONO2_SELECT ? ', ' + item.TELEFONO2_SELECT : '')}</td>
-//                                         <td class="text-center">${inteligenciaLaboral}</td>
-//                                         <td class="text-center">${buroLaboral}</td>
-//                                         <td class="text-center">${ppt}</td>
-//                                         <td class="text-center">${referenciasLaboral}</td>
-//                                         <td class="text-center">${pruebaConocimiento}</td>
-//                                         <td class="text-center">${entrevista}</td>
-//                                         <td class="text-center">${total}</td>
-//                                         <td class="text-center">
-//                                             <button type="button" class="btn btn-primary btn-circle" id="AbrirModalFull" data-bs-toggle="modal" data-bs-target="#FullScreenModal" data-curp="${item.CURP || ''}" data-nombre="${item.NOMBRE_SELC || ''} ${item.PRIMER_APELLIDO_SELEC || ''} ${item.SEGUNDO_APELLIDO_SELEC || ''}">
-//                                                 <i class="bi bi-eye-fill"></i>
-//                                             </button>
-//                                         </td>
-//                                         <td class="text-center">
-//                                           <button type="button" class="btn btn-success MandarContratacion"
-//                                             data-categoria-id="${categoriaId}"
-//                                             data-nombre="${item.NOMBRE_SELC || ''}"
-//                                             data-primer-apellido="${item.PRIMER_APELLIDO_SELEC || ''}"
-//                                             data-segundo-apellido="${item.SEGUNDO_APELLIDO_SELEC || ''}"
-//                                             data-dia-fecha="${item.DIA_FECHA_SELECT || ''}"
-//                                             data-mes-fecha="${item.MES_FECHA_SELECT || ''}"
-//                                             data-anio-fecha="${item.ANIO_FECHA_SELECT || ''}"
-//                                             ${isComplete ? '' : 'disabled'}>
-//                                             <i class="bi bi-check-square-fill"></i>
-//                                         </button>
-//                                         </td>
-//                                     </tr>
-//                                 `;
-
-
-
-                       
-
-//                     });
-
-//                     innerTable += `
-//                             </tbody>
-//                         </table>
-//                     `;
-
-//                     row.child(innerTable).show();
-//                     tr.addClass('shown');
-//                 }
-//             },
-//             error: function(jqXHR, textStatus, errorThrown) {
-//                 Swal.close();
-//                 console.error('Error: ', textStatus, errorThrown);
-//                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
-//             }
-//         });
-//     }
-// });
-
-
-
-
 $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
     var tr = $(this).closest('tr');
     var row = Tablaseleccion.row(tr);
@@ -289,6 +146,7 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                                     <th class="text-center">% Total</th>
                                     <th class="text-center">Mostrar</th>
                                     <th class="text-center">Seleccionar</th>
+                                    <th class="text-center">No seleccionar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -343,6 +201,17 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
                                         <i class="bi bi-check-square-fill"></i>
                                     </button>
                                 </td>
+                             <td class="text-center">
+                                <button type="button" 
+                                    class="btn btn-danger Quitarseleccion"
+                                    data-id="${item.ID_FORMULARIO_SELECCION}"
+                                    data-nombre="${item.NOMBRE_SELC} ${item.PRIMER_APELLIDO_SELEC} ${item.SEGUNDO_APELLIDO_SELEC}"
+                                    ${isComplete ? '' : 'disabled'}>
+                                    <i class="bi bi-x-square-fill"></i>
+                                </button>
+                            </td>
+
+
                             </tr>
                         `;
                     });
@@ -381,72 +250,9 @@ function calcularTotal(inteligencia, buro, ppt, referencias, prueba, entrevista)
 
 
 
-// $(document).on('click', '.MandarContratacion', function() {
-//     var button = $(this); 
-//     var row = button.closest('tr'); 
-
-//     var curp = row.find('td:eq(3)').text().trim(); 
-//     var nombreCompleto = row.find('td:eq(1)').text().trim(); 
-//     var fechas = row.find('td:eq(2)').text().trim(); 
-
-//     var nombre = nombreCompleto.split(' ')[0] || ''; 
-//     var primerApellido = nombreCompleto.split(' ')[1] || ''; 
-//     var segundoApellido = nombreCompleto.split(' ')[2] || ''; 
-
-//     var diaFecha = fechas.split(' ')[0] || ''; 
-//     var mesFecha = fechas.split(' ')[1] || ''; 
-//     var anioFecha = fechas.split(' ')[2] || ''; 
-
-//     var datos = {
-//         CURP: curp,
-//         NOMBRE_PC: nombre,
-//         PRIMER_APELLIDO_PC: primerApellido,
-//         SEGUNDO_APELLIDO_PC: segundoApellido,
-//         DIA_FECHA_PC: diaFecha,
-//         MES_FECHA_PC: mesFecha,
-//         ANIO_FECHA_PC: anioFecha
-//     };
-
-//     Swal.fire({
-//         title: `¿Está seguro de enviar a pendiente de contratar a ${nombre} ${primerApellido} ${segundoApellido}?`,
-//         text: 'Este registro será guardado como pendiente de contratar.',
-//         icon: 'warning',
-//         showCancelButton: true,
-//         confirmButtonText: 'Sí, guardar',
-//         cancelButtonText: 'Cancelar',
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             $.ajax({
-//                 url: '/guardarPendiente',
-//                 method: 'POST',
-//                 data: datos,
-//                 headers: {
-//                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'), 
-//                 },
-//                 success: function(response) {
-//                     if (response.status === 'success') {
-//                         Swal.fire('Éxito', response.message, 'success');
-//                         Tablaseleccion.ajax.reload(null, false); 
-//                     } else {
-//                         Swal.fire('Error', response.message, 'error');
-//                     }
-//                 },
-//                 error: function(jqXHR, textStatus, errorThrown) {
-//                     console.error('Error: ', textStatus, errorThrown);
-//                     Swal.fire('Error', 'No se pudo guardar el registro.', 'error');
-//                 }
-//             });
-//         }
-//     });
-// });
-
-
-
-
 $(document).on('click', '.MandarContratacion', function() {
     var button = $(this);
 
-    // Recuperar valores directamente desde los atributos del botón
     var curp = button.closest('tr').find('td:eq(2)').text().trim(); 
     var nombre = button.data('nombre'); 
     var primerApellido = button.data('primer-apellido'); 
@@ -456,7 +262,6 @@ $(document).on('click', '.MandarContratacion', function() {
     var anioFecha = button.data('anio-fecha'); 
     var vacanteId = button.data('categoria-id'); 
 
-    // Datos a enviar al backend
     var datos = {
         CURP: curp,
         NOMBRE_PC: nombre,
@@ -500,6 +305,73 @@ $(document).on('click', '.MandarContratacion', function() {
         }
     });
 });
+
+
+
+$(document).on('click', '.Quitarseleccion', function(e) {
+
+    e.preventDefault(); 
+
+    const button = $(this);
+    const id = button.data('id');
+    const nombre = button.data('nombre');
+
+    Swal.fire({
+        title: `¿No seleccionar a ${nombre}?`,
+        html: `
+            <textarea id="justificacion" 
+                      class="swal2-textarea" 
+                      placeholder="Escriba la justificación aquí..."
+                      required></textarea>
+        `,
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar',
+        preConfirm: () => {
+            const justificacion = document.getElementById('justificacion').value.trim();
+            if (!justificacion) {
+                Swal.showValidationMessage('La justificación es obligatoria');
+            }
+            return justificacion;
+        }
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: '/noSeleccionar',
+                type: 'POST',
+                data: {
+                    ID_FORMULARIO_SELECCION: id,
+                    JUSTIFICACION: result.value
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function(response) {
+
+                    if (response.status === 'success') {
+                        Swal.fire('Guardado', response.message, 'success');
+                        Tablaseleccion.ajax.reload(null, false);
+                    } else {
+                        Swal.fire('Error', response.message, 'error');
+                    }
+
+                },
+                error: function(xhr) {
+                    console.log(xhr.responseText);
+                    Swal.fire('Error', 'No se pudo actualizar el registro.', 'error');
+                }
+            });
+
+        }
+
+    });
+
+});
+
+
 
 
 
@@ -708,7 +580,6 @@ $('#Tablainteligencia').on('click', '.ver-archivo-completo', function () {
 });
 
 
-// Evento para abrir el modal con CV
 $('#Tablainteligencia').on('click', '.ver-archivo-competencias', function () {
     var id = $(this).data('id');
     if (!id) {
@@ -718,9 +589,6 @@ $('#Tablainteligencia').on('click', '.ver-archivo-competencias', function () {
     var url = '/mostrarcompetencias/' + id;
     abrirModal(url, 'Documento competencias');
 });
-
-
-
 
 
 
@@ -993,77 +861,6 @@ $('#Tablapptseleccion tbody').on('click', 'td>button.EDITAR', function () {
 });
 
 
-
-// function mostrarCursos(data,form){
-// if ('CURSOS' in data) {
-//     if (data.CURSOS.length > 0) { 
-//         var cursos = data.CURSOS
-//         var count = 1    
-    
-//         cursos.forEach(function (obj) {
-        
-        
-
-//         // cumple = obj.CURSO_CUMPLE_PPT.toUpperCase(); 
-
-//         $('#' + form).find(`textarea[id='CURSO${count}_PPT']`).val(obj.CURSO_PPT)
-    
-        
-//     //    $('#' + form).find(`input[id='CURSO${count}_CUMPLE_${cumple}'][value='${obj.CURSO_CUMPLE_PPT}'][type='radio']`).prop('checked', true)
-
-
-//         if (obj.CURSO_DESEABLE == null) {
-            
-//             $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='checkbox']`).prop('checked', true)
-
-//         } else {
-            
-//             $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='checkbox']`).prop('checked', true)
-
-//             }
-            
-
-//               // Marcar checkbox de Requerido o Deseable
-//                 if (obj.CURSO_DESEABLE == null) {
-//                     $('#' + form).find(`input[id='CURSO${count}_REQUERIDO_PPT'][type='checkbox']`).prop('checked', true);
-//                 } else {
-//                     $('#' + form).find(`input[id='CURSO${count}_DESEABLE_PPT'][type='checkbox']`).prop('checked', true);
-//             }
-            
-
-//         count++
-//         });
-
-
-//         cursosTotales = data.CURSOS.length 
-//         if (cursosTotales <= 10) {
-
-//         $('#cursoTemasCollapse').collapse('show')
-
-
-//         } else if (cursosTotales > 10 && cursosTotales <= 20) {
-//             $('#cursoTemasCollapse').collapse('show')
-//             $('#cursoTemas1Collapse').collapse('show')
-            
-
-//         } else if (cursosTotales > 20 && cursosTotales <= 30) {
-//             $('#cursoTemasCollapse').collapse('show')
-//             $('#cursoTemas1Collapse').collapse('show')
-//             $('#cursoTemas2Collapse').collapse('show')
-
-
-//         } else if (cursosTotales > 30){
-            
-//             $('.collapse').collapse('show')
-        
-
-
-//         }
-
-//     }
-//     }
-// }
-
 function mostrarCursos(data, form) {
     if (!('CURSOS' in data) || data.CURSOS.length === 0) return;
 
@@ -1072,20 +869,17 @@ function mostrarCursos(data, form) {
     cursos.forEach(function (curso, index) {
         const num = index + 1;
 
-        // Textarea del curso
         $('#' + form).find(`#CURSO${num}_PPT`).val(curso.CURSO_PPT);
 
 $('#' + form).find(`input[id='PORCENTAJE_CURSO${num}']`).val(curso.PORCENTAJE_CURSO);
 
         
-        // Radios de Cumple (si/no)
         const cumple = (curso.CURSO_CUMPLE_PPT || '').toLowerCase();
         if (cumple === 'si' || cumple === 'no') {
             const radioId = `#CURSO${num}_CUMPLE_${cumple.toUpperCase()}`;
             $('#' + form).find(`input${radioId}[type='radio']`).prop('checked', true);
         }
 
-        // Checkbox requerido/deseable
         const checkId = curso.CURSO_DESEABLE == null 
                         ? `#CURSO${num}_REQUERIDO_PPT` 
                         : `#CURSO${num}_DESEABLE_PPT`;
@@ -1093,7 +887,6 @@ $('#' + form).find(`input[id='PORCENTAJE_CURSO${num}']`).val(curso.PORCENTAJE_CU
         $('#' + form).find(`input${checkId}[type='checkbox']`).prop('checked', true);
     });
 
-    // Mostrar colapsables según el total de cursos
     const total = cursos.length;
     if (total <= 10) {
         $('#cursoTemasCollapse').collapse('show');
@@ -1157,7 +950,7 @@ Tablareferencia = $("#Tablareferencia").DataTable({
             data: 'REFERENCIAS',
             render: function (data, type, row) {
                 if (!data || data.length === 0) {
-                    return 'NA'; // Retorna 'NA' si no hay datos
+                    return 'NA'; 
                 }
                 let referenciasHTML = '';
                 data.forEach(function (referencia) {
@@ -1849,7 +1642,7 @@ document.addEventListener('DOMContentLoaded', function () {
 const ModalInteligencia = document.getElementById('Modal_inteligencia');
 
 ModalInteligencia.addEventListener('hidden.bs.modal', event => {
-    // Resetear valores
+
     ID_INTELIGENCIA_SELECCION = 0;
     document.getElementById('formularioINTELIGENCIA').reset();
     $('.collapse').collapse('hide');
@@ -2005,7 +1798,6 @@ $("#nuevo_buro").click(function (e) {
 
     reiniciarModalAlAbrir();
 
-    // Mostrar el modal
     $("#Modal_buro").modal("show");
 });
 
@@ -2452,7 +2244,6 @@ function agregarInput() {
 function actualizarPorcentajeCumplimiento() {
     empresasCumplen = 0;
 
-    // Recorremos todos los inputs dinámicos
     for (let i = 1; i <= contador; i++) {
         const radioCumple = document.querySelector(`input[name="CUMPLE_${i}"]:checked`);
         if (radioCumple && radioCumple.value === "Sí") {
@@ -2474,7 +2265,6 @@ function actualizarPorcentajesReferencias() {
     }
 }
 
-// Iniciar todo cuando el DOM esté cargado
 document.addEventListener('DOMContentLoaded', initReferenciasLaborales);
 
 
@@ -2897,14 +2687,6 @@ ModalEntrevista.addEventListener('hidden.bs.modal', event => {
     $('.collapse').collapse('hide');
    
     $('#guardarFormSeleccionEntrevista').css('display', 'block').prop('disabled', false);
-
-
-
-    // // Remueve la clase 'validar' y cualquier otra clase que desees de todos los inputs
-    // $('#formularioENTREVISTA input').each(function() {
-    //     $(this).removeClass('validar'); 
-    // });
-   
 
 });
 
@@ -4204,138 +3986,6 @@ document.getElementById('DEPARTAMENTO_AREA_ID').addEventListener('change', funct
 
 
 
-// $("#guardarFormSeleccionPPT").click(function (e) {
-//     e.preventDefault();
-
-//     formularioValido = validarFormularioV1('formularioSeleccionPPT');
-
-//     if (formularioValido) {
-
-//                 const brechasFormacion = obtenerBrechasFormacion();
-//                 const brechasHabilidades = obtenerBrechasHabilidades();
-//                 const brechasConocimientos = obtenerBrechasConocimientos();
-//                 const brechasExperiencia = obtenerBrechasExperiencia();
-//                 const brechasCursos = obtenerBrechasCursos();
-
-//                 // OBTENER SUMA TOTAL ACTUAL Y CALCULAR FALTANTE
-//                 const inputSuma = document.getElementById("SUMA_TOTAL");
-//                 const sumaTotal = parseFloat(inputSuma?.value || 0);
-//                 const faltante = 100 - sumaTotal;
-
-//                 // MOSTRAR EN CONSOLA
-//                 console.log("-- Brechas por Formación --");
-//                 console.log(brechasFormacion.brechas);
-
-//                 console.log("-- Brechas por Habilidades --");
-//                 console.log(brechasHabilidades.brechas);
-
-//                 console.log("-- Brechas por Conocimientos --");
-//                 console.log(brechasConocimientos.brechas);
-
-//                 console.log("-- Brechas por Experiencia --");
-//                 console.log(brechasExperiencia.brechas);
-
-//                 console.log("-- Brechas por Cursos --");
-//                 console.log(brechasCursos.brechas);
-
-//         console.log("-- Porcentaje restante para 100%: " + faltante.toFixed(1) + "%");
-        
-
-
-//         if (ID_PPT_SELECCION == 0) {
-
-//             alertMensajeConfirm({
-//                 title: "¿Desea guardar la información?",
-//                 text: "Al guardarla, se usará para la creación del PPT",
-//                 icon: "question",
-//             }, async function () {
-
-//                 await loaderbtn('guardarFormSeleccionPPT');
-//                 await ajaxAwaitFormData({
-//                     api: 1,
-//                     ID_PPT_SELECCION: ID_PPT_SELECCION,
-//                     CURP: curpSeleccionada
-//                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
-
-//                     Swal.fire({
-//                         icon: 'info',
-//                         title: 'Espere un momento',
-//                         text: 'Estamos guardando la información',
-//                         showConfirmButton: false
-//                     });
-
-//                     $('.swal2-popup').addClass('ld ld-breath');
-
-//                 }, function (data) {
-
-//                     setTimeout(() => {
-//                         ID_PPT_SELECCION = data.PPT.ID_PPT_SELECCION;
-//                         alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para hacer uso del PPT', null, null, 1500);
-//                         $('#miModal_ppt').modal('hide');
-//                         document.getElementById('formularioSeleccionPPT').reset();
-
-//                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-//                             Tablapptseleccion.ajax.reload(null, false);
-//                         }
-
-//                         // Mostrar la brecha en consola si se requiere también después del guardado
-//                         console.log("Brecha de competencias guardadas:", brecha);
-
-//                     }, 300);
-//                 });
-
-//             }, 1);
-
-//         } else {
-
-//             alertMensajeConfirm({
-//                 title: "¿Desea editar la información de este formulario?",
-//                 text: "Al guardarla, se editará la información del PPT",
-//                 icon: "question",
-//             }, async function () {
-
-//                 await loaderbtn('guardarFormSeleccionPPT');
-//                 await ajaxAwaitFormData({
-//                     api: 1,
-//                     ID_PPT_SELECCION: ID_PPT_SELECCION,
-//                     CURP: curpSeleccionada
-//                 }, 'SeleccionSave', 'formularioSeleccionPPT', 'guardarFormSeleccionPPT', { callbackAfter: true, callbackBefore: true }, () => {
-
-//                     Swal.fire({
-//                         icon: 'info',
-//                         title: 'Espere un momento',
-//                         text: 'Estamos guardando la información',
-//                         showConfirmButton: false
-//                     });
-
-//                     $('.swal2-popup').addClass('ld ld-breath');
-
-//                 }, function (data) {
-
-//                     setTimeout(() => {
-//                         ID_PPT_SELECCION = data.PPT.ID_PPT_SELECCION;
-//                         alertMensaje('success', 'Información editada correctamente', 'Información guardada');
-//                         $('#miModal_ppt').modal('hide');
-//                         document.getElementById('formularioSeleccionPPT').reset();
-
-//                         if ($.fn.DataTable.isDataTable('#Tablapptseleccion')) {
-//                             Tablapptseleccion.ajax.reload(null, false);
-//                         }
-
-//                         console.log("Brecha de competencias editadas:", brecha);
-
-//                     }, 300);
-//                 });
-
-//             }, 1);
-//         }
-
-//     } else {
-//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
-//     }
-// });
-
-
 
 
 
@@ -4347,7 +3997,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
     formularioValido = validarFormularioV1('formularioSeleccionPPT');
 
     if (formularioValido) {
-        // Obtener todas las brechas
         const brechasFormacion = obtenerBrechasFormacion();
         const brechasHabilidades = obtenerBrechasHabilidades();
         const brechasConocimientos = obtenerBrechasConocimientos();
@@ -4366,8 +4015,7 @@ $("#guardarFormSeleccionPPT").click(function (e) {
             cursos: brechasCursos.brechasDetalladas
         };
 
-        
-
+    
         const datosEnvio = {
             api: 1,
             ID_PPT_SELECCION: ID_PPT_SELECCION,
@@ -4449,370 +4097,6 @@ $("#guardarFormSeleccionPPT").click(function (e) {
 
 
 
-
-
-//  document.addEventListener("DOMContentLoaded", function () {
-//     const radioButtons = document.querySelectorAll(
-//         "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
-//     );
-
-//     const selectRadioPairs = [
-//         { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
-//         { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
-//         { select: "TECNICO_PPT", radio: "TECNICO_CUMPLE_PPT" },
-//         { select: "UNIVERSITARIO_PPT", radio: "UNIVERSITARIO_CUMPLE_PPT" },
-//         { select: "SITUACION_PPT", radio: "SITUACION_CUMPLE_PPT" },
-//         { select: "CEDULA_PPT", radio: "CEDULA_CUMPLE_PPT" },
-//         { select: "AREA1_PPT", radio: "AREA1_CUMPLE_PPT" },
-//         { select: "AREA2_PPT", radio: "AREA2_CUMPLE_PPT" },
-//         { select: "AREA3_PPT", radio: "AREA3_CUMPLE_PPT" },
-//         { select: "AREA4_PPT", radio: "AREA4_CUMPLE_PPT" },
-//         { radio: "ESPECIALIDAD_CUMPLE_PPT", dependentRadios: ["EGRESADO_ESPECIALIDAD_PPT"] },
-//         { radio: "MAESTRIA_CUMPLE_PPT", dependentRadios: ["EGRESADO_MAESTRIA_PPT"] },
-//         { radio: "DOCTORADO_CUMPLE_PPT", dependentRadios: ["EGRESADO_DOCTORADO_PPT"] },
-//     ];
-
-//     const tools = [
-//         { aplica: "WORD_APLICA_PPT", cumple: "WORD_CUMPLE_PPT", peso: 1.5 },
-//         { aplica: "EXCEL_APLICA_PPT", cumple: "EXCEL_CUMPLE_PPT", peso: 1.5 },
-//         { aplica: "POWER_APLICA_PPT", cumple: "POWER_CUMPLE_PPT", peso: 3 },
-//     ];
-
-//     const idiomas = [
-//         { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT", peso: 1.3333 },
-//         { aplica: "APLICA_IDIOMA2_PPT", cumple: "IDIOMA2_CUMPLE_PPT", peso: 1.3333 },
-//         { aplica: "APLICA_IDIOMA3_PPT", cumple: "IDIOMA3_CUMPLE_PPT", peso: 1.3333 },
-//     ];
-
-//     const cursosContainer = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
-//     const pesoTotalCursos = 25;
-
-//       const competencias = [
-//         { name: "INNOVACION", peso: 6 / 8 },
-//         { name: "PASION", peso: 6 / 8 },
-//         { name: "SERVICIO_CLIENTE", peso: 6 / 8 },
-//         { name: "COMUNICACION_EFICAZ", peso: 6 / 8 },
-//         { name: "TRABAJO_EQUIPO", peso: 6 / 8 },
-//         { name: "INTEGRIDAD", peso: 6 / 8 },
-//         { name: "RESPONSABILIDAD_SOCIAL", peso: 6 / 8 },
-//         { name: "ADAPTABILIDAD", peso: 6 / 8 },
-//         { name: "LIDERAZGO", peso: 2 },
-//         { name: "TOMA_DECISIONES", peso: 2 },
-//     ];
-
-
-
-//     const requisitosMovilidad = [
-//         { name: "DISPONIBILIDAD_VIAJAR_PPT", cumple: "DISPONIBILIDAD_VIAJAR_OPCION_CUMPLE" },
-//         { name: "REQUIERE_PASAPORTE_PPT", cumple: "REQUIEREPASAPORTE_OPCION_CUMPLE" },
-//         { name: "REQUIERE_VISA_PPT", cumple: "REQUIEREVISA_OPCION_CUMPLE" },
-//         { name: "REQUIERE_LICENCIA_PPT", cumple: "REQUIERELICENCIA_OPCION_CUMPLE" },
-//         { name: "CAMBIO_RESIDENCIA_PPT", cumple: "CAMBIORESIDENCIA_OPCION_CUMPLE" },
-//     ];
-
-
-
-//     const experienciaGeneralRadio = document.querySelectorAll("input[name='EXPERIENCIAGENERAL_CUMPLE_PPT']");
-//     const experienciaEspecificaRadio = document.querySelectorAll("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']");
-//     const puestosContainer = document.querySelectorAll("select.puesto");
-//     const pesoEspecifica = 7;
-
-//     const pesoTotal20 = 20;
-//     const pesoTotal6 = 6;
-//     const pesoTotalIdiomas = 4;
-//     const totalInput = document.getElementById("SUMA_TOTAL");
-
-
-     
-//   function calcularSumaTotal() {
-//     let sumaTotal = 0;
-
-//         let puntosRequisitosMovilidad = 0;
-//         let puntosDatosGenerales = 0;
-//         let radiosGeneralesSeleccionados = 0;
-
-//         const movilidadAplica = requisitosMovilidad.filter(({ name }) => {
-//             const aplica = document.querySelector(`input[name='${name}']:checked`);
-//             return aplica?.value === "si";
-//         });
-
-//         const alMenosUnRequisitoAplica = movilidadAplica.length > 0;
-
-//         const requisitosCumplen = requisitosMovilidad.filter(({ name, cumple }) => {
-//             const aplica = document.querySelector(`input[name='${name}']:checked`);
-//             const cumpleOK = document.querySelector(`input[name='${cumple}']:checked`);
-//             return aplica?.value === "si" && cumpleOK?.value === "si";
-//         });
-
-//         const requisitosValidos = requisitosCumplen.length;
-
-//         const pesoRadioGeneral = alMenosUnRequisitoAplica ? 1.25 : 2.5;
-
-//         radioButtons.forEach((radio) => {
-//             if (radio.checked && radio.value === "si") {
-//                 sumaTotal += pesoRadioGeneral;
-//                 puntosDatosGenerales += pesoRadioGeneral;
-//                 radiosGeneralesSeleccionados++;
-//             }
-//         });
-
-// if (requisitosValidos > 0) {
-//     const pesoPorRequisito = 5 / requisitosValidos;
-//     requisitosCumplen.forEach(({ name, cumple }) => {
-//         const aplica = document.querySelector(`input[name='${name}']:checked`);
-//         const cumpleOK = document.querySelector(`input[name='${cumple}']:checked`);
-//         if (aplica?.value === "si" && cumpleOK?.value === "si") {
-//             sumaTotal += pesoPorRequisito;
-//             puntosRequisitosMovilidad += pesoPorRequisito;
-//         }
-//     });
-// }
-
-
-
-//     const seccionesValidas = selectRadioPairs.filter(({ select, dependentRadios }) => {
-//         if (select) {
-//             const selectElement = document.getElementById(select);
-//             if (!selectElement || selectElement.value === "0" || selectElement.value === "Seleccione una opción") {
-//                 return false;
-//             }
-//         }
-
-//         if (dependentRadios) {
-//             const algunoMarcado = dependentRadios.some(depRadioName => {
-//                 const radio = document.querySelector(`input[name='${depRadioName}']:checked`);
-//                 return radio && radio.value === "si";
-//             });
-//             if (!algunoMarcado) return false;
-//         }
-
-//         return true;
-//     });
-
-//     const pesoPorSeccion = seccionesValidas.length > 0 ? pesoTotal20 / seccionesValidas.length : 0;
-
-//     seccionesValidas.forEach(({ radio }) => {
-//         const radios = document.getElementsByName(radio);
-//         radios.forEach((r) => {
-//             if (r.checked && r.value === "si") {
-//                 sumaTotal += pesoPorSeccion;
-//             }
-//         });
-//     });
-
-//     // Herramientas
-//     let validTools = 0;
-//     tools.forEach(({ aplica, cumple, peso }) => {
-//         const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
-//         const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
-
-//         if (aplicaElement && aplicaElement.value === "si") {
-//             validTools++;
-//             if (cumpleElement && cumpleElement.value === "si") {
-//                 sumaTotal += peso;
-//             }
-//         }
-//     });
-
-//     if (validTools < tools.length && validTools > 0) {
-//         const adjustedWeight = pesoTotal6 / validTools;
-//         tools.forEach(({ aplica, cumple, peso }) => {
-//             const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
-//             const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
-
-//             if (aplicaElement && aplicaElement.value === "si") {
-//                 if (cumpleElement && cumpleElement.value === "si") {
-//                     sumaTotal += adjustedWeight - peso;
-//                 }
-//             }
-//         });
-//     }
-
-//     // Idiomas
-//     let validIdiomas = 0;
-//     idiomas.forEach(({ aplica, cumple, peso }) => {
-//         const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
-//         const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
-
-//         if (aplicaElement && aplicaElement.value === "si") {
-//             validIdiomas++;
-//             if (cumpleElement && cumpleElement.value === "si") {
-//                 sumaTotal += peso;
-//             }
-//         }
-//     });
-
-//     if (validIdiomas < idiomas.length && validIdiomas > 0) {
-//         const adjustedWeight = pesoTotalIdiomas / validIdiomas;
-//         idiomas.forEach(({ aplica, cumple, peso }) => {
-//             const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
-//             const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
-
-//             if (aplicaElement && aplicaElement.value === "si") {
-//                 if (cumpleElement && cumpleElement.value === "si") {
-//                     sumaTotal += adjustedWeight - peso;
-//                 }
-//             }
-//         });
-//     }
-
-//     // Cursos
-//     const cursosValidos = Array.from(cursosContainer).filter((curso) => {
-//         const id = curso.id.match(/\d+/)[0];
-//         const radioSi = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
-//         return curso.value.trim() !== "" && radioSi && radioSi.value === "si";
-//     });
-
-//     const pesoPorCurso = cursosValidos.length > 0 ? pesoTotalCursos / cursosValidos.length : 0;
-//     cursosValidos.forEach(() => {
-//         sumaTotal += pesoPorCurso;
-//     });
-
-//     // Experiencia específica
-//     const especificaSi = document.querySelector("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']:checked");
-//     if (especificaSi && especificaSi.value === "si") {
-//         sumaTotal += pesoEspecifica;
-//     }
-
-//     // Experiencia general y otras
-//     const experienciaRadios = [
-//         "EXPERIENCIAGENERAL_CUMPLE_PPT",
-//         "CANTIDAD_EXPERIENCIA_CUMPLE_PPT",
-//         "TIEMPO_EXPERIENCIA_CUMPLE_PPT"
-//     ];
-
-//     experienciaRadios.forEach(name => {
-//         const radioSi = document.querySelector(`input[name='${name}']:checked`);
-//         if (radioSi && radioSi.value === "si") {
-//             sumaTotal += 6;
-//         }
-//     });
-
-//     // Competencias
-//     competencias.forEach(({ name, peso }) => {
-//         const requerido = document.getElementById(`${name}_REQUERIDA_PPT`);
-//         const deseable = document.getElementById(`${name}_DESEABLE_PPT`);
-//         const cumpleSi = document.getElementById(`${name}_CUMPLE_SI`);
-
-//         if ((requerido && requerido.checked) || (deseable && deseable.checked)) {
-//             if (cumpleSi && cumpleSi.checked) {
-//                 sumaTotal += peso;
-//             }
-//         }
-//     });
-
-//     // Resultado final
-//     totalInput.value = Math.round(sumaTotal);
-// }
-
-     
-//     // --- Eventos ---
-//     radioButtons.forEach((radio) => {
-//         radio.addEventListener("change", calcularSumaTotal);
-//     });
-
-//     cursosContainer.forEach((curso) => {
-//         curso.addEventListener("input", calcularSumaTotal);
-//         const id = curso.id.match(/\d+/)[0];
-//         const radioElements = document.querySelectorAll(`input[name='CURSO_CUMPLE_PPT[${id}]']`);
-//         radioElements.forEach((radio) => {
-//             radio.addEventListener("change", calcularSumaTotal);
-//         });
-//     });
-
-//     experienciaEspecificaRadio.forEach((radio) => {
-//         radio.addEventListener("change", calcularSumaTotal);
-//     });
-
-//     experienciaGeneralRadio.forEach((radio) => {
-//         radio.addEventListener("change", calcularSumaTotal);
-//     });
-     
-//      ["CANTIDAD_EXPERIENCIA_CUMPLE_PPT", "TIEMPO_EXPERIENCIA_CUMPLE_PPT"].forEach(name => {
-//         const radios = document.querySelectorAll(`input[name='${name}']`);
-//         radios.forEach((radio) => {
-//             radio.addEventListener("change", calcularSumaTotal);
-//         });
-//      });
-     
-//      selectRadioPairs.forEach(({ radio }) => {
-//         const radioElements = document.getElementsByName(radio);
-//         radioElements.forEach((radio) => {
-//             radio.addEventListener("change", calcularSumaTotal);
-//         });
-//     });
-
-//     puestosContainer.forEach((puesto) => {
-//         puesto.addEventListener("change", calcularSumaTotal);
-//         const id = puesto.id.match(/\d+/)[0];
-//         const radioElements = document.querySelectorAll(`input[name='PUESTO${id}_CUMPLE_PPT']`);
-//         radioElements.forEach((radio) => {
-//             radio.addEventListener("change", calcularSumaTotal);
-//         });
-//     });
-
-//     tools.forEach(({ aplica, cumple }) => {
-//         const aplicaElements = document.getElementsByName(aplica);
-//         const cumpleElements = document.getElementsByName(cumple);
-
-//         aplicaElements.forEach((aplicaElement) => {
-//             aplicaElement.addEventListener("change", calcularSumaTotal);
-//         });
-
-//         cumpleElements.forEach((cumpleElement) => {
-//             cumpleElement.addEventListener("change", calcularSumaTotal);
-//         });
-//     });
-
-//     idiomas.forEach(({ aplica, cumple }) => {
-//         const aplicaElements = document.getElementsByName(aplica);
-//         const cumpleElements = document.getElementsByName(cumple);
-
-//         aplicaElements.forEach((aplicaElement) => {
-//             aplicaElement.addEventListener("change", calcularSumaTotal);
-//         });
-
-//         cumpleElements.forEach((cumpleElement) => {
-//             cumpleElement.addEventListener("change", calcularSumaTotal);
-//         });
-//     });
-
-
-
-//      competencias.forEach(({ name }) => {
-//         const requerido = document.getElementById(`${name}_REQUERIDA_PPT`);
-//         const deseable = document.getElementById(`${name}_DESEABLE_PPT`);
-//         const cumpleSi = document.getElementById(`${name}_CUMPLE_SI`);
-//         const cumpleNo = document.getElementById(`${name}_CUMPLE_NO`);
-
-//         [requerido, deseable, cumpleSi, cumpleNo].forEach((element) => {
-//             if (element) {
-//                 element.addEventListener("change", calcularSumaTotal);
-//             }
-//         });
-//      });
-    
-//     requisitosMovilidad.forEach(({ name, cumple }) => {
-//         const radios = document.querySelectorAll(`input[name='${name}'], input[name='${cumple}']`);
-//         radios.forEach((radio) => {
-//             radio.addEventListener("change", calcularSumaTotal);
-//         });
-//     });
-    
-    
-    
-     
-// document.addEventListener("input", (e) => {
-//     if (e.target.matches("input[type='radio'], select")) {
-//         setTimeout(() => {
-//             calcularSumaTotal();
-//         }, 0);
-//     }
-// });
-
-
-
-// });
 
 
 // SUMA DE SELECCION
@@ -4923,454 +4207,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-// SUMA DE OBTENER BRECHA
-
-
-
-
-
-// function obtenerBrechaCompetencias() {
-//     const brechas = [];
-//     const brechasDetalladas = [];
-
-//     const totalActualInput = document.getElementById("SUMA_TOTAL");
-//     const sumaTotal = parseFloat(totalActualInput?.value || 0);
-
-
-
-//     const selectRadioPairs = [
-//         { select: "SECUNDARIA_PPT", radio: "SECUNDARIA_CUMPLE_PPT" },
-//         { select: "TECNICA_PPT", radio: "TECNICA_CUMPLE_PPT" },
-//         { select: "TECNICO_PPT", radio: "TECNICO_CUMPLE_PPT" },
-//         { select: "UNIVERSITARIO_PPT", radio: "UNIVERSITARIO_CUMPLE_PPT" },
-//         { select: "SITUACION_PPT", radio: "SITUACION_CUMPLE_PPT" },
-//         { select: "CEDULA_PPT", radio: "CEDULA_CUMPLE_PPT" },
-//         { select: "AREA1_PPT", radio: "AREA1_CUMPLE_PPT" },
-//         { select: "AREA2_PPT", radio: "AREA2_CUMPLE_PPT" },
-//         { select: "AREA3_PPT", radio: "AREA3_CUMPLE_PPT" },
-//         { select: "AREA4_PPT", radio: "AREA4_CUMPLE_PPT" },
-//         { radio: "ESPECIALIDAD_CUMPLE_PPT", dependentRadios: ["EGRESADO_ESPECIALIDAD_PPT"] },
-//         { radio: "MAESTRIA_CUMPLE_PPT", dependentRadios: ["EGRESADO_MAESTRIA_PPT"] },
-//         { radio: "DOCTORADO_CUMPLE_PPT", dependentRadios: ["EGRESADO_DOCTORADO_PPT"] },
-//     ];
-
-//     const tools = [
-//         { aplica: "WORD_APLICA_PPT", cumple: "WORD_CUMPLE_PPT", nombre: "Word" },
-//         { aplica: "EXCEL_APLICA_PPT", cumple: "EXCEL_CUMPLE_PPT", nombre: "Excel" },
-//         { aplica: "POWER_APLICA_PPT", cumple: "POWER_CUMPLE_PPT", nombre: "Power Point"},
-//     ];
-
-//     const idiomas = [
-//         { aplica: "APLICA_IDIOMA1_PPT", cumple: "IDIOMA1_CUMPLE_PPT", nombre: "IDIOMA1" },
-//         { aplica: "APLICA_IDIOMA2_PPT", cumple: "IDIOMA2_CUMPLE_PPT", nombre: "IDIOMA2" },
-//         { aplica: "APLICA_IDIOMA3_PPT", cumple: "IDIOMA3_CUMPLE_PPT", nombre: "IDIOMA3" },
-//     ];
-
-//     const competencias = [
-//         { name: "INNOVACION", mensaje: "Innovación" },
-//         { name: "PASION", mensaje: "Pasión" },
-//         { name: "SERVICIO_CLIENTE", mensaje: "Servicio (Orientación al cliente)" },
-//         { name: "COMUNICACION_EFICAZ", mensaje: "Comunicación eficaz" },
-//         { name: "TRABAJO_EQUIPO", mensaje: "Trabajo en equipo" },
-//         { name: "INTEGRIDAD", mensaje: "Integridad" },
-//         { name: "RESPONSABILIDAD_SOCIAL", mensaje: "Responsabilidad social"},
-//         { name: "ADAPTABILIDAD", mensaje: "Adaptabilidad a los cambios del entorno" },
-//         { name: "LIDERAZGO", mensaje: "Liderazgo" },
-//         { name: "TOMA_DECISIONES", mensaje: "Toma de decisiones" },
-//     ];
-
-//     // Calcular los valores faltantes utilizando la misma lógica que el cálculo principal
-//     let sumaTotalCalculada = 0;
-//     let brechasPorCategoria = {};
-
-//     // Verifica si hay requisitos de movilidad aplicables
-//     const movilidadAplica = requisitosMovilidad.filter(({ name }) => {
-//         const aplica = document.querySelector(`input[name='${name}']:checked`);
-//         return aplica?.value === "si";
-//     });
-
-//     const alMenosUnRequisitoAplica = movilidadAplica.length > 0;
-
-//     // Para datos generales (edad, género, etc.)
-//     const radioButtons = document.querySelectorAll(
-//         "input[name='EDAD_CUMPLE_PPT'], input[name='GENERO_CUMPLE_PPT'], input[name='ESTADO_CIVIL_CUMPLE_PPT'], input[name='NACIONALIDAD_CUMPLE_PPT']"
-//     );
-
-//     const pesoRadioGeneral = alMenosUnRequisitoAplica ? 1.25 : 2.5;
-//     let puntosDatosGenerales = 0;
-//     let radiosGeneralesSeleccionados = 0;
-
-//     radioButtons.forEach((radio) => {
-//         if (radio.checked && radio.value === "si") {
-//             sumaTotalCalculada += pesoRadioGeneral;
-//             puntosDatosGenerales += pesoRadioGeneral;
-//             radiosGeneralesSeleccionados++;
-//         }
-//     });
-
-//     // Para requisitos de movilidad
-//     let puntosRequisitosMovilidad = 0;
-//     if (alMenosUnRequisitoAplica) {
-//         const requisitosCumplen = movilidadAplica.filter(({ name, cumple }) => {
-//             const cumpleOK = document.querySelector(`input[name='${cumple}']:checked`);
-//             return cumpleOK?.value === "si";
-//         });
-
-//         const requisitosNoCompletados = movilidadAplica.filter(({ name, cumple }) => {
-//             const cumpleOK = document.querySelector(`input[name='${cumple}']:checked`);
-//             return !cumpleOK || cumpleOK.value !== "si";
-//         });
-
-   
-//     }
-
-//     // CAMBIO IMPORTANTE: Esta función verifica si un select tiene un valor válido
-//     function tieneValorValido(selectId) {
-//         const select = document.getElementById(selectId);
-//         if (!select) return false;
-        
-//         // Verificar que tenga un valor seleccionado válido
-//         if (select.value === "" || 
-//             select.value === "0" || 
-//             select.value === "Seleccione una opción" || 
-//             select.selectedIndex <= 0) {
-//             return false;
-//         }
-        
-//         // Verificar que el texto seleccionado no sea un placeholder
-//         const selectedText = select.options[select.selectedIndex].text;
-//         if (selectedText === "Seleccione una opción" || 
-//             selectedText === "Área" || 
-//             selectedText === "" || 
-//             selectedText.includes("Seleccione")) {
-//             return false;
-//         }
-        
-//         return true;
-//     }
-
-//     // CAMBIO IMPORTANTE: Esta función verifica si un radio tiene un valor seleccionado
-//     function radioTieneValor(radioName) {
-//         const radio = document.querySelector(`input[name='${radioName}']:checked`);
-//         return radio !== null;
-//     }
-
-//     // Para escolaridad - Filtrar correctamente las secciones válidas
-//     // Solo consideramos secciones donde el select tiene un valor válido o los radios dependientes están marcados
-//     const seccionesValidas = selectRadioPairs.filter(({ select, radio, dependentRadios }) => {
-//         // Si tiene un select, verificar que tenga valor válido
-//         if (select) {
-//             if (!tieneValorValido(select)) {
-//                 return false;
-//             }
-//         }
-        
-//         // Si tiene radio dependientes, verificar que al menos uno esté marcado
-//         if (dependentRadios) {
-//             const algunoMarcado = dependentRadios.some(depRadioName => {
-//                 const radio = document.querySelector(`input[name='${depRadioName}']:checked`);
-//                 return radio && radio.value === "si";
-//             });
-//             if (!algunoMarcado) return false;
-//         }
-        
-//         // Verificar que el radio principal tenga algún valor seleccionado
-//         if (radio && !radioTieneValor(radio)) {
-//             return false;
-//         }
-        
-//         return true;
-//     });
-
-//     const pesoPorSeccion = seccionesValidas.length > 0 ? 20 / seccionesValidas.length : 0;
-//     const pesoPorSeccionRedondeado = parseFloat(pesoPorSeccion.toFixed(2));
-    
-//     // Procesamos solo las secciones válidas
-//     seccionesValidas.forEach(({ select, radio, dependentRadios }) => {
-//         const cumple = document.querySelector(`input[name='${radio}']:checked`)?.value === "si";
-        
-//         if (cumple) {
-//             sumaTotalCalculada += pesoPorSeccion;
-//         } else {
-//             // Solo agregamos brechas para secciones que no cumplen pero son válidas
-//             let msg = "";
-//             let skipBrecha = false;
-            
-//             switch (radio) {
-//                 case "SECUNDARIA_CUMPLE_PPT":
-//                     // Solo si el select de secundaria tiene valor
-//                     if (tieneValorValido("SECUNDARIA_PPT")) {
-//                         msg = "Falta por cumplir con la secundaria";
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "TECNICA_CUMPLE_PPT":
-//                     if (tieneValorValido("TECNICA_PPT")) {
-//                         msg = "Falta por concluir el bachillerato";
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "TECNICO_CUMPLE_PPT":
-//                     if (tieneValorValido("TECNICO_PPT")) {
-//                         msg = "Falta cumplir con Técnico superior";
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "UNIVERSITARIO_CUMPLE_PPT":
-//                     if (tieneValorValido("UNIVERSITARIO_PPT")) {
-//                         msg = "Falta cumplir con la Carrera universitaria";
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "SITUACION_CUMPLE_PPT":
-//                     if (tieneValorValido("SITUACION_PPT")) {
-//                         const texto = document.getElementById("SITUACION_PPT").options[document.getElementById("SITUACION_PPT").selectedIndex].text;
-//                         msg = `Falta por cumplir con ${texto}`;
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "CEDULA_CUMPLE_PPT":
-//                     if (tieneValorValido("CEDULA_PPT")) {
-//                         msg = "Falta por cumplir con la Cédula profesional";
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "AREA1_CUMPLE_PPT":
-//                 case "AREA2_CUMPLE_PPT":
-//                 case "AREA3_CUMPLE_PPT":
-//                 case "AREA4_CUMPLE_PPT":
-//                     const areaSelectId = select; // Ej: "AREA1_PPT"
-//                     if (tieneValorValido(areaSelectId)) {
-//                         const areaText = document.getElementById(areaSelectId).options[document.getElementById(areaSelectId).selectedIndex].text;
-//                         msg = `Falta por cumplir con el Área de conocimientos: ${areaText}`;
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "ESPECIALIDAD_CUMPLE_PPT":
-//                     // Verificamos si alguno de los radios dependientes está marcado como "si"
-//                     if (dependentRadios && dependentRadios.some(name => document.querySelector(`input[name='${name}']:checked`)?.value === "si")) {
-//                         msg = "Falta Estudios de posgrado requeridos: Especialidad";
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "MAESTRIA_CUMPLE_PPT":
-//                     if (dependentRadios && dependentRadios.some(name => document.querySelector(`input[name='${name}']:checked`)?.value === "si")) {
-//                         msg = "Falta Estudios de posgrado requeridos: Maestría";
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 case "DOCTORADO_CUMPLE_PPT":
-//                     if (dependentRadios && dependentRadios.some(name => document.querySelector(`input[name='${name}']:checked`)?.value === "si")) {
-//                         msg = "Falta Estudios de posgrado requeridos: Doctorado";
-//                     } else {
-//                         skipBrecha = true;
-//                     }
-//                     break;
-//                 default:
-//                     skipBrecha = true;
-//             }
-            
-//             // Solo agregamos la brecha si no debe saltarse
-//             if (!skipBrecha && msg) {
-//                 brechasDetalladas.push({ mensaje: msg, porcentaje: pesoPorSeccionRedondeado });
-//                 brechas.push(`${msg} (${pesoPorSeccionRedondeado}%)`);
-//             }
-//         }
-//     });
-
-//     // Para herramientas
-//     let validTools = 0;
-//     const toolsCumplen = [];
-//     const toolsNoCumplen = [];
-
-//     tools.forEach(({ aplica, cumple, nombre, peso }) => {
-//         const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
-//         const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
-
-//         if (aplicaElement && aplicaElement.value === "si") {
-//             validTools++;
-//             if (cumpleElement && cumpleElement.value === "si") {
-//                 sumaTotalCalculada += peso;
-//                 toolsCumplen.push({ aplica, cumple, nombre, peso });
-//             } else {
-//                 toolsNoCumplen.push({ aplica, cumple, nombre, peso });
-//             }
-//         }
-//     });
-
-//     // Ajustar pesos si es necesario
-//     if (validTools < tools.length && validTools > 0) {
-//         const adjustedWeight = 6 / validTools;
-//         const ajusteDePeso = adjustedWeight - tools[0].peso; // Difference to add per tool
-        
-//         toolsCumplen.forEach(() => {
-//             sumaTotalCalculada += ajusteDePeso;
-//         });
-        
-//         // Actualizar las brechas para herramientas no cumplidas
-//         toolsNoCumplen.forEach(({ nombre, peso }) => {
-//             const pesoPorHerramienta = parseFloat((6 / validTools).toFixed(2));
-//             brechasDetalladas.push({ mensaje: `Falta por cumplir con el programa ${nombre}`, porcentaje: pesoPorHerramienta });
-//             brechas.push(`Falta por cumplir con el programa ${nombre} (${pesoPorHerramienta}%)`);
-//         });
-//     } else {
-//         // Si no hay ajuste, usar el peso original
-//         toolsNoCumplen.forEach(({ nombre, peso }) => {
-//             const pesoRedondeado = parseFloat(peso.toFixed(2));
-//             brechasDetalladas.push({ mensaje: `Falta por cumplir con el programa ${nombre}`, porcentaje: pesoRedondeado });
-//             brechas.push(`Falta por cumplir con el programa ${nombre} (${pesoRedondeado}%)`);
-//         });
-//     }
-
-//     // Para idiomas
-//     let validIdiomas = 0;
-//     const idiomasCumplen = [];
-//     const idiomasNoCumplen = [];
-
-//     idiomas.forEach(({ aplica, cumple, nombre }) => {
-//         const aplicaElement = document.querySelector(`input[name='${aplica}']:checked`);
-//         const cumpleElement = document.querySelector(`input[name='${cumple}']:checked`);
-
-//         if (aplicaElement && aplicaElement.value === "si") {
-//             validIdiomas++;
-//             if (cumpleElement && cumpleElement.value === "si") {
-//                 const pesoPorIdioma = 4 / validIdiomas; // Use the dynamic weight
-//                 sumaTotalCalculada += pesoPorIdioma;
-//                 idiomasCumplen.push({ aplica, cumple, nombre });
-//             } else {
-//                 idiomasNoCumplen.push({ aplica, cumple, nombre });
-//             }
-//         }
-//     });
-
-//     // Ajustar y agregar brechas para idiomas
-//     if (validIdiomas > 0) {
-//         const pesoPorIdioma = parseFloat((4 / validIdiomas).toFixed(2));
-//         idiomasNoCumplen.forEach(({ nombre }) => {
-//             const nombreIdioma = document.getElementById(`NOMBRE_${nombre}_PPT`)?.value || nombre;
-//             brechasDetalladas.push({ mensaje: `Falta por cumplir con el idioma: ${nombreIdioma}`, porcentaje: pesoPorIdioma });
-//             brechas.push(`Falta por cumplir con el idioma: ${nombreIdioma} (${pesoPorIdioma}%)`);
-//         });
-//     }
-
-//     // Para experiencia general y otros aspectos
-//     const experienciaRadios = [
-//         { name: "EXPERIENCIAGENERAL_CUMPLE_PPT", texto: "Falta por cumplir con la experiencia laboral general requerida" },
-//         { name: "CANTIDAD_EXPERIENCIA_CUMPLE_PPT", texto: "Falta por cumplir con la cantidad total de años de experiencia laboral" },
-//         { name: "TIEMPO_EXPERIENCIA_CUMPLE_PPT", texto: "Falta por cumplir con el tiempo de experiencia específica requerido para el cargo" }
-//         { name: "EXPERIENCIA_ESPECIFICA_CUMPLE_PPT", texto: "Falta por cumplir con la experiencia laboral específica requerida" }
-
-//     ];
-
-//     experienciaRadios.forEach(({ name, texto }) => {
-//         const radioSi = document.querySelector(`input[name='${name}']:checked`);
-//         if (radioSi && radioSi.value === "si") {
-//             sumaTotalCalculada += 6;
-//         } else {
-//             brechasDetalladas.push({ mensaje: texto, porcentaje: 6.00 });
-//             brechas.push(`${texto} (6.00%)`);
-//         }
-//     });
-
-//     // Para experiencia específica
-//     const expEsp = document.querySelector("input[name='EXPERIENCIA_ESPECIFICA_CUMPLE_PPT']:checked");
-//     if (expEsp && expEsp.value === "si") {
-//         sumaTotalCalculada += 7;
-//     } else {
-//         brechasDetalladas.push({ mensaje: "Falta por cumplir con la experiencia laboral específica requerida"});
-//         brechas.push("Falta por cumplir con la experiencia laboral específica requerida (7.00%)");
-//     }
-
-    
-
-//     // Para cursos
-//     const cursosContainer = document.querySelectorAll("textarea[name='CURSO_PPT[]']");
-//     const cursosValidos = Array.from(cursosContainer).filter((curso) => {
-//         return curso.value.trim() !== "";
-//     });
-    
-//     const cursosCumplen = cursosValidos.filter((curso) => {
-//         const id = curso.id.match(/\d+/)[0];
-//         const radioSi = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
-//         return radioSi && radioSi.value === "si";
-//     });
-    
-//     const cursosNoCumplen = cursosValidos.filter((curso) => {
-//         const id = curso.id.match(/\d+/)[0];
-//         const radioSi = document.querySelector(`input[name='CURSO_CUMPLE_PPT[${id}]']:checked`);
-//         return !radioSi || radioSi.value !== "si";
-//     });
-    
-//     const pesoPorCurso = cursosValidos.length > 0 ? 25 / cursosValidos.length : 0;
-//     const pesoPorCursoRedondeado = parseFloat(pesoPorCurso.toFixed(2));
-    
-//     cursosCumplen.forEach(() => {
-//         sumaTotalCalculada += pesoPorCurso;
-//     });
-    
-//     cursosNoCumplen.forEach((curso) => {
-//         brechasDetalladas.push({ mensaje: `Falta por cumplir con el curso: ${curso.value.trim()}`, porcentaje: pesoPorCursoRedondeado });
-//         brechas.push(`Falta por cumplir con el curso: ${curso.value.trim()} (${pesoPorCursoRedondeado}%)`);
-//     });
-
- 
-    
-//     // Suma de todos los porcentajes de brecha actuales
-//     const sumaDeBrechas = brechasDetalladas.reduce((sum, item) => sum + item.porcentaje, 0);
-    
-//     // Solo normalizar si hay brechas y la suma no es 0
-//     if (brechasDetalladas.length > 0 && sumaDeBrechas > 0) {
-//         // Aplicar un factor de ajuste para que la suma de las brechas sea igual al porcentaje faltante
-//         const factorDeAjuste = porcentajeFaltante / sumaDeBrechas;
-        
-//         // Calcular el total después del ajuste para verificar si es necesario redistribuir
-//         let totalAjustado = 0;
-        
-//         // Ajustar todos los porcentajes con valores redondeados
-//         brechasDetalladas.forEach(item => {
-//             // Calcular y redondear el nuevo porcentaje
-//             const nuevoValor = item.porcentaje * factorDeAjuste;
-//             item.porcentaje = parseFloat(nuevoValor.toFixed(2));
-//             totalAjustado += item.porcentaje;
-            
-//             // Actualizar el mensaje correspondiente en 'brechas'
-//             const indiceBrecha = brechas.findIndex(b => b.startsWith(item.mensaje));
-//             if (indiceBrecha !== -1) {
-//                 brechas[indiceBrecha] = `${item.mensaje} (${item.porcentaje}%)`;
-//             }
-//         });
-        
-//         // Verificar si hay diferencia por redondeo y ajustar al último elemento si es necesario
-//         const diferencia = porcentajeFaltante - totalAjustado;
-//         if (Math.abs(diferencia) > 0.01 && brechasDetalladas.length > 0) {
-//             // Ajustar el último elemento para compensar la diferencia de redondeo
-//             const ultimoElemento = brechasDetalladas[brechasDetalladas.length - 1];
-//             ultimoElemento.porcentaje = parseFloat((ultimoElemento.porcentaje + diferencia).toFixed(2));
-            
-//             // Actualizar el mensaje correspondiente
-//             const indiceUltimaBrecha = brechas.findIndex(b => b.startsWith(ultimoElemento.mensaje));
-//             if (indiceUltimaBrecha !== -1) {
-//                 brechas[indiceUltimaBrecha] = `${ultimoElemento.mensaje} (${ultimoElemento.porcentaje}%)`;
-//             }
-//         }
-//     }
-
-//     return {
-//         brechas,
-//         brechasDetalladas,
-//         porcentajeFaltante
-//     };
-// }
-
 
 ///  FUNCION PARA SUMAR LAS PRUEBAS DE CONOCIMIENTO 
 function calcularPorcentajeTotal2() {
@@ -5395,7 +4231,6 @@ function calcularPorcentajeTotal2() {
 
     $('#porcentajeTotalPrueba').val(Math.round(porcentajeFinal));  
 }
-
 
 
 function obtenerBrechasHabilidades() {
@@ -5439,7 +4274,6 @@ function obtenerBrechasHabilidades() {
 }
 
 
-
 function obtenerBrechasFormacion() {
     const formacion = [
         { radioName: 'SECUNDARIA_CUMPLE_PPT', inputId: 'PORCENTAJE_SECUNDARIA', mensaje: 'Falta por cumplir con la secundaria' },
@@ -5476,13 +4310,13 @@ function obtenerBrechasFormacion() {
                     const seleccionado = select.options[select.selectedIndex].text;
                     textoBrecha = `Falta por cumplir con el Área de conocimientos: ${seleccionado}`;
                 } else {
-                    return; // Saltar si el área no está seleccionada correctamente
+                    return; 
                 }
             }
 
             brechasDetalladas.push({
                 mensaje: textoBrecha,
-                porcentaje // sin redondear
+                porcentaje 
             });
 
             brechas.push(`${textoBrecha}, porcentaje: ${porcentaje}%`);
@@ -5632,7 +4466,7 @@ function obtenerBrechasCursos() {
 
             brechasDetalladas.push({
                 mensaje,
-                porcentaje // sin redondeo
+                porcentaje 
             });
 
             brechas.push(`${mensaje}, porcentaje: ${porcentaje}%`);

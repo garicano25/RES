@@ -172,7 +172,7 @@ $(document).on('click', '.GUARDAR', function () {
                         icon: 'success',
                         confirmButtonText: 'Aceptar',
                     }).then(() => {
-                        location.reload();
+                        Tablapendientecontratacion.ajax.reload()
                     });
                 },
                 error: function (xhr) {

@@ -455,6 +455,8 @@ Route::post('/SeleccionSave', [seleccionController::class, 'store']);
 Route::get('/consultarSeleccion/{vacantesId}', [seleccionController::class, 'consultarSeleccion']);
 Route::post('/guardarPendiente', [seleccionController::class, 'guardarPendiente']);
 
+Route::post('/noSeleccionar', [seleccionController::class, 'noSeleccionar']);
+
 // AUTORIZACION
 Route::get('/ver-archivo/{curp}', [seleccionController::class, 'visualizarArchivo']);
 Route::get('/ver-pdf', [seleccionController::class, 'mostrarPDF'])->name('ver-pdf');
@@ -596,8 +598,6 @@ Route::get('/actualizaciondocumentos', [actualizaciondocsController::class, 'ind
 Route::post('/ActualizarfechasSave',[actualizaciondocsController::class, 'store']);
 Route::get('/validarPeriodoActualizacion', [actualizaciondocsController::class, 'validarPeriodoActualizacion']);
 Route::get('/Tabladocumentosactualizados', [actualizaciondocsController::class, 'Tabladocumentosactualizados']);
-
-
 Route::get('/mostrardocumentoactualizado/{id}', [actualizaciondocsController::class, 'mostrardocumentoactualizado']);
 
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
@@ -1189,8 +1189,4 @@ Route::get('/clear-cache', function () {
     Artisan::call('route:clear');
     Artisan::call('view:clear');
     return 'Application cache cleared';
-});
-
-Route::get('/pruebasww', function () {
-    return view('welprueba');
 });
