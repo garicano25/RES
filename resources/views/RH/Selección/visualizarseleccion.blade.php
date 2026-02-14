@@ -3,7 +3,25 @@
 @section('contenido')
 
 
+<style>
+    .justificacion-preview {
+        max-width: 250px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+    }
 
+    .ver-mas-link {
+        color: #0d6efd;
+        cursor: pointer;
+        font-size: 12px;
+        display: inline-block;
+        margin-top: 4px;
+    }
+</style>
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
@@ -41,7 +59,7 @@
                                     <button type="button" class="btn btn-light waves-effect waves-light" style="margin-left: 10px;" id="verPdfButton">
                                         <i class="bi bi-file-earmark-pdf-fill"></i> &nbsp; Ver
                                     </button>
-                                   
+
                                 </ol>
                                 <div class="card-body position-relative">
                                     <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -57,7 +75,7 @@
                             <div class="card h-100 cardseleccion">
                                 <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
                                     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-lightbulb-fill"></i>&nbsp;Inteligencia laboral</h3>
-                                  
+
                                 </ol>
                                 <div class="card-body position-relative">
                                     <i id="loadingIcon3" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -71,7 +89,7 @@
                             <div class="card h-100 cardseleccion">
                                 <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
                                     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-clipboard-data-fill"></i>&nbsp;Buró laboral</h3>
-                                   
+
                                 </ol>
                                 <div class="card-body position-relative">
                                     <i id="loadingIcon4" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -87,7 +105,7 @@
                             <div class="card h-100 cardseleccion">
                                 <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
                                     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-filetype-ppt"></i>&nbsp;Perfil de puesto de trabajo&nbsp;(PPT)</h3>
-                                   
+
                                 </ol>
                                 <div class="card-body position-relative">
                                     <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -101,7 +119,7 @@
                             <div class="card h-100 cardseleccion">
                                 <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
                                     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-file-person"></i>&nbsp;Referencias laboral</h3>
-                                 
+
                                 </ol>
                                 <div class="card-body position-relative">
                                     <i id="loadingIcon5" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -119,7 +137,7 @@
                             <div class="card h-100 cardseleccion ">
                                 <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
                                     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-check2-square"></i>&nbsp;Pruebas de conocimientos</h3>
-                                
+
                                 </ol>
                                 <div class="card-body position-relative">
                                     <i id="loadingIcon7" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
@@ -134,7 +152,7 @@
                             <div class="card h-100 cardseleccion ">
                                 <ol class="breadcrumb mb-5 d-flex align-items-center" style="background-color: #007DBA !important">
                                     <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-people-fill"></i>&nbsp;Entrevista</h3>
-                                
+
                                 </ol>
                                 <div class="card-body position-relative">
                                     <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>

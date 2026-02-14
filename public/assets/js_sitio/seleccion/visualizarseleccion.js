@@ -143,7 +143,7 @@ $('#Tablaseleccion2Visualizar tbody').on('click', 'td.clickable', function() {
                                     <th class="text-center">% Pruebas de conocimientos</th>
                                     <th class="text-center">% Entrevista</th>
                                     <th class="text-center">% Total</th>
-                                    <th class="text-center">Justificación</th> 
+                                    <th class="text-center" style="width: 250px;">Justificación</th>
                                     <th class="text-center">Mostrar</th>
                                 </tr>
                             </thead>
@@ -162,13 +162,27 @@ $('#Tablaseleccion2Visualizar tbody').on('click', 'td.clickable', function() {
 
                         var justificacion = '';
 
-                            if (item.NO_CONTRATAR == 1) {
-                                justificacion = item.JUSTIFICACION 
-                                    ? `<span class="badge bg-danger">${item.JUSTIFICACION}</span>` 
-                                    : '<span class="badge bg-secondary">Sin justificación</span>';
+                         if (item.NO_CONTRATAR == 1) {
+
+                                if (item.JUSTIFICACION) {
+                                    justificacion = `
+                                        <div class="justificacion-preview text-start">
+                                            ${item.JUSTIFICACION}
+                                        </div>
+                                        <span class="ver-mas-link" 
+                                            data-justificacion="${item.JUSTIFICACION.replace(/"/g, '&quot;')}">
+                                            Ver más
+                                        </span>
+                                    `;
+                                } else {
+                                    justificacion = '<span class="badge bg-secondary">Sin justificación</span>';
+                                }
+
                             } else {
                                 justificacion = '<span class="badge bg-success">Contratado</span>';
                             }
+
+
 
                         
                         
@@ -222,6 +236,19 @@ $('#Tablaseleccion2Visualizar tbody').on('click', 'td.clickable', function() {
     }
 });
 
+
+$(document).on('click', '.ver-mas-link', function () {
+
+    const texto = $(this).data('justificacion');
+
+    Swal.fire({
+        title: 'Justificación completa',
+        html: `<div style="text-align:left;">${texto}</div>`,
+        width: 600,
+        confirmButtonText: 'Cerrar'
+    });
+
+});
 
 
 function calcularTotal(inteligencia, buro, ppt, referencias, prueba, entrevista) {
