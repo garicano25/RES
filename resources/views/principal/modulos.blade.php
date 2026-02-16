@@ -914,7 +914,7 @@
                             </a>
                             @endif
                             {{-- Mantenimiento --}}
-                            @if($tieneSoloRolAlmacenista || tieneSoloRolTecnicojunior )
+                            @if($tieneSoloRolAlmacenista )
                             <a href="{{ url('/mantenimientoequipos') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
