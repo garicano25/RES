@@ -835,7 +835,7 @@
 
                         <div class="modules">
                             {{-- RRHH --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones || $tieneSoloRolIntendente )
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones || $tieneSoloRolIntendente || tieneSoloRolTecnicojunior )
                             <a href="{{ url('/recempleado') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/RRHH.png" alt=""></div>
@@ -914,7 +914,7 @@
                             </a>
                             @endif
                             {{-- Mantenimiento --}}
-                            @if($tieneSoloRolAlmacenista )
+                            @if($tieneSoloRolAlmacenista || $tieneSoloRolTecnicojunior)
                             <a href="{{ url('/mantenimientoequipos') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
