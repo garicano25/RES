@@ -35,8 +35,9 @@ Modalconfirmacion.addEventListener('hidden.bs.modal', event => {
 $("#guardarCONFIRMACION").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioCONFIRMACION'));
+    formularioValido = validarFormulario($('#formularioCONFIRMACION'))
 
+    
     if (formularioValido) {
         let verificacionInfo = {};
 
@@ -231,7 +232,6 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
         },
         { data: 'NO_OFERTA' },
         { data: 'FECHA_CONFIRMACION' },
-        { data: 'BTN_DOCUMENTO', className: 'text-center' },
         { 
             data: 'EVIDENCIAS',
             render: function (data) {
@@ -252,11 +252,10 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'N° de cotización', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Fecha de aceptación', className: 'all text-center' },
-        { targets: 3, title: 'Documento aceptación', className: 'all text-center' },
-        { targets: 4, title: 'Evidencias ', className: 'all text-center' },
-        { targets: 5, title: 'Editar', className: 'all text-center' },
-        { targets: 6, title: 'Visualizar', className: 'all text-center' },
-        { targets: 7, title: 'Activo', className: 'all text-center' }
+        { targets: 3, title: 'Evidencias ', className: 'all text-center' },
+        { targets: 4, title: 'Editar', className: 'all text-center' },
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 6, title: 'Activo', className: 'all text-center' }
     ],
       infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;

@@ -526,7 +526,7 @@
     @endif
 
     @if(request()->is('confirmacion'))
-    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.4"></script>
+    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=2.5"></script>
     @endif
 
     @if(request()->is('catalogomediocontacto'))
