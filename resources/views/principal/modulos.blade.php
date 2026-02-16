@@ -878,7 +878,7 @@
                             </a>
                             @endif
                             {{-- Ventas --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones || $tieneSoloRolTecnicojunior )
                             <div class="modules__card" onclick="noPermiso('Ventas')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Ventas.png" alt=""></div>
                                 <h2 class="modules__text">Ventas</h2>
@@ -892,7 +892,7 @@
                             </a>
                             @endif
                             {{-- Admón --}}
-                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones)
+                            @if($tieneRolRestringidoUnico || $tieneSoloRolAlmacenista || $tieneSoloRolLideOperaciones || $tieneSoloRolTecnicojunior )
                             <div class="modules__card" onclick="noPermiso('Admón')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Admon.png" alt=""></div>
                                 <h2 class="modules__text">Admón</h2>
@@ -911,7 +911,7 @@
                                     <h2 class="modules__text">Almacén</h2>
                                 </div>
                             </a>
-                            @elseif($tieneRolRestringidoUnico || $tieneSoloRolLideOperaciones )
+                            @elseif($tieneRolRestringidoUnico || $tieneSoloRolLideOperaciones || $tieneSoloRolTecnicojunior  )
                             <div class="modules__card" onclick="noPermiso('Almacén')">
                                 <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
                                 <h2 class="modules__text">Almacén</h2>
