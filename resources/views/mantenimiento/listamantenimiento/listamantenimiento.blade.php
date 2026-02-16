@@ -547,7 +547,6 @@
                 </div>
                 <div class="modal-footer mt-5">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarINVENTARIO">Guardar</button>
                 </div>
             </form>
         </div>
