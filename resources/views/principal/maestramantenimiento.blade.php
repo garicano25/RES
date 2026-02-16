@@ -382,12 +382,12 @@
 
 
     @if(request()->is('mantenimientoequipos'))
-    <script src="/assets/js_sitio/listademantenimiento/listamantenimiento.js?v=3.0"></script>
+    <script src="/assets/js_sitio/listademantenimiento/listamantenimiento.js?v=4.0"></script>
     @endif
 
 
     @if(request()->is('mantenimientoinstalaciones'))
-    <script src="/assets/js_sitio/listademantenimiento/listamttoinstalacion.js"></script>
+    <script src="/assets/js_sitio/listademantenimiento/listamttoinstalacion.js?v=1.0"></script>
     @endif
 
 </body>

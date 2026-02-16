@@ -94,7 +94,6 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">#</th>
-                                <th class="text-center">Foto</th>
                                 <th class="text-center">Descripción</th>
                                 <th class="text-center">Ubicación</th>
                                 <th class="text-center">Editar</th>
