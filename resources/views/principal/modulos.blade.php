@@ -779,7 +779,7 @@
 
                         </div>
 
-                     
+
 
 
                         @php
@@ -801,6 +801,11 @@
                         $tieneSoloRolAlmacenista = !$esSuperusuario && $user->hasRole('Almacenista');
                         $tieneSoloRolLideOperaciones = !$esSuperusuario && $user->hasRole('Líder de Operaciones');
 
+
+                        $tieneSoloRolTecnicojunior = !$esSuperusuario && $user->hasRole('Técnico en mantenimiento junior');
+
+
+
                         /*
                         |--------------------------------------------------------------------------
                         | Roles restringidos administrativos
@@ -811,7 +816,6 @@
                         $tieneSoloRolHSEQ = !$esSuperusuario && $user->hasRole('Analista HSEQ');
                         $tieneSoloRolSoftware = !$esSuperusuario && $user->hasRole('Desarrollador de Software Junior');
                         $tieneSoloRolAmadellaves = !$esSuperusuario && $user->hasRole('Ama de llaves');
-                        $tieneSoloRolTecnicojunior = !$esSuperusuario && $user->hasRole('Técnico en mantenimiento junior');
 
                         /*
                         |--------------------------------------------------------------------------
@@ -823,7 +827,6 @@
                         $tieneSoloRolAsistentePlaneacion ||
                         $tieneSoloRolHSEQ ||
                         $tieneSoloRolSoftware ||
-                        $tieneSoloRolTecnicojunior ||
                         $tieneSoloRolAmadellaves;
 
                         @endphp
@@ -911,7 +914,7 @@
                             </a>
                             @endif
                             {{-- Mantenimiento --}}
-                            @if($tieneSoloRolAlmacenista)
+                            @if($tieneSoloRolAlmacenista || tieneSoloRolTecnicojunior )
                             <a href="{{ url('/mantenimientoequipos') }}" class="modules__link">
                                 <div class="modules__card">
                                     <div class="modules__circle"><img src="assets/Modulos/img/Almacén.png" alt=""></div>
