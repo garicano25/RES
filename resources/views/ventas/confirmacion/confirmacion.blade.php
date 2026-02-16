@@ -82,24 +82,15 @@
                                     </div>
                                 </div>
 
-                                <div class="col-4 mt-3">
+                                <div class="col-8 mt-3">
                                     <label class="form-label">Quién acepta *</label>
-                                    <input type="text" class="form-control" name="QUIEN_ACEPTA" id="QUIEN_ACEPTA" required>
+                                    <input type="text" class="form-control" name="QUIEN_ACEPTA" id="QUIEN_ACEPTA" required value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
                                 </div>
                                 <div class="col-4 mt-3">
                                     <label class="form-label">Cargo *</label>
                                     <input type="text" class="form-control" name="CARGO_ACEPTACION" id="CARGO_ACEPTACION" required>
                                 </div>
 
-                                <div class="col-md-4 mt-3">
-                                    <label class="form-label">Subir documento de aceptación (PDF) *</label>
-                                    <div class="d-flex align-items-center">
-                                        <input type="file" class="form-control me-2" name="DOCUMENTO_ACEPTACION" id="DOCUMENTO_ACEPTACION" accept=".pdf">
-                                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
@@ -155,27 +146,27 @@
                         <div id="VERIFICACION_CLIENTE" style="display: none;">
                             <div class="col-12">
                                 <div class="row">
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-6 mb-3">
                                         <label class="form-label">Quién valida *</label>
                                         <input type="text" class="form-control"
                                             id="QUIEN_VALIDA"
                                             name="QUIEN_VALIDA"
                                             readonly
-                                            data-usuario="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
+                                            value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
                                     </div>
 
 
-                                    <div class="col-md-4 mt-2">
+                                    <div class="col-md-6 mt-2">
                                         <label>Fecha de Validación *</label>
                                         <div class="input-group">
-                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VALIDACION" name="FECHA_VALIDACION">
+                                            <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_VALIDACION" name="FECHA_VALIDACION" required>
                                             <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                         </div>
                                     </div>
 
-                                    <div class="col-md-4 mb-3">
+                                    <div class="col-md-12mb-3">
                                         <label class="form-label">Comentario *</label>
-                                        <textarea class="form-control" name="COMENTARIO_VALIDACION" id="COMENTARIO_VALIDACION" rows="1"></textarea>
+                                        <textarea class="form-control" name="COMENTARIO_VALIDACION" id="COMENTARIO_VALIDACION" rows="1" required></textarea>
                                     </div>
                                 </div>
                             </div>

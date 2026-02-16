@@ -35,9 +35,9 @@ Modalconfirmacion.addEventListener('hidden.bs.modal', event => {
 $("#guardarCONFIRMACION").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioCONFIRMACION'))
 
-    
+            formularioValido = validarFormulario3($('#formularioCONFIRMACION'))
+
     if (formularioValido) {
         let verificacionInfo = {};
 
