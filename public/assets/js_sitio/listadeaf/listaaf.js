@@ -159,17 +159,16 @@ var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
     columnDefs: [
         { targets: '_all', className: 'text-center' }, 
         { targets: 0,  width:  '50px' },
-        { targets: 1,  width:  '120px'  },
-        { targets: 2,  width:  '250px' },
+        { targets: 1,  width:  '250px' },
+        { targets: 2,  width:  '120px'},
         { targets: 3,  width:  '120px'},
         { targets: 4,  width:  '120px'},
         { targets: 5,  width:  '120px'},
-        { targets: 6,  width:  '120px'},
-        { targets: 7,  width:  '250px'},
-        { targets: 8,  width:  '120px'},
-        { targets: 9,  width:  '70px' },
-        { targets: 10, width:  '70px' },
-        { targets: 11, width:  '70px' }                                 
+        { targets: 6,  width:  '250px'},
+        { targets: 7,  width:  '120px'},
+        { targets: 8,  width:  '70px' },
+        { targets: 9, width:  '70px' },
+        { targets: 10, width:  '70px' }                                 
     ],
     columns: [
         { 
@@ -177,12 +176,6 @@ var Tablalistadeaf = $("#Tablalistadeaf").DataTable({
             render: function(data, type, row, meta) {
                 return meta.row + 1; 
             }
-        },
-         { 
-            data: 'FOTO_EQUIPO_HTML',
-            orderable: false,
-            searchable: false,
-            className: 'text-center'
         },
         { data: 'DESCRIPCION_EQUIPO' },
  {
