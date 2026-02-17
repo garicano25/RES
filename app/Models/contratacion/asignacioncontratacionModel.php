@@ -22,7 +22,8 @@ class asignacioncontratacionModel extends Model
         'ALMACENISTA_ASIGNACION',
         'ACTIVO',
         'DOCUMENTO_ASIGNACION',
-        'CURP'
+        'CURP',
+        'EPP_JSON'
     ];
 
 

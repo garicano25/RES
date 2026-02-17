@@ -564,10 +564,12 @@ Route::get('/Tablasignacioncolaboradorgeneral', [contratacionController::class, 
 Route::get('/Tablasignacioncolaborador', [contratacionController::class, 'Tablasignacioncolaborador']);
 
 Route::get('/TablasignacioncolaboradorEditar', [contratacionController::class, 'TablasignacioncolaboradorEditar']);
-
 Route::get('/pdfAsignacion/{id}',[pdfasingacionController::class, 'pdfAsignacion']);
+Route::get('/pdfAsignacionEpp/{id}', [pdfasingacionController::class, 'pdfAsignacionEpp']);
 
 Route::get('/mostrarasignacion/{id}', [contratacionController::class, 'mostrarasignacion']);
+
+
 
 /////////////////////////////////////// STEP 4 DOCUMENTOS DE SOPORTE DE LOS CONTRATOS EN GENERAL
 Route::get('/Tablasoportecontrato', [contratacionController::class, 'Tablasoportecontrato']);

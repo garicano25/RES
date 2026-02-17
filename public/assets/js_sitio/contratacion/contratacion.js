@@ -4844,17 +4844,26 @@ Modalasignacion.addEventListener('hidden.bs.modal', event => {
 
     ID_ASINGACIONES_CONTRATACION = 0
 
-$('#ASIGNACIONES_ID').val('');
-
+    $('#ASIGNACIONES_ID').val('');
     $('#FIRMA_ASIGNACION').show();
     $('#SUBIR_DOCUMENTO_ASIGNACION').hide();
+    $('#ASIGANCION_EPP').hide();
 
+    window.listaEPP = [];
+    $('#tablaEPPBody').empty();
+    $('#EPP_JSON').val('');
 })
 
 $('#NUEVA_ASIGNACION').on('click', function () {
 
     document.getElementById('formularioASIGNACIONES').reset();
     ID_ASINGACIONES_CONTRATACION = 0;
+
+
+   window.listaEPP = [];
+    actualizarTabla();
+    $('#EPP_JSON').val('');
+
 
     $('#FIRMA_ASIGNACION').show();
     $('#SUBIR_DOCUMENTO_ASIGNACION').hide();
@@ -4864,6 +4873,9 @@ $('#NUEVA_ASIGNACION').on('click', function () {
     $('#modalAsignacionColaborador').one('shown.bs.modal', function () {
         cargarTablaAsignacionesModal(); 
     });
+
+    $('#ASIGANCION_EPP').hide();
+
 });
 
 function validarPrimerContrato() {
@@ -4889,8 +4901,6 @@ function validarPrimerContrato() {
         }
     });
 }
-
-
 
 function cargarTablaAsignacionesModal() {
 
@@ -4959,8 +4969,6 @@ function cargarTablaAsignacionesModal() {
     });
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
      const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
     const inputFirmadoPor = document.getElementById("PERSONAL_ASIGNA");
@@ -4985,9 +4993,6 @@ function setAsignacionesSeleccionadas() {
 
     $('#ASIGNACIONES_ID').val(JSON.stringify(asignaciones));
 }
-
-
-
 
 
 $("#guardarASIGNACIONES").click(function (e) {
@@ -5084,8 +5089,6 @@ $("#guardarASIGNACIONES").click(function (e) {
 });
 
 
-
-
 function cargarTablasingnaciongeneral() {
     if ($.fn.DataTable.isDataTable('#Tablasignacioncolaboradorgeneral')) {
         Tablasignacioncolaboradorgeneral.clear().destroy();
@@ -5138,7 +5141,22 @@ function cargarTablasingnaciongeneral() {
             { data: 'MODELO_EQUIPO', className: 'text-center' },
             { data: 'SERIE_EQUIPO', className: 'text-center' },
             { data: 'CODIGO_EQUIPO', className: 'text-center' },
-            { data: 'DESCARGAR_FORMATOS', className: 'text-center' },
+            {
+                data: null,
+                className: 'text-center',
+                render: function (data, type, row) {
+
+                    if (row.TIPO_ASIGNACION == 1) {
+                        return row.DESCARGAR_FORMATOS || '';
+                    }
+
+                    if (row.TIPO_ASIGNACION == 2) {
+                        return row.DESCARGAR_EPP || '';
+                    }
+
+                    return '';
+                }
+            },
             { data: 'BTN_DOCUMENTO', className: 'text-center' },
             { data: 'BTN_EDITAR', className: 'text-center' },
         ],
@@ -5207,6 +5225,172 @@ $(document).on('click', '.descargar-asignacion', function () {
     );
 });
 
+$(document).on('click', '.descargar-epp', function () {
+    const id = $(this).data('id');
+
+    window.open(
+        `/pdfAsignacionEpp/${id}`,
+        '_blank'
+    );
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const selectTipo = document.getElementById('TIPO_ASIGNACION');
+    const divEpp = document.getElementById('ASIGANCION_EPP');
+
+    selectTipo.addEventListener('change', function () {
+
+        if (this.value === "2") {
+            divEpp.style.display = "block";
+        } else {
+            divEpp.style.display = "none";
+        }
+
+    });
+
+});
+
+
+
+const equiposPorCategoria = {
+    "Cabeza": [
+        "Casco contra impacto",
+        "Casco dieléctrico",
+        "Tafilete",
+        "Barbiquejo"
+    ],
+    "Ojos y cara": [
+        "Anteojo de protección",
+        "Monogafa",
+        "Marco",
+        "Lente claro",
+        "Lente oscuro",
+        "Lente con filtro UV"
+    ],
+    "Oídos": [
+        "Tapones auditivos desechables",
+        "Tapones auditivos de nitrilo"
+    ],
+    "Aparato respiratorio": [
+        "Respirador contra partículas",
+        "Respirador de media cara",
+        "Filtro contra vapor"
+    ],
+    "Extremidades superiores": [
+        "Guante de nitrilo",
+        "Guante punto PVC"
+    ],
+    "Tronco": [
+        "Chaleco salvavidas tipo V",
+        "Mandil de neopreno y/o nitrilo"
+    ],
+    "Extremidades inferiores": [
+        "Calzado contra impactos",
+        "Calzado dieléctrico",
+        "Botas impermeables"
+    ],
+    "Dotación": [
+        "Camisa manga larga",
+        "Camisa manga corta",
+        "Playera tipo polo",
+        "Overol"
+    ]
+};
+
+
+window.listaEPP = [];
+
+$(document).ready(function() {
+
+    $('#categoriaEPP').on('change', function() {
+        const categoria = $(this).val();
+        const equipoSelect = $('#equipoEPP');
+
+        equipoSelect.empty();
+        equipoSelect.append('<option value="">Seleccione equipo</option>');
+
+        if (equiposPorCategoria[categoria]) {
+            equiposPorCategoria[categoria].forEach(function(equipo) {
+                equipoSelect.append(`<option value="${equipo}">${equipo}</option>`);
+            });
+        }
+    });
+
+    $('#agregarEPP').on('click', function() {
+
+        const categoria = $('#categoriaEPP').val();
+        const equipo = $('#equipoEPP').val();
+        const talla = $('#tallaEPP').val();
+        const solicitada = $('#cantidadSolicitada').val();
+        const entregada = $('#cantidadEntregada').val();
+
+        if (!categoria || !equipo || !solicitada) {
+            alert('Complete los campos obligatorios');
+            return;
+        }
+
+        const item = {
+            categoria: categoria,
+            equipo: equipo,
+            talla: talla,
+            cantidad_solicitada: solicitada,
+            cantidad_entregada: entregada
+        };
+
+        listaEPP.push(item);
+        actualizarTabla();
+        limpiarCampos();
+    });
+
+});
+
+
+function actualizarTabla() {
+
+    const tbody = $('#tablaEPPBody');
+    tbody.empty();
+
+    listaEPP.forEach((item, index) => {
+
+        tbody.append(`
+            <tr>
+                <td>${item.categoria}</td>
+                <td>${item.equipo}</td>
+                <td>${item.talla || 'N/A'}</td>
+                <td>${item.cantidad_solicitada}</td>
+                <td>${item.cantidad_entregada || 0}</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm eliminarEPP" data-index="${index}">
+                        X
+                    </button>
+                </td>
+            </tr>
+        `);
+
+    });
+
+    $('#EPP_JSON').val(JSON.stringify(listaEPP));
+}
+
+$(document).on('click', '.eliminarEPP', function() {
+
+    const index = $(this).data('index');
+    listaEPP.splice(index, 1);
+    actualizarTabla();
+
+});
+
+function limpiarCampos() {
+    $('#categoriaEPP').val('');
+    $('#equipoEPP').empty().append('<option value="">Seleccione equipo</option>');
+    $('#tallaEPP').val('');
+    $('#cantidadSolicitada').val('');
+    $('#cantidadEntregada').val('');
+}
+
+
 
 $('#Tablasignacioncolaboradorgeneral').on('click', 'td>button.EDITAR', function () {
 
@@ -5227,8 +5411,35 @@ $('#Tablasignacioncolaboradorgeneral').on('click', 'td>button.EDITAR', function 
         JSON.stringify(row.data().ASIGNACIONES_ID || [])
     );
 
+ $('#EPP_JSON').val(
+        JSON.stringify(row.data().EPP_JSON || [])
+    );
+
     
-    
+    if (row.data().TIPO_ASIGNACION == 2) {
+
+        $('#ASIGANCION_EPP').show();
+
+        let jsonEPP = row.data().EPP_JSON || [];
+
+        try {
+            window.listaEPP = Array.isArray(jsonEPP)
+                ? jsonEPP
+                : JSON.parse(jsonEPP);
+        } catch (e) {
+            console.error("Error parseando JSON EPP:", e);
+            window.listaEPP = [];
+        }
+
+        actualizarTabla(); 
+
+    } else {
+
+        $('#ASIGANCION_EPP').hide();
+        window.listaEPP = [];
+        actualizarTabla();
+
+    }
     $('#modalAsignacionColaborador').modal('show');
 
     $('#modalAsignacionColaborador').one('shown.bs.modal', function () {

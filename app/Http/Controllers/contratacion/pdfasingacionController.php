@@ -75,4 +75,64 @@ class pdfasingacionController extends Controller
             ])
             ->stream('Asignacion_' . $asignacion->ID_ASINGACIONES_CONTRATACION . '.pdf');
     }
+
+
+
+    public function pdfAsignacionEpp($id)
+    {
+        $asignacion = DB::table('asignaciones_contratacion')
+            ->where('ID_ASINGACIONES_CONTRATACION', $id)
+            ->first();
+
+        if (!$asignacion) {
+            abort(404, 'Asignación no encontrada');
+        }
+
+        $curp = $asignacion->CURP;
+
+      
+        $empleado = DB::table('formulario_contratacion')
+            ->where('CURP', $curp)
+            ->select(
+                'NOMBRE_COLABORADOR',
+                'PRIMER_APELLIDO',
+                'SEGUNDO_APELLIDO'
+            )
+            ->first();
+
+       
+        $cargo = DB::table('contratos_anexos_contratacion as cac')
+            ->join('catalogo_categorias as cc', 'cc.ID_CATALOGO_CATEGORIA', '=', 'cac.NOMBRE_CARGO')
+            ->where('cac.CURP', $curp)
+            ->orderBy('cac.ID_CONTRATOS_ANEXOS', 'desc')
+            ->select('cc.NOMBRE_CATEGORIA')
+            ->first();
+
+       
+        $epp = [];
+
+        if (!empty($asignacion->EPP_JSON)) {
+            $epp = json_decode($asignacion->EPP_JSON, true);
+
+            if (!is_array($epp)) {
+                $epp = [];
+            }
+        }
+
+        $data = [
+            'asignacion' => $asignacion,
+            'empleado'   => $empleado,
+            'cargo'      => $cargo,
+            'epp'        => $epp,
+        ];
+
+        return Pdf::loadView('pdf.asignacion_epp', $data)
+            ->setPaper('letter', 'portrait')
+            ->setOptions([
+                'isPhpEnabled'     => true,
+                'isRemoteEnabled'  => true,
+                'chroot'           => public_path()
+            ])
+            ->stream('Asignacion_EPP_' . $id . '.pdf');
+    }
 }

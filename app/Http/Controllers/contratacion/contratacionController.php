@@ -1137,6 +1137,7 @@ public function mostrarecibosnomina($id)
                         'TIPO_ASIGNACION'  => $asignacion->TIPO_ASIGNACION,
                         'ALMACENISTA_ASIGNACION'  => $asignacion->ALMACENISTA_ASIGNACION,
                         'ASIGNACIONES_ID'  => $asignacion->ASIGNACIONES_ID,
+                        'EPP_JSON'  => $asignacion->EPP_JSON,
 
                         'CANTIDAD_SALIDA' => $inv->CANTIDAD_SALIDA,
                         'DESCRIPCION_EQUIPO' => $inv->DESCRIPCION_EQUIPO,
@@ -1160,18 +1161,19 @@ public function mostrarecibosnomina($id)
                             </button>';
                         }
 
-                        if ($asignacion->TIPO_ASIGNACION == 1) {
-                            $fila['DESCARGAR_FORMATOS'] =
-                                        '<button class="btn btn-danger btn-custom rounded-pill pdf-button descargar-asignacion"
+                        $fila['DESCARGAR_FORMATOS'] =
+                            '<button class="btn btn-danger btn-custom rounded-pill pdf-button descargar-asignacion"
                                 data-id="' . $asignacion->ID_ASINGACIONES_CONTRATACION . '">
                                 <i class="bi bi-filetype-pdf"></i>
                             </button>';
-                        } else {
-                            $fila['DESCARGAR_FORMATOS'] =
-                                '<button type="button" class="btn btn-secondary btn-custom rounded-pill" disabled>
-                                <i class="bi bi-ban"></i>
+
+
+                        $fila['DESCARGAR_EPP'] =
+                            '<button class="btn btn-danger btn-custom rounded-pill pdf-button descargar-epp"
+                                data-id="' . $asignacion->ID_ASINGACIONES_CONTRATACION . '">
+                                <i class="bi bi-filetype-pdf"></i>
                             </button>';
-                        }
+
 
                         $fila['BTN_DOCUMENTO'] =
                             '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentoasignacion"

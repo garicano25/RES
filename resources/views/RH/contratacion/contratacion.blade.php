@@ -140,13 +140,13 @@
 
                 <!-- Lista de contratos Tab -->
                 <div class="tab-pane fade show active" id="contratos" role="tabpanel" aria-labelledby="contratos-tab">
-                    <ol class="breadcrumb mb-5">
+                    <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
                         <h3 style="color: #ffffff; margin: 0;">
                             <i class="bi bi-folder2-open"></i>&nbsp;&nbsp;Contratos
                         </h3>
-                        <button type="button" class="btn btn-light waves-effect waves-light" id="boton_nuevo_contrato" style="margin-left: auto;">
+                        <!-- <button type="button" class="btn btn-light waves-effect waves-light" id="boton_nuevo_contrato" style="margin-left: auto;">
                             Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
-                        </button>
+                        </button> -->
                     </ol>
 
                     <div class="d-flex justify-content-center align-items-center mb-4">
@@ -2891,7 +2891,71 @@
                     </div>
 
 
-                    <div id="ASIGANCION_EPP" style="display: none;">
+                    <div id="ASIGANCION_EPP" style="display:none;">
+
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label>Categoría</label>
+                                <select class="form-control" id="categoriaEPP">
+                                    <option value="">Seleccione categoría</option>
+                                    <option value="Cabeza">Cabeza</option>
+                                    <option value="Ojos y cara">Ojos y cara</option>
+                                    <option value="Oídos">Oídos</option>
+                                    <option value="Aparato respiratorio">Aparato respiratorio</option>
+                                    <option value="Extremidades superiores">Extremidades superiores</option>
+                                    <option value="Tronco">Tronco</option>
+                                    <option value="Extremidades inferiores">Extremidades inferiores</option>
+                                    <option value="Dotación">Dotación</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Equipo</label>
+                                <select class="form-control" id="equipoEPP">
+                                    <option value="">Seleccione equipo</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-2">
+                                <label>Talla</label>
+                                <input type="text" class="form-control" id="tallaEPP">
+                            </div>
+
+                            <div class="col-md-1">
+                                <label>Solic.</label>
+                                <input type="number" class="form-control" id="cantidadSolicitada">
+                            </div>
+
+                            <div class="col-md-1">
+                                <label>Entreg.</label>
+                                <input type="number" class="form-control" id="cantidadEntregada">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <button type="button" class="btn btn-primary" id="agregarEPP">
+                                Agregar equipo
+                            </button>
+                        </div>
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered text-center">
+                                <thead>
+                                    <tr>
+                                        <th>Categoría</th>
+                                        <th>Equipo</th>
+                                        <th>Talla</th>
+                                        <th>Solicitada</th>
+                                        <th>Entregada</th>
+                                        <th>Eliminar</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tablaEPPBody"></tbody>
+                            </table>
+                        </div>
+
+                        <input type="hidden" name="EPP_JSON" id="EPP_JSON">
+
                     </div>
 
 
