@@ -54,19 +54,17 @@ var Tablabitacoragrhistorial = $("#Tablabitacoragrhistorial").DataTable({
         dataSrc: 'data'
     },
     columnDefs: [
-      { targets: '_all', defaultContent: 'N/A' },
-        { targets: 0, width: '70px', className: 'text-center'  },
-        { targets: 1, width: '250px', className: 'text-center'  },
-        { targets: 2, width: '250px',className: 'text-center'  },
-        { targets: 3, width: '200px',className: 'text-center'  },
-        { targets: 4, width: '250px', className: 'text-center' },
-        { targets: 5, width: '600px' },
-        { targets: 6, width: '250px',className: 'text-center'  },
-        { targets: 7, width: '800px', className: 'col-bien-servicio' },
-        { targets: 8, width: '250px', className: 'text-center' },
-        { targets: 9, width: '250px',className: 'text-center'  },
-        
-        
+       { targets: '_all', defaultContent: 'N/A' },
+        { targets: 0, width: '5px', className: 'text-center' },
+        { targets: 1, width: '50px', className: 'text-center'  },
+        { targets: 2, width: '50px',className: 'text-center'  },
+        { targets: 3, width: '50px',className: 'text-center'  },
+        { targets: 4, width: '50px', className: 'text-center' },
+        { targets: 5, width: '50px' },
+        { targets: 6, width: '50px',className: 'text-center'  },
+        { targets: 7, width: '50px', className: 'col-bien-servicio' },
+        { targets: 8, width: '30px', className: 'text-center' },
+        { targets: 9, width: '50px',className: 'text-center'  },        
     ],
   columns: [
         { 
