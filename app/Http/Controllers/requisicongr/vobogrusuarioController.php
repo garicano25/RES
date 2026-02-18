@@ -50,9 +50,19 @@ class vobogrusuarioController extends Controller
                 ->where('gr.MANDAR_USUARIO_VOBO', 'Sí')
                 ->whereNull('gr.VO_BO_USUARIO')
                 ->where(function ($q) {
-                    $q->whereNull('d.BIENS_PARCIAL')   
-                        ->orWhere('d.BIENS_PARCIAL', '!=', 'Sí'); 
+
+                    $q->whereNull('d.BIENS_PARCIAL') 
+                        ->orWhere('d.BIENS_PARCIAL', '!=', 'Sí')
+
+                        ->orWhere(function ($sub) {
+                            $sub->where('d.BIENS_PARCIAL', 'Sí')
+                                ->whereNotNull('d.CANTIDAD_ACEPTADA')
+                                ->whereNotNull('d.CANTIDAD_ENTRA_ALMACEN')
+                                ->where('d.CANTIDAD_ACEPTADA', '!=', '')
+                                ->where('d.CANTIDAD_ENTRA_ALMACEN', '!=', '');
+                        });
                 })
+
                 ->select(
                     'gr.ID_GR',
                     'gr.NO_RECEPCION',
@@ -80,20 +90,31 @@ class vobogrusuarioController extends Controller
     public function ConsultarProductosVoBo($idGR)
     {
         try {
+
             $cabecera = DB::table('formulario_bitacoragr')
                 ->where('ID_GR', $idGR)
                 ->select('ID_GR', 'NO_RECEPCION')
                 ->first();
 
             if (!$cabecera) {
-                return response()->json(['ok' => false, 'msg' => 'No se encontró la recepción']);
+                return response()->json([
+                    'ok' => false,
+                    'msg' => 'No se encontró la recepción'
+                ]);
             }
 
             $detalle = DB::table('formulario_bitacoragr_detalle')
                 ->where('ID_GR', $idGR)
                 ->where(function ($q) {
-                    $q->whereNull('BIENS_PARCIAL')   
-                        ->orWhere('BIENS_PARCIAL', '!=', 'Sí'); 
+
+                    $q->whereNull('BIENS_PARCIAL')
+                        ->orWhere('BIENS_PARCIAL', '!=', 'Sí')
+
+                        ->orWhere(function ($sub) {
+                            $sub->where('BIENS_PARCIAL', 'Sí')
+                                ->where('CANTIDAD_ACEPTADA', '>', 0)
+                                ->where('CANTIDAD_ENTRA_ALMACEN', '>', 0);
+                        });
                 })
                 ->select(
                     'ID_DETALLE',
@@ -114,12 +135,14 @@ class vobogrusuarioController extends Controller
                 'detalle' => $detalle
             ]);
         } catch (\Throwable $e) {
+
             return response()->json([
                 'ok' => false,
                 'msg' => $e->getMessage()
             ], 500);
         }
     }
+
 
 
 
