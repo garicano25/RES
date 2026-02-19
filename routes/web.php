@@ -502,6 +502,7 @@ Route::get('/pendientecontratar', function () {return view('RH.contratacion.pend
 Route::get('/Tablapendientecontratacion', [pendientecontratarController::class, 'Tablapendientecontratacion']);
 Route::post('/mandarcontratacion', [pendientecontratarController::class, 'mandarcontratacion']);
 Route::get('/obtenerInformacionContrato/{contrato_id}', [contratacionController::class, 'obtenerInformacionContrato']);
+Route::post('/obtenerSiguienteNumeroEmpleado', [contratacionController::class, 'obtenerSiguienteNumeroEmpleado']);
 
 /////////////////////////////////////// STEP 1 DATOS GENERALES
 Route::get('/contratacion', [contratacionController::class, 'index'])->middleware('role:Superusuario,Administrador');

@@ -1082,9 +1082,10 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
 
     $(".div_trabajador_nombre").html(row.data().NOMBRE_COLABORADOR + ' ' + row.data().PRIMER_APELLIDO + ' ' + row.data().SEGUNDO_APELLIDO);
 
-$(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPLEADO ? row.data().NUMERO_EMPLEADO : "No disponible"}`);
+    $(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPLEADO ? row.data().NUMERO_EMPLEADO : "No disponible"}`);
 
-     obtenerCargo();
+    obtenerCargo();
+    generarNumeroEmpleado();
 
     if (row.data().DIA_COLABORADOR && row.data().MES_COLABORADOR && row.data().ANIO_COLABORADOR) {
         const fechaNacimiento = `${row.data().ANIO_COLABORADOR}-${row.data().MES_COLABORADOR}-${row.data().DIA_COLABORADOR}`;
@@ -1100,6 +1101,42 @@ $(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPL
 
     $("#step1").click();
 });
+
+
+function generarNumeroEmpleado() {
+
+    if (!curpSeleccionada) {
+        console.warn("No hay CURP seleccionada");
+        return;
+    }
+
+    $.ajax({
+        url: '/obtenerSiguienteNumeroEmpleado',
+        type: 'POST',
+        data: {
+            curp: curpSeleccionada,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+
+            if (response.status === 'nuevo') {
+                $('#NUMERO_EMPLEADO').val(response.numero);
+            }
+
+            if (response.status === 'existe') {
+                $('#NUMERO_EMPLEADO').val(response.numero);
+            }
+
+        },
+        error: function() {
+            console.error("Error al obtener número empleado");
+        }
+    });
+}
+
+
+
+
 
 function calcularEdad(fechaNacimiento) {
     const hoy = new Date();

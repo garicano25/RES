@@ -236,8 +236,55 @@ public function verificarestadobloqueo(Request $request)
 }
 
 
+    public function obtenerSiguienteNumeroEmpleado(Request $request)
+    {
+        try {
 
-public function activarColaborador(Request $request, $id)
+            $curp = $request->curp;
+
+            if (!$curp) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'CURP no proporcionada'
+                ]);
+            }
+
+            $empleado = DB::table('formulario_contratacion')
+                ->where('CURP', $curp)
+                ->select('NUMERO_EMPLEADO')
+                ->first();
+
+            if ($empleado && !empty($empleado->NUMERO_EMPLEADO)) {
+                return response()->json([
+                    'status' => 'existe',
+                    'numero' => $empleado->NUMERO_EMPLEADO
+                ]);
+            }
+
+            $ultimoNumero = DB::table('formulario_contratacion')
+                ->whereNotNull('NUMERO_EMPLEADO')
+                ->max('NUMERO_EMPLEADO');
+
+            $siguienteNumero = $ultimoNumero ? $ultimoNumero + 1 : 1;
+
+            return response()->json([
+                'status' => 'nuevo',
+                'numero' => $siguienteNumero
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+
+
+
+    public function activarColaborador(Request $request, $id)
 {
     try {
         $colaborador = contratacionModel::findOrFail($id);
