@@ -128,6 +128,38 @@
             <td colspan="5">{{ $ot->PERSONA_SOLICITA_CONFIRMACION }}</td>
         </tr>
     </table>
+    <table>
+        <tr>
+            <td colspan="6" class="bg-gray text-center">
+                Datos de contacto
+            </td>
+        </tr>
+
+        <tr>
+            <td class="bg-gray">Contacto:</td>
+            <td colspan="2">
+                {{ $ot->TITULO_CONFIRMACION ?? '' }}
+                {{ $ot->CONTACTO_CONFIRMACION ?? '' }}
+            </td>
+
+            <td class="bg-gray">Teléfono:</td>
+            <td colspan="2">
+                {{ !empty($ot->CONTACTO_TELEFONO_CONFIRMACION) ? $ot->CONTACTO_TELEFONO_CONFIRMACION : 'NP' }}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="bg-gray">Celular:</td>
+            <td colspan="2">
+                {{ !empty($ot->CONTACTO_CELULAR_CONFIRMACION) ? $ot->CONTACTO_CELULAR_CONFIRMACION : 'NP' }}
+            </td>
+
+            <td class="bg-gray">E-mail:</td>
+            <td colspan="2">
+                {{ !empty($ot->CONTACTO_EMAIL_CONFIRMACION) ? $ot->CONTACTO_EMAIL_CONFIRMACION : 'NP' }}
+            </td>
+        </tr>
+    </table>
 
     <table>
         <tr>
