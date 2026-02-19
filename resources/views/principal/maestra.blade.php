@@ -315,50 +315,6 @@
                     </li>
                     @endif
 
-                    <!-- @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
-                    <li class="nav-item dropdown" style="margin-left: -2px;">
-                        <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;"
-                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-diagram-3-fill" style="margin-right: 5px;"></i>
-                            <span class="d-lg-none">Organización</span>
-                            <span class="d-none d-lg-inline">Organización</span>
-                        </a>
-
-                        <ul class="dropdown-menu">
-
-                            <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
-                            <hr class="dropdown-divider">
-
-                            <li><a class="dropdown-item" href="{{url('/ppt')}}">PPT</a></li>
-                            <hr class="dropdown-divider">
-
-                            <li><a class="dropdown-item" href="{{url('/dpt')}}">DPT</a></li>
-                            <hr class="dropdown-divider">
-
-                            <li class="dropdown-submenu">
-                                <a class="dropdown-item dropdown-toggle" href="#">
-                                    Requisición de personal
-                                </a>
-
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <a class="dropdown-item" href="{{url('/requisiciondepersonalsolicitud')}}">
-                                            Solicitud de requisición de personal
-                                        </a>
-                                    </li>
-                                    <hr class="dropdown-divider">
-                                    <li>
-                                        <a class="dropdown-item" href="{{url('/requisiciondepersonal')}}">
-                                            Requisición de personal
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-
-                        </ul>
-                    </li>
-                    @endif -->
-
 
                     @if(auth()->check() && auth()->user()->hasRoles([
                     'Superusuario',
@@ -466,8 +422,25 @@
 
                             <li><a class="dropdown-item" href="{{url('/contratacion')}}">Lista de colaboradores</a></li>
                             <hr class="dropdown-divider">
-                            <li><a class="dropdown-item" href="{{url('/actualizaciondocumentos')}}">Actualización de documentos</a></li>
 
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#">
+                                    Actualización de documentos
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/actualizaciondocumentos') }}">
+                                            Actual
+                                        </a>
+                                    </li>
+                                    <hr class="dropdown-divider">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ url('/actualizaciondocumentoshistorial') }}">
+                                            Historial
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     @endif
@@ -830,6 +803,13 @@
     @if(request()->is('actualizaciondocumentos'))
     <script src="/assets/js_sitio/contratacion/actualizaciondocs.js?v=1"></script>
     @endif
+
+
+    @if(request()->is('actualizaciondocumentoshistorial'))
+    <script src="/assets/js_sitio/contratacion/actualizaciondochistorial.js"></script>
+    @endif
+
+
 
 </body>
 

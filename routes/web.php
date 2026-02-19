@@ -65,6 +65,7 @@ use App\Http\Controllers\contratacion\pendientecontratarController;
 use App\Http\Controllers\contratacion\CvController;
 use App\Http\Controllers\contratacion\pdfasingacionController;
 use App\Http\Controllers\contratacion\actualizaciondocsController;
+use App\Http\Controllers\contratacion\actualizaciondochistorialController;
 
 
 // CONTROLADORES DE REC.EMPLEADOS
@@ -600,13 +601,14 @@ Route::get('/actualizaciondocumentos', [actualizaciondocsController::class, 'ind
 Route::post('/ActualizarfechasSave',[actualizaciondocsController::class, 'store']);
 Route::get('/Tabladocumentosactualizados', [actualizaciondocsController::class, 'Tabladocumentosactualizados']);
 Route::get('/mostrardocumentoactualizado/{id}', [actualizaciondocsController::class, 'mostrardocumentoactualizado']);
-
-
-
 Route::post('/aceptarDocumentoActualizado', [actualizaciondocsController::class, 'aceptarDocumentoActualizado']);
-
-
 Route::post('/rechazarDocumentoActualizado', [actualizaciondocsController::class, 'rechazarDocumentoActualizado']);
+
+/// ACTUALIZACION DE DOCUMENTO DEL COLABORADOR  - HISTORIAL 
+
+
+Route::get('/actualizaciondocumentoshistorial', [actualizaciondochistorialController::class, 'index']);
+Route::get('/Tabladocumentosactualizadohistorial', [actualizaciondochistorialController::class, 'Tabladocumentosactualizadohistorial']);
 
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 

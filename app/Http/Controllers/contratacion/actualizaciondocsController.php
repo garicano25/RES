@@ -14,8 +14,6 @@ use App\Models\contratacion\fechasactualizaciondocs;
 use App\Models\contratacion\documentosactualizadosModel;
 use App\Models\contratacion\documentosoporteModel;
 
-
-
 use DB;
 
 class actualizaciondocsController extends Controller
