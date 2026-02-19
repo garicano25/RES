@@ -246,7 +246,6 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
         },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
@@ -255,7 +254,6 @@ var Tablaconfirmacion = $("#Tablaconfirmacion").DataTable({
         { targets: 3, title: 'Evidencias ', className: 'all text-center' },
         { targets: 4, title: 'Editar', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
-        { targets: 6, title: 'Activo', className: 'all text-center' }
     ],
       infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;

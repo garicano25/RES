@@ -253,7 +253,6 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'text-center' },
@@ -267,7 +266,6 @@ var Tablaofertas = $("#Tablaofertas").DataTable({
         { targets: 8, title: 'Términos y condiciones', className: 'text-center' },
         { targets: 9, title: 'Editar', className: 'text-center' },
         { targets: 10, title: 'Visualizar', className: 'text-center' },
-        { targets: 11, title: 'Activo', className: 'text-center' }
     ],
      infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;

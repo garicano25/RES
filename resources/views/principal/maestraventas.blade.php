@@ -518,15 +518,15 @@
     @endif
 
     @if(request()->is('solicitudes'))
-    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=5.14"></script>
+    <script src="/assets/js_sitio/solicitudes/solicitudes.js?v=6"></script>
     @endif
 
     @if(request()->is('ofertas'))
-    <script src="/assets/js_sitio/ofertas/ofertas.js?v=5.6"></script>
+    <script src="/assets/js_sitio/ofertas/ofertas.js?v=6"></script>
     @endif
 
     @if(request()->is('confirmacion'))
-    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=3.0"></script>
+    <script src="/assets/js_sitio/confirmacion/confirmacion.js?v=4"></script>
     @endif
 
     @if(request()->is('catalogomediocontacto'))
@@ -542,7 +542,7 @@
     @endif
 
     @if(request()->is('ordentrabajo'))
-    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=1.6"></script>
+    <script src="/assets/js_sitio/orden_trabajo/orden_trabajo.js?v=2"></script>
     @endif
 
     @if(request()->is('catalogolineanegocio'))

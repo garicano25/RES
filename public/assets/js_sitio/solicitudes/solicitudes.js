@@ -512,7 +512,6 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_CORREO' },
-        { data: 'BTN_ELIMINAR' }
     ],
     createdRow: function(row, data) {
         if (data.PROCEDE_COTIZAR == 1) {
@@ -543,7 +542,6 @@ var Tablasolicitudes = $("#Tablasolicitudes").DataTable({
         { targets: 7, title: 'Editar', className: 'all text-center' },
         { targets: 8, title: 'Visualizar', className: 'all text-center' },
         { targets: 9, title: 'Correo', className: 'all text-center' },
-        { targets: 10, title: 'Activo', className: 'all text-center' }
     ]
 });
 

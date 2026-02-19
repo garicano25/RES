@@ -247,7 +247,6 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
         { data: 'DESCARGA_OT' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'BTN_ELIMINAR' }
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -259,7 +258,6 @@ var Tablaordentrabajo = $("#Tablaordentrabajo").DataTable({
         { targets: 6, title: 'Descargar OT', className: 'all text-center' },
         { targets: 7, title: 'Editar', className: 'all text-center' },
         { targets: 8, title: 'Visualizar', className: 'all text-center' },
-        { targets: 9, title: 'Activo', className: 'all text-center' }
     ],
      infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;
