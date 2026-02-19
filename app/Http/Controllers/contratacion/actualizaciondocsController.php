@@ -35,6 +35,8 @@ class actualizaciondocsController extends Controller
             12 => 'Constancia de situación fiscal',
             14 => 'Visa',
             15 => 'Credencial de residente',
+            16 => 'Aviso de retención de infonavit',
+
         ];
 
         $documentosSeleccionados = [];
