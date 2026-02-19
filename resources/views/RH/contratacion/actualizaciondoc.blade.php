@@ -28,7 +28,6 @@
                     </span>
                 </div>
             </div>
-
             <div class="col-md-3 text-center">
                 <label>Fecha fin</label>
                 <div class="input-group">
@@ -44,7 +43,21 @@
                     </span>
                 </div>
             </div>
+            <div class="col-md-3 text-center">
+                <label>Seleccionar documentos</label>
+                <select class="form-select"
+                    id="TIPO_DOCUMENTO"
+                    name="TIPO_DOCUMENTO[]"
+                    multiple>
 
+                    @foreach($documentos as $id => $nombre)
+                    <option value="{{ $id }}"
+                        {{ in_array((string)$id, $documentosSeleccionados ?? []) ? 'selected' : '' }}>
+                        {{ $nombre }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
             <div class="col-md-2 d-flex">
                 <button type="submit" class="btn btn-success" id="guardaractulizacion">
                     Guardar
@@ -102,15 +115,12 @@
 
 
                     <div id="FECHAS_SOPORTEDOCUMENTOS" style="display: none">
-
-
                         <div class="row  mb-3">
                             <div class="col-6">
                                 <label>Fecha Inicio *</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_DOCUMENTOSOPORTE" name="FECHAI_DOCUMENTOSOPORTE" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-
                                 </div>
                             </div>
                             <div class="col-6">
@@ -118,28 +128,27 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_DOCUMENTOSOPORTE" name="FECHAF_DOCUMENTOSOPORTE" required>
                                     <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
-
                                 </div>
                             </div>
-
-
-                        </div>
-
-                    </div>
-
-                    <div class="mb-3">
-                        <label>Subir documento</label>
-                        <div class="input-group">
-                            <input type="file" class="form-control" id="DOCUMENTO_SOPORTE" name="DOCUMENTO_SOPORTE" accept=".pdf" style="width: auto; flex: 1;">
-                            <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_documento" style="display:none;">Quitar archivo</button>
                         </div>
                     </div>
-                    <div id="DOCUMENTO_ERROR" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+
+                    <div id="BOTON_VISTO_BUENO" style="display: block;">
+                        <div id=" solicitarVerificacionDiv" class="col-12 text-center mt-3" style="display: block;">
+                            <div class="col-md-6 mx-auto d-flex gap-2">
+                                <button type="button" id="SOLICITAR_VERIFICACION" class="btn btn-info w-100" onclick="darVistoBueno()">
+                                    Aceptar 
+                                </button>
+                                <button type="button" id="RECHAZAR_VERIFICACION" class="btn btn-danger w-100" onclick="rechazarVistoBueno()">
+                                    Rechazar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="submit" class="btn btn-success" id="guardarDOCUMENTOSOPORTE">Guardar</button>
                 </div>
             </form>
         </div>

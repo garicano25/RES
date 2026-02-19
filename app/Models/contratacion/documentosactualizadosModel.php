@@ -18,8 +18,10 @@ class documentosactualizadosModel extends Model
         'FECHAI_DOCUMENTOSOPORTE',
         'FECHAF_DOCUMENTOSOPORTE',
         'DOCUMENTO_SOPORTE',
-        'ACTIVO'
-
+        'ACTUALIZAR_DOCUMENTO',
+        'ACTIVO',
+        'ESTADO_DOCUMENTO',
+        'MOTIVO_RECHAZADO'
 
     ];
 }

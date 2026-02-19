@@ -15,10 +15,10 @@ class documentosoporteModel extends Model
         'RENOVACION_DOCUMENTO',
         'TIPO_DOCUMENTO',
         'NOMBRE_DOCUMENTO',
-        'DOCUMENTO_SOPORTE',
+        'PROCEDE_FECHA_DOC',
         'FECHAI_DOCUMENTOSOPORTE',
         'FECHAF_DOCUMENTOSOPORTE',
-        'PROCEDE_FECHA_DOC',
+        'DOCUMENTO_SOPORTE',
         'ACTIVO'
     ];
 }

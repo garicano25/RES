@@ -598,9 +598,15 @@ Route::get('/mostrarrequisicon/{id}', [contratacionController::class, 'mostrarre
 
 Route::get('/actualizaciondocumentos', [actualizaciondocsController::class, 'index']);
 Route::post('/ActualizarfechasSave',[actualizaciondocsController::class, 'store']);
-Route::get('/validarPeriodoActualizacion', [actualizaciondocsController::class, 'validarPeriodoActualizacion']);
 Route::get('/Tabladocumentosactualizados', [actualizaciondocsController::class, 'Tabladocumentosactualizados']);
 Route::get('/mostrardocumentoactualizado/{id}', [actualizaciondocsController::class, 'mostrardocumentoactualizado']);
+
+
+
+Route::post('/aceptarDocumentoActualizado', [actualizaciondocsController::class, 'aceptarDocumentoActualizado']);
+
+
+Route::post('/rechazarDocumentoActualizado', [actualizaciondocsController::class, 'rechazarDocumentoActualizado']);
 
 //============================================== RECURSOS DE LOS EMPLEADOS ============================================== 
 
@@ -631,6 +637,9 @@ Route::get('/Tablaexpediente', [expedientecolabController::class, 'Tablaexpedien
 Route::get('/Tabladocumentosoportexpediente', [expedientecolabController::class, 'Tabladocumentosoportexpediente']);
 
 Route::post('/ExpedienteSave', [expedientecolabController::class, 'store']);
+
+
+Route::get('/validarPeriodoActualizacion', [expedientecolabController::class, 'validarPeriodoActualizacion']);
 
 //==============================================  CAPACITACION  ============================================== 
 

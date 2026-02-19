@@ -928,8 +928,8 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label>Este documento se debe actualizar o renovar anualmente *</label>
-                        <select class="form-select" id="RENOVACION_DOCUMENTO" name="RENOVACION_DOCUMENTO" required>
+                        <label>Este documento se debe actualizar o renovar anualmente</label>
+                        <select class="form-select" id="RENOVACION_DOCUMENTO" name="RENOVACION_DOCUMENTO">
                             <option value="" disabled selected>Seleccione una opción</option>
                             <option value="1">Sí</option>
                             <option value="2">No</option>

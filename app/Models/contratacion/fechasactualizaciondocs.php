@@ -13,6 +13,10 @@ class fechasactualizaciondocs extends Model
     protected $fillable = [
         'FECHA_INICIO',
         'FECHA_FIN',
+        'TIPO_DOCUMENTO',
         'ACTIVO',
     ];
-}
+
+
+
+    }

@@ -2,6 +2,27 @@ ID_ACTUALIZACION_DOCUMENTOS = 0
 
 
 
+var actualizacion_id = null;
+
+
+$(document).ready(function () {
+
+    $('#TIPO_DOCUMENTO').selectize({
+        plugins: ['remove_button'],
+        delimiter: ',',
+        persist: false,
+        placeholder: 'Seleccione una opción',
+    });
+  
+});
+
+
+
+
+
+
+
+
 
 $("#guardaractulizacion").click(function (e) {
     e.preventDefault();
@@ -136,7 +157,7 @@ var Tabladocumentosactualizados = $("#Tabladocumentosactualizados").DataTable({
             { targets: 1, title: 'Nombre del colaborador', className: 'all text-center' },  
             { targets: 2, title: 'Nombre del documento', className: 'all text-center' },  
             { targets: 3, title: 'Documento actualizado', className: 'all text-center' },  
-            { targets: 4, title: 'Editar', className: 'all text-center' }
+            { targets: 4, title: 'Visualizar', className: 'all text-center' }
         ]
 });
 
@@ -151,15 +172,15 @@ Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
    
     $('#miModal_DOCUMENTOS_SOPORTE .modal-title').html('Documento de soporte');
 
-    $('#TIPO_DOCUMENTO').prop('disabled', false); 
     $('#NOMBRE_DOCUMENTO').prop('readonly', false); 
 
 
-    document.getElementById('quitar_documento').style.display = 'none';
 
-    document.getElementById('DOCUMENTO_ERROR').style.display = 'none';
 
     document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
+
+
+    actualizacion_id = 0; 
 
 })
 
@@ -234,11 +255,12 @@ $('#Tabladocumentosactualizados').on('click', 'td>button.EDITAR', function () {
 
     ID_DOCUMENTOS_ACTUALIZADOS = row.data().ID_DOCUMENTOS_ACTUALIZADOS;
 
+    actualizacion_id = row.data().ID_DOCUMENTOS_ACTUALIZADOS;
+
     editarDatoTabla(row.data(), 'formularioDOCUMENTOS', 'miModal_DOCUMENTOS_SOPORTE', 1);
 
     $('#miModal_DOCUMENTOS_SOPORTE .modal-title').html(row.data().NOMBRE_DOCUMENTO);
 
-    $('#TIPO_DOCUMENTO').prop('disabled', true); 
     $('#NOMBRE_DOCUMENTO').prop('readonly', true); 
 
     if (row.data().PROCEDE_FECHA_DOC === "1") {
@@ -250,3 +272,129 @@ $('#Tabladocumentosactualizados').on('click', 'td>button.EDITAR', function () {
 
 });
 
+
+
+
+function darVistoBueno() {
+
+    if (!actualizacion_id) {
+        Swal.fire('Error', 'No se encontró el documento.', 'error');
+        return;
+    }
+
+    Swal.fire({
+        title: '¿Aceptar documento?',
+        text: 'Esta acción aprobará el documento y actualizará la información oficial.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, aceptar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: '/aceptarDocumentoActualizado',
+                type: 'POST',
+                data: {
+                    ID_DOCUMENTOS_ACTUALIZADOS: actualizacion_id
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+
+                    if (response.status === 'success') {
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Documento aceptado',
+                            text: response.message
+                        });
+
+                        $('#miModal_DOCUMENTOS_SOPORTE').modal('hide');
+
+                        Tabladocumentosactualizados.ajax.reload(null, false);
+
+                    } else {
+
+                        Swal.fire('Error', response.message, 'error');
+                    }
+                },
+                error: function (xhr) {
+
+                    console.error(xhr.responseText);
+
+                    Swal.fire(
+                        'Error',
+                        'Ocurrió un error al aceptar el documento.',
+                        'error'
+                    );
+                }
+            });
+
+        }
+
+    });
+}
+
+
+function rechazarVistoBueno() {
+
+    if (!actualizacion_id) {
+        Swal.fire('Error', 'No se encontró el documento.', 'error');
+        return;
+    }
+
+    Swal.fire({
+        title: '¿Rechazar documento?',
+        text: 'Esta acción desactivará el documento.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, rechazar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: '/rechazarDocumentoActualizado',
+                type: 'POST',
+                data: {
+                    ID_DOCUMENTOS_ACTUALIZADOS: actualizacion_id
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (response) {
+
+                    if (response.status === 'success') {
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Documento rechazado',
+                            text: response.message
+                        });
+
+                        $('#miModal_DOCUMENTOS_SOPORTE').modal('hide');
+
+                        Tabladocumentosactualizados.ajax.reload(null, false);
+
+                    } else {
+                        Swal.fire('Error', response.message, 'error');
+                    }
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                    Swal.fire(
+                        'Error',
+                        'Ocurrió un error al rechazar el documento.',
+                        'error'
+                    );
+                }
+            });
+
+        }
+
+    });
+}

@@ -70,13 +70,6 @@ $(document).ready(function() {
     });
     
     $("#datosgenerales-tab").click(function () {
-        
-        if (tablacontratosCargada) {
-            Tablacontratosyanexos.columns.adjust().draw();
-        } else {
-            cargarTablaContratosyanexos();
-            tablacontratosCargada = true;
-        }
 
         $('#contratosdoc-tab').closest('li').css("display", 'none');
     });
@@ -274,7 +267,7 @@ $("#guardarDatosGenerales").click(function (e) {
                 }, function (data) {
                     curpSeleccionada = data.contrato.CURP;
                     ID_FORMULARIO_CONTRATACION = data.contrato.ID_FORMULARIO_CONTRATACION;
-                    $('#step3, #step4,#step5,#step6').css("display", "flex");
+                    $('#step2').css("display", "flex");
                    
 
                     alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
@@ -320,7 +313,6 @@ $('#Tablaexpediente tbody').on('click', 'td>button.EDITAR', function () {
     ID_FORMULARIO_CONTRATACION = row.data().ID_FORMULARIO_CONTRATACION;
 
 
-    validarPeriodoActualizacionStep();
 
     
     $('#FormularioCONTRATACION').each(function() {
@@ -328,10 +320,10 @@ $('#Tablaexpediente tbody').on('click', 'td>button.EDITAR', function () {
     });
 
     $('#datosgenerales-tab').closest('li').css("display", 'block');
-    $('#step3,#step4,#step5,#step6').css("display", "flex");
+    $('#step2').css("display", "flex");
 
     $('#step1-content').css("display", 'block');
-    $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content').css("display", 'none');
+    $('#step2-content').css("display", 'none');
 
 
     $('#DESCARGAR_CREDENCIAL').css("display", 'none');
@@ -516,28 +508,6 @@ $(".div_trabajador_numeoro").html(`Número de empleado: ${row.data().NUMERO_EMPL
 
     $("#step1").click();
 });
-
-
-
-function validarPeriodoActualizacionStep() {
-
-    return $.ajax({
-        url: '/validarPeriodoActualizacion',
-        method: 'GET'
-    }).done(function (resp) {
-
-        if (resp.ok && resp.mostrar) {
-            $('#step2').css('display', 'flex');
-        } else {
-            $('#step2').css('display', 'none');
-        }
-
-    }).fail(function () {
-        console.error('Error al validar periodo');
-        $('#step2').css('display', 'none');
-    });
-
-}
 
 
 
@@ -987,6 +957,8 @@ Modaldocumentosoporte.addEventListener('hidden.bs.modal', event => {
 
     document.getElementById('FECHAS_SOPORTEDOCUMENTOS').style.display = 'none';
 
+    document.getElementById('DIV_ACTUALIZACOIN').style.display = 'none';
+
 
     documento_id = 0; 
 
@@ -1010,6 +982,22 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+
+$(document).ready(function () {
+
+    $('input[name="ACTUALIZAR_DOCUMENTO"]').on('change', function () {
+
+        if ($(this).val() == "1") {
+            $('#DIV_ACTUALIZACOIN').slideDown();
+        } else {
+            $('#DIV_ACTUALIZACOIN').slideUp();
+        }
+
+    });
+
+});
+
 
 $('#Tabladocumentosoportexpediente').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Artisan;
 use Exception;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,9 +15,9 @@ use App\Models\contratacion\documentosoporteModel;
 use App\Models\organizacion\catalogotipovacanteModel;
 use App\Models\organizacion\catalogomotivovacanteModel;
 use App\Models\organizacion\areasModel;
-
-
 use App\Models\contratacion\documentosactualizadosModel;
+use App\Models\contratacion\fechasactualizaciondocs;
+
 
 use DB;
 
@@ -154,7 +155,127 @@ class expedientecolabController extends Controller
 
 
 
+
+
+
+
+
     /////////////////////////////////////////// STEP 2 DOCUMENTOS DE SOPORTE //////////////////////////////////
+
+
+    public function validarPeriodoActualizacion()
+    {
+        try {
+
+            $ultimo = fechasactualizaciondocs::orderBy('ID_ACTUALIZACION_DOCUMENTOS', 'desc')
+                ->first();
+
+            if (!$ultimo) {
+                return response()->json([
+                    'ok' => true,
+                    'mostrar' => false
+                ]);
+            }
+
+            $hoy = Carbon::now();
+
+            $inicio = Carbon::parse($ultimo->FECHA_INICIO)->startOfDay();
+            $fin = Carbon::parse($ultimo->FECHA_FIN)->endOfDay();
+
+
+
+            return response()->json([
+                'ok' => true,
+                'mostrar' => $hoy->between($inicio, $fin)
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'ok' => false,
+                'mostrar' => false
+            ]);
+        }
+    }
+
+
+
+
+    // public function Tabladocumentosoportexpediente(Request $request)
+    // {
+    //     try {
+
+    //         $curp = $request->get('curp');
+
+    //         $ultimaFecha = fechasactualizaciondocs::latest('ID_ACTUALIZACION_DOCUMENTOS')->first();
+
+    //         if (!$ultimaFecha) {
+    //             return response()->json([
+    //                 'data' => [],
+    //                 'msj'  => 'No hay periodo de actualización activo'
+    //             ]);
+    //         }
+
+    //         $hoy = now()->format('Y-m-d');
+
+    //         if ($hoy < $ultimaFecha->FECHA_INICIO || $hoy > $ultimaFecha->FECHA_FIN) {
+    //             return response()->json([
+    //                 'data' => [],
+    //                 'msj'  => 'Periodo fuera de rango'
+    //             ]);
+    //         }
+
+    //         $tiposPermitidos = json_decode($ultimaFecha->TIPO_DOCUMENTO ?? '[]', true);
+
+    //         if (empty($tiposPermitidos)) {
+    //             return response()->json([
+    //                 'data' => [],
+    //                 'msj'  => 'No hay documentos configurados'
+    //             ]);
+    //         }
+
+    //         $tabla = documentosoporteModel::where('CURP', $curp)
+    //             ->whereIn('TIPO_DOCUMENTO', $tiposPermitidos)
+    //             ->whereNotIn('ID_DOCUMENTO_SOPORTE', function ($query) {
+    //                 $query->select('DOCUMENTOS_ID')
+    //                     ->from('documento_actualizados');
+    //             })
+    //             ->get();
+
+    //         foreach ($tabla as $value) {
+
+    //             $value->BTN_EDITAR = ($value->ACTIVO == 0)
+    //                 ? '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
+    //                     <i class="bi bi-eye"></i>
+    //                </button>'
+    //                 : '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR">
+    //                     <i class="bi bi-pencil-square"></i>
+    //                </button>';
+
+    //             $value->BTN_DOCUMENTO =
+    //                 '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte"
+    //                 data-id="' . $value->ID_DOCUMENTO_SOPORTE . '"
+    //                 title="Ver documento">
+    //                 <i class="bi bi-filetype-pdf"></i>
+    //             </button>';
+
+    //             $value->BTN_VISUALIZAR =
+    //                 '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR">
+    //                 <i class="bi bi-eye"></i>
+    //             </button>';
+    //         }
+
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj'  => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+
+    //         return response()->json([
+    //             'msj'  => 'Error ' . $e->getMessage(),
+    //             'data' => []
+    //         ], 500);
+    //     }
+    // }
+
 
     public function Tabladocumentosoportexpediente(Request $request)
     {
@@ -162,40 +283,90 @@ class expedientecolabController extends Controller
 
             $curp = $request->get('curp');
 
-            $tabla = documentosoporteModel::where('CURP', $curp)
-                ->where('RENOVACION_DOCUMENTO', 1)
-                ->whereNotIn('ID_DOCUMENTO_SOPORTE', function ($query) {
-                    $query->select('DOCUMENTOS_ID')
-                        ->from('documento_actualizados');
-                })
-                ->get();
+            $ultimaFecha = fechasactualizaciondocs::latest('ID_ACTUALIZACION_DOCUMENTOS')->first();
 
+            if (!$ultimaFecha) {
+                return response()->json(['data' => []]);
+            }
+
+            $hoy = now()->format('Y-m-d');
+
+            $fechaInicio = $ultimaFecha->FECHA_INICIO;
+            $fechaFin    = $ultimaFecha->FECHA_FIN;
+
+            $query = documentosoporteModel::where('CURP', $curp)
+                ->whereNotExists(function ($sub) use ($ultimaFecha) {
+                    $sub->select(DB::raw(1))
+                        ->from('documento_actualizados as da')
+                        ->whereColumn('da.DOCUMENTOS_ID', 'documentos_soporte_contratacion.ID_DOCUMENTO_SOPORTE')
+                        ->where('da.ACTIVO', 1)
+                        ->whereBetween('da.created_at', [
+                            $ultimaFecha->FECHA_INICIO,
+                            $ultimaFecha->FECHA_FIN
+                        ]);
+                });
+
+
+
+
+            if ($hoy < $fechaInicio) {
+
+                return response()->json(['data' => []]);
+            }
+
+            if ($hoy >= $fechaInicio && $hoy <= $fechaFin) {
+
+                $tiposPermitidos = json_decode($ultimaFecha->TIPO_DOCUMENTO ?? '[]', true);
+
+                if (empty($tiposPermitidos)) {
+                    return response()->json(['data' => []]);
+                }
+
+                $query->whereIn('TIPO_DOCUMENTO', $tiposPermitidos);
+            }
+
+            if ($hoy > $fechaFin) {
+
+                $query->where('RENOVACION_DOCUMENTO', 1);
+            }
+
+            $tabla = $query->get();
 
             foreach ($tabla as $value) {
-                if ($value->ACTIVO == 0) {
 
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR" ><i class="bi bi-eye"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte" data-id="' . $value->ID_DOCUMENTO_SOPORTE . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                } else {
+                $value->BTN_EDITAR = ($value->ACTIVO == 0)
+                    ? '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
+                        <i class="bi bi-eye"></i>
+                   </button>'
+                    : '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR">
+                        <i class="bi bi-pencil-square"></i>
+                   </button>';
 
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte" data-id="' . $value->ID_DOCUMENTO_SOPORTE . '" title="Ver documento"> <i class="bi bi-filetype-pdf"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                }
+                $value->BTN_DOCUMENTO =
+                    '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte"
+                    data-id="' . $value->ID_DOCUMENTO_SOPORTE . '"
+                    title="Ver documento">
+                    <i class="bi bi-filetype-pdf"></i>
+                </button>';
+
+                $value->BTN_VISUALIZAR =
+                    '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR">
+                    <i class="bi bi-eye"></i>
+                </button>';
             }
 
             return response()->json([
-                'data' => $tabla,
-                'msj' => 'Información consultada correctamente'
+                'data' => $tabla
             ]);
         } catch (Exception $e) {
+
             return response()->json([
-                'msj' => 'Error ' . $e->getMessage(),
-                'data' => 0
-            ]);
+                'data' => [],
+                'error' => $e->getMessage()
+            ], 500);
         }
     }
+
 
 
 
@@ -272,24 +443,6 @@ class expedientecolabController extends Controller
                     $response['soporte'] = $soportes;
                     return response()->json($response);
                     break;
-
-
-
-         
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
 
 
                 default:

@@ -821,14 +821,14 @@
 
 
     @if(request()->is('expediente'))
-    <script src="/assets/js_sitio/RecEmpleados/expediente.js?v=1.0"></script>
+    <script src="/assets/js_sitio/RecEmpleados/expediente.js?v=2"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
 
     @if(request()->is('actualizaciondocumentos'))
-    <script src="/assets/js_sitio/contratacion/actualizaciondocs.js"></script>
+    <script src="/assets/js_sitio/contratacion/actualizaciondocs.js?v=1"></script>
     @endif
 
 </body>
