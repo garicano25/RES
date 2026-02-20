@@ -198,85 +198,6 @@ class expedientecolabController extends Controller
 
 
 
-
-    // public function Tabladocumentosoportexpediente(Request $request)
-    // {
-    //     try {
-
-    //         $curp = $request->get('curp');
-
-    //         $ultimaFecha = fechasactualizaciondocs::latest('ID_ACTUALIZACION_DOCUMENTOS')->first();
-
-    //         if (!$ultimaFecha) {
-    //             return response()->json([
-    //                 'data' => [],
-    //                 'msj'  => 'No hay periodo de actualización activo'
-    //             ]);
-    //         }
-
-    //         $hoy = now()->format('Y-m-d');
-
-    //         if ($hoy < $ultimaFecha->FECHA_INICIO || $hoy > $ultimaFecha->FECHA_FIN) {
-    //             return response()->json([
-    //                 'data' => [],
-    //                 'msj'  => 'Periodo fuera de rango'
-    //             ]);
-    //         }
-
-    //         $tiposPermitidos = json_decode($ultimaFecha->TIPO_DOCUMENTO ?? '[]', true);
-
-    //         if (empty($tiposPermitidos)) {
-    //             return response()->json([
-    //                 'data' => [],
-    //                 'msj'  => 'No hay documentos configurados'
-    //             ]);
-    //         }
-
-    //         $tabla = documentosoporteModel::where('CURP', $curp)
-    //             ->whereIn('TIPO_DOCUMENTO', $tiposPermitidos)
-    //             ->whereNotIn('ID_DOCUMENTO_SOPORTE', function ($query) {
-    //                 $query->select('DOCUMENTOS_ID')
-    //                     ->from('documento_actualizados');
-    //             })
-    //             ->get();
-
-    //         foreach ($tabla as $value) {
-
-    //             $value->BTN_EDITAR = ($value->ACTIVO == 0)
-    //                 ? '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
-    //                     <i class="bi bi-eye"></i>
-    //                </button>'
-    //                 : '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR">
-    //                     <i class="bi bi-pencil-square"></i>
-    //                </button>';
-
-    //             $value->BTN_DOCUMENTO =
-    //                 '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte"
-    //                 data-id="' . $value->ID_DOCUMENTO_SOPORTE . '"
-    //                 title="Ver documento">
-    //                 <i class="bi bi-filetype-pdf"></i>
-    //             </button>';
-
-    //             $value->BTN_VISUALIZAR =
-    //                 '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR">
-    //                 <i class="bi bi-eye"></i>
-    //             </button>';
-    //         }
-
-    //         return response()->json([
-    //             'data' => $tabla,
-    //             'msj'  => 'Información consultada correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-
-    //         return response()->json([
-    //             'msj'  => 'Error ' . $e->getMessage(),
-    //             'data' => []
-    //         ], 500);
-    //     }
-    // }
-
-
     public function Tabladocumentosoportexpediente(Request $request)
     {
         try {
@@ -388,7 +309,7 @@ class expedientecolabController extends Controller
                         if ($request->hasFile('DOCUMENTO_SOPORTE')) {
                             $documento = $request->file('DOCUMENTO_SOPORTE');
                             $curp = $request->CURP;
-                            $idDocumento = $soportes->DOCUMENTOS_ID;
+                            $idDocumento = $soportes->ID_DOCUMENTOS_ACTUALIZADOS;
 
                             $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
 
@@ -423,7 +344,7 @@ class expedientecolabController extends Controller
 
                                 $documento = $request->file('DOCUMENTO_SOPORTE');
                                 $curp = $request->CURP;
-                                $idDocumento = $soportes->DOCUMENTOS_ID;
+                                $idDocumento = $soportes->ID_DOCUMENTOS_ACTUALIZADOS;
 
                                 $nombreArchivo =  preg_replace('/[^A-Za-z0-9áéíóúÁÉÍÓÚñÑ\-]/u', '_', $request->NOMBRE_DOCUMENTO) . '.' . $documento->getClientOriginalExtension();
 
