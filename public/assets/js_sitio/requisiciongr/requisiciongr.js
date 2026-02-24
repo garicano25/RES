@@ -541,7 +541,7 @@ if (resp.existe) {
                             </div>
                            <div class="col-4 mt-2">
                               <label class="form-label">U.M</label>
-                              <input type="text" class="form-control " name="UNIDAD_MEDIDA_ALMACEN[]" >
+                              <input type="text" class="form-control " name="UNIDAD_MEDIDA_ALMACEN[]" required>
                             </div>
 
                              <div class="col-4 mt-2">
@@ -995,7 +995,7 @@ function crearBloqueDetalle(det, resp) {
 
                           <div class="col-4 mt-2">
                               <label class="form-label">U.M</label>
-                              <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]"  value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}">
+                              <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]"  value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}" required>
                             </div>
 
 

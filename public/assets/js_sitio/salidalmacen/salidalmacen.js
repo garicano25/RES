@@ -776,7 +776,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                                 ].filter(Boolean).join(" | ");
 
 
-                            const estaAsignado = inv.ASIGNADO == 1;
+                            const estaAsignado = inv.ASIGNADO == 2;
                             const esElGuardado = valorGuardado == inv.ID_FORMULARIO_INVENTARIO;
 
                             const textoFinal = estaAsignado
@@ -1023,7 +1023,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                         inv.SERIE_EQUIPO
                     ].filter(Boolean).join(" | ");
 
-                        const estaAsignado = inv.ASIGNADO == 1;
+                        const estaAsignado = inv.ASIGNADO == 2;
 
                         const esElGuardado = valorGuardado == inv.ID_FORMULARIO_INVENTARIO;
 
