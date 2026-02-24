@@ -729,7 +729,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-success" id="btnGuardarTodo" style="display: none;">Guardar Todo</button>
+                    <button type="button" class="btn btn-success" id="btnGuardarTodo" style="display: block;">Guardar Todo</button>
                 </div>
             </form>
 
