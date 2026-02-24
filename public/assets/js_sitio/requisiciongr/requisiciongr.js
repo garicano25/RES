@@ -353,11 +353,15 @@ if (resp.existe) {
 
          setTimeout(() => {
             let detalleCont = $(`#pane-${id} .detalles-gr`);
-            detalle.forEach(det => {
+           detalle.forEach(det => {
                 let bloque = crearBloqueDetalle(det, resp);
                 detalleCont.append(bloque);
+
+                activarSelect2EnBloque(bloque);
             });
 
+    
+             
             let $form = $(`#pane-${id} form.form-gr`);
             if ($form.find('input[name="_token"]').length === 0) {
                 $form.prepend(
@@ -382,47 +386,50 @@ if (resp.existe) {
         panes += `</div>`;
         contenedor.append(tabs + panes);
     } 
-    // ==========================
-    // SOLO UNA GR
-    // ==========================
-    else {
+        // ==========================
+        // SOLO UNA GR
+        // ==========================
+        else {
 
-        $("#modal-body-parciales").hide().empty();
-      $("#modal-body-base").show();
-      
-        let cab = resp.cabecera;
+            $("#modal-body-parciales").hide().empty();
+        $("#modal-body-base").show();
+        
+            let cab = resp.cabecera;
 
-            $('#ID_GR').val(cab.ID_GR ?? '');
-            $('#modal_no_mr').val(cab.NO_MR);
-            $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
-            $('#modal_no_po').val(cab.NO_PO ?? '');
-            $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
-            $('#PROVEEDOR_EQUIPO').val(cab.PROVEEDOR_KEY ?? '');
-            $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
-            $('#modal_usuario_nombre').val(cab.USUARIO_SOLICITO ?? '');
-            $('#DESDE_ACREDITACION').val(cab.FECHA_EMISION ?? '');
-            $('#NO_RECEPCION').val(cab.NO_RECEPCION ?? '');
-            $('#GENEROGR_ID').val(cab.GENEROGR_ID ?? '');
-            $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
-            $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
-            $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
-            $('#GR_PARCIAL').val(cab.GR_PARCIAL ?? '');
-            $('#FECHA_ENTREGA_GR').val(cab.FECHA_ENTREGA_GR ?? '');
-            $('#FINALIZAR_GR').val(cab.FINALIZAR_GR ?? '');
+                $('#ID_GR').val(cab.ID_GR ?? '');
+                $('#modal_no_mr').val(cab.NO_MR);
+                $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
+                $('#modal_no_po').val(cab.NO_PO ?? '');
+                $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
+                $('#PROVEEDOR_EQUIPO').val(cab.PROVEEDOR_KEY ?? '');
+                $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
+                $('#modal_usuario_nombre').val(cab.USUARIO_SOLICITO ?? '');
+                $('#DESDE_ACREDITACION').val(cab.FECHA_EMISION ?? '');
+                $('#NO_RECEPCION').val(cab.NO_RECEPCION ?? '');
+                $('#GENEROGR_ID').val(cab.GENEROGR_ID ?? '');
+                $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
+                $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
+                $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
+                $('#GR_PARCIAL').val(cab.GR_PARCIAL ?? '');
+                $('#FECHA_ENTREGA_GR').val(cab.FECHA_ENTREGA_GR ?? '');
+                $('#FINALIZAR_GR').val(cab.FINALIZAR_GR ?? '');
 
 
 
-      
+        
 
-        let detalleCont = $("#modal_bien_servicio");
-        detalleCont.empty();
-        resp.detalle.forEach(det => {
-            let bloque = crearBloqueDetalle(det, resp);
-            detalleCont.append(bloque);
-        });
+            let detalleCont = $("#modal_bien_servicio");
+            detalleCont.empty();
+            resp.detalle.forEach(det => {
+                let bloque = crearBloqueDetalle(det, resp);
+                detalleCont.append(bloque);
 
-        $('#VISTOBOUSUARIO').show();
-    }
+                activarSelect2EnBloque(bloque);
+
+            });
+
+            $('#VISTOBOUSUARIO').show();
+        }
 
     
 
@@ -516,15 +523,39 @@ if (resp.existe) {
                             </div>
                           </div>
                           <div class="row mb-2">
-                            <div class="col-3 mt-2">
+
+                           <div class="col-4 mt-2">
+                              <label class="form-label">Tipo de cálculo</label>
+                              <select class="form-control tipo_calculo" name="TIPO_CALCULO[]" required> 
+                                <option value="">Seleccione</option>
+                                <option value="1">Por pieza</option>
+                                <option value="2">Por paquete</option>
+                                <option value="3">N/A</option>
+                              </select>
+                            </div>
+
+
+                            <div class="col-4 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
                               <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]" value="0" min="0">
                             </div>
-                           <div class="col-3 mt-2">
+                           <div class="col-4 mt-2">
                               <label class="form-label">U.M</label>
                               <input type="text" class="form-control " name="UNIDAD_MEDIDA_ALMACEN[]" >
                             </div>
-                            <div class="col-3 mt-2">
+
+                             <div class="col-4 mt-2">
+                              <label class="form-label">El ítem se guarda</label>
+                              <select class="form-control guarda_item" name="ARTICULOS_SEPERADOS[]" required>
+                                <option value="">Seleccione</option>
+                                <option value="1">Por separado</option>
+                                <option value="2">Todo junto</option>
+                                <option value="3">N/A</option>
+                              </select>
+                            </div>
+
+
+                            <div class="col-4 mt-2">
                               <label class="form-label">Tipo</label>
                               <select class="form-control" name="TIPO_BS[]" required>
                                 <option value="">Seleccione</option>
@@ -535,7 +566,7 @@ if (resp.existe) {
                               </select>
                             </div>
 
-                            <div class="col-3 mt-2">
+                            <div class="col-4 mt-2">
                               <label class="form-label">El B o S es parcial</label>
                               <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" style="pointer-events:none; background-color:#e9ecef;">
 
@@ -576,7 +607,7 @@ if (resp.existe) {
                                       ).join("")}
                                     </select>
                                   </div>
-                                  <div class="col-4 mt-2">
+                                  <div class="col-6 mt-2">
                                     <label class="form-label">Inventario</label>
                                     <select class="form-control inventario" name="INVENTARIO[]">
                                       <option value="">Seleccione</option>
@@ -592,6 +623,17 @@ if (resp.existe) {
 
                     contenedor.append(bloque);
 
+                  
+                let selectTipoInventario = bloque.find(".inventario");
+
+                selectTipoInventario.select2({
+                    width: '100%',
+                    dropdownParent: obtenerModalPadre(selectTipoInventario),
+                    placeholder: "Seleccione",
+                    allowClear: true
+                });
+                                
+                  
                   calcularTotales(bloque);
 
                 
@@ -602,13 +644,13 @@ if (resp.existe) {
                         bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
                     });
 
+                  bloque.find(".tipo_calculo").on("change", function () {
+                        calcularTotales(bloque);
+                    });
                 
-                 bloque.find(".cantidad_entraalmacen").on("input", function () {
-                      calcularTotales(bloque);
-                      let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
-                      let almacen = parseFloat($(this).val()) || 0;
-                      bloque.find(".comentario-diferencia-almacen").toggle(cant !== almacen);
-                 });
+               bloque.find(".cantidad_entraalmacen").on("input", function () {
+                    calcularTotales(bloque);
+                });
                 
                 
                     bloque.find(".en_inventario").on("change", function () {
@@ -654,104 +696,103 @@ if (resp.existe) {
 });
 
 
+function obtenerModalPadre(elemento) {
+    const modalBody = $(elemento).closest(".modal-body");
 
+    if (modalBody.length > 0) {
+        return modalBody; 
+    }
 
-function calcularTotales(bloque) {
-      let cantidad = parseFloat(bloque.find(".cantidad").val()) || 0;
-      let precioUnit = parseFloat(bloque.find(".precio_unitario").val()) || 0;
+    const modal = $(elemento).closest(".modal");
 
-    
-      let totalMr = cantidad * precioUnit;
-      bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
-      
-    let aceptada = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
-  
-    let almacen = parseFloat(bloque.find(".cantidad_entraalmacen").val()) || 0;
+    if (modal.length > 0) {
+        return modal;
+    }
 
+    return $("body");
+}
 
-      let precioUnitGr = (almacen > 0) ? (totalMr / almacen) : 0;
-      bloque.find(".precio_unitario_gr").val(precioUnitGr.toFixed(2));
+function activarSelect2EnBloque(bloque) {
 
-      let totalGr = almacen * precioUnitGr;
-      bloque.find(".precio_total_gr").val(totalGr.toFixed(2));
-  
-  
-      if (cantidad !== aceptada) {
-          bloque.find(".comentario-diferencia").show();
-      } else {
-          bloque.find(".comentario-diferencia").hide();
-  }
-  
+    let selects = bloque.find(".inventario");
 
-   if (cantidad !== almacen) {
-          bloque.find(".comentario-diferencia-almacen").show();
-      } else {
-          bloque.find(".comentario-diferencia-almacen").hide();
-      }
+    selects.each(function () {
+
+        let $this = $(this);
+
+        // Si ya está inicializado lo destruimos primero
+        if ($this.hasClass("select2-hidden-accessible")) {
+            $this.select2("destroy");
+        }
+
+        $this.select2({
+            width: '100%',
+            dropdownParent: obtenerModalPadre($this),
+            placeholder: "Seleccione",
+            allowClear: true
+        });
+    });
 }
 
 
 
 
+function calcularTotales(bloque) {
 
-// $('#btnGuardarGR').on('click', function () {
-//     let formData = [];
+    let cantidad      = parseFloat(bloque.find(".cantidad").val()) || 0;
+    let precioUnitMR  = parseFloat(bloque.find(".precio_unitario").val()) || 0;
+    let almacen       = parseFloat(bloque.find(".cantidad_entraalmacen").val()) || 0;
+    let aceptada      = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
+    let tipoCalculo   = bloque.find(".tipo_calculo").val();
 
-//     if ($(".form-gr").length > 0) {
-//         let activeForm = $(".tab-pane.active .form-gr");
-//         formData = formData.concat(activeForm.serializeArray());
-//     } else {
-//         formData = formData.concat($("#formulariorecepciongr").serializeArray());
-//     }
+ 
+    let totalMr = cantidad * precioUnitMR;
+    bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
 
-//     formData.push({
-//         name: "_token",
-//         value: $('meta[name="csrf-token"]').attr('content')
-//     });
+    let precioUnitGR = 0;
+    let totalGR = 0;
 
-//     Swal.fire({
-//         title: '¿Desea guardar la GR?',
-//         text: "Confirme para continuar",
-//         icon: 'question',
-//         showCancelButton: true,
-//         confirmButtonText: 'Sí, guardar',
-//         cancelButtonText: 'No, cancelar'
-//     }).then((result) => {
-//         if (result.isConfirmed) {
-//             $.ajax({
-//                 url: '/guardarGR',
-//                 method: 'POST',
-//                 data: $.param(formData),
-//                 beforeSend: function () {
-//                     Swal.fire({
-//                         title: 'Guardando...',
-//                         text: 'Por favor espere',
-//                         allowOutsideClick: false,
-//                         allowEscapeKey: false,
-//                         didOpen: () => {
-//                             Swal.showLoading();
-//                         }
-//                     });
-//                 },
-//                 success: function (resp) {
-//                     Swal.close();
+  
+    if (tipoCalculo === "1") {
 
-//                     if (resp.ok) {
-//                         Swal.fire('Éxito', 'GR guardada', 'success');
-//                         $('#modalGR').modal('hide');
-//                         Tablabitacoragr.ajax.reload();
-//                     } else {
-//                         Swal.fire('Error', resp.msg, 'error');
-//                     }
-//                 },
-//                 error: function () {
-//                     Swal.close();
-//                     Swal.fire('Error', 'Ocurrió un problema al guardar la GR', 'error');
-//                 }
-//             });
-//         }
-//     });
-// });
+        precioUnitGR = precioUnitMR; 
+        totalGR = precioUnitGR * almacen;
+
+    }
+
+   
+    else if (tipoCalculo === "2") {
+
+        if (almacen > 0) {
+            precioUnitGR = totalMr / almacen;
+            totalGR = precioUnitGR * almacen;
+        } else {
+            precioUnitGR = 0;
+            totalGR = 0;
+        }
+
+    }
+
+  
+    else {
+        precioUnitGR = 0;
+        totalGR = 0;
+    }
+
+    bloque.find(".precio_unitario_gr").val(precioUnitGR.toFixed(2));
+    bloque.find(".precio_total_gr").val(totalGR.toFixed(2));
+
+ 
+    bloque.find(".comentario-diferencia")
+          .toggle(cantidad !== aceptada);
+
+    bloque.find(".comentario-diferencia-almacen")
+          .toggle(cantidad !== almacen);
+}
+
+
+
+
 
 
 
@@ -932,31 +973,55 @@ function crearBloqueDetalle(det, resp) {
                   
 
                          <div class="row mb-2">
-                            <div class="col-3 mt-2">
+
+
+                          <div class="col-4 mt-2">
+                              <label class="form-label">Tipo de cálculo</label>
+                                <select class="form-control tipo_calculo" name="TIPO_CALCULO[]" required>
+                                <option value="">Seleccione</option>
+                                <option value="1" ${det.TIPO_CALCULO=="1"?"selected":""}>Por pieza</option>
+                                <option value="2" ${det.TIPO_CALCULO == "2" ? "selected" : ""}>Por paquete</option>
+                                <option value="3" ${det.TIPO_CALCULO=="3"?"selected":""}>N/A</option>
+                                </select>
+                          </div>
+
+
+
+                            <div class="col-4 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
                               <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]"   value="${det.CANTIDAD_ENTRA_ALMACEN ?? ''}">
                             </div>
                        
 
-                          <div class="col-3 mt-2">
+                          <div class="col-4 mt-2">
                               <label class="form-label">U.M</label>
                               <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]"  value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}">
                             </div>
 
 
+                            <div class="col-4 mt-2">
+                              <label class="form-label">El ítem se guarda</label>
+                                <select class="form-control guarda_item" name="ARTICULOS_SEPERADOS[]" required>
+                                <option value="">Seleccione</option>
+                                <option value="1" ${det.ARTICULOS_SEPERADOS=="1"?"selected":""}>Por separado</option>
+                                <option value="2" ${det.ARTICULOS_SEPERADOS == "2" ? "selected" : ""}>Todo junto</option>
+                                <option value="3" ${det.ARTICULOS_SEPERADOS=="3"?"selected":""}>N/A</option>
+                                </select>
+                            </div>
 
-                        <div class="col-3 mt-2">
-                            <label class="form-label">Tipo</label>
-                            <select class="form-control" name="TIPO_BS[]" required>
-                              <option value="">Seleccione</option>
-                              <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
-                              <option value="Servicio" ${det.TIPO_BS == "Servicio" ? "selected" : ""}>Servicio</option>
-                              <option value="N/A" ${det.TIPO_BS=="N/A"?"selected":""}>N/A</option>
-                              
-                            </select>
+
+
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Tipo</label>
+                                <select class="form-control" name="TIPO_BS[]" required>
+                                <option value="">Seleccione</option>
+                                <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
+                                <option value="Servicio" ${det.TIPO_BS == "Servicio" ? "selected" : ""}>Servicio</option>
+                                <option value="N/A" ${det.TIPO_BS=="N/A"?"selected":""}>N/A</option>
+                                </select>
                           </div>
 
-                               <div class="col-3 mt-2">
+                               <div class="col-4 mt-2">
                               <label class="form-label">El B o S es parcial</label>
                               <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" style="pointer-events:none; background-color:#e9ecef;">
                               <option value="">Seleccione</option>
@@ -1083,13 +1148,15 @@ function crearBloqueDetalle(det, resp) {
   
   
   
-    bloque.find(".cantidad_entraalmacen").on("input", function () {
-        calcularTotales(bloque);
-        let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
-        let almacen = parseFloat($(this).val()) || 0;
-        bloque.find(".comentario-diferencia-almacen").toggle(cant !== almacen);
-    });
+   bloque.find(".cantidad_entraalmacen").on("input", function () {
+    calcularTotales(bloque);
+});
   
+
+    bloque.find(".tipo_calculo").on("change", function () {
+    calcularTotales(bloque);
+    });
+    
   
   
     bloque.find(".en_inventario").on("change", function () {
@@ -1138,6 +1205,7 @@ function crearBloqueDetalle(det, resp) {
 });
   
   
+
 
     return bloque;
 }

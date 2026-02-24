@@ -164,6 +164,8 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 
 
 
+
+
 $('#Tablabitacoragrhistorial tbody').on('click', 'button.btn-gr', function () {
   var data = Tablabitacoragrhistorial.row($(this).parents('tr')).data();
 
@@ -331,7 +333,7 @@ if (resp.existe) {
 
 
                   
-                   <div class="row mb-3">
+                  <div class="row mb-3">
                       <div class="col-md-6">
                           <label class="form-label"> Estado Vo.Bo usuario</label>
                           <select class="form-control" name="VO_BO_USUARIO">
@@ -351,7 +353,7 @@ if (resp.existe) {
                         </div>
 
 
-                        <div class="col-md-12">
+                        <div class="col-md-12 mt-2">
                           <label class="form-label"> Finalizar GR</label>
                           <select class="form-control" name="FINALIZAR_GR">
                               <option value="">Seleccione</option>
@@ -376,11 +378,15 @@ if (resp.existe) {
 
          setTimeout(() => {
             let detalleCont = $(`#pane-${id} .detalles-gr`);
-            detalle.forEach(det => {
+           detalle.forEach(det => {
                 let bloque = crearBloqueDetalle(det, resp);
                 detalleCont.append(bloque);
+
+                activarSelect2EnBloque(bloque);
             });
 
+    
+             
             let $form = $(`#pane-${id} form.form-gr`);
             if ($form.find('input[name="_token"]').length === 0) {
                 $form.prepend(
@@ -405,47 +411,50 @@ if (resp.existe) {
         panes += `</div>`;
         contenedor.append(tabs + panes);
     } 
-    // ==========================
-    // SOLO UNA GR
-    // ==========================
-    else {
+        // ==========================
+        // SOLO UNA GR
+        // ==========================
+        else {
 
-        $("#modal-body-parciales").hide().empty();
-      $("#modal-body-base").show();
-      
-        let cab = resp.cabecera;
+            $("#modal-body-parciales").hide().empty();
+        $("#modal-body-base").show();
+        
+            let cab = resp.cabecera;
 
-            $('#ID_GR').val(cab.ID_GR ?? '');
-            $('#modal_no_mr').val(cab.NO_MR);
-            $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
-            $('#modal_no_po').val(cab.NO_PO ?? '');
-            $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
-            $('#PROVEEDOR_EQUIPO').val(cab.PROVEEDOR_KEY ?? '');
-            $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
-            $('#modal_usuario_nombre').val(cab.USUARIO_SOLICITO ?? '');
-            $('#DESDE_ACREDITACION').val(cab.FECHA_EMISION ?? '');
-            $('#NO_RECEPCION').val(cab.NO_RECEPCION ?? '');
-            $('#GENEROGR_ID').val(cab.GENEROGR_ID ?? '');
-            $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
-            $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
-            $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
-            $('#GR_PARCIAL').val(cab.GR_PARCIAL ?? '');
-            $('#FECHA_ENTREGA_GR').val(cab.FECHA_ENTREGA_GR ?? '');
-            $('#FINALIZAR_GR').val(cab.FINALIZAR_GR ?? '');
+                $('#ID_GR').val(cab.ID_GR ?? '');
+                $('#modal_no_mr').val(cab.NO_MR);
+                $('#modal_fecha_mr').val(data.FECHA_APRUEBA_MR ?? '');
+                $('#modal_no_po').val(cab.NO_PO ?? '');
+                $('#modal_fecha_po').val(data.FECHA_APROBACION_PO ?? '');
+                $('#PROVEEDOR_EQUIPO').val(cab.PROVEEDOR_KEY ?? '');
+                $('#modal_fecha_entrega').val(data.FECHA_ENTREGA_PO ?? '');
+                $('#modal_usuario_nombre').val(cab.USUARIO_SOLICITO ?? '');
+                $('#DESDE_ACREDITACION').val(cab.FECHA_EMISION ?? '');
+                $('#NO_RECEPCION').val(cab.NO_RECEPCION ?? '');
+                $('#GENEROGR_ID').val(cab.GENEROGR_ID ?? '');
+                $('#MANDAR_USUARIO_VOBO').val(cab.MANDAR_USUARIO_VOBO ?? '');
+                $('#FECHA_VOUSUARIO').val(cab.FECHA_VOUSUARIO ?? '');
+                $('#VO_BO_USUARIO').val(cab.VO_BO_USUARIO ?? '');
+                $('#GR_PARCIAL').val(cab.GR_PARCIAL ?? '');
+                $('#FECHA_ENTREGA_GR').val(cab.FECHA_ENTREGA_GR ?? '');
+                $('#FINALIZAR_GR').val(cab.FINALIZAR_GR ?? '');
 
 
 
-      
+        
 
-        let detalleCont = $("#modal_bien_servicio");
-        detalleCont.empty();
-        resp.detalle.forEach(det => {
-            let bloque = crearBloqueDetalle(det, resp);
-            detalleCont.append(bloque);
-        });
+            let detalleCont = $("#modal_bien_servicio");
+            detalleCont.empty();
+            resp.detalle.forEach(det => {
+                let bloque = crearBloqueDetalle(det, resp);
+                detalleCont.append(bloque);
 
-        $('#VISTOBOUSUARIO').show();
-    }
+                activarSelect2EnBloque(bloque);
+
+            });
+
+            $('#VISTOBOUSUARIO').show();
+        }
 
     
 
@@ -538,31 +547,51 @@ if (resp.existe) {
                               <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2"></textarea>
                             </div>
                           </div>
-
-                      
-
                           <div class="row mb-2">
-                            <div class="col-3 mt-2">
+
+                           <div class="col-4 mt-2">
+                              <label class="form-label">Tipo de cálculo</label>
+                              <select class="form-control tipo_calculo" name="TIPO_CALCULO[]" required> 
+                                <option value="">Seleccione</option>
+                                <option value="1">Por pieza</option>
+                                <option value="2">Por paquete</option>
+                                <option value="3">N/A</option>
+                              </select>
+                            </div>
+
+
+                            <div class="col-4 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
                               <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]" value="0" min="0">
                             </div>
-
-                           <div class="col-3 mt-2">
+                           <div class="col-4 mt-2">
                               <label class="form-label">U.M</label>
                               <input type="text" class="form-control " name="UNIDAD_MEDIDA_ALMACEN[]" >
                             </div>
 
-
-                            <div class="col-3 mt-2">
-                              <label class="form-label">Tipo</label>
-                              <select class="form-control" name="TIPO_BS[]">
+                             <div class="col-4 mt-2">
+                              <label class="form-label">El ítem se guarda</label>
+                              <select class="form-control guarda_item" name="ARTICULOS_SEPERADOS[]" required>
                                 <option value="">Seleccione</option>
-                                <option value="Bien">Bien</option>
-                                <option value="Servicio">Servicio</option>
+                                <option value="1">Por separado</option>
+                                <option value="2">Todo junto</option>
+                                <option value="3">N/A</option>
                               </select>
                             </div>
 
-                            <div class="col-3 mt-2">
+
+                            <div class="col-4 mt-2">
+                              <label class="form-label">Tipo</label>
+                              <select class="form-control" name="TIPO_BS[]" required>
+                                <option value="">Seleccione</option>
+                                <option value="Bien">Bien</option>
+                                <option value="Servicio">Servicio</option>
+                                <option value="N/A">N/A</option>
+
+                              </select>
+                            </div>
+
+                            <div class="col-4 mt-2">
                               <label class="form-label">El B o S es parcial</label>
                               <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" style="pointer-events:none; background-color:#e9ecef;">
 
@@ -603,7 +632,7 @@ if (resp.existe) {
                                       ).join("")}
                                     </select>
                                   </div>
-                                  <div class="col-4 mt-2">
+                                  <div class="col-6 mt-2">
                                     <label class="form-label">Inventario</label>
                                     <select class="form-control inventario" name="INVENTARIO[]">
                                       <option value="">Seleccione</option>
@@ -619,6 +648,17 @@ if (resp.existe) {
 
                     contenedor.append(bloque);
 
+                  
+                let selectTipoInventario = bloque.find(".inventario");
+
+                selectTipoInventario.select2({
+                    width: '100%',
+                    dropdownParent: obtenerModalPadre(selectTipoInventario),
+                    placeholder: "Seleccione",
+                    allowClear: true
+                });
+                                
+                  
                   calcularTotales(bloque);
 
                 
@@ -629,13 +669,13 @@ if (resp.existe) {
                         bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
                     });
 
+                  bloque.find(".tipo_calculo").on("change", function () {
+                        calcularTotales(bloque);
+                    });
                 
-                 bloque.find(".cantidad_entraalmacen").on("input", function () {
-                      calcularTotales(bloque);
-                      let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
-                      let almacen = parseFloat($(this).val()) || 0;
-                      bloque.find(".comentario-diferencia-almacen").toggle(cant !== almacen);
-                 });
+               bloque.find(".cantidad_entraalmacen").on("input", function () {
+                    calcularTotales(bloque);
+                });
                 
                 
                     bloque.find(".en_inventario").on("change", function () {
@@ -671,7 +711,8 @@ if (resp.existe) {
                 contenedor.html('<div class="text-muted">No hay bienes o servicios</div>');
           }
           
-            $('#VISTOBOUSUARIO').hide();
+
+              $('#VISTOBOUSUARIO').hide();
 
         }
 
@@ -680,36 +721,96 @@ if (resp.existe) {
 });
 
 
+function obtenerModalPadre(elemento) {
+    const modalBody = $(elemento).closest(".modal-body");
+
+    if (modalBody.length > 0) {
+        return modalBody; 
+    }
+
+    const modal = $(elemento).closest(".modal");
+
+    if (modal.length > 0) {
+        return modal;
+    }
+
+    return $("body");
+}
+
+function activarSelect2EnBloque(bloque) {
+
+    let selects = bloque.find(".inventario");
+
+    selects.each(function () {
+
+        let $this = $(this);
+
+        if ($this.hasClass("select2-hidden-accessible")) {
+            $this.select2("destroy");
+        }
+
+        $this.select2({
+            width: '100%',
+            dropdownParent: obtenerModalPadre($this),
+            placeholder: "Seleccione",
+            allowClear: true
+        });
+    });
+}
+
 
 
 function calcularTotales(bloque) {
-    let cantidad = parseFloat(bloque.find(".cantidad").val()) || 0;
-    let precioUnit = parseFloat(bloque.find(".precio_unitario").val()) || 0;
-  
-    let totalMr = cantidad * precioUnit;
-      bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
-      
-    let aceptada = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
-  
-    let almacen = parseFloat(bloque.find(".cantidad_entraalmacen").val()) || 0;
 
-    let precioUnitGr = (almacen > 0) ? (totalMr / almacen) : 0;
-        bloque.find(".precio_unitario_gr").val(precioUnitGr.toFixed(2));
+    let cantidad      = parseFloat(bloque.find(".cantidad").val()) || 0;
+    let precioUnitMR  = parseFloat(bloque.find(".precio_unitario").val()) || 0;
+    let almacen       = parseFloat(bloque.find(".cantidad_entraalmacen").val()) || 0;
+    let aceptada      = parseFloat(bloque.find(".cantidad_aceptada").val()) || 0;
+    let tipoCalculo   = bloque.find(".tipo_calculo").val();
 
-    let totalGr = almacen * precioUnitGr;
-        bloque.find(".precio_total_gr").val(totalGr.toFixed(2));
-    
-    if (cantidad !== aceptada) {
-        bloque.find(".comentario-diferencia").show();
-    } else {
-        bloque.find(".comentario-diferencia").hide();
+ 
+    let totalMr = cantidad * precioUnitMR;
+    bloque.find(".precio_total_mr").val(totalMr.toFixed(2));
+
+    let precioUnitGR = 0;
+    let totalGR = 0;
+
+  
+    if (tipoCalculo === "1") {
+
+        precioUnitGR = precioUnitMR; 
+        totalGR = precioUnitGR * almacen;
+
     }
 
-    if (cantidad !== almacen) {
-        bloque.find(".comentario-diferencia-almacen").show();
-    } else {
-        bloque.find(".comentario-diferencia-almacen").hide();
+   
+    else if (tipoCalculo === "2") {
+
+        if (almacen > 0) {
+            precioUnitGR = totalMr / almacen;
+            totalGR = precioUnitGR * almacen;
+        } else {
+            precioUnitGR = 0;
+            totalGR = 0;
+        }
+
     }
+
+  
+    else {
+        precioUnitGR = 0;
+        totalGR = 0;
+    }
+
+    bloque.find(".precio_unitario_gr").val(precioUnitGR.toFixed(2));
+    bloque.find(".precio_total_gr").val(totalGR.toFixed(2));
+
+ 
+    bloque.find(".comentario-diferencia")
+          .toggle(cantidad !== aceptada);
+
+    bloque.find(".comentario-diferencia-almacen")
+          .toggle(cantidad !== almacen);
 }
 
 
@@ -780,6 +881,7 @@ function crearBloqueDetalle(det, resp) {
     let bloque = $(`
           <div class="border rounded p-3 mb-3 bg-light">
                         <div class="row mb-2">
+
                          <div class="col-12 text-center">
                             <h5>Cantidad solicitada</h5>
                           </div>
@@ -804,9 +906,11 @@ function crearBloqueDetalle(det, resp) {
                             <input type="text" class="form-control precio_total_mr" name="PRECIO_TOTAL_MR[]" value="${det.PRECIO_TOTAL_MR ?? 0}" readonly>
                           </div>
                         </div>
+
                         <div class="col-12 text-center">
                           <h5>Cantidad recibida </h5>
                         </div>
+                        
                         <div class="row mb-2">
                           <div class="col-3 mt-2">
                             <label class="form-label">Cantidad Rechazada</label>
@@ -832,38 +936,80 @@ function crearBloqueDetalle(det, resp) {
                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA[]" rows="2">${det.COMENTARIO_DIFERENCIA ?? ""}</textarea>
                           </div>
                         </div>
+                  
+
                          <div class="row mb-2">
-                            <div class="col-3 mt-2">
+
+
+                          <div class="col-4 mt-2">
+                              <label class="form-label">Tipo de cálculo</label>
+                                <select class="form-control tipo_calculo" name="TIPO_CALCULO[]" required>
+                                <option value="">Seleccione</option>
+                                <option value="1" ${det.TIPO_CALCULO=="1"?"selected":""}>Por pieza</option>
+                                <option value="2" ${det.TIPO_CALCULO == "2" ? "selected" : ""}>Por paquete</option>
+                                <option value="3" ${det.TIPO_CALCULO=="3"?"selected":""}>N/A</option>
+                                </select>
+                          </div>
+
+
+
+                            <div class="col-4 mt-2">
                               <label class="form-label">Cantidad que entra a almacén</label>
                               <input type="number" class="form-control cantidad_entraalmacen" name="CANTIDAD_ENTRA_ALMACEN[]"   value="${det.CANTIDAD_ENTRA_ALMACEN ?? ''}">
                             </div>
-                          <div class="col-3 mt-2">
+                       
+
+                          <div class="col-4 mt-2">
                               <label class="form-label">U.M</label>
                               <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]"  value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}">
                             </div>
-                        <div class="col-3 mt-2">
-                            <label class="form-label">Tipo</label>
-                            <select class="form-control" name="TIPO_BS[]">
-                              <option value="">Seleccione</option>
-                              <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
-                              <option value="Servicio" ${det.TIPO_BS=="Servicio"?"selected":""}>Servicio</option>
-                            </select>
+
+
+                            <div class="col-4 mt-2">
+                              <label class="form-label">El ítem se guarda</label>
+                                <select class="form-control guarda_item" name="ARTICULOS_SEPERADOS[]" required>
+                                <option value="">Seleccione</option>
+                                <option value="1" ${det.ARTICULOS_SEPERADOS=="1"?"selected":""}>Por separado</option>
+                                <option value="2" ${det.ARTICULOS_SEPERADOS == "2" ? "selected" : ""}>Todo junto</option>
+                                <option value="3" ${det.ARTICULOS_SEPERADOS=="3"?"selected":""}>N/A</option>
+                                </select>
+                            </div>
+
+
+
+                            <div class="col-4 mt-2">
+                                <label class="form-label">Tipo</label>
+                                <select class="form-control" name="TIPO_BS[]" required>
+                                <option value="">Seleccione</option>
+                                <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
+                                <option value="Servicio" ${det.TIPO_BS == "Servicio" ? "selected" : ""}>Servicio</option>
+                                <option value="N/A" ${det.TIPO_BS=="N/A"?"selected":""}>N/A</option>
+                                </select>
                           </div>
-                               <div class="col-3 mt-2">
+
+                               <div class="col-4 mt-2">
                               <label class="form-label">El B o S es parcial</label>
                               <select class="form-control bs-esparcial" name="BIENS_PARCIAL[]" style="pointer-events:none; background-color:#e9ecef;">
                               <option value="">Seleccione</option>
                               <option value="Sí" ${det.BIENS_PARCIAL=="Sí"?"selected":""}>Sí</option>
                               <option value="No" ${det.BIENS_PARCIAL=="No"?"selected":""}>No</option>
                             </select>
+
                             </div>
+
                           </div>
+
+
                         <div class="row mb-2 comentario-diferencia-almacen" style="display:${det.CANTIDAD != det.CANTIDAD_ENTRA_ALMACEN ? 'block' : 'none'};">
                           <div class="col-12 mt-2">
                                 <label class="form-label">Comentario por diferencia en cantidad que entra a almacén</label>
                             <textarea class="form-control" name="COMENTARIO_DIFERENCIA_ALMACEN[]" rows="2">${det.COMENTARIO_DIFERENCIA_ALMACEN ?? ""}</textarea>
                           </div>
                         </div>
+
+
+                
+
                            <div class="row mb-2">
                              <div class="col-4 mt-2">
                             <label class="form-label">¿Está en inventario?</label>
@@ -898,6 +1044,7 @@ function crearBloqueDetalle(det, resp) {
                             </div>
                           </div>
                           </div>
+
                           <div class="row mb-3">
                           <div class="col-12 text-center">
                             <h4>Vo.Bo usuario</h4>
@@ -924,10 +1071,15 @@ function crearBloqueDetalle(det, resp) {
                               <option value="MAL_ESTADO" ${det.ESTADO_BS_USUARIO=="MAL_ESTADO"?"selected":""}>Mal estado</option>
                             </select>
                           </div>
+
+                              
+                     
                           <div class="col-3 mt-2">
                             <label class="form-label">Comentario estado usuario</label>
                             <textarea class="form-control" name="COMENTARIO_ESTADO_USUARIO[]" rows="2">${det.COMENTARIO_ESTADO_USUARIO??""}</textarea>
                           </div>
+
+                          
                            <div class="col-2">
                             <label class="form-label">Vo. Bo</label>
                               <select class="form-control" name="VOBO_USUARIO_PRODUCTO[]">
@@ -936,12 +1088,17 @@ function crearBloqueDetalle(det, resp) {
                                 <option value="No" ${det.VOBO_USUARIO_PRODUCTO=="No"?"selected":""}>No</option>
                             </select>
                           </div>
+
                           <div class="col-12 mt-2 comentario-rechazada" 
                               style="display:${det.VOBO_USUARIO_PRODUCTO=="No" ? "block" : "none"};">
                               <label class="form-label">Comentario de rechazo</label>
                               <textarea class="form-control" name="COMENTARIO_VO_RECHAZO[]" rows="2">${det.COMENTARIO_VO_RECHAZO ?? ""}</textarea>
                           </div>
+
+
                         </div>
+
+
                     </div>
     `);
 
@@ -954,12 +1111,19 @@ function crearBloqueDetalle(det, resp) {
         bloque.find(".comentario-diferencia").toggle(cant !== aceptada);
     });
 
-    bloque.find(".cantidad_entraalmacen").on("input", function () {
-        calcularTotales(bloque);
-        let cant = parseFloat(bloque.find(".cantidad").val()) || 0;
-        let almacen = parseFloat($(this).val()) || 0;
-        bloque.find(".comentario-diferencia-almacen").toggle(cant !== almacen);
+  
+  
+  
+   bloque.find(".cantidad_entraalmacen").on("input", function () {
+    calcularTotales(bloque);
+});
+  
+
+    bloque.find(".tipo_calculo").on("change", function () {
+    calcularTotales(bloque);
     });
+    
+  
   
     bloque.find(".en_inventario").on("change", function () {
         if ($(this).val() === "Sí") {
@@ -988,7 +1152,7 @@ function crearBloqueDetalle(det, resp) {
     });
   
   
-    bloque.find(".vobo-usuario").on("change", function () {
+   bloque.find(".vobo-usuario").on("change", function () {
         let selectVal = $(this).val();
         let comentarioDiv = bloque.find(".comentario-rechazada");
 
@@ -999,18 +1163,18 @@ function crearBloqueDetalle(det, resp) {
             comentarioDiv.hide();
             comentarioDiv.find("textarea").removeAttr("required").val("");
         }
-    });
+   });
   
   
-    bloque.find(".cantidad_entraalmacen").on("input", function () {
-        calcularTotales(bloque);
-    });
+  bloque.find(".cantidad_entraalmacen").on("input", function () {
+    calcularTotales(bloque);
+});
   
   
+
 
     return bloque;
 }
-
 
 $('#GR_PARCIAL').on('change', function () {
     if ($(this).val() === "Sí") {
