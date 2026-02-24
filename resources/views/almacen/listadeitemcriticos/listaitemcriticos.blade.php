@@ -119,6 +119,8 @@
 </div>
 
 
+
+
 <div id="Modal_inventario" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg" style="min-width: 86%;">
         <div class="modal-content">
@@ -158,7 +160,7 @@
                                                 <div class="col-12">
                                                     <div class="form-group">
                                                         <label> Foto del ítem </label>
-                                                        <input type="file" accept="image/jpeg,image/x-png,image/gif" id="FOTO_EQUIPO" name="FOTO_EQUIPO" data-allowed-file-extensions="jpg png JPG PNG" data-height="240" data-default-file="" />
+                                                        <input type="file" accept="image/jpeg,image/x-png,image/gif/" id="FOTO_EQUIPO" name="FOTO_EQUIPO" data-allowed-file-extensions="jpg png JPG PNG jpeg JPEG" data-height="240" data-default-file="" />
                                                     </div>
 
 
@@ -214,6 +216,54 @@
                                                     <div class="form-group">
                                                         <label>Código de Identificación *</label>
                                                         <input type="text" class="form-control" id="CODIGO_EQUIPO" name="CODIGO_EQUIPO" required>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 mt-2" id="DATOS_VEHICULOS" style="display: none;">
+                                                    <div class="row">
+
+                                                        <div class="col-6 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Placas *</label>
+                                                                <input type="text" class="form-control" id="PLACAS_VEHICULOS" name="PLACAS_VEHICULOS" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-6 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Color *</label>
+                                                                <input type="text" class="form-control" id="COLOR_VEHICULO" name="COLOR_VEHICULO" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Entidad póliza *</label>
+                                                                <input type="text" class="form-control" id="ENTIDAD_POLIZA" name="ENTIDAD_POLIZA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Número de póliza *</label>
+                                                                <input type="text" class="form-control" id="NUMERO_POLIZA" name="NUMERO_POLIZA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Inicio de Vigencia *</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="INICIOVIGENCIA_POLIZA" name="INICIOVIGENCIA_POLIZA" required>
+                                                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3 mt-2">
+                                                            <div class="form-group">
+                                                                <label>Fin de Vigencia *</label>
+                                                                <div class="input-group">
+                                                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FINVIGENCIA_POLIZA" name="FINVIGENCIA_POLIZA" required>
+                                                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-2 mt-2">
@@ -276,11 +326,20 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-12 mt-2" id="DESPUES_2024" style="display: block;">
+
+
+                                                <div class="col-4 mt-2">
+                                                    <label>¿El proveedor está dado de alta? </label>
+                                                    <select class="form-control" name="PROVEEDOR_ALTA" id="PROVEEDOR_ALTA">
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Sí</option>
+                                                        <option value="2">No</option>
+                                                    </select>
+                                                </div>
+
+
+                                                <div class="col-12 mt-2" id="PROVEEDORES_ACTIVOS" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
-
-
-
                                                     <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
                                                         <option value="">Seleccionar proveedor</option>
                                                         <optgroup label="Proveedor oficial">
@@ -297,13 +356,19 @@
                                                             </option>
                                                             @endforeach
                                                         </optgroup>
+
+                                                        <optgroup label="Extra">
+                                                            <option value="Nota de remisión">Nota de remisión</option>
+                                                            <option value="N/A">N/A</option>
+
+                                                        </optgroup>
                                                     </select>
                                                 </div>
 
 
-                                                <div class="col-12 mt-2" id="ANTES_2024" style="display: none;">
+                                                <div class="col-12 mt-2" id="ESCRIBIR_PROVEEDOR" style="display: none;">
                                                     <label class="form-label">Proveedor</label>
-                                                    <input type="text" class="form-control" id="PROVEEDOR_ANTESDEL2024">
+                                                    <input type="text" class="form-control" id="NOMBRE_PROVEEDOR" name="NOMBRE_PROVEEDOR" required>
                                                 </div>
 
                                                 <div class="col-3 mt-2">
@@ -365,7 +430,7 @@
                         <!-- TAB 2: Documentación del producto -->
                         <div class="tab-pane fade" id="contenido-documentos" role="tabpanel">
                             <ol class="breadcrumb mb-5">
-                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Documentos del producto</h3>
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Documentos del ítem</h3>
                                 <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVA_DOCUMENTACION" style="margin-left: auto;">
                                     Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                                 </button>
@@ -482,6 +547,9 @@
 
                                 </div>
                             </div>
+
+
+
                             <div class="col-12 mb-3">
                                 <label class="form-label">Subir Evidencia (PDF) *</label>
                                 <div class="d-flex align-items-center">
@@ -502,6 +570,9 @@
         </div>
     </div>
 </div>
+
+
+
 
 
 @endsection

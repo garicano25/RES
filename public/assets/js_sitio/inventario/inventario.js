@@ -565,8 +565,7 @@ $(document).ready(function() {
                    
         
 
-    
-        $("#tab2-entrada").show();
+    $("#tab2-entrada").show();
         
             
          

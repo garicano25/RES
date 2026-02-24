@@ -33,6 +33,39 @@ function limpiarFormularioUsuario() {
 }
 
 
+function obtenerModalPadre(elemento) {
+    const modalBody = $(elemento).closest(".modal-body");
+
+    if (modalBody.length > 0) {
+        return modalBody; 
+    }
+
+    const modal = $(elemento).closest(".modal");
+
+    if (modal.length > 0) {
+        return modal;
+    }
+
+    return $("body");
+}
+
+
+
+function initSelectProveedor() {
+
+    const select = $('#PROVEEDOR_EQUIPO');
+
+    if (select.hasClass("select2-hidden-accessible")) {
+        select.select2('destroy');
+    }
+
+    select.select2({
+        dropdownParent: obtenerModalPadre(select),
+        width: '100%',
+        placeholder: 'Seleccionar proveedor',
+        allowClear: true
+    });
+}
 
 
 $("#guardarINVENTARIO").click(function (e) {
@@ -307,29 +340,15 @@ $('#Tablalistaitemcriticos tbody').on('click', 'td>button.EDITAR', function () {
     cantidad.addEventListener("input", calcularTotal);
     unitario.addEventListener("input", calcularTotal);
 
-    calcularTotal();
-
-
-
-       let fechaAdquisicion = row.data().FECHA_ADQUISICION || "";
-    if (fechaAdquisicion === "2024-12-31") {
-        $("#ANTES_2024").show();
-        $("#DESPUES_2024").hide();
-
-        $("#PROVEEDOR_ANTESDEL2024").val(row.data().PROVEEDOR_EQUIPO || "");
-    } else {
-        $("#ANTES_2024").hide();
-        $("#DESPUES_2024").show();
-        $("#PROVEEDOR_EQUIPO").val(row.data().PROVEEDOR_EQUIPO || "");
-    }
-
-        $("#tab2-entrada").show();
-        
-    
+   calcularTotal();
+   
+    $("#tab2-entrada").show();
+            
    if (row.data().REQUIERE_ARTICULO === "1") {
        $("#tab3-documentos").show();
-        $("#MOSTRAR_ALERTA_DOCUMENTOS").show();
+       $("#MOSTRAR_ALERTA_DOCUMENTOS").show();
        cargarDocumentos(inventario_id);
+
 
     } else if (row.data().REQUIERE_ARTICULO === "2") {
        $("#tab3-documentos").hide();
@@ -345,11 +364,54 @@ $('#Tablalistaitemcriticos tbody').on('click', 'td>button.EDITAR', function () {
 
     }
     
+    if (row.data().PROVEEDOR_ALTA === '1') {
+
+        $('#PROVEEDORES_ACTIVOS').show();
+        $('#ESCRIBIR_PROVEEDOR').hide();
+
+    } else if (row.data().PROVEEDOR_ALTA === '2') {
+
+        $('#PROVEEDORES_ACTIVOS').hide();
+        $('#ESCRIBIR_PROVEEDOR').show();
+
+    } else {
+        $('#PROVEEDORES_ACTIVOS').show();
+        $('#ESCRIBIR_PROVEEDOR').hide();
+    }
+
+    if (row.data().TIPO_EQUIPO === 'Vehículos') {
+        $('#DATOS_VEHICULOS').show();
+    } else {
+        $('#DATOS_VEHICULOS').hide();
+    }
     
     $("#tab3-documentos").off("click").on("click", function () {
         cargarTablaDocumentosEquipo();
     });
 
+
+    $.get('/cantidadEquipoReadonly', function (resp) {
+
+    if (resp.readonly === true) {
+        $('#CANTIDAD_EQUIPO').attr('readonly', true);
+        $('#LIMITEMINIMO_EQUIPO').attr('readonly', true);
+
+    } else {
+        $('#CANTIDAD_EQUIPO').removeAttr('readonly');
+        $('#LIMITEMINIMO_EQUIPO').removeAttr('readonly');
+
+    }
+
+    });
+
+
+    initSelectProveedor();
+
+    if (row.data().PROVEEDOR_EQUIPO) {
+    $('#PROVEEDOR_EQUIPO')
+        .val(row.data().PROVEEDOR_EQUIPO)
+        .trigger('change');
+    }
 
 
     
@@ -438,20 +500,7 @@ $(document).ready(function() {
     calcularTotal();
                    
         
-    let fechaAdquisicion = row.data().FECHA_ADQUISICION || "";
-    if (fechaAdquisicion === "2024-12-31") {
-        $("#ANTES_2024").show();
-        $("#DESPUES_2024").hide();
 
-        $("#PROVEEDOR_ANTESDEL2024").val(row.data().PROVEEDOR_EQUIPO || "");
-    } else {
-        $("#ANTES_2024").hide();
-        $("#DESPUES_2024").show();
-
-        $("#PROVEEDOR_EQUIPO").val(row.data().PROVEEDOR_EQUIPO || "");
-    }
-
-    
     $("#tab2-entrada").show();
         
             
@@ -459,7 +508,8 @@ $(document).ready(function() {
     if (row.data().REQUIERE_ARTICULO === "1") {
        $("#tab3-documentos").show();
         $("#MOSTRAR_ALERTA_DOCUMENTOS").show();
-       cargarDocumentos(inventario_id);
+        cargarDocumentos(inventario_id);
+
 
     } else if (row.data().REQUIERE_ARTICULO === "2") {
     $("#tab3-documentos").hide();
@@ -474,10 +524,45 @@ $(document).ready(function() {
     $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
 
     }
-    
+        
+    if (row.data().PROVEEDOR_ALTA === '1') {
+
+    $('#PROVEEDORES_ACTIVOS').show();
+    $('#ESCRIBIR_PROVEEDOR').hide();
+
+    } else if (row.data().PROVEEDOR_ALTA === '2') {
+
+        $('#PROVEEDORES_ACTIVOS').hide();
+        $('#ESCRIBIR_PROVEEDOR').show();
+
+    } else {
+        $('#PROVEEDORES_ACTIVOS').show();
+        $('#ESCRIBIR_PROVEEDOR').hide();
+    }
+
+
+    if (row.data().TIPO_EQUIPO === 'Vehículos') {
+        $('#DATOS_VEHICULOS').show();
+    } else {
+        $('#DATOS_VEHICULOS').hide();
+    }
+
+
     $("#tab3-documentos").off("click").on("click", function () {
         cargarTablaDocumentosEquipo();
     });
+
+        
+        
+        
+    initSelectProveedor();
+
+    if (row.data().PROVEEDOR_EQUIPO) {
+    $('#PROVEEDOR_EQUIPO')
+        .val(row.data().PROVEEDOR_EQUIPO)
+        .trigger('change');
+        }
+        
 
 
     });
