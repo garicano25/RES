@@ -660,7 +660,7 @@
     @endif
 
     @if(request()->is('bitacoragr'))
-    <script src="/assets/js_sitio/requisiciongr/requisiciongr.js?v=6"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisiciongr.js?v=7"></script>
     @endif
 
     @if(request()->is('vobogrusuario'))
@@ -672,7 +672,7 @@
     @endif
 
     @if(request()->is('bitacoragrhistorial'))
-    <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=5"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=7"></script>
     @endif
 
 </body>

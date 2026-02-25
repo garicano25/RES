@@ -131,27 +131,24 @@
             </div>
             <div class="tabla-scroll-bottom">
                 <div class="table-responsive">
-                    <table id="Tablabitacoragr" class="table table-hover table-bordered text-center w-100" style="min-width: 3000px; table-layout: fixed;">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th class="text-center">#</th>
-                                <th class="text-center">No.MR</th>
-                                <th class="text-center">Fecha de aprobación.MR</th>
-                                <th class="text-center">No.PO</th>
-                                <th class="text-center">Fecha de aprobación.PO</th>
-                                <th class="text-center">Proveedor</th>
-                                <th class="text-center">Fecha de entrega.PO</th>
-                                <th class="text-center">Bien o servicio</th>
-                                <th class="text-center">GR</th>
-                                <th class="text-center">Fecha de emisión .GR</th>
-                                <th class="text-center">No.GR</th>
-
-
-
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
+                        <table id="Tablabitacoragr" class="table table-hover table-bordered  w-100" style="min-width: 1000px; table-layout: fixed;">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th class="text-center">#</th>
+                                    <th class="text-center">No.MR</th>
+                                    <th class="text-center">Fecha de aprobación.MR</th>
+                                    <th class="text-center">No.PO</th>
+                                    <th class="text-center">Fecha de aprobación.PO</th>
+                                    <th class="text-center">Proveedor</th>
+                                    <th class="text-center">Fecha de entrega.PO</th>
+                                    <th class="text-center">Bien o servicio</th>
+                                    <th class="text-center">GR</th>
+                                    <th class="text-center">Fecha de emisión .GR</th>
+                                    <th class="text-center">No.GR</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@
 
 
     /* ========== TABLA BITÁCORA GENERAL ========== */
-    /* #Tablabitacora {
+    #Tablabitacora {
         table-layout: fixed !important;
         width: 100% !important;
     }
@@ -36,7 +36,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         vertical-align: middle;
-    } */
+    }
 
     /* ========== EXCEPCIÓN: COLUMNA JUSTIFICACIÓN ========== */
     #Tablabitacora td.col-justificacion {
