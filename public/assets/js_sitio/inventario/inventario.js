@@ -99,6 +99,7 @@ $(document).ready(function() {
         $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
         $("#DATOS_VEHICULOS").hide();
         $('#CANTIDAD_EQUIPO').attr('readonly', false);
+        $('#LIMITEMINIMO_EQUIPO').attr('readonly', false);
 
 
     });
