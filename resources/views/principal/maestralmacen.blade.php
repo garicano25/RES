@@ -460,27 +460,27 @@
     @endif
 
     @if(request()->is('listadeaf'))
-    <script src="/assets/js_sitio/listadeaf/listaaf.js?v=4"></script>
+    <script src="/assets/js_sitio/listadeaf/listaaf.js?v=5"></script>
     @endif
 
     @if(request()->is('listadeafn'))
-    <script src="/assets/js_sitio/listadeafn/listaafn.js?v=3"></script>
+    <script src="/assets/js_sitio/listadeafn/listaafn.js?v=5"></script>
     @endif
 
     @if(request()->is('listadecomercializacion'))
-    <script src="/assets/js_sitio/listacomercializacion/listacomercializacion.js?v=3"></script>
+    <script src="/assets/js_sitio/listacomercializacion/listacomercializacion.js?v=5"></script>
     @endif
 
     @if(request()->is('listadeitemcriticos'))
-    <script src="/assets/js_sitio/listadeitemcritico/listaitemcritico.js?v=3"></script>
+    <script src="/assets/js_sitio/listadeitemcritico/listaitemcritico.js?v=5"></script>
     @endif
 
     @if(request()->is('listadealertas'))
-    <script src="/assets/js_sitio/listadealerta/listaalerta.js?v=3"></script>
+    <script src="/assets/js_sitio/listadealerta/listaalerta.js?v=5"></script>
     @endif
 
     @if(request()->is('listadeasignacion'))
-    <script src="/assets/js_sitio/listadeasignacion/listadeasignacion.js?v=3"></script>
+    <script src="/assets/js_sitio/listadeasignacion/listadeasignacion.js?v=5"></script>
     @endif
 
     @if(request()->is('bitacoraconsumibles'))
