@@ -953,7 +953,7 @@
                             <option value="12">Constancia de situación fiscal</option>
                             <option value="14">Visa</option>
                             <option value="15">Credencial de residente</option>
-                            <option value="16">Aviso de retención de infonavit</option>
+                            <option value="16">Aviso o carta de retención de INFONAVIT</option>
                             <option value="13">Otros</option>
                         </select>
                     </div>
