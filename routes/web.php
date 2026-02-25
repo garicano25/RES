@@ -76,6 +76,7 @@ use App\Http\Controllers\recursosempleado\expedientecolabController;
 
 // CONTROLADORES DE CAPACITACION 
 use App\Http\Controllers\capacitacion\brechaController;
+use App\Http\Controllers\capacitacion\catalogoscapacitacionController;
 
 // CONTROLADORES DE DESVINCULACION
 use App\Http\Controllers\desvinculacion\desvinculacionController;
@@ -651,6 +652,75 @@ Route::get('/validarPeriodoActualizacion', [expedientecolabController::class, 'v
 
 Route::get('/brechacompetencia', function () {  return view('RH.capacitacion.brechacomp');});
 Route::get('/Tablabrecha', [brechaController::class, 'Tablabrecha']);
+
+
+//==============================================  CATALOGOS CAPACITACION  ============================================== 
+
+Route::get('/catalogoscapacitacion', function () {return view('RH.capacitacion.catalogos.catalogovistageneral');});
+Route::post('/CatcapacitacionSave', [catalogoscapacitacionController::class, 'store']);
+Route::get('/CatcapacitacionDelete', [catalogoscapacitacionController::class, 'store']);
+
+
+// CATALOGO TIPO DE CURSO
+Route::get('/capacitaciontipocurso', function () {return view('RH.capacitacion.catalogos.catalogotipocurso');});
+Route::get('/Tablacaptipocurso', [catalogoscapacitacionController::class, 'Tablacaptipocurso']);
+
+// CATALOGO AREA CONOCIMIENTO
+Route::get('/capacitacionareaconocimiento', function () { return view('RH.capacitacion.catalogos.catalogoareaconocimiento');});
+Route::get('/Tablacapareaconocimiento', [catalogoscapacitacionController::class, 'Tablacapareaconocimiento']);
+
+// CATALOGO MODALIDAD
+Route::get('/capacitacionmodalidad', function () {return view('RH.capacitacion.catalogos.catalogomodalidad');});
+Route::get('/Tablacapmodalidad', [catalogoscapacitacionController::class, 'Tablacapmodalidad']);
+
+// CATALOGO FORMATO
+Route::get('/capacitacionformato', function () { return view('RH.capacitacion.catalogos.catalogoformato');});
+Route::get('/Tablacapformato', [catalogoscapacitacionController::class, 'Tablacapformato']);
+
+// CATALOGO PAIS O REGION 
+Route::get('/capacitacionpaisoregion', function () { return view('RH.capacitacion.catalogos.catalogopaisregion');});
+Route::get('/Tablacappaisoregion', [catalogoscapacitacionController::class, 'Tablacappaisoregion']);
+
+// CATALOGO IDIOMA 
+Route::get('/capacitacionidioma', function () {return view('RH.capacitacion.catalogos.catalogoidiomas');});
+Route::get('/Tablacapidioma', [catalogoscapacitacionController::class, 'Tablacapidioma']);
+
+// CATALOGO NORMATIVIDAD O MARCO DE REFERENCIA 
+Route::get('/capacitacionnormatividad', function () { return view('RH.capacitacion.catalogos.catalogonormativa');});
+Route::get('/Tablacapnormatividad', [catalogoscapacitacionController::class, 'Tablacapnormatividad']);
+
+// RECONOCIMIENTO
+Route::get('/capacitacionreconocimiento', function () { return view('RH.capacitacion.catalogos.catalogoreconocimiento');});
+Route::get('/Tablacapreconocimiento', [catalogoscapacitacionController::class, 'Tablacapreconocimiento']);
+
+// COMPETENCIA
+Route::get('/capacitacioncompetencia', function () {return view('RH.capacitacion.catalogos.catalogocompetenciasdesarrolla');});
+Route::get('/Tablacapcompetencias', [catalogoscapacitacionController::class, 'Tablacapcompetencias']);
+
+// TIPO PROVEEDOR
+Route::get('/capacitaciontipoproveedor', function () { return view('RH.capacitacion.catalogos.catalogotipoproveedor');});
+Route::get('/Tablacaptipoproveedor', [catalogoscapacitacionController::class, 'Tablacaptipoproveedor']);
+
+// METODO DE EVALUACION
+Route::get('/capacitacionmetodoevaluacion', function () {return view('RH.capacitacion.catalogos.catalogometodoevaluacion');});
+Route::get('/Tablacapmetodoevaluacion', [catalogoscapacitacionController::class, 'Tablacapmetodoevaluacion']);
+
+// EVIDENCIAS GENERADAS
+Route::get('/capacitacionevidenciasgeneradas', function () { return view('RH.capacitacion.catalogos.catalogoevidencasgeneradas');});
+Route::get('/Tablacapevidenciasgeneradas', [catalogoscapacitacionController::class, 'Tablacapevidenciasgeneradas']);
+
+// UBICACION
+Route::get('/capacitacionubicacion', function () {return view('RH.capacitacion.catalogos.catalogoubicacion');});
+Route::get('/Tablacapubicacion', [catalogoscapacitacionController::class, 'Tablacapubicacion']);
+
+// MATERIAL DIDACTICO
+Route::get('/capacitacionmaterialdidactico', function () { return view('RH.capacitacion.catalogos.catalogomaterialdidactico');});
+Route::get('/Tablacapmaterialdidactico', [catalogoscapacitacionController::class, 'Tablacapmaterialdidactico']);
+
+// IMPACTO ESPERADO
+Route::get('/capacitacionimpactoesperado', function () {return view('RH.capacitacion.catalogos.catalogoimpactoesperado');});
+Route::get('/Tablacapimpactoesperado', [catalogoscapacitacionController::class, 'Tablacapimpactoesperado']);
+
 
 
 //============================================== DESVINCULACIÓN ============================================== 

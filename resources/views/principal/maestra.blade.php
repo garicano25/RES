@@ -525,7 +525,9 @@
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/catalogogenerales')}}">Catálogos generales</a>
                                 </li>
-
+                                <hr class="dropdown-divider">
+                                <li><a class="dropdown-item" href="{{url('/catalogoscapacitacion')}}">Catálogos capacitación</a>
+                                </li>
                             </ul>
                         </li>
                     </ul>
@@ -801,7 +803,7 @@
 
 
     @if(request()->is('actualizaciondocumentos'))
-    <script src="/assets/js_sitio/contratacion/actualizaciondocs.js?v=1"></script>
+    <script src="/assets/js_sitio/contratacion/actualizaciondocs.js?v=2"></script>
     @endif
 
 
@@ -809,8 +811,65 @@
     <script src="/assets/js_sitio/contratacion/actualizaciondochistorial.js"></script>
     @endif
 
+    @if(request()->is('capacitaciontipocurso'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/tipocurso.js"></script>
+    @endif
 
+    @if(request()->is('capacitacionareaconocimiento'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/areaconocimiento.js"></script>
+    @endif
 
+    @if(request()->is('capacitacionmodalidad'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/modalidad.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionformato'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/formato.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionpaisoregion'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/paisoregion.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionidioma'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/idioma.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionnormatividad'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/normatividad.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionreconocimiento'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/reconocimiento.js"></script>
+    @endif
+
+    @if(request()->is('capacitacioncompetencia'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/competencia.js"></script>
+    @endif
+
+    @if(request()->is('capacitaciontipoproveedor'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/tipoproveedor.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionmetodoevaluacion'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/metodoevaluacion.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionevidenciasgeneradas'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/evidenciasgeneradas.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionubicacion'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/ubicacion.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionmaterialdidactico'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/materialdidactico.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionimpactoesperado'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/impactoesperado.js"></script>
+    @endif
 </body>
 
 </html>

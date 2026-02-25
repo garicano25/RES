@@ -57,7 +57,6 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
 $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
     e.preventDefault();
 
-
        
     $('#formularioRECURSOSEMPLEADO').each(function(){
         this.reset();
@@ -65,70 +64,8 @@ $("#NUEVO_RECUROSEMPLEADO").click(function (e) {
 
     $(".materialesdiv").empty();
 
-
     $("#miModal_RECURSOSEMPLEADOS").modal("show");
-
-
-    $.get('/obtenerAreaSolicitante', function(response) {
-    if (response.area) {
-        $("#AREA_SOLICITANTE_MR").val(response.area);
-    } else {
-        $("#AREA_SOLICITANTE_MR").val("Área no encontrada");
-        }
-        
-        });
-
-    
-     $.get('/obtenerDatosPermiso', function (response) {
-        if (response.cargo) {
-            $("#CARGO_PERMISO").val(response.cargo);
-        }
-        if (response.numero_empleado) {
-            $("#NOEMPLEADO_PERMISO").val(response.numero_empleado);
-        }
-     });
-    
-    
-
-    $.get('/obtenerDatosVacaciones', function (response) {
-        if (response.numero_empleado) {
-            $("#NOEMPLEADO_PERMISO_VACACIONES").val(response.numero_empleado);
-        }
-        if (response.fecha_ingreso) {
-            $("#FECHA_INGRESO_VACACIONES").val(response.fecha_ingreso);
-        }
-        if (response.anios_servicio) {
-            $("#ANIO_SERVICIO_VACACIONES").val(response.anios_servicio);
-        }
-        if (response.dias_corresponden) {
-            $("#DIAS_CORRESPONDEN_VACACIONES").val(response.dias_corresponden);
-        }
-        if (response.desde_anio_vacaciones) {
-            $("#DESDE_ANIO_VACACIONES").val(response.desde_anio_vacaciones);
-        }
-        if (response.hasta_anio_vacaciones) {
-            $("#HASTA_ANIO_VACACIONES").val(response.hasta_anio_vacaciones);
-        }
-    }).fail(function (xhr) {
-        console.error("Error al obtener los datos:", xhr.responseText);
-        Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: "No fue posible obtener los datos de vacaciones. Intente nuevamente."
-        });
-    });
-
-    
-    $.get('/obtenerAreaSolicitante', function(response) {
-    if (response.area) {
-        $("#AREA_VACACIONES").val(response.area);
-    } else {
-        $("#AREA_VACACIONES").val("Área no encontrada");
-        }
-      });
-
-    
-    
+   
     const hoy = new Date();
     const yyyy = hoy.getFullYear();
     const mm = String(hoy.getMonth() + 1).padStart(2, '0');
@@ -767,10 +704,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // Caso 3: Vacaciones
         if (this.value === "3") {
 
-            // Primer GET: obtener datos de vacaciones
             $.get('/obtenerDatosVacaciones', function (response) {
                 if (response.numero_empleado) {
                     $("#NOEMPLEADO_PERMISO_VACACIONES").val(response.numero_empleado);
@@ -799,7 +734,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             });
 
-            // Segundo GET: obtener área del solicitante
             $.get('/obtenerAreaSolicitante', function (response) {
                 if (response.area) {
                     $("#AREA_VACACIONES").val(response.area);
@@ -847,39 +781,32 @@ document.addEventListener("DOMContentLoaded", function () {
         let usuarioNombre = btnFirmar.getAttribute("data-usuario");
         let fechaSalida = inputFechaSalida.value; 
 
-        // Validar que exista fecha
         if (!fechaSalida) {
             alert("Debe ingresar la fecha antes de firmar la solicitud.");
 
-            // Marcar el input en rojo
             inputFechaSalida.classList.add("is-invalid");
 
-            // Quitar el rojo automáticamente cuando empiece a escribir
             inputFechaSalida.addEventListener("input", function () {
                 if (this.value) {
                     this.classList.remove("is-invalid");
                 }
             });
 
-            return; // detener ejecución
+            return; 
         }
 
-        // Obtener hora actual
         let ahora = new Date();
         let horas = ahora.getHours();
         let minutos = String(ahora.getMinutes()).padStart(2, "0");
         let segundos = String(ahora.getSeconds()).padStart(2, "0");
 
-        // Determinar AM o PM
         let ampm = horas >= 12 ? "p.m." : "a.m.";
 
-        // Convertir a formato de 12 horas
         horas = horas % 12;
-        horas = horas ? horas : 12; // El 0 se convierte en 12
+        horas = horas ? horas : 12; 
 
         let horaCompleta = horas + ":" + minutos + ":" + segundos + " " + ampm;
 
-        // Asignar valores
         inputFirmo.value = "1";
         inputFirmadoPor.value =  usuarioNombre + " el " + fechaSalida + " a las " + horaCompleta;
     });
@@ -990,7 +917,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 mensajeError.style.display = "none";
                 modal.show();
             } else {
-                // 🚫 Si responde que no → calcular directo
                 inputTomados.value = 0;
                 let diasPendientes = diasCorresponden - diasDisfrutar;
                 if (diasPendientes < 0) diasPendientes = 0;
