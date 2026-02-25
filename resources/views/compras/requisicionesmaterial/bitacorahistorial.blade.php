@@ -729,7 +729,9 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                     <button type="button" class="btn btn-success" id="btnGuardarTodo" style="display: block;">Guardar Todo</button>
+                    @endif
                 </div>
             </form>
 
