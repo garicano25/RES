@@ -170,8 +170,12 @@ var Tablalistaitemcriticos = $("#Tablalistaitemcriticos").DataTable({
     responsive: false,
     paging: true,
     searching: true,
-    info: false,
+    filtering: true,
     lengthChange: true,
+    info: true,   
+    scrollY: false,
+    scrollCollapse: false,
+    fixedHeader: false,    
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',

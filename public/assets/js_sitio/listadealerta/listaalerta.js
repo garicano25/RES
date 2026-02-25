@@ -172,8 +172,12 @@ var Tablalistadealertas = $("#Tablalistadealertas").DataTable({
     responsive: false,
     paging: true,
     searching: true,
-    info: false,
+    filtering: true,
     lengthChange: true,
+    info: true,   
+    scrollY: false,
+    scrollCollapse: false,
+    fixedHeader: false,    
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',
@@ -235,7 +239,9 @@ var Tablalistadealertas = $("#Tablalistadealertas").DataTable({
      createdRow: function (row, data) {
         $(row).addClass(data.ROW_CLASS);
     },
-
+ infoCallback: function (settings, start, end, max, total, pre) {
+            return `Total de ${total} registros`;
+    },
 drawCallback: function () {
     const topScroll = document.querySelector('.tabla-scroll-top');
     const scrollInner = document.querySelector('.tabla-scroll-top .scroll-inner');

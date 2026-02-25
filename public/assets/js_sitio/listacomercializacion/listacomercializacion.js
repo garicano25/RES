@@ -196,13 +196,17 @@ var Tablalistacomercializacion = $("#Tablalistacomercializacion").DataTable({
     language: {
         url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
     },
-    scrollX: true,
+   scrollX: true,
     autoWidth: false,
     responsive: false,
     paging: true,
     searching: true,
-    info: false,
+    filtering: true,
     lengthChange: true,
+    info: true,   
+    scrollY: false,
+    scrollCollapse: false,
+    fixedHeader: false,    
     lengthMenu: [[10, 25, 50, -1], [10, 25, 50, 'Todos']],
     ajax: {
         dataType: 'json',
@@ -263,6 +267,9 @@ var Tablalistacomercializacion = $("#Tablalistacomercializacion").DataTable({
   ],
      createdRow: function (row, data) {
         $(row).addClass(data.ROW_CLASS);
+    },
+      infoCallback: function (settings, start, end, max, total, pre) {
+            return `Total de ${total} registros`;
     },
 
 drawCallback: function () {
