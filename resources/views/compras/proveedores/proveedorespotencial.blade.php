@@ -224,24 +224,7 @@
                 </div>
               </div>
 
-              <div class="col-12">
-                <div class="row">
-                  <div class="col-4 mb-3">
-                    <label>¿El proveedor es crítico? *</label>
-                    <select class="form-control" name="PROVEEDOR_CRITICO" id="PROVEEDOR_CRITICO" required>
-                      <option value="" selected disabled>Seleccione una opción</option>
-                      <option value="1">Sí</option>
-                      <option value="2">No</option>
-                    </select>
-                  </div>
-
-
-                </div>
-              </div>
-
-
-
-
+             
               <div class="row">
                 <div class="mb-3">
                   <div class="row">
