@@ -61,6 +61,7 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         { targets: 7, width: '50px', className: 'col-bien-servicio' },
         { targets: 8, width: '30px', className: 'text-center' },
         { targets: 9, width: '50px',className: 'text-center'  },
+        { targets: 10, width: '50px',className: 'text-center'  },
     ],
   columns: [
         { 
@@ -81,6 +82,7 @@ var Tablabitacoragr = $("#Tablabitacoragr").DataTable({
         className: "text-center",
         defaultContent: '<button class="btn btn-sm btn-primary btn-gr">Ver GR</button>'
       },
+      { data: 'FECHA_EMISION' }, 
       { data: 'NO_GR' }, 
   ],
     rowCallback: function(row, data) {

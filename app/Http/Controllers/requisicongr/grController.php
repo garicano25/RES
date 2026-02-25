@@ -331,30 +331,85 @@ class grController extends Controller
 
 
 
-                    $registrosGR = DB::table('formulario_bitacoragr')
-                        ->where('NO_MR', $first->NO_MR)
-                        ->when($first->NO_PO, function ($q) use ($first) {
-                            $q->where('NO_PO', $first->NO_PO);
-                        }, function ($q) use ($first) {
-                            $q->where('PROVEEDOR_KEY', $first->PROVEEDOR_KEY);
-                        })
-                        ->get(['FINALIZAR_GR', 'NO_RECEPCION']);
+                $registrosGR = DB::table('formulario_bitacoragr')
+                    ->where('NO_MR', $first->NO_MR)
+                    ->when($first->NO_PO, function ($q) use ($first) {
+                        $q->where('NO_PO', $first->NO_PO);
+                    }, function ($q) use ($first) {
+                        $q->where('PROVEEDOR_KEY', $first->PROVEEDOR_KEY);
+                    })
+                    ->get(['FINALIZAR_GR', 'NO_RECEPCION', 'FECHA_EMISION']);
 
-                    if ($registrosGR->isEmpty()) {  
-                        $first->ROW_CLASS = '';
-                        $first->NO_GR = null;
-                    } elseif ($registrosGR->every(fn($v) => $v->FINALIZAR_GR === 'Sí')) {
-                        $first->ROW_CLASS = 'bg-verde-suave';
-                        $first->NO_GR = $registrosGR->pluck('NO_RECEPCION')
-                            ->map(fn($v) => "• {$v}")
-                            ->implode('<br>');
-                    } else {
-                        $first->ROW_CLASS = 'bg-amarillo-suave';
-                        $first->NO_GR = $registrosGR->pluck('NO_RECEPCION')
-                            ->map(fn($v) => "• {$v}")
-                            ->implode('<br>');
-                    }
+                if ($registrosGR->isEmpty()) {
 
+                    $first->ROW_CLASS = '';
+                    $first->NO_GR = null;
+                    $first->FECHA_EMISION = null;
+                } else {
+
+                    $first->ROW_CLASS = $registrosGR->every(fn($v) => $v->FINALIZAR_GR === 'Sí')
+                        ? 'bg-verde-suave'
+                        : 'bg-amarillo-suave';
+
+                    // 🔹 NO_GR
+                    $first->NO_GR = $registrosGR
+                        ->pluck('NO_RECEPCION')
+                        ->filter() // elimina null
+                        ->map(fn($v) => "• {$v}")
+                        ->implode('<br>');
+
+                    // 🔹 FECHAS
+                    $first->FECHA_EMISION = $registrosGR
+                        ->pluck('FECHA_EMISION')
+                        ->filter()
+                        ->map(fn($v) => "• {$v}")
+                        ->implode('<br>');
+                }
+
+                // if ($registrosGR->isEmpty()) {  
+                //     $first->ROW_CLASS = '';
+                //     $first->NO_GR = null;
+                // } elseif ($registrosGR->every(fn($v) => $v->FINALIZAR_GR === 'Sí')) {
+                //     $first->ROW_CLASS = 'bg-verde-suave';
+                //     $first->NO_GR = $registrosGR->pluck('NO_RECEPCION')
+                //         ->map(fn($v) => "• {$v}")
+                //         ->implode('<br>');
+                // } else {
+                //     $first->ROW_CLASS = 'bg-amarillo-suave';
+                //     $first->NO_GR = $registrosGR->pluck('NO_RECEPCION')
+                //         ->map(fn($v) => "• {$v}")
+                //         ->implode('<br>');
+                // }
+
+
+                // if ($registrosGR->isEmpty()) {
+
+                //     $first->ROW_CLASS = '';
+                //     $first->NO_GR = null;
+                //     $first->FECHA_EMISION = null;
+                // } elseif ($registrosGR->every(fn($v) => $v->FINALIZAR_GR === 'Sí')) {
+
+                //     $first->ROW_CLASS = 'bg-verde-suave';
+
+                //     $first->NO_GR = $registrosGR->pluck('NO_RECEPCION')
+                //         ->map(fn($v) => "• {$v}")
+                //         ->implode('<br>');
+
+                //     $first->FECHA_EMISION = $registrosGR->pluck('FECHA_EMISION')
+                //         ->map(fn($v) => "• {$v}")
+                //         ->implode('<br>');
+                // } else {
+
+                //     $first->ROW_CLASS = 'bg-amarillo-suave';
+
+                //     $first->NO_GR = $registrosGR->pluck('NO_RECEPCION')
+                //         ->map(fn($v) => "• {$v}")
+                //         ->implode('<br>');
+
+                //     $first->FECHA_EMISION = $registrosGR->pluck('FECHA_EMISION')
+                //         ->map(fn($v) => "• {$v}")
+                //         ->implode('<br>');
+                // }
 
 
                     return $first;

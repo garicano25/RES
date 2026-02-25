@@ -54,7 +54,7 @@ var Tablabitacoragrhistorial = $("#Tablabitacoragrhistorial").DataTable({
         dataSrc: 'data'
     },
     columnDefs: [
-       { targets: '_all', defaultContent: 'N/A' },
+        { targets: '_all', defaultContent: 'N/A' },
         { targets: 0, width: '5px', className: 'text-center' },
         { targets: 1, width: '50px', className: 'text-center'  },
         { targets: 2, width: '50px',className: 'text-center'  },
@@ -64,7 +64,8 @@ var Tablabitacoragrhistorial = $("#Tablabitacoragrhistorial").DataTable({
         { targets: 6, width: '50px',className: 'text-center'  },
         { targets: 7, width: '50px', className: 'col-bien-servicio' },
         { targets: 8, width: '30px', className: 'text-center' },
-        { targets: 9, width: '50px',className: 'text-center'  },        
+        { targets: 9, width: '50px',className: 'text-center'  },
+        { targets: 10, width: '50px',className: 'text-center'  },
     ],
   columns: [
         { 
@@ -85,6 +86,7 @@ var Tablabitacoragrhistorial = $("#Tablabitacoragrhistorial").DataTable({
         className: "text-center",
         defaultContent: '<button class="btn btn-sm btn-primary btn-gr">Ver GR</button>'
       },
+      { data: 'FECHA_EMISION' }, 
       { data: 'NO_GR' }, 
   ],
     rowCallback: function(row, data) {

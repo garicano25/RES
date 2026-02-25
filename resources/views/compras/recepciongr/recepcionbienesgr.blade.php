@@ -143,7 +143,9 @@
                                 <th class="text-center">Fecha de entrega.PO</th>
                                 <th class="text-center">Bien o servicio</th>
                                 <th class="text-center">GR</th>
+                                <th class="text-center">Fecha de emisión .GR</th>
                                 <th class="text-center">No.GR</th>
+
 
 
                             </tr>
