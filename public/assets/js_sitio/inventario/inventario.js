@@ -98,6 +98,7 @@ $(document).ready(function() {
         $("#ESCRIBIR_PROVEEDOR").hide();
         $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
         $("#DATOS_VEHICULOS").hide();
+        $('#CANTIDAD_EQUIPO').attr('readonly', false);
 
 
     });
