@@ -209,28 +209,27 @@
 
         <tr>
             <td class="text-center" style="padding-top:5px;">
-                {{ $asignacion->PERSONAL_ASIGNA ?? '' }}
-            </td>
-
-            <td class="text-center" style="padding-top:5px;">
-                {{ $asignacion->ALMACENISTA_ASIGNACION ?? '' }}
-            </td>
-
-            <td class="text-center" style="padding-top:5px;">
                 {{ $empleado->NOMBRE_COLABORADOR ?? '' }}
                 {{ $empleado->PRIMER_APELLIDO ?? '' }}
                 {{ $empleado->SEGUNDO_APELLIDO ?? '' }}
             </td>
+            <td class="text-center" style="padding-top:5px;">
+                {{ $asignacion->ALMACENISTA_ASIGNACION ?? '' }}
+            </td>
+            <td class="text-center" style="padding-top:5px;">
+                {{ $asignacion->PERSONAL_ASIGNA ?? '' }}
+            </td>
+
         </tr>
         <tr>
             <td class="bg-gray text-center bold">
-                Autorización <br> RRHH 
+                Recibe <br> Colaborador
             </td>
             <td class="bg-gray text-center bold">
-                Autorización <br> Almacenista
+                Entrega <br> Almacenista
             </td>
             <td class="bg-gray text-center bold">
-                Conformidad <br> Colaborador
+                Autoriza <br> RRHH
             </td>
         </tr>
     </table>
@@ -238,8 +237,8 @@
 
 
     <script type="text/php">
-        
-    if (isset($pdf)) {
+
+        if (isset($pdf)) {
         $pdf->page_script(function ($pageNumber, $pageCount, $pdf, $fontMetrics) {
 
             $font = $fontMetrics->getFont("Poppins", "normal");
