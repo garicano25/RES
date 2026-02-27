@@ -77,6 +77,7 @@ use App\Http\Controllers\recursosempleado\expedientecolabController;
 // CONTROLADORES DE CAPACITACION 
 use App\Http\Controllers\capacitacion\brechaController;
 use App\Http\Controllers\capacitacion\catalogoscapacitacionController;
+use App\Http\Controllers\capacitacion\catalogocursosController;
 
 // CONTROLADORES DE DESVINCULACION
 use App\Http\Controllers\desvinculacion\desvinculacionController;
@@ -721,8 +722,15 @@ Route::get('/Tablacapmaterialdidactico', [catalogoscapacitacionController::class
 Route::get('/capacitacionimpactoesperado', function () {return view('RH.capacitacion.catalogos.catalogoimpactoesperado');});
 Route::get('/Tablacapimpactoesperado', [catalogoscapacitacionController::class, 'Tablacapimpactoesperado']);
 
+// CATALOGO GENERAL DEL CURSO 
+
+Route::get('/capacitacioncursos', [catalogocursosController::class, 'index']);
+Route::post('/CapCursoSave', [catalogocursosController::class, 'store']);
+Route::get('/CapCursoDelete', [catalogocursosController::class, 'store']);
+Route::get('/Tablacapcursos', [catalogocursosController::class, 'Tablacapcursos']);
 
 
+Route::post('/generarCodigoCurso', [catalogocursosController::class, 'generarCodigoCurso']);
 //============================================== DESVINCULACIÓN ============================================== 
 
 Route::get('/desvinculacion', [desvinculacionController::class, 'index']);

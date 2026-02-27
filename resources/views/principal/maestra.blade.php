@@ -794,18 +794,15 @@
     <script src="/assets/js_sitio/reclutamiento/vacantesactivashistorial.js"></script>
     @endif
 
-
     @if(request()->is('expediente'))
     <script src="/assets/js_sitio/RecEmpleados/expediente.js?v=2"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
-
     @if(request()->is('actualizaciondocumentos'))
     <script src="/assets/js_sitio/contratacion/actualizaciondocs.js?v=2"></script>
     @endif
-
 
     @if(request()->is('actualizaciondocumentoshistorial'))
     <script src="/assets/js_sitio/contratacion/actualizaciondochistorial.js"></script>
@@ -870,6 +867,11 @@
     @if(request()->is('capacitacionimpactoesperado'))
     <script src="/assets/js_sitio/capacitacion/catalogos/impactoesperado.js"></script>
     @endif
+
+    @if(request()->is('capacitacioncursos'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/cursos.js"></script>
+    @endif
+    
 </body>
 
 </html>
