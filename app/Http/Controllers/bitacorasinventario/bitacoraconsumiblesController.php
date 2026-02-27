@@ -186,7 +186,7 @@ class bitacoraconsumiblesController extends Controller
                 ->get();
 
             $data = [];
-            $tiposPermitidos = ['Consumible', 'Material para curso', 'Papelería', 'EPP', 'Donación', 'AF', 'ANF'];
+            $tiposPermitidos = ['Consumible', 'Material para curso', 'Papelería', 'EPP', 'Donación', 'AF', 'ANF', 'Herramienta'];
 
             // 🔹 RANGO DE FECHAS
             $fechaInicio = '2025-01-01';
