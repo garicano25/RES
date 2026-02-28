@@ -336,7 +336,7 @@
 
                         <div class="col-6 mt-3">
                             <div class="form-group">
-                                <label>Si aplica para la prestación de servicios de la empresa: cuales? </label>
+                                <label>¿Si aplica para la prestación de servicios de la empresa: cuáles?</label>
                                 <textarea class="form-control" id="PRESTACIONSERVICIOS_CURSO" name="PRESTACIONSERVICIOS_CURSO" rows="2"> </textarea>
                             </div>
                         </div>
@@ -652,7 +652,7 @@
 
                         <div class="col-6 mt-3">
                             <div class="form-group">
-                                <label>Evaluación de curso</label>
+                                <label>Evaluación de instructor</label>
                                 <textarea class="form-control" id="EVALUACION_INSTRUCTOR" name="EVALUACION_INSTRUCTOR" rows="3"></textarea>
                             </div>
                         </div>
