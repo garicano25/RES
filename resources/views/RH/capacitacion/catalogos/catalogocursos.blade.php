@@ -188,14 +188,14 @@
 
                         <div class="col-6 mt-3">
                             <div class="form-group">
-                                <label>Número de sesiones *</label>
+                                <label>Número de sesiones / días *</label>
                                 <input type="text" class="form-control" id="NUMERO_SESIONES" name="NUMERO_SESIONES" required>
                             </div>
                         </div>
 
                         <div class="col-6 mt-3">
                             <div class="form-group">
-                                <label>Duración por sesión *</label>
+                                <label>Duración por sesión / día*</label>
                                 <input type="text" class="form-control" id="DURACION_SESIONES" name="DURACION_SESIONES" required>
                             </div>
                         </div>
