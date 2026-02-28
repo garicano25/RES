@@ -693,84 +693,84 @@ class notificacionController extends Controller
 
 
 
-            $notiActualizacionDocs = collect([]);
+            // $notiActualizacionDocs = collect([]);
 
-            $curpUsuario = $usuario->CURP ?? null;
+            // $curpUsuario = $usuario->CURP ?? null;
 
-            if ($curpUsuario) {
+            // if ($curpUsuario) {
 
-                $tieneContratacion = DB::table('formulario_contratacion')
-                    ->where('CURP', $curpUsuario)
-                    ->where('ACTIVO', 1)
-                    ->exists();
+            //     $tieneContratacion = DB::table('formulario_contratacion')
+            //         ->where('CURP', $curpUsuario)
+            //         ->where('ACTIVO', 1)
+            //         ->exists();
 
-                if ($tieneContratacion) {
+            //     if ($tieneContratacion) {
 
-                    $ultimaFecha = DB::table('fechas_actualizaciondocs')
-                        ->where('ACTIVO', 1)
-                        ->orderByDesc('ID_ACTUALIZACION_DOCUMENTOS')
-                        ->first();
+            //         $ultimaFecha = DB::table('fechas_actualizaciondocs')
+            //             ->where('ACTIVO', 1)
+            //             ->orderByDesc('ID_ACTUALIZACION_DOCUMENTOS')
+            //             ->first();
 
-                    if ($ultimaFecha) {
+            //         if ($ultimaFecha) {
 
-                        $tiposRequeridos = json_decode($ultimaFecha->TIPO_DOCUMENTO, true);
+            //             $tiposRequeridos = json_decode($ultimaFecha->TIPO_DOCUMENTO, true);
 
-                        if (!empty($tiposRequeridos)) {
+            //             if (!empty($tiposRequeridos)) {
 
-                            $documentosUsuario = DB::table('documentos_soporte_contratacion')
-                                ->where('CURP', $curpUsuario)
-                                ->whereIn('TIPO_DOCUMENTO', $tiposRequeridos)
-                                ->get();
+            //                 $documentosUsuario = DB::table('documentos_soporte_contratacion')
+            //                     ->where('CURP', $curpUsuario)
+            //                     ->whereIn('TIPO_DOCUMENTO', $tiposRequeridos)
+            //                     ->get();
 
-                            if ($documentosUsuario->count() > 0) {
+            //                 if ($documentosUsuario->count() > 0) {
 
-                                $faltanDocumentos = false;
+            //                     $faltanDocumentos = false;
 
-                                foreach ($documentosUsuario as $doc) {
+            //                     foreach ($documentosUsuario as $doc) {
 
-                                    $existeActualizacion = DB::table('documento_actualizados')
-                                        ->where('DOCUMENTOS_ID', $doc->ID_DOCUMENTO_SOPORTE)
-                                        ->where('ACTIVO', 1)
-                                        ->whereBetween('created_at', [
-                                            $ultimaFecha->FECHA_INICIO,
-                                            $ultimaFecha->FECHA_FIN
-                                        ])
-                                        ->exists();
+            //                         $existeActualizacion = DB::table('documento_actualizados')
+            //                             ->where('DOCUMENTOS_ID', $doc->ID_DOCUMENTO_SOPORTE)
+            //                             ->where('ACTIVO', 1)
+            //                             ->whereBetween('created_at', [
+            //                                 $ultimaFecha->FECHA_INICIO,
+            //                                 $ultimaFecha->FECHA_FIN
+            //                             ])
+            //                             ->exists();
 
-                                    if (!$existeActualizacion) {
-                                        $faltanDocumentos = true;
-                                        break;
-                                    }
-                                }
+            //                         if (!$existeActualizacion) {
+            //                             $faltanDocumentos = true;
+            //                             break;
+            //                         }
+            //                     }
 
-                                if ($faltanDocumentos) {
+            //                     if ($faltanDocumentos) {
 
-                                    $badgeDocs = "<span style='
-                            background-color:#d9534f;
-                            color:white;
-                            padding:3px 8px;
-                            border-radius:6px;
-                            font-size:11px;
-                            font-weight:bold;
-                            display:inline-block;
-                            '>Importante</span>";
+            //                         $badgeDocs = "<span style='
+            //                 background-color:#d9534f;
+            //                 color:white;
+            //                 padding:3px 8px;
+            //                 border-radius:6px;
+            //                 font-size:11px;
+            //                 font-weight:bold;
+            //                 display:inline-block;
+            //                 '>Importante</span>";
 
-                                    $notiActualizacionDocs = collect([
-                                        [
-                                            'titulo'        => 'Actualización de documentos',
-                                            'detalle'       => 'Periodo: ' . $ultimaFecha->FECHA_INICIO . ' al ' . $ultimaFecha->FECHA_FIN,
-                                            'fecha'         => 'Vigencia hasta: ' . $ultimaFecha->FECHA_FIN,
-                                            'fecha_sort'    => $ultimaFecha->FECHA_FIN,
-                                            'estatus_badge' => $badgeDocs,
-                                            'link'          => url('/expediente')
-                                        ]
-                                    ]);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            //                         $notiActualizacionDocs = collect([
+            //                             [
+            //                                 'titulo'        => 'Actualización de documentos',
+            //                                 'detalle'       => 'Periodo: ' . $ultimaFecha->FECHA_INICIO . ' al ' . $ultimaFecha->FECHA_FIN,
+            //                                 'fecha'         => 'Vigencia hasta: ' . $ultimaFecha->FECHA_FIN,
+            //                                 'fecha_sort'    => $ultimaFecha->FECHA_FIN,
+            //                                 'estatus_badge' => $badgeDocs,
+            //                                 'link'          => url('/expediente')
+            //                             ]
+            //                         ]);
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             $resultado = collect($notiVoBo)
                 ->merge(collect($notiAutorizar))
@@ -785,7 +785,7 @@ class notificacionController extends Controller
                 ->merge(collect($notiOrdencompra))
                 ->merge(collect($notiAprobarPO))
                 ->merge(collect($notiVoboGR))
-                ->merge(collect($notiActualizacionDocs))
+                // ->merge(collect($notiActualizacionDocs))
 
 
                 ->sortByDesc(function ($item) {
