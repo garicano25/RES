@@ -30,6 +30,9 @@ use App\Models\capacitacion\materialdidacticoModel;
 use App\Models\capacitacion\impactoesparadoModel;
 use App\Models\organizacion\catalogocategoriaModel;
 use App\Models\capacitacion\cursosModel;
+use App\Models\capacitacion\documentosemitidosModel;
+use App\Models\capacitacion\monedaModel;
+use App\Models\capacitacion\lineanegocioModel;
 
 
 
@@ -56,11 +59,13 @@ class catalogocursosController extends Controller
         $ubicacion = ubicacionModel::where('ACTIVO', 1)->get();
         $materialesdidactico = materialdidacticoModel::where('ACTIVO', 1)->get();
         $impactoesperado = impactoesparadoModel::where('ACTIVO', 1)->get();
+        $docemitido = documentosemitidosModel::where('ACTIVO', 1)->get();
+        $moneda = monedaModel::where('ACTIVO', 1)->get();
+        $lineas = lineanegocioModel::where('ACTIVO', 1)->get();
 
 
 
-
-        return view('RH.capacitacion.catalogos.catalogocursos', compact('tipocurso', 'areaconocimiento', 'modalidad', 'formato', 'paisregion', 'idioma', 'normatividad', 'reconocimiento', 'competencia', 'tipoproveedor', 'metodoevaluacion', 'evidenciageneradas', 'ubicacion', 'materialesdidactico', 'impactoesperado', 'categorias' ));
+        return view('RH.capacitacion.catalogos.catalogocursos', compact('tipocurso', 'areaconocimiento', 'modalidad', 'formato', 'paisregion', 'idioma', 'normatividad', 'reconocimiento', 'competencia', 'tipoproveedor', 'metodoevaluacion', 'evidenciageneradas', 'ubicacion', 'materialesdidactico', 'impactoesperado', 'categorias', 'docemitido','moneda', 'lineas'));
     }
 
 

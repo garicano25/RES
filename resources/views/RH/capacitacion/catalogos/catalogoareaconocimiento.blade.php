@@ -32,7 +32,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Nombre del área</label>
+                        <label class="form-label">Nombre del área *</label>
                         <input type=" text" class="form-control" id="NOMBRE_AREA_CONOCIMIENTO" name="NOMBRE_AREA_CONOCIMIENTO" required>
                     </div>
 

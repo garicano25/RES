@@ -32,7 +32,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Impacto esperado</label>
+                        <label class="form-label">Impacto esperado *</label>
                         <input type=" text" class="form-control" id="IMPACTO_ESPERADO" name="IMPACTO_ESPERADO" required>
                     </div>
 

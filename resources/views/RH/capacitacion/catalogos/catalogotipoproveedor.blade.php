@@ -31,7 +31,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Tipo de proveedor</label>
+                        <label class="form-label">Tipo de proveedor *</label>
                         <input type=" text" class="form-control" id="TIPO_PROVEEDOR" name="TIPO_PROVEEDOR" required>
                     </div>
 

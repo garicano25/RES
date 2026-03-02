@@ -32,7 +32,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Material didáctico</label>
+                        <label class="form-label">Material didáctico *</label>
                         <input type=" text" class="form-control" id="MATERIAL_DIDACTICO" name="MATERIAL_DIDACTICO" required>
                     </div>
 

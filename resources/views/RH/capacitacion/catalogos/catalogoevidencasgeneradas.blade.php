@@ -31,7 +31,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Nombre de la evidencia</label>
+                        <label class="form-label">Nombre de la evidencia *</label>
                         <input type=" text" class="form-control" id="NOMBRE_EVIDENCIA" name="NOMBRE_EVIDENCIA" required>
                     </div>
 

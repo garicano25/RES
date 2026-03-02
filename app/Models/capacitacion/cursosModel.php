@@ -74,7 +74,14 @@ class cursosModel extends Model
         'UBICACION_CURSO',
         'MATERIAL_DIDACTICO',
         'IMPACTO_ESPERADO',
-
+        'CURSOS_JSON',
+        'PRESTACION_SERVICIO_JSON',
+        'CERTIFICACIONES_INSTRUCTOR_JSON',
+        'CALIFICACION_MAXIMA',
+        'TIPO_COSTO',
+        'COSTO_CURSO',
+        'TASA_CAMBIO',
+        'VALOR_MXN',
         'ACTIVO'
     ];
 

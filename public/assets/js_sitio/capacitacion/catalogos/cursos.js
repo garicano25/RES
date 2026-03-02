@@ -9,7 +9,15 @@ Modalcurso.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formulariocurso').reset();
 
     $('#CADA_ANIO').hide();
+    $('#NOMBRE_CURSOS').hide();
+    $('#PRESTACION_SERVICIOS').hide();
 
+    $(".perfilrecomendado").empty();
+    $(".cursosprevios").empty();
+    $(".prestacionservicios").empty();
+    $(".certificacionesinstructor").empty();
+    $(".leccionesaprendidas").empty();
+    $(".observacionescurso").empty();
     
 });
 
@@ -96,6 +104,14 @@ $("#NUEVO_CURSO").click(function (e) {
     $('#formularioRECURSOSEMPLEADO').each(function () {
         this.reset();
     });
+
+
+    $(".perfilrecomendado").empty();
+    $(".cursosprevios").empty();
+    $(".prestacionservicios").empty();
+    $(".certificacionesinstructor").empty();
+    $(".leccionesaprendidas").empty();
+    $(".observacionescurso").empty();
 
 
     $("#miModal_curso").modal("show");
@@ -228,7 +244,6 @@ $("#NUEVO_CURSO").click(function (e) {
     });
 });
 
-
 $('#VIGENCIA_CURSO').on('change', function () {
 
     let valor = $(this).val();
@@ -241,6 +256,326 @@ $('#VIGENCIA_CURSO').on('change', function () {
 
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+    const botonAgregarperfil = document.getElementById('botonagregarperfilrecomendado');
+    botonAgregarperfil.addEventListener('click', agregarperfil);
+
+    function agregarperfil() {
+
+        const contenedor = document.querySelector('.perfilrecomendado');
+
+        let ultimaFila = contenedor.querySelector('.fila-perfil:last-child');
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-perfil', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                <label>Recomendado *</label>
+                <input type="text" class="form-control" name="PERFIL_RECOMENDADO" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarperfil">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarperfil')
+            .addEventListener('click', function() {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    }
+});
+
+$('#CURSOS_PREVIOS').on('change', function () {
+
+    let valor = $(this).val();
+
+    if (valor === "1") {
+        $('#NOMBRE_CURSOS').slideDown();
+    } else {
+        $('#NOMBRE_CURSOS').slideUp();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const botonCursos = document.getElementById('botonagregarcursos');
+    botonCursos.addEventListener('click', agregarcursos);
+
+    function agregarcursos() {
+
+        const contenedor = document.querySelector('.cursosprevios');
+
+        let ultimaFila = contenedor.querySelector('.fila-cursos:last-child');
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-cursos', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                <label>Nombre del curso *</label>
+                <input type="text" class="form-control" name="NOMBRE_CURSO" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarcurso">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarcurso')
+            .addEventListener('click', function() {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    }
+});
+
+$('#PRESTACIONSERVICIOS_CURSO').on('change', function () {
+
+    let valor = $(this).val();
+
+    if (valor === "1") {
+        $('#PRESTACION_SERVICIOS').slideDown();
+    } else {
+        $('#PRESTACION_SERVICIOS').slideUp();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const botonAgregarServicio = document.getElementById('botonagregarservicios');
+    botonAgregarServicio.addEventListener('click', agregarServicio);
+
+    function agregarServicio() {
+
+        let opciones = `<option value="">Seleccione una opción</option>`;
+
+        if (window.lineas && Array.isArray(window.lineas)) {
+            window.lineas.forEach(lineas => {
+                opciones += `
+                    <option value="${lineas.ID_LINEA_NEGOCIO}">
+                        ${lineas.ABREVIATURA_NEGOCIO}
+                    </option>
+                `;
+            });
+        }
+
+        const divServicio = document.createElement('div');
+        divServicio.classList.add('row', 'generarservicio', 'mb-3');
+
+        divServicio.innerHTML = `
+        
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Línea de negocio *</label>
+                    <select class="form-control"
+                            name="LINEA_NEGOCIO"
+                            required>
+                        ${opciones}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                    <label>¿Cuál? *</label>
+                    <input type="text"
+                           class="form-control"
+                           name="CUAL_SERVICIO"
+                           required>
+                </div>
+            </div>
+
+            <div class="col-12 mt-2">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button"
+                            class="btn btn-danger botonEliminarServicio">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        const contenedor = document.querySelector('.prestacionservicios');
+        contenedor.appendChild(divServicio);
+
+        const botonEliminar = divServicio.querySelector('.botonEliminarServicio');
+        botonEliminar.addEventListener('click', function() {
+            contenedor.removeChild(divServicio);
+        });
+    }
+
+});
+
+$('#CERTIFICACIONES_INSTRUCTOR').on('change', function () {
+
+    let valor = $(this).val();
+
+    if (valor === "1") {
+        $('#CERTIFICACIONESINSTRUCTOR').slideDown();
+    } else {
+        $('#CERTIFICACIONESINSTRUCTOR').slideUp();
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const botonCertificaciones = document.getElementById('botonagregarcertificacioninstructor');
+    botonCertificaciones.addEventListener('click', agregarcertificacion);
+
+    function agregarcertificacion() {
+
+        const contenedor = document.querySelector('.certificacionesinstructor');
+
+        let ultimaFila = contenedor.querySelector('.fila-certificaciones:last-child');
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-certificaciones', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                <label>Nombre certificación *</label>
+                <input type="text" class="form-control" name="NOMBRE_CERTIFICACION" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarcertificacion">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarcertificacion')
+            .addEventListener('click', function() {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    }
+});
+
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    const botonAgregarLecciones = document.getElementById('botonagregarlecciones');
+    botonAgregarLecciones.addEventListener('click', agregarlecciones);
+
+    function agregarlecciones() {
+
+        const contenedor = document.querySelector('.leccionesaprendidas');
+
+        let ultimaFila = contenedor.querySelector('.fila-lecciones:last-child');
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-lecciones', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                <label>Lección *</label>
+                <input type="text" class="form-control" name="NOMBRE_LECCION" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarleccion">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarleccion')
+            .addEventListener('click', function() {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const botonAgregarObservaciones = document.getElementById('botonagregarobservaciones');
+    botonAgregarObservaciones.addEventListener('click', agregarobservaciones);
+
+    function agregarobservaciones() {
+
+        const contenedor = document.querySelector('.observacionescurso');
+
+        let ultimaFila = contenedor.querySelector('.fila-observaciones:last-child');
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-observaciones', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                <label>Observación *</label>
+                <input type="text" class="form-control" name="INPUT_OBSERVACION" required>
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarobservacion">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarobservacion')
+            .addEventListener('click', function() {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    }
+});
+
 
 
 $("#guardarcursos").click(function (e) {
@@ -251,6 +586,57 @@ $("#guardarcursos").click(function (e) {
 
     if (formularioValido) {
 
+
+        var perfilrestricciones = [];
+            $("[name='PERFIL_RECOMENDADO']").each(function () {
+                perfilrestricciones.push({ 'PERFIL_RECOMENDADO': $(this).val() });
+        });
+        
+          var cursosprevios = [];
+            $("[name='NOMBRE_CURSO']").each(function () {
+                cursosprevios.push({ 'NOMBRE_CURSO': $(this).val() });
+        });
+        
+        
+        var prestacionservicios = [];
+        $(".generarservicio ").each(function() {
+            var inputservicios = {
+                'LINEA_NEGOCIO': $(this).find("select[name='LINEA_NEGOCIO']").val(),
+                'CUAL_SERVICIO': $(this).find("input[name='CUAL_SERVICIO']").val(),
+            };
+            prestacionservicios.push(inputservicios);
+        });
+
+        var certificacioninstructor = [];
+            $("[name='NOMBRE_CERTIFICACION']").each(function () {
+                certificacioninstructor.push({ 'NOMBRE_CERTIFICACION': $(this).val() });
+        });
+        
+        var leccionesaprendidas= [];
+            $("[name='NOMBRE_LECCION']").each(function () {
+                leccionesaprendidas.push({ 'NOMBRE_LECCION': $(this).val() });
+        });
+        
+         var observacionescurso= [];
+            $("[name='INPUT_OBSERVACION']").each(function () {
+                observacionescurso.push({ 'NOMBREINPUT_OBSERVACION_LECCION': $(this).val() });
+        });
+        
+         const requestData = {
+            api: 1,
+            ID_CURSOS_CAPACITACION: ID_CURSOS_CAPACITACION,
+            PERFILRECOMENDADO_CURSO: JSON.stringify(perfilrestricciones),
+            CURSOS_JSON: JSON.stringify(cursosprevios),
+            PRESTACION_SERVICIO_JSON: JSON.stringify(prestacionservicios),
+            CERTIFICACIONES_INSTRUCTOR_JSON: JSON.stringify(certificacioninstructor),
+            LECCIONES_APRENDIDAS: JSON.stringify(leccionesaprendidas),
+            OBSERVACIONES_CURSO: JSON.stringify(observacionescurso),
+            
+
+        };
+
+
+
     if (ID_CURSOS_CAPACITACION == 0) {
         
         alertMensajeConfirm({
@@ -260,7 +646,7 @@ $("#guardarcursos").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarcursos')
-            await ajaxAwaitFormData({ api: 1, ID_CURSOS_CAPACITACION: ID_CURSOS_CAPACITACION }, 'CapCursoSave', 'formulariocurso', 'guardarcursos', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData(requestData, 'CapCursoSave', 'formulariocurso', 'guardarcursos', { callbackAfter: true, callbackBefore: true }, () => {
         
                
 
@@ -300,7 +686,7 @@ $("#guardarcursos").click(function (e) {
         },async function () { 
 
             await loaderbtn('guardarcursos')
-            await ajaxAwaitFormData({ api: 1, ID_CURSOS_CAPACITACION: ID_CURSOS_CAPACITACION }, 'CapCursoSave', 'formulariocurso', 'guardarcursos', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData(requestData, 'CapCursoSave', 'formulariocurso', 'guardarcursos', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -335,7 +721,6 @@ $("#guardarcursos").click(function (e) {
 }
     
 });
-
 
 
 var Tablacapcursos = $("#Tablacapcursos").DataTable({
@@ -397,9 +782,6 @@ var Tablacapcursos = $("#Tablacapcursos").DataTable({
 });
 
 
-
-
-
 $('#Tablacapcursos tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacapcursos.row(tr);
@@ -438,6 +820,31 @@ $('#Tablacapcursos tbody').on('click', 'td>button.EDITAR', function () {
         $('#CADA_ANIO').hide();
     }
 
+    if (row.data().CURSOS_PREVIOS === "1") {
+        $('#NOMBRE_CURSOS').show();
+    } else if (row.data().CURSOS_PREVIOS === "2") {
+        $('#NOMBRE_CURSOS').hide();
+    }else {
+        $('#NOMBRE_CURSOS').hide();
+    }
+
+    if (row.data().PRESTACIONSERVICIOS_CURSO === "1") {
+        $('#PRESTACION_SERVICIOS').show();
+    } else if (row.data().PRESTACIONSERVICIOS_CURSO === "2") {
+        $('#PRESTACION_SERVICIOS').hide();
+    }else {
+        $('#PRESTACION_SERVICIOS').hide();
+    }
+
+    if (row.data().CERTIFICACIONES_INSTRUCTOR === "1") {
+        $('#CERTIFICACIONESINSTRUCTOR').show();
+    } else if (row.data().CERTIFICACIONES_INSTRUCTOR === "2") {
+        $('#CERTIFICACIONESINSTRUCTOR').hide();
+    }else {
+        $('#CERTIFICACIONESINSTRUCTOR').hide();
+    }
+
+
 
     /// CATEGORIAS 
     if (!$('#CATEGORIAS_CURSO')[0].selectize) {
@@ -820,24 +1227,401 @@ $('#Tablacapcursos tbody').on('click', 'td>button.EDITAR', function () {
 
 
 
+   $(".perfilrecomendado").empty();
+    mostrarperfilrecomendado(row);
 
+    $(".cursosprevios").empty();
+    mostrarcursosprevios(row);
+
+    $(".prestacionservicios").empty();
+    mostrarPrestacionServicios(row);
+
+    $(".certificacionesinstructor").empty();
+    mostrarcertificaciones(row);
+
+    $(".leccionesaprendidas").empty();
+    mostrarleccionesaprendidas(row);
+
+    $(".observacionescurso").empty();
+    mostrarobservaciones(row);
+
+
+
+
+    
 
     $('#miModal_curso .modal-title').html(row.data().NOMBE_OFICIAL_CURSO);
 
 });
 
+function mostrarperfilrecomendado(row) {
 
+    let contenedor = document.querySelector('.perfilrecomendado');
+
+    contenedor.innerHTML = "";
+
+    let data = row.data().PERFILRECOMENDADO_CURSO;
+
+    if (!data) return;
+
+    try {
+        data = JSON.parse(data);
+    } catch (e) {
+        data = [];
+    }
+
+    let ultimaFila = null;
+
+    data.forEach((item, index) => {
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-perfil', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                <label>Recomendado *</label>
+                <input type="text" class="form-control" 
+                       name="PERFIL_RECOMENDADO" 
+                       value="${item.PERFIL_RECOMENDADO}" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarperfil">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarperfil')
+            .addEventListener('click', function () {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    });
+}
+
+function mostrarcursosprevios(row) {
+
+    let contenedor = document.querySelector('.cursosprevios');
+
+    contenedor.innerHTML = "";
+
+    let data = row.data().CURSOS_JSON;
+
+    if (!data) return;
+
+    try {
+        data = JSON.parse(data);
+    } catch (e) {
+        data = [];
+    }
+
+    let ultimaFila = null;
+
+    data.forEach((item, index) => {
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-cursos', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                <label>Nombre del curso *</label>
+                <input type="text" class="form-control" 
+                       name="NOMBRE_CURSO" 
+                       value="${item.NOMBRE_CURSO}" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarcurso">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarcurso')
+            .addEventListener('click', function () {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    });
+}
+
+function mostrarPrestacionServicios(row) {
+
+    const contenedor = document.querySelector('.prestacionservicios');
+    contenedor.innerHTML = "";
+
+    let data = row.data().PRESTACION_SERVICIO_JSON;
+
+    if (!data) return;
+
+    try {
+        data = JSON.parse(data);
+    } catch (e) {
+        data = [];
+    }
+
+    data.forEach((item) => {
+
+        const fila = document.createElement('div');
+        fila.classList.add('row', 'generarservicio', 'mb-3');
+
+        const servicioSeleccionada = item.LINEA_NEGOCIO;
+        const cualServicio = item.CUAL_SERVICIO ?? "";
+
+        let opcionesClasificacion = `<option value="">Seleccione una clasificación</option>`;
+
+        if (window.lineas && Array.isArray(window.lineas)) {
+            window.lineas.forEach(servicios => {
+                opcionesClasificacion += `
+                    <option value="${servicios.ID_LINEA_NEGOCIO}"
+                        ${servicios.ID_LINEA_NEGOCIO == servicioSeleccionada ? "selected" : ""}>
+                        ${servicios.ABREVIATURA_NEGOCIO}
+                    </option>
+                `;
+            });
+        }
+
+        fila.innerHTML = `
+            <div class="col-6">
+                <div class="form-group">
+                    <label>Línea de negocio *</label>
+                    <select class="form-control"
+                            name="LINEA_NEGOCIO"
+                            required>
+                        ${opcionesClasificacion}
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-6">
+                <div class="form-group">
+                      <label>¿Cuál? *</label>
+                    <input type="text"
+                           class="form-control"
+                           name="CUAL_SERVICIO"
+                           value="${cualServicio}"
+                           required>
+                </div>
+            </div>
+
+           <div class="col-12 mt-2">
+                <div class="form-group" style="text-align: center;">
+                    <button type="button"
+                            class="btn btn-danger botonEliminarServicio">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        contenedor.appendChild(fila);
+
+        // 🗑 Eliminar fila
+        fila.querySelector('.botonEliminarServicio')
+            .addEventListener('click', function () {
+                fila.remove();
+            });
+    });
+}
+
+function mostrarcertificaciones(row) {
+
+    let contenedor = document.querySelector('.certificacionesinstructor');
+
+    contenedor.innerHTML = "";
+
+    let data = row.data().CERTIFICACIONES_INSTRUCTOR_JSON;
+
+    if (!data) return;
+
+    try {
+        data = JSON.parse(data);
+    } catch (e) {
+        data = [];
+    }
+
+    let ultimaFila = null;
+
+    data.forEach((item, index) => {
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-certificaciones', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+            <label>Nombre certificación *</label>
+                 <input type="text" class="form-control"
+                       name="NOMBRE_CERTIFICACION" 
+                       value="${item.NOMBRE_CERTIFICACION}" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarcertificacion">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarcertificacion')
+            .addEventListener('click', function () {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    });
+}
+
+function mostrarleccionesaprendidas(row) {
+
+    let contenedor = document.querySelector('.leccionesaprendidas');
+
+    contenedor.innerHTML = "";
+
+    let data = row.data().LECCIONES_APRENDIDAS;
+
+    if (!data) return;
+
+    try {
+        data = JSON.parse(data);
+    } catch (e) {
+        data = [];
+    }
+
+    let ultimaFila = null;
+
+    data.forEach((item, index) => {
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-lecciones', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                <label>Lección *</label>
+                <input type="text" class="form-control" 
+                       name="NOMBRE_LECCION" 
+                       value="${item.NOMBRE_LECCION}" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarleccion">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarleccion')
+            .addEventListener('click', function () {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    });
+}
+
+function mostrarobservaciones(row) {
+
+    let contenedor = document.querySelector('.observacionescurso');
+
+    contenedor.innerHTML = "";
+
+    let data = row.data().OBSERVACIONES_CURSO;
+
+    if (!data) return;
+
+    try {
+        data = JSON.parse(data);
+    } catch (e) {
+        data = [];
+    }
+
+    let ultimaFila = null;
+
+    data.forEach((item, index) => {
+
+        if (!ultimaFila || ultimaFila.querySelectorAll('.col-6').length === 2) {
+            ultimaFila = document.createElement('div');
+            ultimaFila.classList.add('row', 'fila-observaciones', 'mb-3');
+            contenedor.appendChild(ultimaFila);
+        }
+
+        const bloque = document.createElement('div');
+        bloque.classList.add('col-6');
+        bloque.innerHTML = `
+            <div class="form-group">
+                 <label>Observación *</label>
+                <input type="text" class="form-control" 
+                       name="INPUT_OBSERVACION" 
+                       value="${item.INPUT_OBSERVACION}" required>
+
+                <div class="mt-2" style="text-align:center;">
+                    <button type="button" class="btn btn-danger botonEliminarobservacion">
+                        <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+        ultimaFila.appendChild(bloque);
+
+        bloque.querySelector('.botonEliminarobservacion')
+            .addEventListener('click', function () {
+                bloque.remove();
+
+                if (ultimaFila.querySelectorAll('.col-6').length === 0) {
+                    ultimaFila.remove();
+                }
+            });
+    });
+}
 
 $(document).ready(function() {
     $('#Tablacapcursos tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
         var row = Tablacapcursos.row(tr);
         
-        hacerSoloLectura(row.data(), '#miModal_curso');
+        hacerSoloLecturainventario(row.data(), '#miModal_curso');
 
         ID_CURSOS_CAPACITACION = row.data().ID_CURSOS_CAPACITACION;
         editarDatoTabla(row.data(), 'formulariocurso', 'miModal_curso',1);
-
 
 
     if (row.data().VIGENCIA_CURSO === "1") {
@@ -850,6 +1634,31 @@ $(document).ready(function() {
         $('#CADA_ANIO').hide();
     }
 
+    if (row.data().CURSOS_PREVIOS === "1") {
+        $('#NOMBRE_CURSOS').show();
+    } else if (row.data().CURSOS_PREVIOS === "2") {
+        $('#NOMBRE_CURSOS').hide();
+    }else {
+        $('#NOMBRE_CURSOS').hide();
+    }
+
+    if (row.data().PRESTACIONSERVICIOS_CURSO === "1") {
+        $('#PRESTACION_SERVICIOS').show();
+    } else if (row.data().PRESTACIONSERVICIOS_CURSO === "2") {
+        $('#PRESTACION_SERVICIOS').hide();
+    }else {
+        $('#PRESTACION_SERVICIOS').hide();
+    }
+
+    if (row.data().CERTIFICACIONES_INSTRUCTOR === "1") {
+        $('#CERTIFICACIONESINSTRUCTOR').show();
+    } else if (row.data().CERTIFICACIONES_INSTRUCTOR === "2") {
+        $('#CERTIFICACIONESINSTRUCTOR').hide();
+    }else {
+        $('#CERTIFICACIONESINSTRUCTOR').hide();
+    }
+
+
 
     /// CATEGORIAS 
     if (!$('#CATEGORIAS_CURSO')[0].selectize) {
@@ -1232,8 +2041,29 @@ $(document).ready(function() {
 
 
 
+   $(".perfilrecomendado").empty();
+    mostrarperfilrecomendado(row);
 
-         $('#miModal_curso .modal-title').html(row.data().NOMBE_OFICIAL_CURSO);
+    $(".cursosprevios").empty();
+    mostrarcursosprevios(row);
+
+    $(".prestacionservicios").empty();
+    mostrarPrestacionServicios(row);
+
+    $(".certificacionesinstructor").empty();
+    mostrarcertificaciones(row);
+
+    $(".leccionesaprendidas").empty();
+    mostrarleccionesaprendidas(row);
+
+    $(".observacionescurso").empty();
+    mostrarobservaciones(row);
+
+
+
+
+
+    $('#miModal_curso .modal-title').html(row.data().NOMBE_OFICIAL_CURSO);
 
     });
 
@@ -1270,6 +2100,22 @@ $('#TIPO_ID').on('change', function () {
 
         }
     });
-
 });
 
+
+
+$('#COSTO_CURSO, #TASA_CAMBIO').on('input', function () {
+
+    let costo = $('#COSTO_CURSO').val().replace(/,/g, '');
+    let tasa  = $('#TASA_CAMBIO').val().replace(/,/g, '');
+
+    let numCosto = parseFloat(costo);
+    let numTasa  = parseFloat(tasa);
+
+    if (!isNaN(numCosto) && !isNaN(numTasa)) {
+        $('#VALOR_MXN').val(numCosto * numTasa);
+    } else {
+        $('#VALOR_MXN').val('');
+    }
+
+});

@@ -722,6 +722,20 @@ Route::get('/Tablacapmaterialdidactico', [catalogoscapacitacionController::class
 Route::get('/capacitacionimpactoesperado', function () {return view('RH.capacitacion.catalogos.catalogoimpactoesperado');});
 Route::get('/Tablacapimpactoesperado', [catalogoscapacitacionController::class, 'Tablacapimpactoesperado']);
 
+// DOCUMENTOS EMITIDOS
+Route::get('/capacitaciondocumentosemitidos', function () {return view('RH.capacitacion.catalogos.catalogodocumentosemitidos');});
+Route::get('/Tablacapemitidos', [catalogoscapacitacionController::class, 'Tablacapemitidos']);
+
+
+// MONEDA
+Route::get('/capacitacionmoneda', function () {return view('RH.capacitacion.catalogos.catalogomoneda');});
+Route::get('/Tablacapmoneda', [catalogoscapacitacionController::class, 'Tablacapmoneda']);
+
+// MONEDA
+Route::get('/capacitaciolineasnegocios', function () {return view('RH.capacitacion.catalogos.catalogonegocios');});
+Route::get('/Tablacaplineanegocios', [catalogoscapacitacionController::class, 'Tablacaplineanegocios']);
+
+
 // CATALOGO GENERAL DEL CURSO 
 
 Route::get('/capacitacioncursos', [catalogocursosController::class, 'index']);

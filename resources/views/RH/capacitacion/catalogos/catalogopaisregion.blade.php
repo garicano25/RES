@@ -31,7 +31,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">País o región</label>
+                        <label class="form-label">País o región *</label>
                         <input type=" text" class="form-control" id="NOMBRE_PAIS_REGION" name="NOMBRE_PAIS_REGION" required>
                     </div>
 

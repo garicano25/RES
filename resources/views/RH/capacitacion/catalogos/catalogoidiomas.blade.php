@@ -31,7 +31,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Nombre del idioma</label>
+                        <label class="form-label">Nombre del idioma *</label>
                         <input type=" text" class="form-control" id="NOMBRE_IDIOMA" name="NOMBRE_IDIOMA" required>
                     </div>
 

@@ -32,7 +32,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Tipo de curso</label>
+                        <label class="form-label">Tipo de curso *</label>
                         <input type=" text" class="form-control" id="TIPO_CURSO" name="TIPO_CURSO" required>
                     </div>
 

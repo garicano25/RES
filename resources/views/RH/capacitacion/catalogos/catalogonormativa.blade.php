@@ -31,7 +31,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Nombre de normativa o marco de referencia</label>
+                        <label class="form-label">Nombre de normativa o marco de referencia *</label>
                         <input type=" text" class="form-control" id="NOMBRE_NORMATIVIDAD" name="NOMBRE_NORMATIVIDAD" required>
                     </div>
 

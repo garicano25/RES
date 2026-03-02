@@ -27,6 +27,9 @@ use App\Models\capacitacion\evidenciageneradaModel;
 use App\Models\capacitacion\ubicacionModel;
 use App\Models\capacitacion\materialdidacticoModel;
 use App\Models\capacitacion\impactoesparadoModel;
+use App\Models\capacitacion\documentosemitidosModel;
+use App\Models\capacitacion\monedaModel;
+use App\Models\capacitacion\lineanegocioModel;
 
 
 
@@ -470,8 +473,92 @@ class catalogoscapacitacionController extends Controller
         }
     }
 
+    /// TABLA DOCUMENTOS EMITIDO 
+    public function Tablacapemitidos()
+    {
+        try {
+            $tabla = documentosemitidosModel::get();
 
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_DOCUMENTOS_EMITIDOS . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_DOCUMENTOS_EMITIDOS . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+            }
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
 
+    /// TABLA MONEDA 
+    public function Tablacapmoneda()
+    {
+        try {
+            $tabla = monedaModel::get();
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_MONEDA . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_MONEDA . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+            }
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+    /// TABLA LINEA DE NEGOCIOS 
+    public function Tablacaplineanegocios()
+    {
+        try {
+            $tabla = lineanegocioModel::get();
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_LINEA_NEGOCIO . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_LINEA_NEGOCIO . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+            }
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
     public function store(Request $request)
     {
 
@@ -914,7 +1001,92 @@ class catalogoscapacitacionController extends Controller
                     return response()->json($response);
                     break;
 
+                ///  DOCUMENTO EMITIDO  
+                case 16:
+                    if ($request->ID_DOCUMENTOS_EMITIDOS == 0) {
+                        DB::statement('ALTER TABLE capacitacion_documentosemitidos AUTO_INCREMENT=1;');
+                        $capacitacion = documentosemitidosModel::create($request->all());
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $capacitacion = documentosemitidosModel::where('ID_DOCUMENTOS_EMITIDOS', $request['ID_DOCUMENTOS_EMITIDOS'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['capacitaciones'] = 'Desactivada';
+                            } else {
+                                $capacitacion = documentosemitidosModel::where('ID_DOCUMENTOS_EMITIDOS', $request['ID_DOCUMENTOS_EMITIDOS'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['capacitaciones'] = 'Activada';
+                            }
+                        } else {
+                            $capacitacion = documentosemitidosModel::find($request->ID_DOCUMENTOS_EMITIDOS);
+                            $capacitacion->update($request->all());
+                            $response['code'] = 1;
+                            $response['capacitaciones'] = 'Actualizada';
+                        }
+                        return response()->json($response);
+                    }
+                    $response['code']  = 1;
+                    $response['capacitaciones']  = $capacitacion;
+                    return response()->json($response);
+                    break;
 
+                ///  MONEDA   
+                case 17:
+                    if ($request->ID_MONEDA == 0) {
+                        DB::statement('ALTER TABLE capacitacion_moneda AUTO_INCREMENT=1;');
+                        $capacitacion = monedaModel::create($request->all());
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $capacitacion = monedaModel::where('ID_MONEDA', $request['ID_MONEDA'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['capacitaciones'] = 'Desactivada';
+                            } else {
+                                $capacitacion = monedaModel::where('ID_MONEDA', $request['ID_MONEDA'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['capacitaciones'] = 'Activada';
+                            }
+                        } else {
+                            $capacitacion = monedaModel::find($request->ID_MONEDA);
+                            $capacitacion->update($request->all());
+                            $response['code'] = 1;
+                            $response['capacitaciones'] = 'Actualizada';
+                        }
+                        return response()->json($response);
+                    }
+                    $response['code']  = 1;
+                    $response['capacitaciones']  = $capacitacion;
+                    return response()->json($response);
+                    break;
+
+                ///  LINEAS DE NEGOCIOS   
+                case 18:
+                    if ($request->ID_LINEA_NEGOCIO == 0) {
+                        DB::statement('ALTER TABLE capacitacion_lineanegocios AUTO_INCREMENT=1;');
+                        $capacitacion = lineanegocioModel::create($request->all());
+                    } else {
+                        if (isset($request->ELIMINAR)) {
+                            if ($request->ELIMINAR == 1) {
+                                $capacitacion = lineanegocioModel::where('ID_LINEA_NEGOCIO', $request['ID_LINEA_NEGOCIO'])->update(['ACTIVO' => 0]);
+                                $response['code'] = 1;
+                                $response['capacitaciones'] = 'Desactivada';
+                            } else {
+                                $capacitacion = lineanegocioModel::where('ID_LINEA_NEGOCIO', $request['ID_LINEA_NEGOCIO'])->update(['ACTIVO' => 1]);
+                                $response['code'] = 1;
+                                $response['capacitaciones'] = 'Activada';
+                            }
+                        } else {
+                            $capacitacion = lineanegocioModel::find($request->ID_LINEA_NEGOCIO);
+                            $capacitacion->update($request->all());
+                            $response['code'] = 1;
+                            $response['capacitaciones'] = 'Actualizada';
+                        }
+                        return response()->json($response);
+                    }
+                    $response['code']  = 1;
+                    $response['capacitaciones']  = $capacitacion;
+                    return response()->json($response);
+                    break;
 
                 default:
 

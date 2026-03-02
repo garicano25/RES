@@ -869,9 +869,20 @@
     @endif
 
     @if(request()->is('capacitacioncursos'))
-    <script src="/assets/js_sitio/capacitacion/catalogos/cursos.js"></script>
+    <script src="/assets/js_sitio/capacitacion/catalogos/cursos.js?v=1"></script>
     @endif
-    
+
+    @if(request()->is('capacitaciondocumentosemitidos'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/documentosemitidos.js"></script>
+    @endif
+
+    @if(request()->is('capacitacionmoneda'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/moneda.js"></script>
+    @endif
+
+    @if(request()->is('capacitaciolineasnegocios'))
+    <script src="/assets/js_sitio/capacitacion/catalogos/lineanegocios.js"></script>
+    @endif
 </body>
 
 </html>

@@ -264,13 +264,20 @@
                             </div>
                         </div>
 
-
-                        <div class="col-12 mt-3">
+                        <div class="col-12">
                             <div class="form-group">
-                                <label>Perfil recomendado del participante *</label>
-                                <textarea class="form-control" id="PERFILRECOMENDADO_CURSO" name="PERFILRECOMENDADO_CURSO" required rows="3"> </textarea>
+                                <label> Perfil recomendado del participante</label>
+                                <button type="button" class="btn btn-danger ml-2 rounded-pill" id="botonagregarperfilrecomendado">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                </button>
                             </div>
                         </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="perfilrecomendado">
+                            </div>
+                        </div>
+
 
                         <div class="row mt-5">
                             <div class="col-12 text-center">
@@ -297,8 +304,29 @@
 
                         <div class="col-4 mt-3">
                             <div class="form-group">
-                                <label>Cursos previos </label>
-                                <input type="text" class="form-control" id="CURSOS_PREVIOS" name="CURSOS_PREVIOS">
+                                <label>Cursos previos *</label>
+                                <select class="form-select" id="CURSOS_PREVIOS" name="CURSOS_PREVIOS" required>
+                                    <option value="" disabled selected>Seleccione una opción</option>
+                                    <option value="1">Sí</option>
+                                    <option value="2">No</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="col-12 mt-3" id="NOMBRE_CURSOS" style="display: none;">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Agregar cursos</label>
+                                    <button type="button" class="btn btn-danger ml-2 rounded-pill" id="botonagregarcursos">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <div class="cursosprevios">
+                                </div>
                             </div>
                         </div>
 
@@ -336,10 +364,32 @@
 
                         <div class="col-6 mt-3">
                             <div class="form-group">
-                                <label>¿Si aplica para la prestación de servicios de la empresa: cuáles?</label>
-                                <textarea class="form-control" id="PRESTACIONSERVICIOS_CURSO" name="PRESTACIONSERVICIOS_CURSO" rows="2"> </textarea>
+                                <label>¿Si aplica para la prestación de servicios de la empresa?</label>
+                                <select class="form-select" id="PRESTACIONSERVICIOS_CURSO" name="PRESTACIONSERVICIOS_CURSO" required>
+                                    <option value="" disabled selected>Seleccione una opción</option>
+                                    <option value="1">Sí</option>
+                                    <option value="2">No</option>
+                                </select>
                             </div>
                         </div>
+
+
+                        <div class="col-12 mt-3" id="PRESTACION_SERVICIOS" style="display: none;">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Agregar servicio</label>
+                                    <button type="button" class="btn btn-danger ml-2 rounded-pill" id="botonagregarservicios">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <div class="prestacionservicios">
+                                </div>
+                            </div>
+                        </div>
+
 
                         <div class="row mt-5">
                             <div class="col-12 text-center">
@@ -371,9 +421,32 @@
                         <div class="col-4 mt-3">
                             <div class="form-group">
                                 <label>Certificaciones del instructor </label>
-                                <input type="text" class="form-control" id="CERTIFICACIONES_INSTRUCTOR" name="CERTIFICACIONES_INSTRUCTOR">
+                                <select class="form-select" id="CERTIFICACIONES_INSTRUCTOR" name="CERTIFICACIONES_INSTRUCTOR" required>
+                                    <option value="" disabled selected>Seleccione una opción</option>
+                                    <option value="1">Sí</option>
+                                    <option value="2">No</option>
+                                </select>
                             </div>
                         </div>
+
+
+                        <div class="col-12 mt-3" id="CERTIFICACIONESINSTRUCTOR" style="display: none;">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>Agregar certificación</label>
+                                    <button type="button" class="btn btn-danger ml-2 rounded-pill" id="botonagregarcertificacioninstructor">
+                                        <i class="bi bi-plus-circle-fill"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <div class="certificacionesinstructor">
+                                </div>
+                            </div>
+                        </div>
+
+
 
                         <div class="col-4 mt-3">
                             <div class="form-group">
@@ -423,12 +496,21 @@
                             </div>
                         </div>
 
-                        <div class="col-4 mt-3">
+                        <div class="col-2 mt-3">
                             <div class="form-group">
                                 <label>Calificación mínima </label>
                                 <input type="text" class="form-control" id="CALIFICACION_MINIMA" name="CALIFICACION_MINIMA">
                             </div>
                         </div>
+
+                        <div class="col-2 mt-3">
+                            <div class="form-group">
+                                <label>Calificación máxima </label>
+                                <input type="text" class="form-control" id="CALIFICACION_MAXIMA" name="CALIFICACION_MAXIMA">
+                            </div>
+                        </div>
+
+
 
                         <div class="col-6 mt-3">
                             <div class="form-group">
@@ -447,9 +529,10 @@
                                 <label>Documento emitido por el proveedor </label>
                                 <select class="form-select" id="DOCUMENTOS_EMITIDOS" name="DOCUMENTOS_EMITIDOS[]" multiple>
                                     <option value=""></option>
-                                    <option value="1">Constancia</option>
-                                    <option value="2">Certificado</option>
-                                    <option value="3">Aplica DC-3</option>
+                                    @foreach ($docemitido as $catalogo)
+                                    <option value="{{ $catalogo->ID_DOCUMENTOS_EMITIDOS }}">{{ $catalogo->NOMBRE_DOCUMENTO }}</option>
+                                    @endforeach
+                                </select>
                                 </select>
                             </div>
                         </div>
@@ -491,24 +574,50 @@
 
                         <div class="col-4 mt-3">
                             <div class="form-group">
-                                <label>Interno</label>
-                                <input type="text" class="form-control" id="COSTO_INTERNO" name="COSTO_INTERNO">
+                                <label>Tipo de costo</label>
+                                <select class="form-select" id="TIPO_COSTO" name="TIPO_COSTO" required>
+                                    <option value="" disabled selected>Seleccione una opción</option>
+                                    <option value="1">Interno</option>
+                                    <option value="2">Externo</option>
+                                </select>
                             </div>
                         </div>
 
                         <div class="col-4 mt-3">
                             <div class="form-group">
-                                <label>Externo </label>
-                                <input type="text" class="form-control" id="COSTO_EXTERNO" name="COSTO_EXTERNO">
+                                <label>Valor del curso</label>
+                                <input type="text" class="form-control" id="COSTO_CURSO" name="COSTO_CURSO">
                             </div>
                         </div>
+
 
                         <div class="col-4 mt-3">
                             <div class="form-group">
                                 <label>Moneda </label>
-                                <input type="text" class="form-control" id="MONEDA_CURSO" name="MONEDA_CURSO">
+                                <select class="form-select" id="MONEDA_CURSO" name="MONEDA_CURSO">
+                                    <option value="" disabled selected>Seleccione una opción</option>
+                                    @foreach ($moneda as $catalogo)
+                                    <option value="{{ $catalogo->ID_MONEDA }}">{{ $catalogo->TIPO_MONEDA }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
+
+
+                        <div class="col-6 mt-3">
+                            <div class="form-group">
+                                <label>Tasa de cambio </label>
+                                <input type="text" class="form-control" id="TASA_CAMBIO" name="TASA_CAMBIO">
+                            </div>
+                        </div>
+
+                        <div class="col-6 mt-3">
+                            <div class="form-group">
+                                <label>Valor en MXN </label>
+                                <input type="text" class="form-control" id="VALOR_MXN" name="VALOR_MXN" readonly>
+                            </div>
+                        </div>
+
 
                         <div class="row mt-5">
                             <div class="col-12 text-center">
@@ -534,7 +643,7 @@
 
                         <div class="col-3 mt-3">
                             <div class="form-group">
-                                <label>Licencias – costo aproximado </label>
+                                <label>Otros – costo aproximado </label>
                                 <input type="text" class="form-control" id="LICENCIAS_CURSO" name="LICENCIAS_CURSO">
                             </div>
                         </div>
@@ -670,19 +779,55 @@
                         </div>
 
 
+
+                        <div class="col-12 mt-4">
+                            <div class="form-group">
+                                <label> Lecciones aprendidas</label>
+                                <button type="button" class="btn btn-danger ml-2 rounded-pill" id="botonagregarlecciones">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="leccionesaprendidas">
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label> Observaciones</label>
+                                <button type="button" class="btn btn-danger ml-2 rounded-pill" id="botonagregarobservaciones">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="col-12 mt-3">
+                            <div class="observacionescurso">
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <!-- 
                         <div class="col-6 mt-3">
                             <div class="form-group">
                                 <label>Lecciones aprendidas</label>
                                 <textarea class="form-control" id="LECCIONES_APRENDIDAS" name="LECCIONES_APRENDIDAS" rows="3"></textarea>
                             </div>
-                        </div>
+                        </div> -->
 
-                        <div class="col-6 mt-3">
+                        <!-- <div class="col-6 mt-3">
                             <div class="form-group">
                                 <label>Observaciones</label>
                                 <textarea class="form-control" id="OBSERVACIONES_CURSO" name="OBSERVACIONES_CURSO" rows="3"></textarea>
                             </div>
-                        </div>
+                        </div> -->
 
 
                     </div>
@@ -695,6 +840,14 @@
         </div>
     </div>
 </div>
+
+
+
+<script>
+    window.lineas = @json($lineas);
+</script>
+
+
 
 
 @endsection

@@ -31,7 +31,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Nombre del reconocimiento</label>
+                        <label class="form-label">Nombre del reconocimiento *</label>
                         <input type=" text" class="form-control" id="NOMBRE_RECONOCIMIENTO" name="NOMBRE_RECONOCIMIENTO" required>
                     </div>
 

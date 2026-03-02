@@ -31,7 +31,7 @@
                     {!! csrf_field() !!}
 
                     <div class="mb-3">
-                        <label class="form-label">Nombre de la competencia</label>
+                        <label class="form-label">Nombre de la competencia *</label>
                         <input type=" text" class="form-control" id="NOMBRE_COMPETENCIAS" name="NOMBRE_COMPETENCIAS" required>
                     </div>
 
