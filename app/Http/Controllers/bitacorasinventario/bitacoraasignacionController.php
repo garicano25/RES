@@ -460,6 +460,36 @@ class bitacoraasignacionController extends Controller
                             ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
                             ->first();
 
+
+                        $asignado = $articulo['NOMBRE_ASIGNACION'] ?? null;
+                        $usuarioAsignado = 'N/A';
+
+                        if ($asignado) {
+
+                            $colaborador = DB::table('formulario_contratacion')
+                                ->where('CURP', $asignado)
+                                ->first();
+
+                            if ($colaborador) {
+                                $usuarioAsignado = trim(
+                                    $colaborador->NOMBRE_COLABORADOR . ' ' .
+                                        $colaborador->PRIMER_APELLIDO . ' ' .
+                                        $colaborador->SEGUNDO_APELLIDO
+                                );
+                            } else {
+
+                                $proveedor = DB::table('formulario_directorio')
+                                    ->where('RFC_PROVEEDOR', $asignado)
+                                    ->first();
+
+                                if ($proveedor) {
+                                    $usuarioAsignado = $proveedor->NOMBRE_DIRECTORIO . ' (' . $proveedor->RFC_PROVEEDOR . ')';
+                                }
+                            }
+                        }
+
+
+                        
                         $data[] = [
                             'ROW_CLASS' => $rowClass,
 
