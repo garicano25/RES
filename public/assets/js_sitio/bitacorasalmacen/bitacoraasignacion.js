@@ -84,8 +84,12 @@ var Tablabitacoraasignacion = $("#Tablabitacoraasignacion").DataTable({
         { targets: 10, title: 'Asignado a', className: 'all text-center' },
         { targets: 11, title: 'Editar', className: 'all text-center' },
         { targets: 12, title: 'Visualizar', className: 'all text-center' }
-    ]
-
+    ],
+   createdRow: function (row, data) {
+        if (data.ROW_CLASS) {
+            $(row).addClass(data.ROW_CLASS);
+        }
+    }
 });
 
 $(document).on('click', '.editarMaterial', function () {
@@ -137,6 +141,7 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+                $("#FINALIZAR_BITACORA_CONSUMBIBLES").val(material.FINALIZAR_BITACORA_CONSUMBIBLES);
 
                
                 if (material.FIRMA_RECIBIDO_POR) {
@@ -237,6 +242,7 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#RECIBIDO_POR").val(material.RECIBIDO_POR);
                 $("#OBSERVACIONES_BITACORA").val(material.OBSERVACIONES_BITACORA);
                 $("#FUNCIONAMIENTO_BITACORA").val(material.FUNCIONAMIENTO_BITACORA);
+                $("#FINALIZAR_BITACORA_CONSUMBIBLES").val(material.FINALIZAR_BITACORA_CONSUMBIBLES);
 
                
                 if (material.FIRMA_RECIBIDO_POR) {

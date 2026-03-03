@@ -117,7 +117,7 @@ $('#Tablaseleccion tbody').on('click', 'td.clickable', function() {
             }
         });
 
-           categoriaId = row.data().CATEGORIA_VACANTE;
+        categoriaId = row.data().CATEGORIA_VACANTE;
         vacantes_id = row.data().VACANTES_ID;
 
         $.ajax({

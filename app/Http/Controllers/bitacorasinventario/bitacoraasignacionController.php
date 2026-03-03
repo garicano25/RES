@@ -59,7 +59,6 @@ class bitacoraasignacionController extends Controller
 
 
 
-
     // public function Tablabitacoraasignacion()
     // {
     //     try {
@@ -71,14 +70,17 @@ class bitacoraasignacionController extends Controller
 
     //         $data = [];
 
+
+    //         $fechaInicio = '2025-01-01';
+    //         $fechaFin    = '2025-12-10';
+
+
     //         foreach ($tabla as $value) {
 
     //             $materiales = json_decode($value->MATERIALES_JSON, true);
     //             if (!is_array($materiales)) continue;
 
     //             foreach ($materiales as $articulo) {
-
-
 
     //                 if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
 
@@ -90,12 +92,72 @@ class bitacoraasignacionController extends Controller
     //                                 continue;
     //                             }
 
+
+
+    //                             $rowClass = '';
+    //                             $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
+
+    //                             if ($fechaSolicitud >= $fechaInicio && $fechaSolicitud <= $fechaFin) {
+
+    //                                 $rowClass = 'bg-verde-suave';
+    //                             } elseif ($fechaSolicitud >= '2025-12-11') {
+
+    //                                 $bitacora = DB::table('bitacorasalmacen')
+    //                                     ->where('RECEMPLEADO_ID', $value->ID_FORMULARIO_RECURSOS_EMPLEADOS)
+    //                                     ->where('INVENTARIO_ID', $detalle['INVENTARIO'])
+    //                                     ->where('ACTIVO', 1)
+    //                                     ->first();
+
+    //                                 if ($bitacora) {
+    //                                     if ($bitacora->FINALIZAR_BITACORA_CONSUMBIBLES == 1) {
+    //                                         $rowClass = 'bg-verde-suave';
+    //                                     } else {
+    //                                         $rowClass = 'bg-amarillo-suave';
+    //                                     }
+    //                                 }
+    //                             }
+
+
     //                             $producto = DB::table('formulario_inventario')
-    //                                 ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+    //                                 ->select(
+    //                                     'DESCRIPCION_EQUIPO',
+    //                                     'MARCA_EQUIPO',
+    //                                     'MODELO_EQUIPO',
+    //                                     'SERIE_EQUIPO',
+    //                                     'CODIGO_EQUIPO'
+    //                                 )
     //                                 ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
     //                                 ->first();
 
+    //                             $asignado = $detalle['NOMBRE_ASIGNACION_DETALLE'] ?? null;
+    //                             $usuarioAsignado = 'N/A';
+
+    //                             if ($asignado) {
+
+    //                                 $colaborador = DB::table('formulario_contratacion')
+    //                                     ->where('CURP', $asignado)
+    //                                     ->first();
+
+    //                                 if ($colaborador) {
+    //                                     $usuarioAsignado = trim(
+    //                                         $colaborador->NOMBRE_COLABORADOR . ' ' .
+    //                                             $colaborador->PRIMER_APELLIDO . ' ' .
+    //                                             $colaborador->SEGUNDO_APELLIDO
+    //                                     );
+    //                                 } else {
+
+    //                                     $proveedor = DB::table('formulario_directorio')
+    //                                         ->where('RFC_PROVEEDOR', $asignado)
+    //                                         ->first();
+
+    //                                     if ($proveedor) {
+    //                                         $usuarioAsignado = $proveedor->NOMBRE_DIRECTORIO . ' (' . $proveedor->RFC_PROVEEDOR . ')';
+    //                                     }
+    //                                 }
+    //                             }
+
     //                             $data[] = [
+    //                                 'ROW_CLASS' => $rowClass,
     //                                 'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
     //                                 'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
     //                                 'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
@@ -108,32 +170,94 @@ class bitacoraasignacionController extends Controller
     //                                 'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
     //                                 'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
     //                                 'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-    //                                 'ASIGNADO_USUARIO' => $detalle['NOMBRE_ASIGNACION_DETALLE'] ?? 'N/A',
+    //                                 'ASIGNADO_USUARIO' => $usuarioAsignado,
     //                                 'UNIDAD_SALIDA' => $detalle['UNIDAD_DETALLE'] ?? '',
     //                                 'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
-    //                                             data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
-    //                                             data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-    //                                             <i class="bi bi-pencil-square"></i></button>',
+    //                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+    //                                 data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+    //                                 <i class="bi bi-pencil-square"></i></button>',
     //                                 'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
-    //                                             data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
-    //                                             data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
-    //                                             <i class="bi bi-eye"></i></button>',
+    //                                 data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+    //                                 data-inventario="' . ($detalle['INVENTARIO'] ?? '') . '">
+    //                                 <i class="bi bi-eye"></i></button>',
     //                             ];
     //                         }
     //                     }
-
     //                 } else {
 
     //                     if (empty($articulo['ES_ASIGNACION']) || $articulo['ES_ASIGNACION'] != 1) {
     //                         continue;
     //                     }
 
+
+
+    //                     $rowClass = '';
+    //                     $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
+
+    //                     if ($fechaSolicitud >= $fechaInicio && $fechaSolicitud <= $fechaFin) {
+
+    //                         $rowClass = 'bg-verde-suave';
+    //                     } elseif ($fechaSolicitud >= '2025-12-11') {
+
+    //                         $bitacora = DB::table('bitacorasalmacen')
+    //                             ->where('RECEMPLEADO_ID', $value->ID_FORMULARIO_RECURSOS_EMPLEADOS)
+    //                             ->where('INVENTARIO_ID', $detalle['INVENTARIO'])
+    //                             ->where('ACTIVO', 1)
+    //                             ->first();
+
+    //                         if ($bitacora) {
+    //                             if ($bitacora->FINALIZAR_BITACORA_CONSUMBIBLES == 1) {
+    //                                 $rowClass = 'bg-verde-suave';
+    //                             } else {
+    //                                 $rowClass = 'bg-amarillo-suave';
+    //                             }
+    //                         }
+    //                     }
+
+
+
+
     //                     $producto = DB::table('formulario_inventario')
-    //                         ->select('DESCRIPCION_EQUIPO', 'MARCA_EQUIPO', 'MODELO_EQUIPO', 'SERIE_EQUIPO', 'CODIGO_EQUIPO')
+    //                         ->select(
+    //                             'DESCRIPCION_EQUIPO',
+    //                             'MARCA_EQUIPO',
+    //                             'MODELO_EQUIPO',
+    //                             'SERIE_EQUIPO',
+    //                             'CODIGO_EQUIPO'
+    //                         )
     //                         ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
     //                         ->first();
 
+    //                     $asignado = $articulo['NOMBRE_ASIGNACION'] ?? null;
+    //                     $usuarioAsignado = 'N/A';
+
+    //                     if ($asignado) {
+
+    //                         $colaborador = DB::table('formulario_contratacion')
+    //                             ->where('CURP', $asignado)
+    //                             ->first();
+
+    //                         if ($colaborador) {
+    //                             $usuarioAsignado = trim(
+    //                                 $colaborador->NOMBRE_COLABORADOR . ' ' .
+    //                                     $colaborador->PRIMER_APELLIDO . ' ' .
+    //                                     $colaborador->SEGUNDO_APELLIDO
+    //                             );
+    //                         } else {
+
+    //                             $proveedor = DB::table('formulario_directorio')
+    //                                 ->where('RFC_PROVEEDOR', $asignado)
+    //                                 ->first();
+
+    //                             if ($proveedor) {
+    //                                 $usuarioAsignado = $proveedor->NOMBRE_DIRECTORIO . ' (' . $proveedor->RFC_PROVEEDOR . ')';
+    //                             }
+    //                         }
+    //                     }
+
     //                     $data[] = [
+    //                         'ROW_CLASS' => $rowClass,
+
     //                         'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
     //                         'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
     //                         'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
@@ -146,16 +270,16 @@ class bitacoraasignacionController extends Controller
     //                         'MODELO_EQUIPO' => $producto->MODELO_EQUIPO ?? 'N/A',
     //                         'SERIE_EQUIPO' => $producto->SERIE_EQUIPO ?? 'N/A',
     //                         'CODIGO_EQUIPO' => $producto->CODIGO_EQUIPO ?? 'N/A',
-    //                         'ASIGNADO_USUARIO' => $articulo['NOMBRE_ASIGNACION'] ?? 'N/A',
+    //                         'ASIGNADO_USUARIO' => $usuarioAsignado,
     //                         'UNIDAD_SALIDA' => $articulo['UNIDAD_SALIDA'] ?? '',
     //                         'BTN_EDITAR' => '<button type="button" class="btn btn-warning btn-custom rounded-pill editarMaterial" 
-    //                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
-    //                                     data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-    //                                     <i class="bi bi-pencil-square"></i></button>',
+    //                         data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+    //                         data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+    //                         <i class="bi bi-pencil-square"></i></button>',
     //                         'BTN_VISUALIZAR' => '<button type="button" class="btn btn-primary btn-custom rounded-pill visualizarMaterial" 
-    //                                     data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
-    //                                     data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
-    //                                     <i class="bi bi-eye"></i></button>',
+    //                         data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" 
+    //                         data-inventario="' . ($articulo['INVENTARIO'] ?? '') . '">
+    //                         <i class="bi bi-eye"></i></button>',
     //                     ];
     //                 }
     //             }
@@ -174,6 +298,7 @@ class bitacoraasignacionController extends Controller
     public function Tablabitacoraasignacion()
     {
         try {
+
             $tabla = recemplaedosModel::where('TIPO_SOLICITUD', 2)
                 ->where('ESTADO_APROBACION', 'Aprobada')
                 ->where('FINALIZAR_SOLICITUD_ALMACEN', 1)
@@ -182,6 +307,9 @@ class bitacoraasignacionController extends Controller
 
             $data = [];
 
+            $fechaInicio = '2025-01-01';
+            $fechaFin    = '2025-12-10';
+
             foreach ($tabla as $value) {
 
                 $materiales = json_decode($value->MATERIALES_JSON, true);
@@ -189,6 +317,7 @@ class bitacoraasignacionController extends Controller
 
                 foreach ($materiales as $articulo) {
 
+                    /* ================= VARIOS ================= */
                     if (!empty($articulo['VARIOS_ARTICULOS']) && $articulo['VARIOS_ARTICULOS'] == "1") {
 
                         if (!empty($articulo['ARTICULOS']) && is_array($articulo['ARTICULOS'])) {
@@ -199,6 +328,29 @@ class bitacoraasignacionController extends Controller
                                     continue;
                                 }
 
+                                /* ===== COLOR FILA ===== */
+                                $rowClass = '';
+                                $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
+
+                                if ($fechaSolicitud >= $fechaInicio && $fechaSolicitud <= $fechaFin) {
+
+                                    $rowClass = 'bg-verde-suave';
+                                } elseif ($fechaSolicitud >= '2025-12-11') {
+
+                                    $bitacora = DB::table('bitacorasalmacen')
+                                        ->where('RECEMPLEADO_ID', $value->ID_FORMULARIO_RECURSOS_EMPLEADOS)
+                                        ->where('INVENTARIO_ID', $detalle['INVENTARIO'])
+                                        ->where('ACTIVO', 1)
+                                        ->first();
+
+                                    if ($bitacora) {
+                                        $rowClass = $bitacora->FINALIZAR_BITACORA_CONSUMBIBLES == 1
+                                            ? 'bg-verde-suave'
+                                            : 'bg-amarillo-suave';
+                                    }
+                                }
+
+                                /* ===== PRODUCTO ===== */
                                 $producto = DB::table('formulario_inventario')
                                     ->select(
                                         'DESCRIPCION_EQUIPO',
@@ -210,6 +362,7 @@ class bitacoraasignacionController extends Controller
                                     ->where('ID_FORMULARIO_INVENTARIO', $detalle['INVENTARIO'])
                                     ->first();
 
+                                /* ===== USUARIO ASIGNADO ===== */
                                 $asignado = $detalle['NOMBRE_ASIGNACION_DETALLE'] ?? null;
                                 $usuarioAsignado = 'N/A';
 
@@ -220,6 +373,7 @@ class bitacoraasignacionController extends Controller
                                         ->first();
 
                                     if ($colaborador) {
+
                                         $usuarioAsignado = trim(
                                             $colaborador->NOMBRE_COLABORADOR . ' ' .
                                                 $colaborador->PRIMER_APELLIDO . ' ' .
@@ -238,6 +392,7 @@ class bitacoraasignacionController extends Controller
                                 }
 
                                 $data[] = [
+                                    'ROW_CLASS' => $rowClass,
                                     'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
                                     'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
                                     'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
@@ -263,12 +418,37 @@ class bitacoraasignacionController extends Controller
                                 ];
                             }
                         }
+
+                        /* ================= NORMAL ================= */
                     } else {
 
                         if (empty($articulo['ES_ASIGNACION']) || $articulo['ES_ASIGNACION'] != 1) {
                             continue;
                         }
 
+                        /* ===== COLOR FILA (CORREGIDO) ===== */
+                        $rowClass = '';
+                        $fechaSolicitud = $value->FECHA_ALMACEN_SOLICITUD;
+
+                        if ($fechaSolicitud >= $fechaInicio && $fechaSolicitud <= $fechaFin) {
+
+                            $rowClass = 'bg-verde-suave';
+                        } elseif ($fechaSolicitud >= '2025-12-11') {
+
+                            $bitacora = DB::table('bitacorasalmacen')
+                                ->where('RECEMPLEADO_ID', $value->ID_FORMULARIO_RECURSOS_EMPLEADOS)
+                                ->where('INVENTARIO_ID', $articulo['INVENTARIO']) // 🔥 AQUÍ ESTABA EL ERROR
+                                ->where('ACTIVO', 1)
+                                ->first();
+
+                            if ($bitacora) {
+                                $rowClass = $bitacora->FINALIZAR_BITACORA_CONSUMBIBLES == 1
+                                    ? 'bg-verde-suave'
+                                    : 'bg-amarillo-suave';
+                            }
+                        }
+
+                        /* ===== PRODUCTO ===== */
                         $producto = DB::table('formulario_inventario')
                             ->select(
                                 'DESCRIPCION_EQUIPO',
@@ -280,34 +460,9 @@ class bitacoraasignacionController extends Controller
                             ->where('ID_FORMULARIO_INVENTARIO', $articulo['INVENTARIO'])
                             ->first();
 
-                        $asignado = $articulo['NOMBRE_ASIGNACION'] ?? null;
-                        $usuarioAsignado = 'N/A';
-
-                        if ($asignado) {
-
-                            $colaborador = DB::table('formulario_contratacion')
-                                ->where('CURP', $asignado)
-                                ->first();
-
-                            if ($colaborador) {
-                                $usuarioAsignado = trim(
-                                    $colaborador->NOMBRE_COLABORADOR . ' ' .
-                                        $colaborador->PRIMER_APELLIDO . ' ' .
-                                        $colaborador->SEGUNDO_APELLIDO
-                                );
-                            } else {
-
-                                $proveedor = DB::table('formulario_directorio')
-                                    ->where('RFC_PROVEEDOR', $asignado)
-                                    ->first();
-
-                                if ($proveedor) {
-                                    $usuarioAsignado = $proveedor->NOMBRE_DIRECTORIO . ' (' . $proveedor->RFC_PROVEEDOR . ')';
-                                }
-                            }
-                        }
-
                         $data[] = [
+                            'ROW_CLASS' => $rowClass,
+
                             'ID_FORMULARIO_RECURSOS_EMPLEADOS' => $value->ID_FORMULARIO_RECURSOS_EMPLEADOS,
                             'DESCRIPCION' => trim($articulo['DESCRIPCION'] ?? ''),
                             'SOLICITANTE_SALIDA' => $value->SOLICITANTE_SALIDA ?? 'N/A',
@@ -337,15 +492,13 @@ class bitacoraasignacionController extends Controller
 
             return response()->json(['data' => $data], 200);
         } catch (\Exception $e) {
+
             return response()->json([
                 'error' => true,
                 'message' => $e->getMessage()
             ], 500);
         }
     }
-
-
-
 
 
     public function obtenerMaterialAsingnacion(Request $request)
@@ -379,6 +532,8 @@ class bitacoraasignacionController extends Controller
                         'FIRMA_ENTREGADO_POR'       => $bitacora->FIRMA_ENTREGADO_POR,
                         'OBSERVACIONES_BITACORA'    => $bitacora->OBSERVACIONES_BITACORA,
                         'FUNCIONAMIENTO_BITACORA'   => $bitacora->FUNCIONAMIENTO_BITACORA,
+                        'FINALIZAR_BITACORA_CONSUMBIBLES'   => $bitacora->FINALIZAR_BITACORA_CONSUMBIBLES,
+
                         'YA_GUARDADO'               => true
                     ]
                 ]);
