@@ -53,7 +53,8 @@ class altaproveedorModel extends Model
         'TIPO_PERSONA_OPCION',
         'VERIFICACION_SOLCITADA',
         'TIENE_ASIGNACION',
-        'DOCUMENTOS_JSON'
+        'DOCUMENTOS_JSON',
+        'PROVEEDOR_CRITICO'
 
     ];
     

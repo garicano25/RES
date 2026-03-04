@@ -560,17 +560,15 @@ Route::get('/mostraracciones/{id}', [contratacionController::class, 'mostraracci
 Route::get('/Tablarecibonomina', [contratacionController::class, 'Tablarecibonomina']);
 Route::get('/mostrarecibosnomina/{id}', [contratacionController::class, 'mostrarecibosnomina']);
 
+
 // ASIGNACIONES
 
 Route::get('/Tablasignacioncolaborador', [contratacionController::class, 'Tablasignacioncolaborador']);
 Route::get('/validarPrimerContrato', [contratacionController::class, 'validarPrimerContrato']);
 Route::get('/Tablasignacioncolaboradorgeneral', [contratacionController::class, 'Tablasignacioncolaboradorgeneral']);
-Route::get('/Tablasignacioncolaborador', [contratacionController::class, 'Tablasignacioncolaborador']);
-
 Route::get('/TablasignacioncolaboradorEditar', [contratacionController::class, 'TablasignacioncolaboradorEditar']);
 Route::get('/pdfAsignacion/{id}',[pdfasingacionController::class, 'pdfAsignacion']);
 Route::get('/pdfAsignacionEpp/{id}', [pdfasingacionController::class, 'pdfAsignacionEpp']);
-
 Route::get('/mostrarasignacion/{id}', [contratacionController::class, 'mostrarasignacion']);
 
 
@@ -640,10 +638,7 @@ Route::get('/generarVacaciones/{id}', [pdfrecempleadoController::class, 'generar
 Route::get('/expediente', [expedientecolabController::class, 'index']);
 Route::get('/Tablaexpediente', [expedientecolabController::class, 'Tablaexpediente']);
 Route::get('/Tabladocumentosoportexpediente', [expedientecolabController::class, 'Tabladocumentosoportexpediente']);
-
 Route::post('/ExpedienteSave', [expedientecolabController::class, 'store']);
-
-
 Route::get('/validarPeriodoActualizacion', [expedientecolabController::class, 'validarPeriodoActualizacion']);
 
 //==============================================  CAPACITACION  ============================================== 
@@ -856,7 +851,6 @@ Route::post('/LineaSave', [catalogolineanegociosController::class, 'store']);
 Route::get('/LineaDelete', [catalogolineanegociosController::class, 'store']);
 Route::get('/Tablalineanegocio', [catalogolineanegociosController::class, 'Tablalineanegocio']);
 
-
 // CATÁLOGO DE TIPO DE SERVICIO
 Route::get('/catalogotiposervicio', function () {return view('ventas.Catalogos.catalogo_tiposervicio');});
 Route::post('/TiposSave', [catalogotiposervicioController::class, 'store']);
@@ -941,6 +935,20 @@ Route::get('/documentosProveedorAdmin/{rfc}', [listaproveedorController::class, 
 Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'enviarCorreoFaltantes']);
 Route::post('/actualizarVerificacionSolicitada', [listaproveedorController::class, 'actualizarVerificacionSolicitada']);
 Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'verificarEstadoVerificacion']);
+
+///// ASIGNACIONES PROVEEDOR
+
+
+
+Route::get('/Tablasignacionproveedor', [listaproveedorController::class, 'Tablasignacionproveedor']);
+Route::get('/Tablasignacionproveedorgeneral', [listaproveedorController::class, 'Tablasignacionproveedorgeneral']);
+Route::get('/TablasignacionproveedorEditar', [listaproveedorController::class, 'TablasignacionproveedorEditar']);
+Route::get('/mostrarasignacionproveedor/{id}', [listaproveedorController::class, 'mostrarasignacionproveedor']);
+
+Route::get('/pdfAsignacionproveedor/{id}', [pdfasingacionController::class, 'pdfAsignacionproveedor']);
+Route::get('/pdfAsignacionEppproveedor/{id}', [pdfasingacionController::class, 'pdfAsignacionEppproveedor']);
+
+
 
 //==============================================     PROVEEDORES TEMPORALES  ============================================== 
 
@@ -1255,7 +1263,7 @@ Route::get('codigo-postal/{cp}', function ($cp) {
 
     Log::info('Consulta CP desde: ' . request()->ip() . ', User-Agent: ' . request()->header('User-Agent'));
 
-    $token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
+    //$token = "a5ba768d-eeac-4c0f-b0be-202ef91df93c";
     $url = "https://api.copomex.com/query/info_cp/{$cp}?type=simplified&token={$token}";
 
     try {

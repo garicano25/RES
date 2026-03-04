@@ -11,6 +11,7 @@ ID_FORMULARIO_CONTACTOPROVEEDOR = 0
 ID_FORMULARIO_CERTIFICACIONPROVEEDOR = 0
 ID_FORMULARIO_REFERENCIASPROVEEDOR = 0
 ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0
+ID_ASINGACIONES_PROVEEDOR = 0;
 
 
 window.ID_FORMULARIO_ALTA = 0;
@@ -48,6 +49,9 @@ var tablareferenciasCargada = false;
 var Tabladocumentosoporteproveedores;
 var tablasoportesCargada = false; 
 
+
+var Tablasignacionproveedorgeneral;
+var tablasasignacionesCargada = false; 
 
 
 
@@ -357,81 +361,6 @@ $("#guardarALTA").click(function (e) {
 });
 
 
-// $("#guardarALTA").click(function (e) {
-//     e.preventDefault();
-
-
-
-//     formularioValido = validarFormularioV1('formularioALTA');
-
-//     if (formularioValido) {
-       
-
-//         if (ID_FORMULARIO_ALTA == 0) {
-//             alertMensajeConfirm({
-//                 title: "¿Desea guardar la información?",
-//                 text: "Al guardarla, se podrá usar",
-//                 icon: "question",
-//             }, async function () {
-
-//                 await loaderbtn('guardarALTA');
-//                 await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave1', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
-//                     Swal.fire({
-//                         icon: 'info',
-//                         title: 'Espere un momento',
-//                         text: 'Estamos guardando la información',
-//                         showConfirmButton: false
-//                     });
-
-//                     $('.swal2-popup').addClass('ld ld-breath');
-                    
-//                 }, function (data) {
-//                     rfcSeleccionada = data.funcion.RFC_ALTA;
-//                     ID_FORMULARIO_ALTA = data.funcion.ID_FORMULARIO_ALTA;
-        
-//                     alertMensaje('success', 'Información guardada correctamente', 'Esta información está lista para usarse', null, null, 1500);
-//                     Tablalistaproveedores.ajax.reload();
-//                 });
-//             }, 1);
-            
-//         } else {
-//             alertMensajeConfirm({
-//                 title: "¿Desea editar la información de este formulario?",
-//                 text: "Al guardarla, se podrá usar",
-//                 icon: "question",
-//             }, async function () {
-
-//                 await loaderbtn('guardarALTA');
-//                 await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_ALTA: ID_FORMULARIO_ALTA }, 'AltaSave1', 'formularioALTA', 'guardarALTA', { callbackAfter: true, callbackBefore: true }, () => {
-//                     Swal.fire({
-//                         icon: 'info',
-//                         title: 'Espere un momento',
-//                         text: 'Estamos guardando la información',
-//                         showConfirmButton: false
-//                     });
-
-//                     $('.swal2-popup').addClass('ld ld-breath');
-
-//                 }, function (data) {
-//                     setTimeout(() => {
-//                         ID_FORMULARIO_ALTA = data.funcion.ID_FORMULARIO_ALTA;
-
-
-
-//                         alertMensaje('success', 'Información editada correctamente', 'Información guardada');
-//                         Tablalistaproveedores.ajax.reload();
-//                     }, 300);
-//                 });
-//             }, 1);
-//         }
-//     } else {
-//         alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000);
-//     }
-// });
-
-
-
-
 
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -523,6 +452,7 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     $("#PAIS_EXTRANJERO").val(row.data().PAIS_EXTRANJERO);
     $("#DEPARTAMENTO_EXTRANJERO").val(row.data().DEPARTAMENTO_EXTRANJERO);
     $("#TIENE_ASIGNACION").val(row.data().TIENE_ASIGNACION);
+    $("#PROVEEDOR_CRITICO").val(row.data().PROVEEDOR_CRITICO);
 
     
     $(".listadedocumentoficial").empty();
@@ -629,6 +559,7 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     tablacertificacionesCargada = false;
     tablareferenciasCargada = false;
     tablasoportesCargada = false;
+    tablasasignacionesCargada = false;
 
     $('#datosgenerales-tab').tab('show');
 
@@ -2634,63 +2565,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-
-// function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
-//     if (!rfcSeleccionada) return;
-
-//     const select = document.getElementById('TIPO_DOCUMENTO_PROVEEDOR');
-//     if (!select) return;
-
-//     select.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
-
-//     fetch(`/documentosProveedorAdmin/${rfcSeleccionada}`)
-//         .then(response => response.json())
-//         .then(data => {
-//             const obligatorios = data.catalogo.filter(doc => doc.TIPO_DOCUMENTO === "1");
-//             const opcionales = data.catalogo.filter(doc => doc.TIPO_DOCUMENTO === "2");
-
-//             const crearGrupo = (label, documentos) => {
-//                 const group = document.createElement('optgroup');
-//                 group.label = label;
-
-//                 documentos.forEach(doc => {
-//                     const option = document.createElement('option');
-//                     option.value = doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR;
-//                     option.textContent = doc.NOMBRE_DOCUMENTO;
-
-//                     if (data.registrados.includes(String(doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR))) {
-//                         option.disabled = true;
-//                         option.style.color = 'green';
-//                         option.style.fontWeight = 'bold';
-//                     }
-
-//                     group.appendChild(option);
-//                 });
-
-//                 return group;
-//             };
-
-//             select.appendChild(crearGrupo('Documentos obligatorios', obligatorios));
-//             select.appendChild(crearGrupo('Documentos opcionales', opcionales));
-//         })
-//         .catch(err => {
-//             console.error('Error al cargar documentos:', err);
-//         });
-// }
-
-
-
-
 function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
     if (!rfcSeleccionada) return;
 
     const select = document.getElementById('TIPO_DOCUMENTO_PROVEEDOR');
     const inputNombre = document.getElementById('NOMBRE_DOCUMENTO');
 
-    // 🔹 Solo valida el select; no bloquea si el input no existe todavía
     if (!select) return;
 
-    // Limpia el select
     select.innerHTML = '<option value="" disabled selected>Seleccione una opción</option>';
 
     fetch(`/documentosProveedorAdmin/${rfcSeleccionada}`)
@@ -2708,14 +2590,12 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
                     option.value = doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR;
                     option.textContent = doc.NOMBRE_DOCUMENTO;
 
-                    // Si ya está registrado, lo deshabilita
                     if (data.registrados.includes(String(doc.ID_CATALOGO_DOCUMENTOSPROVEEDOR))) {
                         option.disabled = true;
                         option.style.color = 'green';
                         option.style.fontWeight = 'bold';
                     }
 
-                    // Guarda el nombre del documento como atributo
                     option.dataset.nombre = doc.NOMBRE_DOCUMENTO;
 
                     group.appendChild(option);
@@ -2724,11 +2604,9 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
                 return group;
             };
 
-            // Agrega los grupos
             select.appendChild(crearGrupo('Documentos obligatorios', obligatorios));
             select.appendChild(crearGrupo('Documentos opcionales', opcionales));
 
-            // 🔹 Agregar opción "Otro"
             const optionOtro = document.createElement('option');
             optionOtro.value = "0";
             optionOtro.textContent = "Otro";
@@ -2736,18 +2614,15 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
             optionOtro.style.fontWeight = 'bold';
             select.appendChild(optionOtro);
 
-            // 🔹 Solo si el input existe, agrega el listener
             if (inputNombre) {
                 select.addEventListener('change', function () {
                     const selectedOption = this.options[this.selectedIndex];
 
                     if (selectedOption.value === "0") {
-                        // Si selecciona "Otro"
                         inputNombre.readOnly = false;
                         inputNombre.value = "";
                         inputNombre.focus();
                     } else {
-                        // Si selecciona un documento existente
                         inputNombre.readOnly = true;
                         inputNombre.value = selectedOption.dataset.nombre || "";
                     }
@@ -2769,7 +2644,7 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
 //     const pasos = ['step1','step2','step3','step4','step5','step6','step7'];
 
 //     const indexActual = pasos.indexOf(stepId);
-//     if (indexActual === -1) return; 
+//     if (indexActual === -1) return;
 
 //     for (let i = 0; i <= indexActual; i++) {
 //         const step = document.getElementById(pasos[i]);
@@ -2884,3 +2759,722 @@ function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
 
    
 //   })();
+
+
+
+
+
+
+
+// <!-- ============================================================================================================================ -->
+// <!--                                                          STEP 8                                                          -->
+// <!-- ============================================================================================================================ -->
+
+document.getElementById('step8').addEventListener('click', function() {
+    document.querySelectorAll('[id$="-content"]').forEach(function(content) {
+        content.style.display = 'none';
+    });
+
+    document.getElementById('step8-content').style.display = 'block';
+
+    if (tablasasignacionesCargada) {
+        Tablasignacionproveedorgeneral.columns.adjust().draw();
+    } else {
+        cargarTablasingnaciongeneralproveedor();
+        tablasasignacionesCargada = true;
+    }
+
+    
+  
+});
+
+
+
+
+
+
+
+const Modalasignacion = document.getElementById('modalAsignacionProveedor')
+Modalasignacion.addEventListener('hidden.bs.modal', event => {
+
+    ID_ASINGACIONES_PROVEEDORES = 0
+
+    $('#ASIGNACIONES_ID').val('');
+    $('#FIRMA_ASIGNACION').show();
+    $('#SUBIR_DOCUMENTO_ASIGNACION').hide();
+    $('#ASIGANCION_EPP').hide();
+
+    window.listaEPP = [];
+    $('#tablaEPPBody').empty();
+    $('#EPP_JSON').val('');
+})
+
+$('#NUEVA_ASIGNACION').on('click', function () {
+
+    document.getElementById('formularioASIGNACIONES').reset();
+    ID_ASINGACIONES_PROVEEDORES = 0;
+
+
+   window.listaEPP = [];
+    actualizarTabla();
+    $('#EPP_JSON').val('');
+
+
+    $('#FIRMA_ASIGNACION').show();
+    $('#SUBIR_DOCUMENTO_ASIGNACION').hide();
+
+    $('#modalAsignacionProveedor').modal('show');
+
+    $('#modalAsignacionProveedor').one('shown.bs.modal', function () {
+        cargarTablaAsignacionesModal(); 
+    });
+
+    $('#ASIGANCION_EPP').hide();
+
+});
+
+
+
+function cargarTablaAsignacionesModal() {
+
+    $('#Tablasignacionproveedor').DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        destroy: true,
+        autoWidth: false,
+        ajax: {
+            url: '/Tablasignacionproveedor',
+            data: function (d) {
+                d.rfc = rfcSeleccionada;
+            },
+            complete: function (xhr) {
+
+                const response = xhr.responseJSON;
+
+                if (response.data && response.data.length > 0) {
+                    $('#ALMACENISTA_ASIGNACION').val(
+                        response.data[0].ALMACENISTA_NOMBRE
+                    );
+                } else {
+                    $('#ALMACENISTA_ASIGNACION').val('');
+                }
+            }
+        },
+        columns: [
+            {
+                data: null,
+                render: function (data) {
+                    return `
+                        <input type="checkbox"
+                               class="form-check-input seleccionar-equipo"
+                               value="${data.ID_ASIGNACION_FORMULARIO}">
+                    `;
+                },
+                orderable: false
+            },
+            { data: 'DESCRIPCION_EQUIPO' },
+            { data: 'CANTIDAD_SALIDA' },
+            { data: 'MARCA_EQUIPO' },
+            { data: 'MODELO_EQUIPO' },
+            { data: 'SERIE_EQUIPO' },
+            { data: 'CODIGO_EQUIPO' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '✔', className: 'all text-center' },
+            { targets: 1, title: 'Descripción', className: 'all text-center' },
+            { targets: 2, title: 'Cantidad', className: 'all text-center' },
+            { targets: 3, title: 'Marca', className: 'all text-center' },
+            { targets: 4, title: 'Modelo', className: 'all text-center' },
+            { targets: 5, title: 'No. Serie', className: 'all text-center' },
+            { targets: 6, title: 'No. Inventario', className: 'all text-center' },
+        ]
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+     const btnFirmar = document.getElementById("FIRMAR_SOLICITUD");
+    const inputFirmadoPor = document.getElementById("PERSONAL_ASIGNA");
+
+    btnFirmar.addEventListener("click", function () {
+        let usuarioNombre = btnFirmar.getAttribute("data-usuario");
+
+    
+        inputFirmadoPor.value =  usuarioNombre ;
+    });
+});
+
+function setAsignacionesSeleccionadas() {
+
+    let asignaciones = [];
+
+    $('#Tablasignacionproveedor tbody input.seleccionar-equipo:checked')
+        .each(function () {
+            asignaciones.push($(this).val());
+        });
+
+    $('#ASIGNACIONES_ID').val(JSON.stringify(asignaciones));
+}
+
+
+$("#guardarASIGNACIONES").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario3($('#formularioASIGNACIONES'))
+
+    if (formularioValido) {
+
+
+        if (ID_ASINGACIONES_PROVEEDORES == 0) {
+            setAsignacionesSeleccionadas();
+        }
+
+        
+    if (ID_ASINGACIONES_PROVEEDORES == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarASIGNACIONES')
+            await ajaxAwaitFormData({ api: 7, RFC: rfcSeleccionada , ID_ASINGACIONES_PROVEEDORES: ID_ASINGACIONES_PROVEEDORES }, 'AltaSave1', 'formularioASIGNACIONES', 'guardarASIGNACIONES', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+                
+            }, function (data) {
+                    
+                ID_ASINGACIONES_PROVEEDORES = data.soporte.ID_ASINGACIONES_PROVEEDORES
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#modalAsignacionProveedor').modal('hide')
+                    document.getElementById('formularioASIGNACIONES').reset();
+
+                    
+                    if ($.fn.DataTable.isDataTable('#Tablasignacionproveedorgeneral')) {
+                        Tablasignacionproveedorgeneral.ajax.reload(null, false); 
+                    }
+
+            })
+            
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarASIGNACIONES')
+            await ajaxAwaitFormData({ api: 7, RFC: rfcSeleccionada ,ID_ASINGACIONES_PROVEEDORES: ID_ASINGACIONES_PROVEEDORES }, 'AltaSave1', 'formularioASIGNACIONES', 'guardarASIGNACIONES', { callbackAfter: true, callbackBefore: true }, () => {
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    ID_ASINGACIONES_PROVEEDORES = data.soporte.ID_ASINGACIONES_PROVEEDORES
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#modalAsignacionProveedor').modal('hide')
+                    document.getElementById('formularioASIGNACIONES').reset();
+
+                    if ($.fn.DataTable.isDataTable('#Tablasignacionproveedorgeneral')) {
+                        Tablasignacionproveedorgeneral.ajax.reload(null, false); 
+                    }
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+
+function cargarTablasingnaciongeneralproveedor() {
+    if ($.fn.DataTable.isDataTable('#Tablasignacionproveedorgeneral')) {
+        Tablasignacionproveedorgeneral.clear().destroy();
+    }
+
+    Tablasignacionproveedorgeneral = $("#Tablasignacionproveedorgeneral").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { rfc: rfcSeleccionada },
+            method: 'GET',
+            cache: false,
+            url: '/Tablasignacionproveedorgeneral',  
+            beforeSend: function () {
+                $('#loadingIcon8').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon8').css('display', 'none');
+                Tablasignacionproveedorgeneral.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon8').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+       columns: [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return meta.row + 1;
+                },
+                className: 'text-center'
+            },
+           { data: 'DESCRIPCION_EQUIPO', className: 'text-center' },
+            { data: 'CANTIDAD_SALIDA', className: 'text-center' },
+            { data: 'MARCA_EQUIPO', className: 'text-center' },
+            { data: 'MODELO_EQUIPO', className: 'text-center' },
+            { data: 'SERIE_EQUIPO', className: 'text-center' },
+            { data: 'CODIGO_EQUIPO', className: 'text-center' },
+            {
+                data: null,
+                className: 'text-center',
+                render: function (data, type, row) {
+
+                    if (row.TIPO_ASIGNACION == 1) {
+                        return row.DESCARGAR_FORMATOS || '';
+                    }
+
+                    if (row.TIPO_ASIGNACION == 2) {
+                        return row.DESCARGAR_EPP || '';
+                    }
+
+                    return '';
+                }
+            },
+            { data: 'BTN_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_EDITAR', className: 'text-center' },
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Descripción', className: 'all text-center' },
+            { targets: 2, title: 'Cantidad', className: 'all text-center' },
+            { targets: 3, title: 'Marca', className: 'all text-center' },
+            { targets: 4, title: 'Modelo', className: 'all text-center' },
+            { targets: 5, title: 'No. Serie', className: 'all text-center' },
+            { targets: 6, title: 'No. Inventario', className: 'all text-center' },
+            { targets: 7, title: 'Descargar formato', className: 'all text-center' },
+            { targets: 8, title: 'Documento', className: 'all text-center' },
+            { targets: 9, title: 'Editar', className: 'all text-center' },
+        ],
+        drawCallback: function () {
+
+            const api = this.api();
+            const rows = api.rows({ page: 'current' }).nodes();
+
+            let lastGroup = null;
+            let rowspan = 1;
+            let firstRow = null;
+
+            api.rows({ page: 'current' }).every(function (rowIdx) {
+
+                const data = this.data();
+                const grupoActual = data.GRUPO_ID;
+
+                if (lastGroup === grupoActual) {
+
+                    rowspan++;
+
+                    $(rows).eq(rowIdx).find('td:eq(7)').hide();
+                    $(rows).eq(rowIdx).find('td:eq(8)').hide(); 
+                    $(rows).eq(rowIdx).find('td:eq(9)').hide(); 
+
+                    $(firstRow).find('td:eq(7)').attr('rowspan', rowspan);
+                    $(firstRow).find('td:eq(8)').attr('rowspan', rowspan);
+                    $(firstRow).find('td:eq(9)').attr('rowspan', rowspan);
+
+                } else {
+
+                    lastGroup = grupoActual;
+                    rowspan = 1;
+                    firstRow = rows[rowIdx];
+
+                    $(firstRow).addClass('table-light');
+
+                    
+                }
+            });
+        },
+
+       
+    });
+}
+
+
+$(document).on('click', '.descargar-asignacion', function () {
+    const id = $(this).data('id');
+
+    window.open(
+        `/pdfAsignacionproveedor/${id}`,
+        '_blank'
+    );
+});
+
+$(document).on('click', '.descargar-epp', function () {
+    const id = $(this).data('id');
+
+    window.open(
+        `/pdfAsignacionEppproveedor/${id}`,
+        '_blank'
+    );
+});
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const selectTipo = document.getElementById('TIPO_ASIGNACION');
+    const divEpp = document.getElementById('ASIGANCION_EPP');
+
+    selectTipo.addEventListener('change', function () {
+
+        if (this.value === "2") {
+            divEpp.style.display = "block";
+        } else {
+            divEpp.style.display = "none";
+        }
+
+    });
+
+});
+
+
+
+const equiposPorCategoria = {
+    "Cabeza": [
+        "Casco contra impacto",
+        "Casco dieléctrico",
+        "Tafilete",
+        "Barbiquejo"
+    ],
+    "Ojos y cara": [
+        "Anteojo de protección",
+        "Monogafa",
+        "Marco",
+        "Lente claro",
+        "Lente oscuro",
+        "Lente con filtro UV"
+    ],
+    "Oídos": [
+        "Tapones auditivos desechables",
+        "Tapones auditivos de nitrilo"
+    ],
+    "Aparato respiratorio": [
+        "Respirador contra partículas",
+        "Respirador de media cara",
+        "Filtro contra vapor"
+    ],
+    "Extremidades superiores": [
+        "Guante de nitrilo",
+        "Guante punto PVC"
+    ],
+    "Tronco": [
+        "Chaleco salvavidas tipo V",
+        "Mandil de neopreno y/o nitrilo"
+    ],
+    "Extremidades inferiores": [
+        "Calzado contra impactos",
+        "Calzado dieléctrico Clase E",
+        "Botas impermeables"
+    ],
+    "Dotación": [
+        "Camisa manga larga",
+        "Camisa manga corta",
+        "Playera tipo polo",
+        "Overol"
+    ]
+};
+
+
+window.listaEPP = [];
+
+$(document).ready(function() {
+
+    $('#categoriaEPP').on('change', function() {
+        const categoria = $(this).val();
+        const equipoSelect = $('#equipoEPP');
+
+        equipoSelect.empty();
+        equipoSelect.append('<option value="">Seleccione equipo</option>');
+
+        if (equiposPorCategoria[categoria]) {
+            equiposPorCategoria[categoria].forEach(function(equipo) {
+                equipoSelect.append(`<option value="${equipo}">${equipo}</option>`);
+            });
+        }
+    });
+
+    $('#agregarEPP').on('click', function() {
+
+        const categoria = $('#categoriaEPP').val();
+        const equipo = $('#equipoEPP').val();
+        const talla = $('#tallaEPP').val();
+        const solicitada = $('#cantidadSolicitada').val();
+        const entregada = $('#cantidadEntregada').val();
+
+        if (!categoria || !equipo || !solicitada) {
+            alert('Complete los campos obligatorios');
+            return;
+        }
+
+        const item = {
+            categoria: categoria,
+            equipo: equipo,
+            talla: talla,
+            cantidad_solicitada: solicitada,
+            cantidad_entregada: entregada
+        };
+
+        listaEPP.push(item);
+        actualizarTabla();
+        limpiarCampos();
+    });
+
+});
+
+
+function actualizarTabla() {
+
+    const tbody = $('#tablaEPPBody');
+    tbody.empty();
+
+    listaEPP.forEach((item, index) => {
+
+        tbody.append(`
+            <tr>
+                <td>${item.categoria}</td>
+                <td>${item.equipo}</td>
+                <td>${item.talla || 'N/A'}</td>
+                <td>${item.cantidad_solicitada}</td>
+                <td>${item.cantidad_entregada || 0}</td>
+                <td>
+                    <button type="button" class="btn btn-danger btn-sm eliminarEPP" data-index="${index}">
+                         <i class="bi bi-trash3-fill"></i>
+                    </button>
+                </td>
+            </tr>
+        `);
+
+    });
+
+    $('#EPP_JSON').val(JSON.stringify(listaEPP));
+}
+
+$(document).on('click', '.eliminarEPP', function() {
+
+    const index = $(this).data('index');
+    listaEPP.splice(index, 1);
+    actualizarTabla();
+
+});
+
+function limpiarCampos() {
+    $('#categoriaEPP').val('');
+    $('#equipoEPP').empty().append('<option value="">Seleccione equipo</option>');
+    $('#tallaEPP').val('');
+    $('#cantidadSolicitada').val('');
+    $('#cantidadEntregada').val('');
+}
+
+
+
+$('#Tablasignacionproveedorgeneral').on('click', 'td>button.EDITAR', function () {
+
+    var tr = $(this).closest('tr');
+    var row = Tablasignacionproveedorgeneral.row(tr);
+
+    ID_ASINGACIONES_PROVEEDORES =
+        row.data().GRUPO_ID || row.data().ID_ASINGACIONES_PROVEEDORES;
+
+
+    $('#FIRMA_ASIGNACION').hide();
+    $('#SUBIR_DOCUMENTO_ASIGNACION').show();
+
+    editarDatoTabla(row.data(), 'formularioASIGNACIONES', 'modalAsignacionProveedor', 1);
+
+
+    $('#ASIGNACIONES_ID').val(
+        JSON.stringify(row.data().ASIGNACIONES_ID || [])
+    );
+
+    $('#EPP_JSON').val(
+        JSON.stringify(row.data().EPP_JSON || [])
+    );
+
+    
+    if (row.data().TIPO_ASIGNACION == 2) {
+
+        $('#ASIGANCION_EPP').show();
+
+        let jsonEPP = row.data().EPP_JSON || [];
+
+        try {
+            window.listaEPP = Array.isArray(jsonEPP)
+                ? jsonEPP
+                : JSON.parse(jsonEPP);
+        } catch (e) {
+            console.error("Error parseando JSON EPP:", e);
+            window.listaEPP = [];
+        }
+
+        actualizarTabla(); 
+
+    } else {
+
+        $('#ASIGANCION_EPP').hide();
+        window.listaEPP = [];
+        actualizarTabla();
+
+    }
+    $('#modalAsignacionProveedor').modal('show');
+
+    $('#modalAsignacionProveedor').one('shown.bs.modal', function () {
+        cargarTablaAsignacionesModalEditar(); 
+    });
+});
+
+
+
+function cargarTablaAsignacionesModalEditar() {
+
+    $('#Tablasignacionproveedor').DataTable({
+         language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        destroy: true,
+        autoWidth: false,
+        ajax: {
+            url: '/TablasignacionproveedorEditar',
+            data: {
+                id_asignacion_contratacion: ID_ASINGACIONES_PROVEEDORES
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { 
+                data: null,
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                }
+            },
+            { data: 'DESCRIPCION_EQUIPO' },
+            { data: 'CANTIDAD_SALIDA' },
+            { data: 'MARCA_EQUIPO' },
+            { data: 'MODELO_EQUIPO' },
+            { data: 'SERIE_EQUIPO' },
+            { data: 'CODIGO_EQUIPO' }
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'Descripción', className: 'text-center' },
+            { targets: 2, title: 'Cantidad', className: 'text-center' },
+            { targets: 3, title: 'Marca', className: 'text-center' },
+            { targets: 4, title: 'Modelo', className: 'text-center' },
+            { targets: 5, title: 'No. Serie', className: 'text-center' },
+            { targets: 6, title: 'No. Inventario', className: 'text-center' }
+        ]
+    });
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivoasignacion = document.getElementById('DOCUMENTO_ASIGNACION');
+    var quitarasignacion = document.getElementById('quitar_asignacion');
+    var errorasignacion = document.getElementById('ASIGNACION_ERROR');
+
+    if (archivoasignacion) {
+        archivoasignacion.addEventListener('change', function() {
+            var archivoasignacion = this.files[0];
+            if (archivoasignacion && archivoasignacion.type === 'application/pdf') {
+                if (errorasignacion) errorasignacion.style.display = 'none';
+                if (quitarasignacion) quitarasignacion.style.display = 'block';
+            } else {
+                if (errorasignacion) errorasignacion.style.display = 'block';
+                this.value = '';
+                if (quitarasignacion) quitarasignacion.style.display = 'none';
+            }
+        });
+        quitarasignacion.addEventListener('click', function() {
+            archivoasignacion.value = ''; 
+            quitarasignacion.style.display = 'none'; 
+            if (errorasignacion) errorasignacion.style.display = 'none'; 
+        });
+    }
+});
+
+
+$('#Tablasignacionproveedorgeneral').on('click', '.ver-archivo-documentoasignacion', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablasignacionproveedorgeneral.row(tr);
+    var id = $(this).data('id');
+
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO.');
+        return;
+    }
+
+    var nombreDocumento = 'Documento de asignación';
+    var url = '/mostrarasignacionproveedor/' + id;
+    
+    abrirModal(url, nombreDocumento);
+});
+
+
+
+

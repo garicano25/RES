@@ -5325,7 +5325,7 @@ const equiposPorCategoria = {
     ],
     "Extremidades inferiores": [
         "Calzado contra impactos",
-        "Calzado dieléctrico",
+        "Calzado dieléctrico Clase E",
         "Botas impermeables"
     ],
     "Dotación": [
@@ -5400,7 +5400,7 @@ function actualizarTabla() {
                 <td>${item.cantidad_entregada || 0}</td>
                 <td>
                     <button type="button" class="btn btn-danger btn-sm eliminarEPP" data-index="${index}">
-                        X
+                      <i class="bi bi-trash3-fill"></i>
                     </button>
                 </td>
             </tr>

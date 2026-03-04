@@ -21,6 +21,7 @@ use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\altareferenciasModel;
 use App\Models\proveedor\altadocumentosModel;
 
+use App\Models\proveedor\asignacionproveedorModel;
 
 use DB;
 
@@ -539,10 +540,263 @@ public function Tablareferencias(Request $request)
         }
     }
 
+    // ASIGNACIONES PROVEEDOR
 
 
 
+    public function Tablasignacionproveedor(Request $request)
+    {
+        try {
 
+            $rfc = $request->get('rfc');
+
+            $idsUsados = DB::table('asignaciones_proveedores')
+                ->where('RFC', $rfc)
+                ->whereNotNull('ASIGNACIONES_ID')
+                ->pluck('ASIGNACIONES_ID');
+
+
+            $idsExcluir = [];
+
+            foreach ($idsUsados as $json) {
+                $array = json_decode($json, true);
+                if (is_array($array)) {
+                    $idsExcluir = array_merge($idsExcluir, $array);
+                }
+            }
+
+
+            $query = DB::table('asignaciones_inventario as ai')
+                ->leftJoin(
+                    'formulario_inventario as fi',
+                    'fi.ID_FORMULARIO_INVENTARIO',
+                    '=',
+                    'ai.INVENTARIO_ID'
+                )
+                ->leftJoin(
+                    'usuarios as u',
+                    'u.ID_USUARIO',
+                    '=',
+                    'ai.ALMACENISTA_ID'
+                )
+                ->where('ai.ASIGNADO_ID', $rfc);
+
+            if (!empty($idsExcluir)) {
+                $query->whereNotIn('ai.ID_ASIGNACION_FORMULARIO', $idsExcluir);
+            }
+
+            $tabla = $query->select(
+                'ai.ID_ASIGNACION_FORMULARIO',
+                'ai.INVENTARIO_ID',
+                'ai.CANTIDAD_SALIDA',
+                'ai.ACTIVO',
+                'ai.ALMACENISTA_ID',
+
+                'fi.DESCRIPCION_EQUIPO',
+                'fi.MARCA_EQUIPO',
+                'fi.MODELO_EQUIPO',
+                'fi.SERIE_EQUIPO',
+                'fi.CODIGO_EQUIPO',
+
+                DB::raw("
+                CONCAT(
+                    u.EMPLEADO_NOMBRE, ' ',
+                    u.EMPLEADO_APELLIDOPATERNO, ' ',
+                    u.EMPLEADO_APELLIDOMATERNO
+                ) as ALMACENISTA_NOMBRE
+            ")
+            )->get();
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => []
+            ]);
+        }
+    }
+
+
+
+    public function Tablasignacionproveedorgeneral(Request $request)
+    {
+        try {
+
+            $rfc = $request->get('rfc');
+
+            $asignaciones = asignacionproveedorModel::where('RFC', $rfc)->get();
+
+            $resultado = [];
+
+            foreach ($asignaciones as $asignacion) {
+
+                $idsAsignaciones = json_decode($asignacion->ASIGNACIONES_ID, true);
+
+                if (!is_array($idsAsignaciones) || empty($idsAsignaciones)) {
+                    continue;
+                }
+
+                $inventarios = DB::table('asignaciones_inventario as ai')
+                    ->leftJoin(
+                        'formulario_inventario as fi',
+                        'fi.ID_FORMULARIO_INVENTARIO',
+                        '=',
+                        'ai.INVENTARIO_ID'
+                    )
+                    ->whereIn('ai.ID_ASIGNACION_FORMULARIO', $idsAsignaciones)
+                    ->select(
+                        'ai.ID_ASIGNACION_FORMULARIO',
+                        'ai.CANTIDAD_SALIDA',
+                        'fi.DESCRIPCION_EQUIPO',
+                        'fi.MARCA_EQUIPO',
+                        'fi.MODELO_EQUIPO',
+                        'fi.SERIE_EQUIPO',
+                        'fi.CODIGO_EQUIPO'
+                    )
+                    ->get();
+
+                $esPrimera = true;
+
+                foreach ($inventarios as $inv) {
+
+                    $fila = [
+                        'GRUPO_ID'         => $asignacion->ID_ASINGACIONES_PROVEEDORES,
+                        'PERSONAL_ASIGNA'  => $asignacion->PERSONAL_ASIGNA,
+                        'FECHA_ASIGNACION' => $asignacion->FECHA_ASIGNACION,
+                        'TIPO_ASIGNACION'  => $asignacion->TIPO_ASIGNACION,
+                        'ALMACENISTA_ASIGNACION'  => $asignacion->ALMACENISTA_ASIGNACION,
+                        'ASIGNACIONES_ID'  => $asignacion->ASIGNACIONES_ID,
+                        'EPP_JSON'  => $asignacion->EPP_JSON,
+
+                        'CANTIDAD_SALIDA' => $inv->CANTIDAD_SALIDA,
+                        'DESCRIPCION_EQUIPO' => $inv->DESCRIPCION_EQUIPO,
+                        'MARCA_EQUIPO'       => $inv->MARCA_EQUIPO,
+                        'MODELO_EQUIPO'      => $inv->MODELO_EQUIPO,
+                        'SERIE_EQUIPO'       => $inv->SERIE_EQUIPO,
+                        'CODIGO_EQUIPO'      => $inv->CODIGO_EQUIPO,
+                    ];
+
+                    if ($esPrimera) {
+
+                        if ($asignacion->ACTIVO == 0) {
+                            $fila['BTN_EDITAR'] =
+                                '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
+                                <i class="bi bi-eye"></i>
+                            </button>';
+                        } else {
+                            $fila['BTN_EDITAR'] =
+                                '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR">
+                                <i class="bi bi-pencil-square"></i>
+                            </button>';
+                        }
+
+                        $fila['DESCARGAR_FORMATOS'] =
+                            '<button class="btn btn-danger btn-custom rounded-pill pdf-button descargar-asignacion"
+                                data-id="' . $asignacion->ID_ASINGACIONES_PROVEEDORES . '">
+                                <i class="bi bi-filetype-pdf"></i>
+                            </button>';
+
+
+                        $fila['DESCARGAR_EPP'] =
+                            '<button class="btn btn-danger btn-custom rounded-pill pdf-button descargar-epp"
+                                data-id="' . $asignacion->ID_ASINGACIONES_PROVEEDORES . '">
+                                <i class="bi bi-filetype-pdf"></i>
+                            </button>';
+
+
+                        $fila['BTN_DOCUMENTO'] =
+                            '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentoasignacion"
+                            data-id="' . $asignacion->ID_ASINGACIONES_PROVEEDORES . '">
+                            <i class="bi bi-filetype-pdf"></i>
+                        </button>';
+                    } else {
+                        $fila['BTN_EDITAR'] = '';
+                        $fila['DESCARGAR_FORMATOS'] = '';
+                        $fila['BTN_DOCUMENTO'] = '';
+                    }
+
+                    $resultado[] = $fila;
+                    $esPrimera = false;
+                }
+            }
+
+            return response()->json([
+                'data' => $resultado,
+                'msj'  => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'msj'  => 'Error ' . $e->getMessage(),
+                'data' => []
+            ]);
+        }
+    }
+
+    public function TablasignacionproveedorEditar(Request $request)
+    {
+        try {
+
+            $idAsignacion = $request->id_asignacion_contratacion;
+
+            if (!$idAsignacion) {
+                return response()->json(['data' => []]);
+            }
+
+            $asignacion = DB::table('asignaciones_proveedores')
+                ->where('ID_ASINGACIONES_PROVEEDORES', $idAsignacion)
+                ->first();
+
+            if (!$asignacion || empty($asignacion->ASIGNACIONES_ID)) {
+                return response()->json(['data' => []]);
+            }
+
+            $ids = json_decode($asignacion->ASIGNACIONES_ID, true);
+
+            if (!is_array($ids) || empty($ids)) {
+                return response()->json(['data' => []]);
+            }
+
+            $tabla = DB::table('asignaciones_inventario as ai')
+                ->leftJoin(
+                    'formulario_inventario as fi',
+                    'fi.ID_FORMULARIO_INVENTARIO',
+                    '=',
+                    'ai.INVENTARIO_ID'
+                )
+                ->whereIn('ai.ID_ASIGNACION_FORMULARIO', $ids)
+                ->select(
+                    'ai.ID_ASIGNACION_FORMULARIO',
+                    'ai.CANTIDAD_SALIDA',
+
+                    'fi.DESCRIPCION_EQUIPO',
+                    'fi.MARCA_EQUIPO',
+                    'fi.MODELO_EQUIPO',
+                    'fi.SERIE_EQUIPO',
+                    'fi.CODIGO_EQUIPO'
+                )
+                ->get();
+
+            return response()->json([
+                'data' => $tabla
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'data' => [],
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
+
+
+    public function mostrarasignacionproveedor($id)
+    {
+        $archivo = asignacionproveedorModel::findOrFail($id)->DOCUMENTO_ASIGNACION;
+        return Storage::response($archivo);
+    }
 
 
 
@@ -955,6 +1209,120 @@ public function Tablareferencias(Request $request)
 
                     break;
 
+
+                case 7:
+
+                    try {
+
+                        function normalizarAsignaciones($value)
+                        {
+                            if (is_array($value)) {
+                                return $value;
+                            }
+
+                            if (is_string($value)) {
+
+                                $decoded = json_decode($value, true);
+
+                                // Si sigue siendo string, estaba doble encodeado
+                                if (is_string($decoded)) {
+                                    $decoded = json_decode($decoded, true);
+                                }
+
+                                if (is_array($decoded)) {
+                                    return $decoded;
+                                }
+                            }
+
+                            return [];
+                        }
+
+
+                        // =========================
+                        // NORMALIZAR ASIGNACIONES_ID
+                        // =========================
+                        $asignacionesArray = normalizarAsignaciones(
+                            $request->ASIGNACIONES_ID ?? null
+                        );
+
+                        // SIEMPRE guardar como JSON STRING
+                        $asignacionesJson = json_encode($asignacionesArray);
+
+                        // =========================
+                        // NUEVO
+                        // =========================
+                        if ((int)$request->ID_ASINGACIONES_PROVEEDORES === 0) {
+
+                            DB::statement('ALTER TABLE asignaciones_proveedores AUTO_INCREMENT = 1');
+
+                            $soportes = asignacionproveedorModel::create(
+                                array_merge(
+                                    $request->except('DOCUMENTO_ASIGNACION', 'ASIGNACIONES_ID'),
+                                    [
+                                        'ASIGNACIONES_ID' => $asignacionesJson
+                                    ]
+                                )
+                            );
+
+                            if ($request->hasFile('DOCUMENTO_ASIGNACION')) {
+
+                                $documento = $request->file('DOCUMENTO_ASIGNACION');
+                                $ruta = "proveedores/{$request->RFC}/Asignaciones/{$soportes->ID_ASINGACIONES_PROVEEDORES}";
+                                $nombre = 'Documento de asignacion.' . $documento->getClientOriginalExtension();
+
+                                $soportes->update([
+                                    'DOCUMENTO_ASIGNACION' => $documento->storeAs($ruta, $nombre)
+                                ]);
+                            }
+                        }
+                        // =========================
+                        // EDITAR
+                        // =========================
+                        else {
+
+                            $soportes = asignacionproveedorModel::findOrFail(
+                                $request->ID_ASINGACIONES_PROVEEDORES
+                            );
+
+                            $soportes->update(
+                                array_merge(
+                                    $request->except('DOCUMENTO_ASIGNACION', 'ASIGNACIONES_ID'),
+                                    [
+                                        'ASIGNACIONES_ID' => $asignacionesJson
+                                    ]
+                                )
+                            );
+
+                            if ($request->hasFile('DOCUMENTO_ASIGNACION')) {
+
+                                if ($soportes->DOCUMENTO_ASIGNACION && Storage::exists($soportes->DOCUMENTO_ASIGNACION)) {
+                                    Storage::delete($soportes->DOCUMENTO_ASIGNACION);
+                                }
+
+                                $documento = $request->file('DOCUMENTO_ASIGNACION');
+                                $ruta = "proveedores/{$request->RFC}/Asignaciones/{$soportes->ID_ASINGACIONES_PROVEEDORES}";
+                                $nombre = 'Documento de asignacion.' . $documento->getClientOriginalExtension();
+
+                                $soportes->update([
+                                    'DOCUMENTO_ASIGNACION' => $documento->storeAs($ruta, $nombre)
+                                ]);
+                            }
+                        }
+
+                        return response()->json([
+                            'code' => 1,
+                            'soporte' => $soportes
+                        ]);
+                    } catch (\Throwable $e) {
+
+                        return response()->json([
+                            'code' => 0,
+                            'error' => 'Error al guardar el contrato',
+                            'detalle' => $e->getMessage()
+                        ], 500);
+                    }
+
+                    break;
 
                 default:
                     $response['code']  = 1;

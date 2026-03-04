@@ -1,17 +1,16 @@
 <?php
 
-namespace App\Models\contratacion;
+namespace App\Models\proveedor;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class asignacioncontratacionModel extends Model
+class asignacionproveedorModel extends Model
 {
 
-
     use HasFactory;
-    protected $primaryKey = 'ID_ASINGACIONES_CONTRATACION';
-    protected $table = 'asignaciones_contratacion';
+    protected $primaryKey = 'ID_ASINGACIONES_PROVEEDORES';
+    protected $table = 'asignaciones_proveedores';
     protected $fillable = [
 
         'ASIGNACIONES_ID',
@@ -21,11 +20,7 @@ class asignacioncontratacionModel extends Model
         'ALMACENISTA_ASIGNACION',
         'ACTIVO',
         'DOCUMENTO_ASIGNACION',
-        'CURP',
+        'RFC',
         'EPP_JSON'
     ];
-
-
-   
-
-    }
+}
