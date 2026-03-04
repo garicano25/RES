@@ -45,6 +45,13 @@
     </link>
     @endif
 
+    @if(request()->is('listaproveedorescriticos'))
+    <!-- form_wizard_steps -->
+    <link href="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_style.css" rel="stylesheet">
+    </link>
+    @endif
+
+
     <style>
         .dropdown-menu {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -667,13 +674,17 @@
     <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.4"></script>
     @endif
 
-    @if(request()->is('listaproveedorescriticos'))
-    <script src="/assets/js_sitio/proveedor/listaproveedorescriticos.js?v=1.0"></script>
-    @endif
+
 
     @if(request()->is('bitacoragrhistorial'))
     <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=7"></script>
     @endif
+
+    @if(request()->is('listaproveedorescriticos'))
+    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js"></script>
+    <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
+    @endif
+
 
 </body>
 

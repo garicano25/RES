@@ -488,11 +488,11 @@
     @endif
 
     @if(request()->is('bitacoraretornables'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=1.27"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraretornable.js?v=2"></script>
     @endif
 
     @if(request()->is('bitacoravehiculos'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=1.33"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoravehiculo.js?v=2"></script>
     @endif
 
     @if(request()->is('bitacoraasignacion'))

@@ -613,7 +613,7 @@ function renderImagenNueva(file, index) {
                     class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
                     style="z-index:10;border-radius:50%;"
                     onclick="eliminarImagenDOM(this)">
-                    ✕
+                   <i class="bi bi-trash-fill"></i>
                 </button>
 
                 <div style="height:180px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
@@ -625,7 +625,7 @@ function renderImagenNueva(file, index) {
                     <a class="btn btn-outline-primary btn-sm"
                        href="${e.target.result}"
                        download>
-                       ⬇️ Descargar
+                     <i class="bi bi-download"></i> Descargar
                     </a>
                 </div>
             </div>
@@ -669,7 +669,7 @@ function cargarImagenesGuardadas(recId, inventarioId) {
                         class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"
                         style="z-index:10;border-radius:50%;"
                         onclick="eliminarImagenDOM(this)">
-                        ✕
+                      <i class="bi bi-trash-fill"></i>
                     </button>
 
                     <div style="height:180px;display:flex;align-items:center;justify-content:center;background:#f8f9fa;">
@@ -681,7 +681,7 @@ function cargarImagenesGuardadas(recId, inventarioId) {
                         <a class="btn btn-outline-primary btn-sm"
                            href="/bitacora/vehiculo/imagen/${img.ID_IMAGENES_BITACORASALMACEN}"
                            download>
-                           ⬇️ Descargar
+                          <i class="bi bi-download"></i> Descargar
                         </a>
                     </div>
                 </div>

@@ -130,6 +130,9 @@ use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 use App\Http\Controllers\proveedor\catalogoverificacionproveedorController;
 use App\Http\Controllers\proveedor\listaproveedorescriticosController;
 
+use App\Http\Controllers\proveedor\listaproveedorcriticoController;
+
+
 // CONTROLADORES DE PO 
 use App\Http\Controllers\ordencompra\poController;
 use App\Http\Controllers\ordencompra\pdfpoController;
@@ -917,8 +920,7 @@ Route::get('/Tabladirectorio', [directorioController::class, 'Tabladirectorio'])
 Route::get('/ServicioDelete', [directorioController::class, 'store']);
 Route::get('/Tablaverificacionproveedor', [directorioController::class, 'Tablaverificacionproveedor']);
 Route::get('/mostrarverificacionproveedor/{id}', [directorioController::class, 'mostrarverificacionproveedor']);
-Route::get('/listaproveedorescriticos', function () {return view('compras.proveedores.listaproveedorescriticos');});
-Route::get('/Tablaproveedorescriticos', [listaproveedorescriticosController::class, 'Tablaproveedorescriticos']);
+
 
 //==============================================    LISTA DE PROVEEDORES  ============================================== 
 
@@ -948,6 +950,11 @@ Route::get('/mostrarasignacionproveedor/{id}', [listaproveedorController::class,
 Route::get('/pdfAsignacionproveedor/{id}', [pdfasingacionController::class, 'pdfAsignacionproveedor']);
 Route::get('/pdfAsignacionEppproveedor/{id}', [pdfasingacionController::class, 'pdfAsignacionEppproveedor']);
 
+
+//==============================================    LISTA DE PROVEEDORES CRITICO  ============================================== 
+
+Route::get('/listaproveedorescriticos', [listaproveedorcriticoController::class, 'index']);
+Route::get('/Tablalistaproveedorescriticos', [listaproveedorcriticoController::class, 'Tablalistaproveedorescriticos']);
 
 
 //==============================================     PROVEEDORES TEMPORALES  ============================================== 
