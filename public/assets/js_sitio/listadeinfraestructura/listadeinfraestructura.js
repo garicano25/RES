@@ -649,29 +649,6 @@ $('#TIPO_EQUIPO').on('change', function () {
     }
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-
-    const proveedorAlta = document.getElementById("PROVEEDOR_ALTA");
-    const proveedoresActivos = document.getElementById("PROVEEDORES_ACTIVOS");
-    const escribirProveedor = document.getElementById("ESCRIBIR_PROVEEDOR");
-
-    proveedoresActivos.style.display = "none";
-    escribirProveedor.style.display = "none";
-
-    proveedorAlta.addEventListener("change", function () {
-
-        if (this.value === "1") {
-            proveedoresActivos.style.display = "block";
-            escribirProveedor.style.display = "none";
-        }
-
-        if (this.value === "2") {
-            proveedoresActivos.style.display = "none";
-            escribirProveedor.style.display = "block";
-        }
-
-    });
-});
 
 
 ////////////////////////  ENTRADA INVENTARIO TAB 2 ////////////////////////
