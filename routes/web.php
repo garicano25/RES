@@ -128,8 +128,6 @@ use App\Http\Controllers\proveedor\catalagofuncionesproveedorController;
 use App\Http\Controllers\proveedor\catalagotituloproveedorController;
 use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 use App\Http\Controllers\proveedor\catalogoverificacionproveedorController;
-use App\Http\Controllers\proveedor\listaproveedorescriticosController;
-
 use App\Http\Controllers\proveedor\listaproveedorcriticoController;
 
 
@@ -165,6 +163,9 @@ use App\Http\Controllers\listacomercializacion\listacomercializacionController;
 use App\Http\Controllers\listaitemcritico\listaitemcriticoController;
 use App\Http\Controllers\listaalerta\listaalertaController;
 use App\Http\Controllers\listaasignacion\listaasignacionController;
+use App\Http\Controllers\listainfraestructura\listainfraestructuraController;
+
+
 
 //// BITACORAS INVENTARIO
 use App\Http\Controllers\bitacorasinventario\bitacoraconsumiblesController;
@@ -1161,6 +1162,12 @@ Route::get('/Tablalistadealertas', [listaalertaController::class, 'Tablalistadea
 //==============================================    LISTA DE ASIGNACION  ==============================================
 Route::get('/listadeasignacion', [listaasignacionController::class, 'index']);
 Route::get('/Tablalistadeasignacion', [listaasignacionController::class, 'Tablalistadeasignacion']);
+
+//==============================================    LISTA DE INFRAESTRUCURA  ==============================================
+
+Route::get('/listadeinfraestructura', [listainfraestructuraController::class, 'index']);
+Route::get('/Tablalistainfraestructura', [listainfraestructuraController::class, 'Tablalistainfraestructura']);
+
 
 
 //==============================================    BITACORAS   ============================================== 

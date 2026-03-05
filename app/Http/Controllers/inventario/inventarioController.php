@@ -54,7 +54,11 @@ class inventarioController extends Controller
     {
         try {
 
-            $query = inventarioModel::query();
+            $query = inventarioModel::query()
+                ->where(function ($q) {
+                    $q->where('ES_INFRAESTRUCTURA', '!=', 1)
+                        ->orWhereNull('ES_INFRAESTRUCTURA');
+                });
 
             if ($request->filled('UBICACION_EQUIPO')) {
                 $query->where('UBICACION_EQUIPO', $request->UBICACION_EQUIPO);
@@ -138,38 +142,6 @@ class inventarioController extends Controller
             ]);
         }
     }
-
-
-    // public function generarCodigoAF()
-    // {
-    //     try {
-    //         $anio_actual = date('y'); 
-
-    //         $ultimo = DB::table('formulario_inventario')
-    //             ->where('CODIGO_EQUIPO', 'like', 'AFR%' . $anio_actual)
-    //             ->orderBy('CODIGO_EQUIPO', 'desc')
-    //             ->first();
-
-    //         if ($ultimo) {
-    //             preg_match('/AFR(\d+)' . $anio_actual . '/', $ultimo->CODIGO_EQUIPO, $matches);
-    //             $consecutivo = isset($matches[1]) ? intval($matches[1]) + 1 : 1;
-    //         } else {
-    //             $consecutivo = 1;
-    //         }
-
-    //         $codigo_nuevo = 'AFR' . str_pad($consecutivo, 5, '0', STR_PAD_LEFT) . $anio_actual;
-
-    //         return response()->json([
-    //             'codigo' => $codigo_nuevo,
-    //             'msj' => 'Código generado correctamente'
-    //         ]);
-    //     } catch (Exception $e) {
-    //         return response()->json([
-    //             'codigo' => null,
-    //             'msj' => 'Error: ' . $e->getMessage()
-    //         ]);
-    //     }
-    // }
 
 
 

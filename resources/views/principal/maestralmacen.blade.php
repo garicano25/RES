@@ -289,6 +289,9 @@
                                     <hr class="dropdown-divider">
                                     <li><a class="dropdown-item" href="{{url('/listadeasignacion')}}">Asignación</a>
                                     </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/listadeinfraestructura')}}">Infraestructura</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -499,6 +502,9 @@
     <script src="/assets/js_sitio/bitacorasalmacen/bitacoraasignacion.js?v=2"></script>
     @endif
 
+    @if(request()->is('listadeinfraestructura'))
+    <script src="/assets/js_sitio/listadeinfraestructura/listadeinfraestructura.js"></script>
+    @endif
 
 
 </body>

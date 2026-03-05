@@ -63,7 +63,7 @@ var Tablabitacora = $("#Tablabitacora").DataTable({
         { targets: 0,  width:   '70px'  },                                                                       
         { targets: 1,  width:   '70px'  },                                                                       
         { targets: 2,  width:  '70px'   },                                 
-        { targets: 3,  width:  '100px'  },                                
+        { targets: 3,  width:  '120px'  },                                
         { targets: 4,  width:  '100px'  },                                 
         { targets: 5,  width:  '150px'  },                                 
         { targets: 6,  width:  '250px'  },       

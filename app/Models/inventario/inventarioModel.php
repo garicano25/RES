@@ -41,7 +41,8 @@ class inventarioModel extends Model
         'FINVIGENCIA_POLIZA',
         'PROVEEDOR_ALTA',
         'NOMBRE_PROVEEDOR', 
-        'REQUIERE_CALIBRACION'
+        'REQUIERE_CALIBRACION',
+        'ES_INFRAESTRUCTURA'
 
     ];
 }

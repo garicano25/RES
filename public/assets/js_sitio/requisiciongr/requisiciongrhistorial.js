@@ -588,6 +588,7 @@ if (resp.existe) {
                                 <option value="">Seleccione</option>
                                 <option value="Bien">Bien</option>
                                 <option value="Servicio">Servicio</option>
+                                <option value="Infraestructura">Infraestructura</option>
                                 <option value="N/A">N/A</option>
 
                               </select>
@@ -985,6 +986,7 @@ function crearBloqueDetalle(det, resp) {
                                 <option value="">Seleccione</option>
                                 <option value="Bien" ${det.TIPO_BS=="Bien"?"selected":""}>Bien</option>
                                 <option value="Servicio" ${det.TIPO_BS == "Servicio" ? "selected" : ""}>Servicio</option>
+                                <option value="Infraestructura" ${det.TIPO_BS == "Infraestructura" ? "selected" : ""}>Infraestructura</option>
                                 <option value="N/A" ${det.TIPO_BS=="N/A"?"selected":""}>N/A</option>
                                 </select>
                           </div>

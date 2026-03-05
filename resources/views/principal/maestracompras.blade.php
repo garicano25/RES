@@ -610,11 +610,11 @@
     @endif
 
     @if(request()->is('bitacora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=1.27"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=2"></script>
     @endif
 
     @if(request()->is('bitacoramrhistorial'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacorahistorial.js?v=1.1"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacorahistorial.js?v=2"></script>
     @endif
 
     @if(request()->is('bancoproveedores'))
@@ -667,7 +667,7 @@
     @endif
 
     @if(request()->is('bitacoragr'))
-    <script src="/assets/js_sitio/requisiciongr/requisiciongr.js?v=7"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisiciongr.js?v=8"></script>
     @endif
 
     @if(request()->is('vobogrusuario'))
@@ -677,7 +677,7 @@
 
 
     @if(request()->is('bitacoragrhistorial'))
-    <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=7"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=8"></script>
     @endif
 
     @if(request()->is('listaproveedorescriticos'))
