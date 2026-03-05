@@ -3205,6 +3205,6 @@ $(document).on('show.bs.modal', '.modal', function () {
     const modal = bootstrap.Modal.getOrCreateInstance(this);
 
     modal._config.backdrop = 'static';
-    modal._config.keyboard = false;
+    modal._config.keyboard = true;
 
 });
