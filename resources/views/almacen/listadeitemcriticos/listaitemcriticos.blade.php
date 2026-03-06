@@ -307,8 +307,8 @@
                                                 </div>
 
                                                 <div class="col-4 mt-2">
-                                                    <label>¿El ítem es crítico? </label>
-                                                    <select class="form-control" name="ITEM_CRITICO" id="ITEM_CRITICO">
+                                                    <label>¿El ítem es crítico? *</label>
+                                                    <select class="form-control" name="ITEM_CRITICO" id="ITEM_CRITICO" required>
                                                         <option value="" selected disabled>Seleccione una opción</option>
                                                         <option value="1">Sí</option>
                                                         <option value="2">No</option>
@@ -329,8 +329,8 @@
 
 
                                                 <div class="col-4 mt-2">
-                                                    <label>¿El proveedor está dado de alta? </label>
-                                                    <select class="form-control" name="PROVEEDOR_ALTA" id="PROVEEDOR_ALTA">
+                                                    <label>¿El proveedor está dado de alta? *</label>
+                                                    <select class="form-control" name="PROVEEDOR_ALTA" id="PROVEEDOR_ALTA" required>
                                                         <option value="" selected disabled>Seleccione una opción</option>
                                                         <option value="1">Sí</option>
                                                         <option value="2">No</option>
