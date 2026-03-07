@@ -97,7 +97,37 @@ class DenyRoleGlobalMiddleware
         'solicitudeshistorial',
         'ofertashistorial',
         'confirmacionhistorial',
-        'ordentrabajohistorial'
+        'ordentrabajohistorial',
+        'tablero',
+        'postulacioneshistorial',
+        'seleccion',
+        'visualizarseleccion',
+        'contratacion',
+        'actualizaciondocumentos',
+        'actualizaciondocumentoshistorial',
+        'expediente',
+        'catalogoscapacitacion',
+        'capacitacioncursos',
+        'capacitaciontipocurso',
+        'capacitacionareaconocimiento',
+        'capacitacionmodalidad',
+        'capacitacionformato',
+        'capacitacionpaisoregion',
+        'capacitacionidioma',
+        'capacitacionnormatividad',
+        'capacitacionreconocimiento',
+        'capacitacioncompetencia',
+        'capacitaciontipoproveedor',
+        'capacitacionmetodoevaluacion',
+        'capacitacionevidenciasgeneradas',
+        'capacitacionubicacion',
+        'capacitacionmaterialdidactico',
+        'capacitacionimpactoesperado',
+        'capacitaciondocumentosemitidos',
+        'capacitacionmoneda',
+        'capacitaciolineasnegocios',
+        'bitacoragrhistorial'
+
         
     ];
 

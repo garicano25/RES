@@ -143,7 +143,9 @@
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab2-entrada" data-bs-toggle="tab" data-bs-target="#contenido-entrada" type="button" role="tab" style="display: none;">Bitácora</button>
                         </li>
-
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab5-detalle" data-bs-toggle="tab" data-bs-target="#contenido-detalle" type="button" role="tab" style="display: none;">Detalle artículo</button>
+                        </li>
                     </ul>
 
 
@@ -337,6 +339,14 @@
                                                     </select>
                                                 </div>
 
+                                                <div class="col-8 mt-2">
+                                                    <label>¿Requiere detallar los componentes del artículo? </label>
+                                                    <select class="form-control" name="DETALLAR_ARTICULOS" id="DETALLAR_ARTICULOS">
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Sí</option>
+                                                        <option value="2">No</option>
+                                                    </select>
+                                                </div>
 
                                                 <div class="col-12 mt-2" id="PROVEEDORES_ACTIVOS" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
@@ -456,7 +466,23 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- TAB 5: Detalle artículo  -->
 
+                        <div class="tab-pane fade" id="contenido-detalle" role="tabpanel">
+                            <ol class="breadcrumb mb-5">
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Agregar detalle</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_DETALLE" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+
+                            <div class="card-body">
+                                <div class="card-body position-relative" id="tabla_activo" style="display: block;">
+                                    <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                    <table id="Tabladetallearticulos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer mt-5">

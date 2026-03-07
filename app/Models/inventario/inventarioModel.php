@@ -42,7 +42,8 @@ class inventarioModel extends Model
         'PROVEEDOR_ALTA',
         'NOMBRE_PROVEEDOR', 
         'REQUIERE_CALIBRACION',
-        'ES_INFRAESTRUCTURA'
+        'ES_INFRAESTRUCTURA',
+        'DETALLAR_ARTICULOS'
 
     ];
 }

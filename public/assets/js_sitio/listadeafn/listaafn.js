@@ -408,6 +408,18 @@ $('#Tablalistadeafn tbody').on('click', 'td>button.EDITAR', function () {
 
     });
 
+   if (row.data().DETALLAR_ARTICULOS === "1") {
+       $("#tab5-detalle").show();
+      
+    } else {
+       $("#tab5-detalle").hide();
+
+    }
+
+    $("#tab5-detalle").off("click").on("click", function () {
+        cargarTablaDetallaArticulo();
+    });
+
 
     initSelectProveedor();
 
@@ -559,6 +571,19 @@ $(document).ready(function() {
     });
 
 
+    if (row.data().DETALLAR_ARTICULOS === "1") {
+       $("#tab5-detalle").show();
+      
+    } else {
+       $("#tab5-detalle").hide();
+
+    }
+
+    $("#tab5-detalle").off("click").on("click", function () {
+        cargarTablaDetallaArticulo();
+    });
+        
+        
     initSelectProveedor();
 
     if (row.data().PROVEEDOR_EQUIPO) {

@@ -1119,6 +1119,12 @@ Route::post('/inventario/respaldar', [inventarioController::class, 'respaldarInv
 /// DOCUMENTOS DEL EQUIPO
 Route::get('/Tabladocumentosinventario', [inventarioController::class, 'Tabladocumentosinventario']);
 Route::get('/mostrardocumentoquipo/{id}', [inventarioController::class, 'mostrardocumentoquipo']);
+Route::post('/guardarRequiereItem', [inventarioController::class, 'guardarRequiereItem']);
+
+/// DETALLE DOCUMENTO
+Route::post('/guardarDetallearticulo', [inventarioController::class, 'guardarDetallearticulo']);
+Route::get('/Tabladetallearticulos', [inventarioController::class, 'Tabladetallearticulos']);
+
 
 /// VISUALIZAR FECHAS DE DOCUMENTOS 
 Route::get('/obtenerDocumentosPorInventario/{inventario_id}', [inventarioController::class, 'obtenerDocumentosPorInventario']);
