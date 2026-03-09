@@ -375,19 +375,19 @@
                                                 </div>
 
 
-                                                <div class="col-4 mt-2">
+                                                <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Precio Unitario (MXN)</label>
                                                         <input type="text" step="any" class="form-control" id="UNITARIO_EQUIPO" name="UNITARIO_EQUIPO">
                                                     </div>
                                                 </div>
-                                                <div class="col-4 mt-2">
+                                                <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label> Precio Total</label>
                                                         <input type="text" class="form-control" id="TOTAL_EQUIPO" name="TOTAL_EQUIPO">
                                                     </div>
                                                 </div>
-                                                <div class="col-4 mt-2">
+                                                <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label>Tipo *</label>
                                                         <select class="form-select" id="TIPO_EQUIPO" name="TIPO_EQUIPO" required>
@@ -395,13 +395,11 @@
                                                             @foreach ($tipoinventario as $tipos)
                                                             <option value="{{ $tipos->DESCRIPCION_TIPO }}">{{ $tipos->DESCRIPCION_TIPO }}</option>
                                                             @endforeach
-
-
                                                         </select>
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6 mt-2">
+                                                <div class="col-3 mt-2">
                                                     <label>Marcar si el ítem. requiere *</label>
                                                     <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO" required>
                                                         <option value="" selected disabled>Seleccione una opción</option>

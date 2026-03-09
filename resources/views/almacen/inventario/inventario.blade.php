@@ -432,8 +432,6 @@
                                                         <input type="text" class="form-control" id="TOTAL_EQUIPO" name="TOTAL_EQUIPO">
                                                     </div>
                                                 </div>
-
-
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label>Tipo *</label>
@@ -442,8 +440,6 @@
                                                             @foreach ($tipoinventario as $tipos)
                                                             <option value="{{ $tipos->DESCRIPCION_TIPO }}">{{ $tipos->DESCRIPCION_TIPO }}</option>
                                                             @endforeach
-
-
                                                         </select>
                                                     </div>
                                                 </div>
