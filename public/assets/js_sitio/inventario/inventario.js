@@ -1349,7 +1349,7 @@ function cargarDocumentos(inventario_id) {
     });
 }
 
-////////////////////////////////// DETALLE DOCUMENTOS //////////////////////////////////
+////////////////////////////////// DETALLE ARTICULO //////////////////////////////////
 
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -1405,7 +1405,7 @@ function guardarDetallearticulo() {
 }
 
 
-////////////////////////////////// DETALLE DOCUMENTOS //////////////////////////////////
+//////////////////////////////////  DETALLE ARTICULO //////////////////////////////////
 
 const Modaldetalle= document.getElementById('miModal_DETALLE')
 Modaldetalle.addEventListener('hidden.bs.modal', event => {

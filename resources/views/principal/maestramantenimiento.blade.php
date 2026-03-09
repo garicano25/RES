@@ -382,7 +382,7 @@
 
 
     @if(request()->is('mantenimientoequipos'))
-    <script src="/assets/js_sitio/listademantenimiento/listamantenimiento.js?v=4.0"></script>
+    <script src="/assets/js_sitio/listademantenimiento/listamantenimiento.js?v=5"></script>
     @endif
 
 

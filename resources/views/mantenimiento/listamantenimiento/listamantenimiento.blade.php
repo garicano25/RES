@@ -130,6 +130,9 @@
                             <button class="nav-link active" id="tab1-info" data-bs-toggle="tab" data-bs-target="#contenido-info" type="button" role="tab">Información del equipo</button>
                         </li>
                         <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab6-entrada" data-bs-toggle="tab" data-bs-target="#contenido-entrada" type="button" role="tab" style="display: none;">Bitácora</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab2-documentos" data-bs-toggle="tab" data-bs-target="#contenido-documentos" type="button" role="tab">Documentación</button>
                         </li>
                         <li class="nav-item" role="presentation">
@@ -137,6 +140,9 @@
                         </li>
                         <li class="nav-item" role="presentation">
                             <button class="nav-link" id="tab4-mtto" data-bs-toggle="tab" data-bs-target="#contenido-mtto" type="button" role="tab">Mantenimiento</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="tab5-detalle" data-bs-toggle="tab" data-bs-target="#contenido-detalle" type="button" role="tab" style="display: none;">Detalle artículo</button>
                         </li>
                     </ul>
 
@@ -326,6 +332,15 @@
                                                 </div>
 
 
+                                                <div class="col-8 mt-2">
+                                                    <label>¿Requiere detallar los componentes del artículo? </label>
+                                                    <select class="form-control" name="DETALLAR_ARTICULOS" id="DETALLAR_ARTICULOS">
+                                                        <option value="" selected disabled>Seleccione una opción</option>
+                                                        <option value="1">Sí</option>
+                                                        <option value="2">No</option>
+                                                    </select>
+                                                </div>
+
                                                 <div class="col-12 mt-2" id="PROVEEDORES_ACTIVOS" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
                                                     <select class="form-select text-center" id="PROVEEDOR_EQUIPO" name="PROVEEDOR_EQUIPO">
@@ -412,6 +427,21 @@
                                 </div>
                             </div>
                         </div> <!--   Fin del tab información del producto -->
+
+                        <!-- TAB 6: Entrada del producto -->
+                        <div class="tab-pane fade" id="contenido-entrada" role="tabpanel">
+                            <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Bitácora</h3>
+                            </ol>
+
+                            <div class="card-body">
+                                <div class="card-body position-relative" id="tabla_activo" style="display: block;">
+                                    <i id="loadingIcon" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                    <table id="Tablaentradainventario" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <!-- TAB 2: Documentación del equipo -->
                         <div class="tab-pane fade" id="contenido-documentos" role="tabpanel">
@@ -540,6 +570,25 @@
                             </ol>
 
                         </div>
+
+                        <!-- TAB 5: Detalle artículo  -->
+
+                        <div class="tab-pane fade" id="contenido-detalle" role="tabpanel">
+                            <ol class="breadcrumb mb-5">
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Detalle</h3>
+                                <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_DETALLE" style="margin-left: auto;">
+                                    Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                                </button>
+                            </ol>
+
+                            <div class="card-body">
+                                <div class="card-body position-relative" id="tabla_activo" style="display: block;">
+                                    <i id="loadingIcon2" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                                    <table id="Tabladetallearticulos" class="table table-hover bg-white table-bordered text-center w-100 TableCustom"></table>
+                                </div>
+                            </div>
+                        </div>
+
 
 
                     </div>
@@ -769,5 +818,66 @@
     </div>
 </div>
 
+
+<!-- ============================================================== -->
+<!-- MODAL DETALLE  -->
+<!-- ============================================================== -->
+
+<div class="modal fade" id="miModal_DETALLE" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" id="formularioDETALLE" style="background-color: #ffffff;">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Nuevo detalle</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+                    <div class="col-12">
+                        <div class="row">
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Nombre componente</label>
+                                <input type="text" class="form-control" name="NOMBRE_COMPONENTE" id="NOMBRE_COMPONENTE">
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Código / parte </label>
+                                <input type="text" class="form-control" name="CODIGO_PARTE" id="CODIGO_PARTE">
+                            </div>
+
+                            <div class="col-md-2 mb-3">
+                                <label class="form-label">Cantidad </label>
+                                <input type="number" class="form-control" name="CANTIDAD_DETALLE" id="CANTIDAD_DETALLE">
+                            </div>
+
+                            <div class="col-md-2 mb-3">
+                                <label class="form-label">Fecha de compra </label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_COMPRA" name="FECHA_COMPRA">
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 mb-3">
+                                <label class="form-label">Requiere reemplazo </label>
+                                <select class="form-control" id="REQUIERE_REEMPLAZO" name="REQUIERE_REEMPLAZO">
+                                    <option value="" selected disabled>Seleccione una opción</option>
+                                    <option value="1">Sí</option>
+                                    <option value="2">No</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarDETALLEARTICULO">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @endsection
