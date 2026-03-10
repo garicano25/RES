@@ -57,7 +57,7 @@
 
 
 
-    #Tablalistaitemcriticos td.col-justificacion {
+    #Tablalistadeasignacion td.col-justificacion {
         white-space: normal !important;
         overflow: visible !important;
         text-overflow: unset !important;
@@ -69,7 +69,7 @@
     }
 
 
-    #Tablalistaitemcriticos td {
+    #Tablalistadeasignacion td {
         word-wrap: break-word;
         white-space: normal !important;
     }
