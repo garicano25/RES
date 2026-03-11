@@ -408,9 +408,32 @@ $('#Tablabitacora tbody').on('click', 'td>button.VISUALIZAR', async function () 
 
           document.getElementById('esProveedorUnico').value = esProveedorUnico ? 'SI' : 'NO';
 
-              result.data.forEach((item) => {
+          // result.data.forEach((item) => {
+          
+          result.data.forEach((item, index) => {
+
+
           const template = document.querySelector('#templateProducto');
           const clon = document.importNode(template.content, true);
+
+            
+        
+          
+              const estado = clon.querySelector('.estado-aprobacion');
+            if (estado) estado.name = `ESTADO_APROBACION[${index}]`;
+
+            const fecha = clon.querySelector('.fecha-aprobacion');
+            if (fecha) fecha.name = `FECHA_APROBACION[${index}]`;
+
+            const requiere = clon.querySelector('.requiere-comentario');
+            if (requiere) requiere.name = `REQUIERE_COMENTARIO[${index}]`;
+
+            const comentario = clon.querySelector('.comentario-aprobacion');
+            if (comentario) comentario.name = `COMENTARIO_APROBACION[${index}]`;
+
+            const rechazo = clon.querySelector('.motivo-rechazo');
+            if (rechazo) rechazo.name = `MOTIVO_RECHAZO[${index}]`;
+
 
           const descripcionDiv = clon.querySelector('.descripcion-materiales');
           const titulo = clon.querySelector('.producto-titulo');

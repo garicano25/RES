@@ -52,6 +52,7 @@
     @endif
 
 
+
     <style>
         .dropdown-menu {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -75,6 +76,21 @@
 
         .dropdown-item span.badge {
             font-size: 0.85rem;
+        }
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+        .dropdown-submenu>.dropdown-menu {
+            top: 0;
+            left: 100%;
+            margin-left: .1rem;
+            display: none;
+        }
+
+        .dropdown-submenu:hover>.dropdown-menu {
+            display: block;
         }
     </style>
 
@@ -357,6 +373,13 @@
                                         Lista proveedores
                                     </a>
                                 </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/listaproveedorescriticos') }}">
+                                        Proveedores críticos
+                                    </a>
+                                </li>
+
                                 @endif
                                 {{-- Superusuario, Administrador, Asistente de planeación y logística y Asistente de compras --}}
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras']))
@@ -367,11 +390,26 @@
                                     </a>
                                 </li>
                                 <hr class="dropdown-divider">
-                                <li>
-                                    <a class="dropdown-item" href="{{ url('/listaproveedorescriticos') }}">
-                                        Proveedores críticos
+                                <li class="dropdown-submenu">
+                                    <a class="dropdown-item dropdown-toggle" href="#">
+                                        Actualización de documentos
                                     </a>
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ url('/actualizaciondocumentosproveedor') }}">
+                                                Vo.Bo
+                                            </a>
+                                        </li>
+                                        <hr class="dropdown-divider">
+                                        <li>
+                                            <a class="dropdown-item" href="{{ url('/actualizaciondocumentoshistorial') }}">
+                                                Aprobación
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
+
+
                                 @endif
                             </ul>
                         </li>
@@ -610,7 +648,7 @@
     @endif
 
     @if(request()->is('bitacora'))
-    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=2"></script>
+    <script src="/assets/js_sitio/requisiconmaterial/bitacora.js?v=3"></script>
     @endif
 
     @if(request()->is('bitacoramrhistorial'))
@@ -674,8 +712,6 @@
     <script src="/assets/js_sitio/requisiciongr/vobogrusuario.js?v=1.4"></script>
     @endif
 
-
-
     @if(request()->is('bitacoragrhistorial'))
     <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=8"></script>
     @endif
@@ -684,6 +720,11 @@
     <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
+
+    @if(request()->is('actualizaciondocumentosproveedor'))
+    <script src="/assets/js_sitio/proveedor/fechaactualizaciondoc.js"></script>
+    @endif
+
 
 
 </body>
