@@ -91,6 +91,46 @@
 
 
 
+<div class="modal fade" id="modalActualizarDocumento">
 
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Actualizar documento</h5>
+            </div>
+
+            <div class="modal-body">
+
+                <form id="formActualizarDocumento" enctype="multipart/form-data">
+
+                    <input type="hidden" name="ID_FORMULARIO_DOCUMENTOSPROVEEDOR" id="ID_FORMULARIO_DOCUMENTOSPROVEEDOR">
+                    <input type="hidden" name="TIPO_DOCUMENTO_PROVEEDOR" id="TIPO_DOCUMENTO_PROVEEDOR_ACT">
+
+                    <div class="mb-3">
+                        <label>Seleccione documento (PDF)</label>
+                        <input type="file"
+                            class="form-control"
+                            name="DOCUMENTO_SOPORTE"
+                            accept="application/pdf"
+                            required>
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+
+                <button class="btn btn-primary" id="guardarActualizacionDoc">
+                    Actualizar</button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 
 @endsection

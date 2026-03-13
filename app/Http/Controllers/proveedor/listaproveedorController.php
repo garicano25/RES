@@ -48,9 +48,20 @@ class listaproveedorController extends Controller
         try {
             $tabla = altaproveedorModel::select('*')->get();
 
+
+            $periodo = DB::table('fecha_actualizaciondocsproveedor')
+                ->where('ACTIVO', 1)
+                ->whereDate('FECHA_INICIO', '<=', now())
+                ->whereDate('FECHA_FIN', '>=', now())
+                ->first();
+
+
             foreach ($tabla as $value) {
 
 
+                $value->BTN_ACTUALIZACION_DOCS = '';
+
+                
                 if ($value->ACTIVO == 0) {
 
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ALTA . '"><span class="slider round"></span></label>';
@@ -59,11 +70,27 @@ class listaproveedorController extends Controller
                 }
 
 
-                
+
                 if ((int) $value->VERIFICACION_SOLICITADA === 1) {
+
                     $value->ESTATUS_DATOS = '<span class="badge bg-success">Completo</span>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_CORREO = ''; 
+
+                    $value->BTN_EDITAR = '<button class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+
+                    $value->BTN_CORREO = '';
+
+                    if ($periodo) {
+
+                        $value->BTN_ACTUALIZACION_DOCS =
+                                            '<button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
+                            data-id="' . $value->ID_FORMULARIO_ALTA . '">
+                            <i class="bi bi-envelope-paper-fill"></i>
+                            </button>';
+                                    } else {
+
+                        $value->BTN_ACTUALIZACION_DOCS = '';
+                    }
+
                     continue;
                 }
 
@@ -213,7 +240,36 @@ class listaproveedorController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Correo enviado correctamente.']);
     }
 
+    public function enviarCorreoActualizacionDocs(Request $request)
+    {
 
+        $proveedor = DB::table('formulario_altaproveedor')
+            ->where('ID_FORMULARIO_ALTA', $request->id)
+            ->first();
+
+        $periodo = DB::table('fecha_actualizaciondocsproveedor')
+            ->where('ACTIVO', 1)
+            ->first();
+
+        $documentos = DB::table('catalogo_documentosproveedor')
+            ->where('ACTUALIZAR_DOCUMENTOS', 1)
+            ->pluck('NOMBRE_DOCUMENTO');
+
+        Mail::send('emails.actualizacion_documentos', [
+            'proveedor' => $proveedor,
+            'documentos' => $documentos,
+            'periodo' => $periodo
+        ], function ($mail) use ($proveedor) {
+
+            $mail->to($proveedor->CORREO_DIRECTORIO)
+                ->subject('Actualización de documentos');
+        });
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Correo enviado al proveedor'
+        ]);
+    }
 
 
     public function actualizarVerificacionSolicitada(Request $request)

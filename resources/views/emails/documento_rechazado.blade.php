@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
 
     <style>
         body {
@@ -32,30 +32,34 @@
 
         .content {
             padding: 25px;
-            font-size: 15px;
             color: #333;
+            font-size: 15px;
             line-height: 1.6;
         }
 
-        .alert {
-            background: #fff8e6;
-            border-left: 4px solid #f39c12;
-            padding: 12px;
+        .rechazo {
+            background: #fff3f3;
+            border-left: 4px solid #cc0000;
+            padding: 15px;
             margin: 15px 0;
-            font-weight: bold;
         }
 
-        .list {
+        .documento {
             background: #f9fafb;
             border: 1px solid #e6e6e6;
-            border-radius: 5px;
             padding: 15px;
+            border-radius: 5px;
             margin-top: 10px;
         }
 
-        .list ul {
-            margin: 0;
-            padding-left: 20px;
+        .motivo {
+            margin-top: 10px;
+            padding: 10px;
+            background: #ffeaea;
+            border: 1px solid #ffcccc;
+            border-radius: 5px;
+            color: #cc0000;
+            font-weight: bold;
         }
 
         .button {
@@ -69,8 +73,8 @@
             padding: 12px 25px;
             text-decoration: none;
             border-radius: 5px;
-            font-size: 15px;
             font-weight: bold;
+            font-size: 15px;
             display: inline-block;
         }
 
@@ -115,48 +119,53 @@
     <div class="container">
 
         <div class="header">
-            Información pendiente de registro
+            Actualización de documento
         </div>
 
         <div class="content">
 
-            <p>{{ $saludo }} proveedor <b>{{ $razonSocial }}</b>,</p>
-
             <p>
-                Gracias por su pre-registro en nuestro ERP.
+                Estimado proveedor <b>{{ $empresa }}</b>,
             </p>
 
-            <p>
-                Detectamos que su registro en el sistema aún está incompleto.
+            <div class="rechazo">
 
-            </p>
-
-            <div class="alert">
-                Los siguientes elementos requieren ser completados:
-            </div>
-
-            <div class="list">
-
-                <ul>
-                    @foreach ($faltantes as $item)
-                    <li>{{ $item }}</li>
-                    @endforeach
-                </ul>
+                Le informamos que la **actualización del siguiente documento no fue aceptada**.
 
             </div>
 
+            <div class="documento">
+
+                <b>Documento actualizado:</b><br>
+
+                {{ $documento }}
+
+            </div>
+
+            <p><b>Motivo:</b></p>
+
+            <div class="motivo">
+
+                {{ $motivo }}
+
+            </div>
+
             <p>
-                Le solicitamos completar la información a la brevedad para continuar con el proceso de validación de su registro.
+                Le solicitamos **corregir el documento y cargarlo nuevamente en el sistema ERP** para completar el proceso de actualización.
             </p>
 
             <div class="button">
+
                 <a href="https://results-erp.results-in-performance.com/login">
-                    Completar información en el sistema
+
+                    Ingresar al sistema
+
                 </a>
+
             </div>
 
             <p>
-                Una vez completados los datos, su registro podrá continuar con el proceso de revisión.
+                Una vez que cargue nuevamente el documento, será revisado nuevamente para confirmar su actualización.
             </p>
 
             <div class="no-reply">
@@ -182,6 +191,7 @@
             </a>
 
             <br>
+
             Todos los derechos reservados.
 
         </div>
@@ -190,4 +200,3 @@
 
 </body>
 
-</html>

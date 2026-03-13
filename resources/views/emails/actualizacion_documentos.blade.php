@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
 
     <style>
         body {
@@ -32,28 +32,28 @@
 
         .content {
             padding: 25px;
-            font-size: 15px;
             color: #333;
+            font-size: 15px;
             line-height: 1.6;
         }
 
-        .alert {
-            background: #fff8e6;
-            border-left: 4px solid #f39c12;
+        .periodo {
+            background: #f8f9fa;
+            border-left: 4px solid #2C3E50;
             padding: 12px;
             margin: 15px 0;
             font-weight: bold;
         }
 
-        .list {
+        .docs {
             background: #f9fafb;
             border: 1px solid #e6e6e6;
-            border-radius: 5px;
             padding: 15px;
+            border-radius: 5px;
             margin-top: 10px;
         }
 
-        .list ul {
+        .docs ul {
             margin: 0;
             padding-left: 20px;
         }
@@ -69,8 +69,8 @@
             padding: 12px 25px;
             text-decoration: none;
             border-radius: 5px;
-            font-size: 15px;
             font-weight: bold;
+            font-size: 15px;
             display: inline-block;
         }
 
@@ -87,10 +87,6 @@
             font-size: 14px;
             text-align: center;
             border-radius: 5px;
-        }
-
-        .no-reply a {
-            color: #cc0000;
         }
 
         .footer {
@@ -115,48 +111,59 @@
     <div class="container">
 
         <div class="header">
-            Información pendiente de registro
+            Actualización de documentos de proveedor
         </div>
 
         <div class="content">
 
-            <p>{{ $saludo }} proveedor <b>{{ $razonSocial }}</b>,</p>
-
             <p>
-                Gracias por su pre-registro en nuestro ERP.
+                Estimado proveedor <b>{{ $proveedor->RAZON_SOCIAL_ALTA }}</b>,
             </p>
 
             <p>
-                Detectamos que su registro en el sistema aún está incompleto.
-
+                Le informamos que debe realizar la actualización de los siguientes documentos en el sistema.
             </p>
 
-            <div class="alert">
-                Los siguientes elementos requieren ser completados:
+            <div class="periodo">
+
+                Periodo de actualización:<br>
+
+                {{ \Carbon\Carbon::parse($periodo->FECHA_INICIO)->format('d/m/Y') }}
+
+                &nbsp;&nbsp;al&nbsp;&nbsp;
+
+                {{ \Carbon\Carbon::parse($periodo->FECHA_FIN)->format('d/m/Y') }}
+
             </div>
 
-            <div class="list">
+            <b>Documentos que deben actualizarse:</b>
+
+            <div class="docs">
 
                 <ul>
-                    @foreach ($faltantes as $item)
-                    <li>{{ $item }}</li>
+
+                    @foreach($documentos as $doc)
+
+                    <li>{{ $doc }}</li>
+
                     @endforeach
+
                 </ul>
 
             </div>
 
-            <p>
-                Le solicitamos completar la información a la brevedad para continuar con el proceso de validación de su registro.
-            </p>
-
             <div class="button">
+
                 <a href="https://results-erp.results-in-performance.com/login">
-                    Completar información en el sistema
+
+                    Ingresar al sistema
+
                 </a>
+
             </div>
 
             <p>
-                Una vez completados los datos, su registro podrá continuar con el proceso de revisión.
+                Por favor ingrese al sistema dentro del periodo indicado para realizar la actualización correspondiente.
             </p>
 
             <div class="no-reply">
@@ -176,7 +183,6 @@
         <div class="footer">
 
             © {{ date('Y') }}
-
             <a href="https://results-in-performance.com">
                 Results In Performance
             </a>

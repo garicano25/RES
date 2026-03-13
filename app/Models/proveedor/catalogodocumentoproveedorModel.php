@@ -8,8 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class catalogodocumentoproveedorModel extends Model
 {
     use HasFactory;
-
-
     protected $table = 'catalogo_documentosproveedor';
     protected $primaryKey = 'ID_CATALOGO_DOCUMENTOSPROVEEDOR';
     protected $fillable = [
@@ -18,6 +16,7 @@ class catalogodocumentoproveedorModel extends Model
         'TIPO_PERSONA_OPCION',
         'DESCRIPCION_DOCUMENTO',
         'ACTIVO',
-        'TIPO_DOCUMENTO'
+        'TIPO_DOCUMENTO',
+        'ACTUALIZAR_DOCUMENTOS'
     ];
 }

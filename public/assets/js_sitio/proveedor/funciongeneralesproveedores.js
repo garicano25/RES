@@ -1,37 +1,4 @@
 
-// $(document).ready(function () {
-//     $.ajax({
-//         url: '/verificarBloqueoPorVerificacion',
-//         method: 'GET',
-//         success: function (response) {
-//             if (response.bloqueado) {
-//                 const botones = [
-//                     '#NUEVA_CERTIFICACION',
-//                     '#guardarCertificaciones',
-//                     '#NUEVO_CONTACTO',
-//                     '#guardarCONTACTOS',
-//                     '#NUEVA_CUENTA',
-//                     '#guardarCuentas',
-//                     '#NUEVO_DOCUMENTO',
-//                     '#guardarDOCUMENTOS',
-//                     '#guardarALTA',
-//                     '#NUEVA_REFERENCIA',
-//                     '#guardarREFERENCIAS',
-//                     '#SOLICITAR_VERIFICACION'
-
-//                 ];
-
-//                 botones.forEach(id => {
-//                     $(id).hide();
-//                 });
-//             }
-//         },
-//         error: function () {
-//             console.warn('No se pudo verificar el estado de la validación.');
-//         }
-//     });
-// });
-
 
 $(document).ready(function () {
     $.ajax({

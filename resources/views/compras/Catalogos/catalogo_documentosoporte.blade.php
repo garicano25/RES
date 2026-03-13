@@ -52,7 +52,7 @@
                             <option value="3">Moral y física</option>
                         </select>
                     </div>
-                    
+
                     <div class="mb-3">
                         <label class="col-form-label">El documento es obligatorio *</label>
                         <div class="d-flex">
@@ -67,6 +67,14 @@
                         </div>
                     </div>
 
+                    <div class="mb-3">
+                        <label>¿El documento se necesita actualizar?</label>
+                        <select class="form-control" name="ACTUALIZAR_DOCUMENTOS" id="ACTUALIZAR_DOCUMENTOS" >
+                            <option value="" selected disabled>Seleccione una opción</option>
+                            <option value="1">Sí</option>
+                            <option value="2">No</option>
+                        </select>
+                    </div>
 
 
                     <div class="mb-3">

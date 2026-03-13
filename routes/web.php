@@ -129,6 +129,7 @@ use App\Http\Controllers\proveedor\catalagotituloproveedorController;
 use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 use App\Http\Controllers\proveedor\catalogoverificacionproveedorController;
 use App\Http\Controllers\proveedor\listaproveedorcriticoController;
+use App\Http\Controllers\proveedor\actualizaciondocumentosController;
 
 
 // CONTROLADORES DE PO 
@@ -939,6 +940,8 @@ Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'en
 Route::post('/actualizarVerificacionSolicitada', [listaproveedorController::class, 'actualizarVerificacionSolicitada']);
 Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'verificarEstadoVerificacion']);
 
+
+Route::post('/enviarCorreoActualizacionDocs', [listaproveedorController::class, 'enviarCorreoActualizacionDocs']);
 ///// ASIGNACIONES PROVEEDOR
 
 
@@ -965,6 +968,29 @@ Route::post('/TempSave', [proveedortempController::class, 'store']);
 Route::get('/Tablaproveedortemporal', [proveedortempController::class, 'Tablaproveedortemporal']);
 Route::get('/TempDelete', [proveedortempController::class, 'store']);
 Route::get('/mostrarequierecontrato/{id}', [proveedortempController::class, 'mostrarequierecontrato']);
+
+
+//============================================== ACTUALIZACION DE DOCUMENTOS PROVEEDORES   ============================================== 
+
+Route::get('/verificarPeriodoActualizacion', [altadocumentosController::class, 'verificarPeriodoActualizacion']);
+Route::post('/actualizarDocumentoProveedor', [altadocumentosController::class, 'actualizarDocumentoProveedor']);
+
+
+
+Route::get('/actualizaciondocumentosproveedor', [actualizaciondocumentosController::class, 'index']);
+Route::post('/ActualizarfechasProveedorSave', [actualizaciondocumentosController::class, 'store']);
+Route::get('/Tabladocumentosactualizadosproveedor', [actualizaciondocumentosController::class, 'Tabladocumentosactualizadosproveedor']);
+Route::get('/mostrardocumentoactualizadoproveedor/{id}', [actualizaciondocumentosController::class, 'mostrardocumentoactualizadoproveedor']);
+Route::post('/aprobarDocumentoProveedor',[actualizaciondocumentosController::class, 'aprobarDocumentoProveedor']);
+Route::post('/rechazarDocumentoProveedor',[actualizaciondocumentosController::class, 'rechazarDocumentoProveedor']);
+
+Route::get('/aprobardocumentosproveedor', function () { return view('compras.proveedores.actualizaciondocsproveedor.aprobaciondocs');});
+Route::get('/Tabladocumentosaprobacionproveedor', [actualizaciondocumentosController::class, 'Tabladocumentosaprobacionproveedor']);
+
+
+
+Route::post('/aprobarDocumentoProveedorFinal', [actualizaciondocumentosController::class, 'aprobarDocumentoProveedorFinal']);
+Route::post('/rechazarDocumentoProveedorFinal', [actualizaciondocumentosController::class, 'rechazarDocumentoProveedorFinal']);
 
 //==============================================    ORDEN DE COMPRA - ACTUALES  ============================================== 
 
@@ -1085,6 +1111,8 @@ Route::post('/AltaDocumentosSave', [altadocumentosController::class, 'store']);
 Route::get('/DocumentosDelete', [altadocumentosController::class, 'store']);
 Route::get('/mostrardocumentosoporteproveedor/{id}', [altadocumentosController::class, 'mostrardocumentosoporteproveedor']);
 Route::get('/documentosRegistrados', [altadocumentosController::class, 'documentosRegistrados']);
+
+
 
 //ALTA DE CUENTAS BANCARIAS 
 Route::get('/proveedorescuentas', function () { return view('compras.proveedores.altacuentas');});

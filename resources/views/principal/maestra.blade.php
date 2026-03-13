@@ -421,8 +421,8 @@
                             <hr class="dropdown-divider">
 
                             <li><a class="dropdown-item" href="{{url('/contratacion')}}">Lista de colaboradores</a></li>
-                            <hr class="dropdown-divider">
 
+                            <hr class="dropdown-divider">
                             <li class="dropdown-submenu">
                                 <a class="dropdown-item dropdown-toggle" href="#">
                                     Actualización de documentos

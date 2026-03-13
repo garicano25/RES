@@ -204,6 +204,8 @@ var Tabladocumentosproveedores = $("#Tabladocumentosproveedores").DataTable({
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
         { data: 'BTN_DOCUMENTO' },
+         { data: 'BTN_ACTUALIZAR' }, 
+
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -211,13 +213,75 @@ var Tabladocumentosproveedores = $("#Tabladocumentosproveedores").DataTable({
         { targets: 2, title: 'Editar', className: 'all text-center' },
         { targets: 3, title: 'Visualizar', className: 'all text-center' },
         { targets: 4, title: 'Documento', className: 'all text-center' },
+        { targets: 5, title: 'Actualizar', className: 'all text-center' },
+
     ]
 });
 
 
 
 
+$(document).on('click','.ACTUALIZAR_DOC',function(){
 
+let id=$(this).data('id')
+let tipo=$(this).data('tipo')
+
+$('#ID_FORMULARIO_DOCUMENTOSPROVEEDOR').val(id)
+$('#TIPO_DOCUMENTO_PROVEEDOR_ACT').val(tipo)
+
+$('#modalActualizarDocumento').modal('show')
+
+})
+
+
+$('#guardarActualizacionDoc').click(function(){
+
+let formData = new FormData($('#formActualizarDocumento')[0]);
+
+let token = $('meta[name="csrf-token"]').attr('content');
+
+$.ajax({
+
+    url:'/actualizarDocumentoProveedor',
+    type:'POST',
+
+    headers:{
+        'X-CSRF-TOKEN': token
+    },
+
+    data:formData,
+    processData:false,
+    contentType:false,
+
+    success:function(response){
+
+        if(response.status=="success"){
+
+            Swal.fire({
+                icon:'success',
+                title:'Correcto',
+                text:response.message
+            })
+
+            $('#modalActualizarDocumento').modal('hide')
+
+            tablaDocumentos.ajax.reload()
+
+        }else{
+
+            Swal.fire({
+                icon:'warning',
+                title:'Aviso',
+                text:response.message
+            })
+
+        }
+
+    }
+
+})
+
+})
 
 $('#Tabladocumentosproveedores').on('click', '.ver-archivo-documentosoporte', function () {
     var tr = $(this).closest('tr');

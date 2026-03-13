@@ -65,25 +65,100 @@ class altadocumentosController extends Controller
         return response()->json($documentos); 
     }
 
+    // public function Tabladocumentosproveedores()
+    // {
+    //     try {
+    //         $userRFC = Auth::user()->RFC_PROVEEDOR;
+
+    //         $tabla = altadocumentosModel::where('RFC_PROVEEDOR', $userRFC)->get();
+
+    //         foreach ($tabla as $value) {
+    //             if ($value->ACTIVO == 0) {
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '"><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+    //             } else {
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" checked><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+    //             }
+    //         }
+
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
     public function Tabladocumentosproveedores()
     {
         try {
+
             $userRFC = Auth::user()->RFC_PROVEEDOR;
+
+            $periodoActivo = DB::table('fecha_actualizaciondocsproveedor')
+                ->where('ACTIVO', 1)
+                ->whereDate('FECHA_INICIO', '<=', now())
+                ->whereDate('FECHA_FIN', '>=', now())
+                ->exists();
 
             $tabla = altadocumentosModel::where('RFC_PROVEEDOR', $userRFC)->get();
 
             foreach ($tabla as $value) {
-                if ($value->ACTIVO == 0) {
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '"><span class="slider round"></span></label>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+
+                $catalogo = DB::table('catalogo_documentosproveedor')
+                    ->where('ID_CATALOGO_DOCUMENTOSPROVEEDOR', $value->TIPO_DOCUMENTO_PROVEEDOR)
+                    ->first();
+
+                // BOTON ACTUALIZAR
+                if ($catalogo && $catalogo->ACTUALIZAR_DOCUMENTOS == 1 && $periodoActivo) {
+
+                    $value->BTN_ACTUALIZAR = '
+                        <button class="btn btn-info btn-custom rounded-pill ACTUALIZAR_DOC"
+                        data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '"
+                        data-tipo="' . $value->TIPO_DOCUMENTO_PROVEEDOR . '">
+                       <i class="bi bi-arrow-up-square-fill"></i>
+                        </button>';
                 } else {
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" checked><span class="slider round"></span></label>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_ACTUALIZAR = '';
                 }
+
+                if ($value->ACTIVO == 0) {
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+
+                    $value->BTN_ELIMINAR = '<label class="switch">
+                <input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '">
+                <span class="slider round"></span></label>';
+
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled>
+                <i class="bi bi-ban"></i></button>';
+                } else {
+
+                    $value->BTN_ELIMINAR = '<label class="switch">
+                <input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '" checked>
+                <span class="slider round"></span></label>';
+
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR">
+                <i class="bi bi-pencil-square"></i></button>';
+
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR">
+                <i class="bi bi-eye"></i></button>';
+                }
+
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-documentosoporte"
+                data-id="' . $value->ID_FORMULARIO_DOCUMENTOSPROVEEDOR . '">
+                <i class="bi bi-filetype-pdf"></i>
+            </button>';
             }
 
             return response()->json([
@@ -91,6 +166,7 @@ class altadocumentosController extends Controller
                 'msj' => 'Información consultada correctamente'
             ]);
         } catch (Exception $e) {
+
             return response()->json([
                 'msj' => 'Error ' . $e->getMessage(),
                 'data' => 0
@@ -99,11 +175,123 @@ class altadocumentosController extends Controller
     }
 
 
-    public function mostrardocumentosoporteproveedor($id)
+
+   public function mostrardocumentosoporteproveedor($id)
     {
         $archivo = altadocumentosModel::findOrFail($id)->DOCUMENTO_SOPORTE;
         return Storage::response($archivo);
     }
+
+
+    //// ACTUALIZACION DOCUMENTOS 
+
+    public function verificarPeriodoActualizacion()
+    {
+        $periodo = DB::table('fecha_actualizaciondocsproveedor')
+            ->where('ACTIVO', 1)
+            ->whereDate('FECHA_INICIO', '<=', now())
+            ->whereDate('FECHA_FIN', '>=', now())
+            ->exists();
+
+        return response()->json([
+            'periodoActivo' => $periodo
+        ]);
+    }
+
+
+    public function actualizarDocumentoProveedor(Request $request)
+    {
+        try {
+
+            $rfc = Auth::user()->RFC_PROVEEDOR;
+
+            $periodo = DB::table('fecha_actualizaciondocsproveedor')
+                ->where('ACTIVO', 1)
+                ->whereDate('FECHA_INICIO', '<=', now())
+                ->whereDate('FECHA_FIN', '>=', now())
+                ->first();
+
+            if (!$periodo) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'El periodo de actualización no está activo'
+                ]);
+            }
+
+            $catalogo = DB::table('catalogo_documentosproveedor')
+                ->where('ID_CATALOGO_DOCUMENTOSPROVEEDOR', $request->TIPO_DOCUMENTO_PROVEEDOR)
+                ->where('ACTUALIZAR_DOCUMENTOS', 1)
+                ->first();
+
+            if (!$catalogo) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Este documento no requiere actualización'
+                ]);
+            }
+
+            $yaExiste = DB::table('actualizacion_documentosproveedor')
+                ->where('RFC_PROVEEDOR', $rfc)
+                ->where('ID_CATALOGO_DOCUMENTO', $request->TIPO_DOCUMENTO_PROVEEDOR)
+                ->whereBetween('FECHA_SOLICITUD', [
+                    $periodo->FECHA_INICIO,
+                    $periodo->FECHA_FIN
+                ])
+                ->where(function ($q) {
+
+                    $q->whereNull('VOBO_RH')
+
+                        ->orWhere(function ($sub) {
+                            $sub->where('VOBO_RH', 1)
+                                ->where(function ($final) {
+                                    $final->whereNull('AUTORIZACION_FINAL')
+                                        ->orWhere('AUTORIZACION_FINAL', '!=', 2);
+                                });
+                        });
+                })
+                ->exists();
+            if ($yaExiste) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Este documento ya fue enviado y está en proceso de revisión'
+                ]);
+            }
+
+            if ($request->hasFile('DOCUMENTO_SOPORTE')) {
+
+                $file = $request->file('DOCUMENTO_SOPORTE');
+
+                $folder = "proveedores/" . $rfc . "/actualizacion_documentos";
+
+                $fileName = time() . '_' . $file->getClientOriginalName();
+
+                $path = $file->storeAs($folder, $fileName);
+
+                DB::table('actualizacion_documentosproveedor')->insert([
+                    'RFC_PROVEEDOR' => $rfc,
+                    'ID_DOCUMENTO_PROVEEDOR' => $request->ID_FORMULARIO_DOCUMENTOSPROVEEDOR,
+                    'ID_CATALOGO_DOCUMENTO' => $request->TIPO_DOCUMENTO_PROVEEDOR,
+                    'DOCUMENTO_NUEVO' => $path,
+                    'ESTATUS' => 1,
+                    'FECHA_SOLICITUD' => now(),
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ]);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Documento enviado para revisión'
+            ]);
+        } catch (Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ]);
+        }
+    }
+
 
     public function store(Request $request)
     {

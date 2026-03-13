@@ -349,6 +349,7 @@
 
 
                         @endif
+
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -400,20 +401,25 @@
                                                 Vo.Bo
                                             </a>
                                         </li>
+
+                                        @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
                                         <hr class="dropdown-divider">
                                         <li>
-                                            <a class="dropdown-item" href="{{ url('/actualizaciondocumentoshistorial') }}">
+                                            <a class="dropdown-item" href="{{ url('/aprobardocumentosproveedor') }}">
                                                 Aprobación
                                             </a>
                                         </li>
+                                        @endif
+
                                     </ul>
                                 </li>
-
 
                                 @endif
                             </ul>
                         </li>
                         @endif
+
+
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
@@ -672,7 +678,7 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=3"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=4"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -725,6 +731,9 @@
     <script src="/assets/js_sitio/proveedor/fechaactualizaciondoc.js"></script>
     @endif
 
+    @if(request()->is('aprobardocumentosproveedor'))
+    <script src="/assets/js_sitio/proveedor/aprobardocumentosproveedor.js"></script>
+    @endif
 
 
 </body>
