@@ -272,20 +272,22 @@ $(document).on('click','.ACTUALIZAR_DOCS',function(){
 
         $.ajax({
 
-            url:'/enviarCorreoActualizacionDocs',
-            method:'POST',
-            data:{
-            id:id,
-            _token:$('meta[name="csrf-token"]').attr('content')
-        },
+                url:'/enviarCorreoActualizacionDocs',
+                method:'POST',
+                data:{
+                id:id,
+                _token:$('meta[name="csrf-token"]').attr('content')
+            },
 
-         success:function(resp){
+            success:function(resp){
 
-        Swal.fire('Correcto',resp.message,'success')
+            Swal.fire('Correcto',resp.message,'success')
+            
+            Tablalistaproveedores.ajax.reload();
 
-        }
+            }
 
-    })
+        })
 
         }
 
