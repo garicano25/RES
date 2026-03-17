@@ -43,11 +43,17 @@
                     </span>
                 </div>
             </div>
+
+            @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+
             <div class="col-md-2 d-flex">
                 <button type="submit" class="btn btn-success" id="guardaractulizacion">
                     Guardar
                 </button>
             </div>
+            @endif
+
+            
         </div>
     </form>
 
