@@ -204,7 +204,7 @@ function cargarTablaProveedoresInactivo() {
 
 $('#Tablalistaproveedorinactivo').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablalistaproveedores.row(tr);
+    var row = Tablalistaproveedorinactivo.row(tr);
 
 
     
