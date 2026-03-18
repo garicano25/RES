@@ -44,21 +44,20 @@ var Tabladocumentosaprobacionproveedor = $("#Tabladocumentosaprobacionproveedor"
     },
     order: [[0, 'asc']],
       columns: [
-        { data: null, render: function (data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
-        { data: 'PROVEEDOR_MOSTRAR', className: 'text-center' },
-        { data: 'NOMBRE_USUARIO', className: 'text-center' },
-        { data: 'NOMBRE_DOCUMENTO', className: 'text-center' },
-        { data: 'BTN_DOCUMENTO' }, 
-        { data: 'BTN_APROBACION' },
-
+            { data: null, render: function (data, type, row, meta) { return meta.row + 1; }, className: 'text-center' },
+            { data: 'PROVEEDOR_MOSTRAR', className: 'text-center' },
+            { data: 'NOMBRE_USUARIO', className: 'text-center' },
+            { data: 'NOMBRE_DOCUMENTO', className: 'text-center' },
+            { data: 'BTN_DOCUMENTO' }, 
+            { data: 'BTN_APROBACION' },
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Proveedor', className: 'all text-center nombre-column' },  
             { targets: 2, title: 'Usuario Vo.Bo', className: 'all text-center nombre-column' },  
             { targets: 3, title: 'Nombre del documento actualizado',  className: 'all text-center nombre-column' },  
-            { targets: 4, title: 'Documento actualizado',  className: 'all text-center nombre-column' },  
-            { targets: 5, title: 'Aprobación', className: 'all text-center nombre-column' }
+            { targets: 4, title: 'Documento actualizado',  className: 'all text-center' },  
+            { targets: 5, title: 'Aprobación', className: 'all text-center ' }
     ],
         
 });
