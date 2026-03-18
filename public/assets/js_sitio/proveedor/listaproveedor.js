@@ -183,13 +183,15 @@ function cargarTablaProveedoresInactivo() {
             },
             { data: 'RFC_ALTA' },
             { data: 'RAZON_SOCIAL_ALTA' },
+            { data: 'BTN_EDITAR' },
             { data: 'BTN_ELIMINAR' }
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
             { targets: 2, title: 'Razón social/Nombre  ', className: 'all text-center nombre-column' },
-            { targets: 3, title: 'Activo', className: 'all text-center' },
+            { targets: 3, title: 'Mostrar', className: 'all text-center' },
+            { targets: 4, title: 'Activo', className: 'all text-center' },
 
 
         ],
@@ -199,6 +201,194 @@ function cargarTablaProveedoresInactivo() {
     });
 }
 
+
+$('#Tablalistaproveedorinactivo').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablalistaproveedores.row(tr);
+
+
+    
+    ID_FORMULARIO_ALTA = row.data().ID_FORMULARIO_ALTA;
+
+    $('#formularioALTA').each(function() {
+        this.reset();
+    });
+
+    $('#datosgenerales-tab').closest('li').css("display", 'block');
+    $('#step2, #step3,#step4,#step5,#step6,#step7').css("display", "flex");
+
+    $('#step1-content').css("display", 'block');
+    $('#step2-content, #step3-content, #step4-content,#step5-content,#step6-content,#step7-content').css("display", 'none');
+
+
+
+    var rfc = row.data().RFC_ALTA;
+    $("#RFC_ALTA").val(rfc);
+    rfcSeleccionada = rfc;
+
+    $("#ID_FORMULARIO_ALTA").val(row.data().ID_FORMULARIO_ALTA);
+
+
+    
+    $("#TIPO_PERSONA_OPCION").val(row.data().TIPO_PERSONA_OPCION);
+
+    $("#TIPO_PERSONA_ALTA").val(row.data().TIPO_PERSONA_ALTA);
+    $("#RAZON_SOCIAL_ALTA").val(row.data().RAZON_SOCIAL_ALTA);
+    $("#RFC_ALTA").val(row.data().RFC_ALTA);
+    $("#REPRESENTANTE_LEGAL_ALTA").val(row.data().REPRESENTANTE_LEGAL_ALTA || '');
+    $("#REGIMEN_ALTA").val(row.data().REGIMEN_ALTA || '');
+    $("#CORREO_DIRECTORIO").val(row.data().CORREO_DIRECTORIO || '');
+    $("#TELEFONO_OFICINA_ALTA").val(row.data().TELEFONO_OFICINA_ALTA || '');
+    $("#PAGINA_WEB_ALTA").val(row.data().PAGINA_WEB_ALTA || '');
+    $("#CUAL_ACTVIDAD_ECONOMICA").val(row.data().CUAL_ACTVIDAD_ECONOMICA || '');
+    $("#CUAL_DESCUENTOS_ECONOMICA").val(row.data().CUAL_DESCUENTOS_ECONOMICA || '');
+    $("#DIAS_CREDITO_ALTA").val(row.data().DIAS_CREDITO_ALTA || '');
+    $("#TERMINOS_IMPORTANCIAS_ALTA").val(row.data().TERMINOS_IMPORTANCIAS_ALTA || '');
+    $("#DESCRIPCION_VINCULO").val(row.data().DESCRIPCION_VINCULO || '');
+    $("#NUMERO_PROVEEDOR").val(row.data().NUMERO_PROVEEDOR || '');
+    $("#ACTVIDAD_COMERCIAL").val(row.data().ACTVIDAD_COMERCIAL || '');
+    
+    $("#CODIGO_POSTAL").val(row.data().CODIGO_POSTAL);
+    $("#TIPO_VIALIDAD_EMPRESA").val(row.data().TIPO_VIALIDAD_EMPRESA);
+    $("#NOMBRE_VIALIDAD_EMPRESA").val(row.data().NOMBRE_VIALIDAD_EMPRESA);
+    $("#NUMERO_EXTERIOR_EMPRESA").val(row.data().NUMERO_EXTERIOR_EMPRESA);
+    $("#NUMERO_INTERIOR_EMPRESA").val(row.data().NUMERO_INTERIOR_EMPRESA);
+    $("#NOMBRE_COLONIA_EMPRESA").val(row.data().NOMBRE_COLONIA_EMPRESA);
+    $("#NOMBRE_LOCALIDAD_EMPRESA").val(row.data().NOMBRE_LOCALIDAD_EMPRESA);
+    $("#NOMBRE_MUNICIPIO_EMPRESA").val(row.data().NOMBRE_MUNICIPIO_EMPRESA);
+    $("#NOMBRE_ENTIDAD_EMPRESA").val(row.data().NOMBRE_ENTIDAD_EMPRESA);
+    $("#PAIS_EMPRESA").val(row.data().PAIS_EMPRESA);
+    $("#ENTRE_CALLE_EMPRESA").val(row.data().ENTRE_CALLE_EMPRESA);
+    $("#ENTRE_CALLE2_EMPRESA").val(row.data().ENTRE_CALLE2_EMPRESA);
+    
+    $("#DOMICILIO_EXTRANJERO").val(row.data().DOMICILIO_EXTRANJERO);
+    $("#CODIGO_EXTRANJERO").val(row.data().CODIGO_EXTRANJERO);
+    $("#CIUDAD_EXTRANJERO").val(row.data().CIUDAD_EXTRANJERO);
+    $("#ESTADO_EXTRANJERO").val(row.data().ESTADO_EXTRANJERO);
+    $("#PAIS_EXTRANJERO").val(row.data().PAIS_EXTRANJERO);
+    $("#DEPARTAMENTO_EXTRANJERO").val(row.data().DEPARTAMENTO_EXTRANJERO);
+    $("#TIENE_ASIGNACION").val(row.data().TIENE_ASIGNACION);
+    $("#PROVEEDOR_CRITICO").val(row.data().PROVEEDOR_CRITICO);
+
+    
+    $(".listadedocumentoficial").empty();
+    obtenerDocumentosOficiales(row);
+
+
+    var verificacionSolicitada = row.data().VERIFICACION_SOLICITADA || 0;
+    $("#VERIFICACION_SOLICITADA").val(verificacionSolicitada);
+
+    if (parseInt(verificacionSolicitada) === 1) {
+        $("#VALIDAR_INFORMACION_PROVEEDOR").hide();
+    } else {
+        $("#VALIDAR_INFORMACION_PROVEEDOR").show();
+        }
+
+
+
+    
+    let actividad = $(`input[name="ACTIVIDAD_ECONOMICA"][value="${row.data().ACTIVIDAD_ECONOMICA}"]`);
+    if (actividad.length) actividad.prop('checked', true);
+
+    let descuento = $(`input[name="DESCUENTOS_ACTIVIDAD_ECONOMICA"][value="${row.data().DESCUENTOS_ACTIVIDAD_ECONOMICA}"]`);
+        if (descuento.length) {
+            descuento.prop('checked', true);
+            if (row.data().DESCUENTOS_ACTIVIDAD_ECONOMICA == "4") {
+                $("#CUAL_DESCUENTOS").show();
+            } else {
+                $("#CUAL_DESCUENTOS").hide();
+                
+            }
+        }
+        
+
+    let vinculo = $(`input[name="VINCULO_FAMILIAR"][value="${row.data().VINCULO_FAMILIAR}"]`);
+    if (vinculo.length) {
+        vinculo.prop('checked', true);
+        if (row.data().VINCULO_FAMILIAR?.toUpperCase() === "SI") {
+            $("#DIV_VINCULOS").show();
+        } else {
+            $("#DIV_VINCULOS").hide();
+        }
+    }
+
+    let servicios = $(`input[name="SERVICIOS_PEMEX"][value="${row.data().SERVICIOS_PEMEX}"]`);
+    if (servicios.length) {
+        servicios.prop('checked', true);
+        if (row.data().SERVICIOS_PEMEX?.toUpperCase() === "SI") {
+            $("#DIV_NUMEROPROVEEDOR").show();
+        } else {
+            $("#DIV_NUMEROPROVEEDOR").hide();   
+        }
+        
+        }
+        
+        
+    let beneficios = $(`input[name="BENEFICIOS_PERSONA"][value="${row.data().BENEFICIOS_PERSONA}"]`);
+    if (beneficios.length) {
+        beneficios.prop('checked', true);
+        if (row.data().BENEFICIOS_PERSONA?.toUpperCase() === "SI") {
+            $("#PERSONA_EXPUESTA").show();
+        } else {
+            $("#PERSONA_EXPUESTA").hide();
+
+         }
+    }
+        
+
+        $("#NOMBRE_PERSONA").val(row.data().NOMBRE_PERSONA);
+
+
+
+
+    let coloniaGuardada = row.data().NOMBRE_COLONIA_EMPRESA || '';
+    let codigoPostalInput = document.getElementById("CODIGO_POSTAL");
+
+    codigoPostalInput.value = row.data().CODIGO_POSTAL || '';
+    codigoPostalInput.dispatchEvent(new Event('change'));
+
+    let coloniaSelect = document.getElementById("NOMBRE_COLONIA_EMPRESA");
+    let observer = new MutationObserver(() => {
+        if (coloniaSelect.options.length > 1) {
+            coloniaSelect.value = coloniaGuardada;
+            observer.disconnect();
+        }
+    });
+    observer.observe(coloniaSelect, { childList: true });
+
+
+
+    if (row.data().TIPO_PERSONA_ALTA == "1") {
+        $('label[for="RFC_LABEL"]').text("R.F.C");
+        $("#DOMICILIO_NACIONAL").show();
+        $("#DOMICILIO_ERXTRANJERO").hide();
+    } else if (row.data().TIPO_PERSONA_ALTA == "2") {
+        $('label[for="RFC_LABEL"]').text("Tax ID");
+        $("#DOMICILIO_NACIONAL").hide();
+        $("#DOMICILIO_ERXTRANJERO").show();
+    }
+
+    actualizarStepsConCurp(rfc);
+
+    tablacuentasCargada = false;
+    tablacontactosCargada = false;
+    tablacertificacionesCargada = false;
+    tablareferenciasCargada = false;
+    tablasoportesCargada = false;
+    tablasasignacionesCargada = false;
+
+    $('#datosgenerales-tab').tab('show');
+
+
+
+    $(".div_trabajador_nombre").html(row.data().RFC_ALTA);
+    $(".div_trabajador_cargo").html(row.data().RAZON_SOCIAL_ALTA);
+
+
+
+
+    $("#step1").click();
+});
 
 
 $(document).on('change', '.ACTIVAR', function () {
@@ -453,7 +643,7 @@ $(document).on("click", ".CORREO", function (e) {
             });
         },
         complete: function () {
-            $btn.prop("disabled", false); // Reactivar botón al terminar
+            $btn.prop("disabled", false); 
         }
     });
 });
