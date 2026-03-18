@@ -940,6 +940,10 @@ Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'en
 Route::post('/actualizarVerificacionSolicitada', [listaproveedorController::class, 'actualizarVerificacionSolicitada']);
 Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'verificarEstadoVerificacion']);
 
+///// INACTIVO 
+
+Route::get('/Tablalistaproveedorinactivo', [listaproveedorController::class, 'Tablalistaproveedorinactivo']);
+Route::post('/activarProveedor', [listaproveedorController::class, 'activarProveedor']);
 
 Route::post('/enviarCorreoActualizacionDocs', [listaproveedorController::class, 'enviarCorreoActualizacionDocs']);
 ///// ASIGNACIONES PROVEEDOR

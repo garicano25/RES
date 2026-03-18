@@ -238,11 +238,21 @@
 
                     </ol>
 
-
+                    <div class="d-flex justify-content-center align-items-center mb-4">
+                        <span id="texto_activo" class="texto-seleccionado me-4" style="cursor: pointer;">Activo</span>
+                        <span id="texto_inactivo" class="texto-no-seleccionado" style="cursor: pointer;">Inactivo</span>
+                    </div>
 
                     <div class="card-body position-relative" id="tabla_activo" style="display: block;">
                         <i id="loadingIcon1" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
                         <table id="Tablalistaproveedores" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                        </table>
+                    </div>
+
+
+                    <div class="card-body position-relative" id="tabla_inactivo" style="display: none;">
+                        <i id="loadingIcon9" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                        <table id="Tablalistaproveedorinactivo" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
                         </table>
                     </div>
 

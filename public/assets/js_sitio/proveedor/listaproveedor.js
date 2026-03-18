@@ -29,6 +29,10 @@ ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0
 Tablalistaproveedores = null
 
 
+var Tablalistaproveedorinactivo;
+var TablalistaproveedorinactivoCargada = false; 
+
+
 
 var Tablacuentas;
 var tablacuentasCargada = false; 
@@ -53,6 +57,41 @@ var tablasoportesCargada = false;
 var Tablasignacionproveedorgeneral;
 var tablasasignacionesCargada = false; 
 
+
+
+
+const textoActivo = document.getElementById('texto_activo');
+const textoInactivo = document.getElementById('texto_inactivo');
+const tablaActivo = document.getElementById('tabla_activo');
+const tablaInactivo = document.getElementById('tabla_inactivo');
+
+textoActivo.addEventListener('click', () => {
+    tablaActivo.style.display = 'block';
+    tablaInactivo.style.display = 'none';
+    textoActivo.classList.add('texto-seleccionado');
+    textoActivo.classList.remove('texto-no-seleccionado');
+    textoInactivo.classList.add('texto-no-seleccionado');
+    textoInactivo.classList.remove('texto-seleccionado');
+
+    Tablalistaproveedores.columns.adjust().draw(); 
+
+});
+
+textoInactivo.addEventListener('click', () => {
+    tablaActivo.style.display = 'none';
+    tablaInactivo.style.display = 'block';
+    textoInactivo.classList.add('texto-seleccionado');
+    textoInactivo.classList.remove('texto-no-seleccionado');
+    textoActivo.classList.add('texto-no-seleccionado');
+    textoActivo.classList.remove('texto-seleccionado');
+
+    
+        cargarTablaProveedoresInactivo();
+        TablalistaproveedorinactivoCargada = true;
+    
+
+
+});
 
 
 
@@ -89,6 +128,173 @@ $(document).ready(function() {
 
 
 
+///// PROVEEDORES INACTIVO
+
+
+
+function cargarTablaProveedoresInactivo() {
+    if ($.fn.DataTable.isDataTable('#Tablalistaproveedorinactivo')) {
+        Tablalistaproveedorinactivo.clear().destroy();
+    }
+
+    Tablalistaproveedorinactivo = $("#Tablalistaproveedorinactivo").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+       ajax: {
+        dataType: 'json',
+        data: {},
+        method: 'GET',
+        cache: false,
+        url: '/Tablalistaproveedorinactivo',
+        beforeSend: function () {
+            $('#loadingIcon9').css('display', 'inline-block');
+        },
+        complete: function () {
+            $('#loadingIcon9').css('display', 'none');
+            Tablalistaproveedorinactivo.columns.adjust().draw(); 
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            $('#loadingIcon9').css('display', 'none');
+            alertErrorAJAX(jqXHR, textStatus, errorThrown);
+        },
+        dataSrc: 'data'
+    },
+       order: [[0, 'asc']],
+        columns: [
+            { 
+                data: null,
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                }
+            },
+            { data: 'RFC_ALTA' },
+            { data: 'RAZON_SOCIAL_ALTA' },
+            { data: 'BTN_ELIMINAR' }
+        ],
+        columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
+            { targets: 2, title: 'Razón social/Nombre  ', className: 'all text-center nombre-column' },
+            { targets: 3, title: 'Activo', className: 'all text-center' },
+
+
+        ],
+        infoCallback: function (settings, start, end, max, total, pre) {
+            return `Total de ${total} registros`;
+        },
+    });
+}
+
+
+
+$(document).on('change', '.ACTIVAR', function () {
+
+    var checkbox = $(this);
+    var row = checkbox.closest('tr');
+
+    // 🔥 AQUÍ defines de qué tabla viene
+    var data = Tablalistaproveedorinactivo.row(row).data();
+
+    var id = checkbox.data('id');
+    var estadoAnterior = checkbox.prop('checked');
+
+    if (!id || !data) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo obtener la información del proveedor',
+            timer: 2000,
+            timerProgressBar: true
+        });
+        return;
+    }
+
+    var nombreProveedor = data.RAZON_SOCIAL_ALTA;
+    var rfc = data.RFC_ALTA;
+
+    Swal.fire({
+        title: '¿Activar proveedor?',
+        html: `<p>Se activará el proveedor:</p><b>${nombreProveedor} (${rfc})</b>`,
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, activar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            $.ajax({
+                url: '/activarProveedor',
+                method: 'POST',
+                data: {
+                    id: id,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+
+                success: function (resp) {
+
+                    if (resp.status === 'success') {
+
+                        // 🔄 Recargar SOLO la tabla correcta
+                        if ($.fn.DataTable.isDataTable('#Tablalistaproveedorinactivo')) {
+                            Tablalistaproveedorinactivo.ajax.reload(null, false);
+                        }
+
+                        // 🔄 Si tienes la de activos también
+                        if ($.fn.DataTable.isDataTable('#Tablalistaproveedores')) {
+                            Tablalistaproveedores.ajax.reload(null, false);
+                        }
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Proveedor activado',
+                            text: nombreProveedor + ' activado correctamente',
+                            timer: 2000,
+                            timerProgressBar: true
+                        });
+
+                    } else {
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Atención',
+                            text: resp.message
+                        });
+
+                        checkbox.prop('checked', !estadoAnterior);
+                    }
+                },
+
+                error: function () {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'No se pudo completar la acción'
+                    });
+
+                    checkbox.prop('checked', !estadoAnterior);
+                }
+            });
+
+        } else {
+            checkbox.prop('checked', !estadoAnterior);
+        }
+
+    });
+
+});
 
 
 
