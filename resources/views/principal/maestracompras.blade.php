@@ -728,11 +728,11 @@
     @endif
 
     @if(request()->is('actualizaciondocumentosproveedor'))
-    <script src="/assets/js_sitio/proveedor/fechaactualizaciondoc.js"></script>
+    <script src="/assets/js_sitio/proveedor/fechaactualizaciondoc.js?v=1"></script>
     @endif
 
     @if(request()->is('aprobardocumentosproveedor'))
-    <script src="/assets/js_sitio/proveedor/aprobardocumentosproveedor.js"></script>
+    <script src="/assets/js_sitio/proveedor/aprobardocumentosproveedor.js?v=1"></script>
     @endif
 
 

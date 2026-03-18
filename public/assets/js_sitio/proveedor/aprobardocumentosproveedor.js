@@ -56,7 +56,7 @@ var Tabladocumentosaprobacionproveedor = $("#Tabladocumentosaprobacionproveedor"
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'Proveedor', className: 'all text-center' },  
             { targets: 2, title: 'Usuario Vo.Bo', className: 'all text-center' },  
-            { targets: 3, title: 'Nombre del documento actualizado', className: 'all text-center' },  
+            { targets: 3, title: 'Nombre del documento actualizado',  className: 'all text-center nombre-column' },  
             { targets: 4, title: 'Documento actualizado', className: 'all text-center' },  
             { targets: 5, title: 'Aprobación', className: 'all text-center' }
     ],
