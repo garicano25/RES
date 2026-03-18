@@ -145,7 +145,7 @@ var Tabladocumentosactualizadosproveedor = $("#Tabladocumentosactualizadosprovee
         ],
         columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'Proveedor', className: 'all text-center nombre-column' },  
+            { targets: 1, title: 'Proveedor', className: 'all text-center' },  
             { targets: 2, title: 'Nombre del documento actualizado', className: 'all text-center nombre-column'  },  
             { targets: 3, title: 'Documento actualizado', className: 'all text-center' },  
             { targets: 4, title: 'Vo.Bo', className: 'all text-center' }
