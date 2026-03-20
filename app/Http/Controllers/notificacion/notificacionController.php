@@ -17,6 +17,7 @@ use DB;
 
 use App\Models\requisicionmaterial\mrModel;
 use App\Models\recempleados\recemplaedosModel;
+use App\Models\paginaweb\ContactoPaginaWeb;
 
 
 
@@ -772,6 +773,44 @@ class notificacionController extends Controller
             //     }
             // }
 
+
+            /**
+             * 15 NOTIFICACIONES – MENSAJES PÁGINA WEB
+             */
+
+            $notiPaginaWeb = collect([]);
+
+            $usuariosPaginaWeb = [1, 2, 3];
+
+            if (in_array($idUsuario, $usuariosPaginaWeb)) {
+
+                $badgePaginaWeb = "<span style='
+                    background-color:#ff9800;
+                    color:white;
+                    padding:3px 8px;
+                    border-radius:6px;
+                    font-size:11px;
+                    font-weight:bold;
+                    display:inline-block;
+                '>Pendiente</span>";
+
+                $notiPaginaWeb = ContactoPaginaWeb::whereNull('SOLICITUD_ATENDIDA')
+                    ->orderBy('created_at', 'desc')
+                    ->get()
+                    ->map(function ($n) use ($badgePaginaWeb) {
+                        return [
+                            'titulo'        => 'Mensaje página web',
+                            'detalle'       => $n->NOMBRE ?? 'Sin nombre',
+                            'fecha'         => 'Fecha solicitud: ' . \Carbon\Carbon::parse($n->created_at)->format('Y-m-d'),
+                            'fecha_sort'    => $n->created_at,
+                            'estatus_badge' => $badgePaginaWeb,
+                            'link'          => url('/mensajespaginaweb') 
+                        ];
+                    });
+            }
+
+
+
             $resultado = collect($notiVoBo)
                 ->merge(collect($notiAutorizar))
                 ->merge(collect($notiTipo2))
@@ -786,6 +825,7 @@ class notificacionController extends Controller
                 ->merge(collect($notiAprobarPO))
                 ->merge(collect($notiVoboGR))
                 // ->merge(collect($notiActualizacionDocs))
+                ->merge(collect($notiPaginaWeb)) 
 
 
                 ->sortByDesc(function ($item) {

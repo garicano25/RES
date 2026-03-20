@@ -19,7 +19,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
 })
 
 
-var Tablamensajepaginaweb = $("#Tablamensajepaginaweb").DataTable({
+var Tablamensajepaginawebhistorial = $("#Tablamensajepaginawebhistorial").DataTable({
     language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
     lengthChange: true,
     lengthMenu: [
@@ -38,12 +38,12 @@ var Tablamensajepaginaweb = $("#Tablamensajepaginaweb").DataTable({
         data: {},
         method: 'GET',
         cache: false,
-        url: '/Tablamensajepaginaweb',
+        url: '/Tablamensajepaginawebhistorial',
         beforeSend: function () {
             mostrarCarga();
         },
         complete: function () {
-            Tablamensajepaginaweb.columns.adjust().draw();
+            Tablamensajepaginawebhistorial.columns.adjust().draw();
             ocultarCarga();
         },
         error: function (jqXHR, textStatus, errorThrown) {
@@ -123,7 +123,7 @@ $("#guardarpaginaweb").click(function (e) {
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
                      $('#miModal_MENSAJES').modal('hide')
                     document.getElementById('formularioMENSAJES').reset();
-                    Tablamensajepaginaweb.ajax.reload()
+                    Tablamensajepaginawebhistorial.ajax.reload()
                 
             })
             
@@ -159,7 +159,7 @@ $("#guardarpaginaweb").click(function (e) {
                     alertMensaje('success', 'Información editada correctamente', 'Información guardada')
                      $('#miModal_MENSAJES').modal('hide')
                     document.getElementById('formularioMENSAJES').reset();
-                    Tablamensajepaginaweb.ajax.reload()
+                    Tablamensajepaginawebhistorial.ajax.reload()
 
                 }, 300);  
             })
@@ -174,9 +174,9 @@ $("#guardarpaginaweb").click(function (e) {
 });
 
 
-$('#Tablamensajepaginaweb tbody').on('change', 'td>label>input.ELIMINAR', function () {
+$('#Tablamensajepaginawebhistorial tbody').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablamensajepaginaweb.row(tr);
+    var row = Tablamensajepaginawebhistorial.row(tr);
 
     var estado = $(this).is(':checked') ? 1 : 0;
 
@@ -186,14 +186,14 @@ $('#Tablamensajepaginaweb tbody').on('change', 'td>label>input.ELIMINAR', functi
         ID_FORMULARIO_CONTACTOSPAGINAWEB: row.data().ID_FORMULARIO_CONTACTOSPAGINAWEB
     };
 
-    eliminarDatoTabla(data, [Tablamensajepaginaweb], 'MensajespaginaDelete');
+    eliminarDatoTabla(data, [Tablamensajepaginawebhistorial], 'MensajespaginaDelete');
 });
 
 
 
-$('#Tablamensajepaginaweb tbody').on('click', 'td>button.EDITAR', function () {
+$('#Tablamensajepaginawebhistorial tbody').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
-    var row = Tablamensajepaginaweb.row(tr);
+    var row = Tablamensajepaginawebhistorial.row(tr);
 
 
     ID_FORMULARIO_CONTACTOSPAGINAWEB = row.data().ID_FORMULARIO_CONTACTOSPAGINAWEB;
@@ -207,14 +207,28 @@ $('#Tablamensajepaginaweb tbody').on('click', 'td>button.EDITAR', function () {
 
 
 $(document).ready(function() {
-    $('#Tablamensajepaginaweb tbody').on('click', 'td>button.VISUALIZAR', function () {
+    $('#Tablamensajepaginawebhistorial tbody').on('click', 'td>button.VISUALIZAR', function () {
         var tr = $(this).closest('tr');
-        var row = Tablamensajepaginaweb.row(tr);
+        var row = Tablamensajepaginawebhistorial.row(tr);
         
         hacerSoloLectura(row.data(), '#miModal_MENSAJES');
 
         ID_FORMULARIO_CONTACTOSPAGINAWEB = row.data().ID_FORMULARIO_CONTACTOSPAGINAWEB;
         editarDatoTabla(row.data(), 'formularioMENSAJES', 'miModal_MENSAJES',1);
+
+         if (row.data().SOLICITUD_ATENDIDA === "1") {
+            $('#DIV_SOLCITUD').show();
+            $('#NO_ATENDIDA').hide();
+        } else if (row.data().SOLICITUD_ATENDIDA === "2") {
+            $('#DIV_SOLCITUD').hide();
+            $('#NO_ATENDIDA').show();
+         } else {
+             
+            $('#DIV_SOLCITUD').hide();
+            $('#NO_ATENDIDA').hide();
+        }
+        
+
 
     });
 

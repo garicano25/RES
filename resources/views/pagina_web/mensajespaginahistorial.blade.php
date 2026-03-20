@@ -6,11 +6,11 @@
 
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5" style="display: flex; justify-content: center; align-items: center;">
-        <h3 style="color: #ffffff; margin: 0; text-align: center;">&nbsp;Mensajes - Actual</h3>
+        <h3 style="color: #ffffff; margin: 0; text-align: center;">&nbsp;Mensajes - Historial</h3>
     </ol>
 
     <div class="card-body">
-        <table id="Tablamensajepaginaweb" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+        <table id="Tablamensajepaginawebhistorial" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
 
         </table>
     </div>
@@ -61,14 +61,10 @@
                         </div>
                     </div>
 
-                    <input type="hidden" id="USUARIO_AUTENTICADO"
-                        value="{{ Auth::user()->EMPLEADO_NOMBRE }} {{ Auth::user()->EMPLEADO_APELLIDOPATERNO }} {{ Auth::user()->EMPLEADO_APELLIDOMATERNO }}">
-
-                        
                     <div id="DIV_SOLCITUD" style="display: none;">
                         <div class="mb-3">
                             <label class="form-label">Quien atendió la solicitud *</label>
-                            <input type="text" class="form-control" id="ATENDIO_SOLICITUD" name="ATENDIO_SOLICITUD" readonly>
+                            <input type="text" class="form-control"  id="ATENDIO_SOLICITUD" name="ATENDIO_SOLICITUD" readonly>
                         </div>
 
                         <div class="mb-3">

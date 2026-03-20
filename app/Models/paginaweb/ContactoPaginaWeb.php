@@ -9,12 +9,16 @@ class ContactoPaginaWeb extends Model
 {
     protected $table = 'contactos_paginaweb';
     protected $primaryKey = 'ID_FORMULARIO_CONTACTOSPAGINAWEB';
-
     protected $fillable = [
         'NOMBRE',
         'CORREO',
         'TELEFONO',
-        'MENSAJE'
+        'MENSAJE',
+        'SOLICITUD_ATENDIDA',
+        'ATENDIO_SOLICITUD',
+        'FECHA_ATENCION',
+        'MOTIVO_NOATENDIDO',
+        'ACTIVO'
     ];
     
 }

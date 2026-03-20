@@ -1291,7 +1291,10 @@ Route::get('/MttoInstalacionDelete', [listainstalacionController::class, 'store'
 Route::get('/mensajespaginaweb', function () {    return view('pagina_web.mensajespagina');});
 Route::get('/Tablamensajepaginaweb', [mensajespaginaController::class, 'Tablamensajepaginaweb']);
 Route::get('/MensajespaginaDelete', [mensajespaginaController::class, 'store']);
+Route::post('/PaginawebSave', [mensajespaginaController::class, 'store']);
 
+Route::get('/mensajespaginawebhistorial', function () { return view('pagina_web.mensajespaginahistorial');});
+Route::get('/Tablamensajepaginawebhistorial', [mensajespaginaController::class, 'Tablamensajepaginawebhistorial']);
 
 
 //==============================================  RUTAS EXTERNAS  ============================================== 
