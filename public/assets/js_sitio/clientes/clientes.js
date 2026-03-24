@@ -230,7 +230,7 @@ $("#guardarCLIENTE").click(function (e) {
 
 document.addEventListener('DOMContentLoaded', function () {
   const guardarBtn = document.getElementById('guardarCLIENTE');
-  const tabs = document.querySelectorAll('#tab1-info button[data-bs-toggle="tab"]');
+  const tabs = document.querySelectorAll('#tabsCliente button[data-bs-toggle="tab"]');
 
   tabs.forEach(tab => {
     tab.addEventListener('shown.bs.tab', function (event) {
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  const activeTab = document.querySelector('#tab1-info button.active');
+  const activeTab = document.querySelector('#tabsCliente button.active');
   if (activeTab && activeTab.getAttribute('data-bs-target') !== '#contenido-info') {
     guardarBtn.style.display = 'none';
   }
