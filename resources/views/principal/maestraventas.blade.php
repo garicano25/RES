@@ -514,7 +514,7 @@
 
 
     @if(request()->is('clientes'))
-    <script src="/assets/js_sitio/clientes/clientes.js?v=1.9"></script>
+    <script src="/assets/js_sitio/clientes/clientes.js?v=9"></script>
     @endif
 
     @if(request()->is('solicitudes'))

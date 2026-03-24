@@ -228,6 +228,28 @@ $("#guardarCLIENTE").click(function (e) {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+  const guardarBtn = document.getElementById('guardarCLIENTE');
+  const tabs = document.querySelectorAll('#tab1-info button[data-bs-toggle="tab"]');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('shown.bs.tab', function (event) {
+      const target = event.target.getAttribute('data-bs-target');
+      if (target === '#contenido-info') {
+        guardarBtn.style.display = 'inline-block';
+      } else {
+        guardarBtn.style.display = 'none';
+      }
+    });
+  });
+
+  const activeTab = document.querySelector('#tab1-info button.active');
+  if (activeTab && activeTab.getAttribute('data-bs-target') !== '#contenido-info') {
+    guardarBtn.style.display = 'none';
+  }
+});
+
+
 
 var Tablaclientesventas = $("#Tablaclientesventas").DataTable({
     language: {
