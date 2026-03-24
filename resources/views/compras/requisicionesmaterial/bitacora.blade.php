@@ -25,20 +25,10 @@
 
 
     /* ========== TABLA BITÁCORA GENERAL ========== */
-    #Tablabitacora {
-        table-layout: fixed !important;
-        width: 100% !important;
-    }
 
-    #Tablabitacora th,
-    #Tablabitacora td {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        vertical-align: middle;
-    }
 
     /* ========== EXCEPCIÓN: COLUMNA JUSTIFICACIÓN ========== */
+
     #Tablabitacora td.col-justificacion {
         white-space: normal !important;
         overflow: visible !important;
@@ -49,6 +39,9 @@
         height: auto !important;
         line-height: 1.3em;
     }
+
+
+
 
     /* ========== TABLA COTIZACIONES (si aplica) ========== */
     #tablaCotizaciones {
