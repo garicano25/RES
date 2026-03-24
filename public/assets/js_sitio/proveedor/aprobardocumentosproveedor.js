@@ -107,7 +107,9 @@ $(document).on('click','.aprobar-final',function(){
         title:'¿Autorizar documento?',
         icon:'question',
         showCancelButton:true,
-        confirmButtonText:'Si autorizar'
+        confirmButtonText: 'Si autorizar',
+        cancelButtonText: 'Cancelar'
+
     }).then((result)=>{
 
         if(result.isConfirmed){
@@ -153,7 +155,9 @@ $(document).on('click','.rechazar-final',function(){
         inputPlaceholder:'Escriba el motivo...',
         showCancelButton:true,
         confirmButtonText:'Rechazar',
-        confirmButtonColor:'#d33'
+        confirmButtonColor: '#d33',
+        cancelButtonText: 'Cancelar'
+
 
     }).then((result)=>{
 

@@ -195,7 +195,8 @@ $(document).on('click','.aprobar-doc',function(){
             title:'¿Aprobar documento?',
             icon:'question',
             showCancelButton:true,
-            confirmButtonText:'Si aprobar'
+            confirmButtonText: 'Si aprobar',
+            cancelButtonText: 'Cancelar'
         }).then((result)=>{
 
         if(result.isConfirmed){
@@ -242,7 +243,8 @@ $(document).on('click','.rechazar-doc',function(){
         inputPlaceholder:'Escriba el motivo...',
         showCancelButton:true,
         confirmButtonText:'Rechazar',
-        confirmButtonColor:'#d33'
+        confirmButtonColor: '#d33',
+        cancelButtonText: 'Cancelar'
 
         }).then((result)=>{
 

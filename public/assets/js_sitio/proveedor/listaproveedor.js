@@ -544,7 +544,7 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         if (data.VERIFICACION_SOLICITADA == 1) {
 
             $(row).css("background-color", "#fff3cd"); 
-            $(row).attr("title", "Verificación de información solicitada");
+            $(row).attr("title", "");
             $(row).tooltip();
         } else {
             $(row).css("background-color", ""); 
