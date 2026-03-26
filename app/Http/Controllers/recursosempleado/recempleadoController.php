@@ -454,7 +454,7 @@ class recempleadoController extends Controller
                     } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
                         $value->ESTADO_REVISION = '<span class="badge bg-danger">✖</span>';
                         $value->BTN_ELIMINAR   = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_RECURSOS_EMPLEADOS . '" checked><span class="slider round"></span></label>';
-                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                        $value->BTN_EDITAR     = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
                         $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     } else {
                         $value->ESTADO_REVISION = '<span class="badge bg-secondary">Sin estado</span>';
