@@ -499,7 +499,7 @@
     @endif
 
     @if(request()->is('bitacoraasignacion'))
-    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraasignacion.js?v=2"></script>
+    <script src="/assets/js_sitio/bitacorasalmacen/bitacoraasignacion.js?v=3"></script>
     @endif
 
     @if(request()->is('listadeinfraestructura'))

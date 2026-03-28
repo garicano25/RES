@@ -65,6 +65,7 @@ var Tablabitacoraasignacion = $("#Tablabitacoraasignacion").DataTable({
         { data: 'MARCA_EQUIPO' },
         { data: 'MODELO_EQUIPO' },
         { data: 'SERIE_EQUIPO' },
+        { data: 'CODIGO_EQUIPO' },
         { data: 'FECHA_ALMACEN_SOLICITUD' },
         { data: 'ASIGNADO_USUARIO' },
         { data: 'BTN_EDITAR' },
@@ -80,10 +81,11 @@ var Tablabitacoraasignacion = $("#Tablabitacoraasignacion").DataTable({
         { targets: 6, title: 'Marca', className: 'all text-center' },
         { targets: 7, title: 'Modelo', className: 'all text-center' },
         { targets: 8, title: 'No. Serie', className: 'all text-center' },
-        { targets: 9, title: 'Fecha de entrega', className: 'all text-center' },
-        { targets: 10, title: 'Asignado a', className: 'all text-center' },
-        { targets: 11, title: 'Editar', className: 'all text-center' },
-        { targets: 12, title: 'Visualizar', className: 'all text-center' }
+        { targets: 9, title: 'Código de Identificación', className: 'all text-center' },
+        { targets: 10, title: 'Fecha de entrega', className: 'all text-center' },
+        { targets: 11, title: 'Asignado a', className: 'all text-center' },
+        { targets: 12, title: 'Editar', className: 'all text-center' },
+        { targets: 13, title: 'Visualizar', className: 'all text-center' }
     ],
    createdRow: function (row, data) {
         if (data.ROW_CLASS) {
