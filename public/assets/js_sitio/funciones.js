@@ -3208,3 +3208,17 @@ $(document).on('show.bs.modal', '.modal', function () {
     modal._config.keyboard = true;
 
 });
+
+
+$(document).on('shown.bs.modal', function () {
+
+    let token = $('meta[name="csrf-token"]').attr('content');
+
+    $('form').each(function () {
+        let input = $(this).find('input[name="_token"]');
+        if (input.length) {
+            input.val(token);
+        }
+    });
+
+});

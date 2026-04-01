@@ -30,6 +30,7 @@ $(document).ready(function () {
 });
 
 
+
 function obtenerModalPadre(elemento) {
     const modalBody = $(elemento).closest(".modal-body");
 
@@ -334,6 +335,76 @@ var Tablainventario = $("#Tablainventario").DataTable({
 $('#btnFiltrarMR').on('click', function () {
     Tablainventario.ajax.reload();
 });
+
+
+
+let colorSeleccionado = null;
+
+$.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+    if (!colorSeleccionado) return true;
+
+    let row = Tablainventario.row(dataIndex).node();
+
+    return $(row).hasClass(colorSeleccionado);
+});
+
+
+$(document).on('click', '.filtro-color', function () {
+
+    let color = $(this).data('color');
+
+    if (colorSeleccionado === color) {
+        colorSeleccionado = null;
+        $('.filtro-color').removeClass('active');
+    } else {
+        colorSeleccionado = color;
+        $('.filtro-color').removeClass('active');
+        $(this).addClass('active');
+    }
+
+    Tablainventario.draw();
+});
+
+
+$('#limpiarFiltro').on('click', function () {
+    colorSeleccionado = null;
+    $('.filtro-color').removeClass('active');
+    Tablainventario.draw();
+});
+
+
+
+function cargarMetricas() {
+
+    $.ajax({
+        url: '/metricasInventario',
+        type: 'GET',
+        success: function (res) {
+
+            $('#bar-verde').css('width', res.verde_porcentaje + '%');
+            $('#bar-rojo').css('width', res.rojo_porcentaje + '%');
+            $('#bar-amarillo').css('width', res.amarillo_porcentaje + '%');
+            $('#bar-naranja').css('width', res.naranja_porcentaje + '%');
+            $('#bar-azul').css('width', res.azul_porcentaje + '%');
+
+            $('#txt-verde').text(res.verde + ' (' + res.verde_porcentaje + '%)');
+            $('#txt-rojo').text(res.rojo + ' (' + res.rojo_porcentaje + '%)');
+            $('#txt-amarillo').text(res.amarillo + ' (' + res.amarillo_porcentaje + '%)');
+            $('#txt-naranja').text(res.naranja + ' (' + res.naranja_porcentaje + '%)');
+            $('#txt-azul').text(res.azul + ' (' + res.azul_porcentaje + '%)');
+            $('#txt-total').text(res.total);
+        }
+    });
+}
+
+
+$(document).ready(function () {
+    cargarMetricas();
+});
+
+
+
 
 document.getElementById('TIPO_EQUIPO').addEventListener('change', function () {
     const tipo = this.value;

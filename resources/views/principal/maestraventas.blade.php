@@ -276,7 +276,6 @@
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Clientes</span><span class="d-none d-lg-inline">Clientes</span>
                         </a>
                     </li>
-
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -365,7 +364,6 @@
                                 <span class="d-none d-lg-inline">Orden de trabajo - OT</span>
                             </a>
                             <ul class="dropdown-menu">
-
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/ordentrabajo') }}">
                                         Actual
@@ -484,7 +482,7 @@
     <!-- Dropify -->
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=7"></script>
+    <script src="/assets/js_sitio/funciones.js?v=8"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 

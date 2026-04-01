@@ -51,7 +51,101 @@ class inventarioController extends Controller
 
 
 
-    public function Tablainventario(Request $request)
+    // public function Tablainventario(Request $request)
+    // {
+    //     try {
+
+    //         $query = inventarioModel::query()
+    //             ->where(function ($q) {
+    //                 $q->where('ES_INFRAESTRUCTURA', '!=', 1)
+    //                     ->orWhereNull('ES_INFRAESTRUCTURA');
+    //             });
+
+    //         if ($request->filled('UBICACION_EQUIPO')) {
+    //             $query->where('UBICACION_EQUIPO', $request->UBICACION_EQUIPO);
+    //         }
+
+    //         $tabla = $query->get();
+
+    //         foreach ($tabla as $value) {
+
+    //             if ($value->ACTIVO == 0) {
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '"><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+    //             } else {
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '" checked><span class="slider round"></span></label>';
+    //                 $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+    //                 $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+    //             }
+
+    //             $value->FOTO_EQUIPO_HTML = '<img src="/equipofoto/' . $value->ID_FORMULARIO_INVENTARIO . '" alt="Foto" class="img-fluid" width="50" height="60">';
+
+    //             $campos = [
+    //                 'DESCRIPCION_EQUIPO',
+    //                 'MARCA_EQUIPO',
+    //                 'MODELO_EQUIPO',
+    //                 'SERIE_EQUIPO',
+    //                 'CODIGO_EQUIPO',
+    //                 'CANTIDAD_EQUIPO',
+    //                 'UBICACION_EQUIPO',
+    //                 'ESTADO_EQUIPO',
+    //                 'FECHA_ADQUISICION',
+    //                 'UNITARIO_EQUIPO',
+    //                 'TOTAL_EQUIPO',
+    //                 'TIPO_EQUIPO',
+    //                 'OBSERVACION_EQUIPO',
+    //                 'FOTO_EQUIPO',
+    //                 'UNIDAD_MEDIDA',
+    //                 'ITEM_CRITICO',
+    //                 'PROVEEDOR_ALTA',
+    //                 'REQUIERE_ARTICULO'
+    //             ];
+
+    //             $completo = true;
+    //             foreach ($campos as $campo) {
+    //                 if (empty($value->$campo)) {
+    //                     $completo = false;
+    //                     break;
+    //                 }
+    //             }
+
+    //             if (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '') {
+    //                 $cantidad = (float)$value->CANTIDAD_EQUIPO;
+    //                 $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
+
+    //                 if ($cantidad <= $minimo) {
+    //                     $value->ROW_CLASS = 'bg-amarrillo-suave';
+    //                 } else {
+    //                     $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
+    //                 }
+    //             } else {
+    //                 $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
+    //             }
+
+
+    //             if ($value->ASIGNADO == 1) {
+    //                 $value->ROW_CLASS = 'bg-naranja-suave';
+    //             }
+
+
+    //         }
+
+    //         // Respuesta
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
+    public function metricasInventario(Request $request)
     {
         try {
 
@@ -65,21 +159,18 @@ class inventarioController extends Controller
                 $query->where('UBICACION_EQUIPO', $request->UBICACION_EQUIPO);
             }
 
-            $tabla = $query->get();
+            $data = $query->get();
 
-            foreach ($tabla as $value) {
+            $conteo = [
+                'verde' => 0,
+                'rojo' => 0,
+                'amarillo' => 0,
+                'naranja' => 0,
+                'azul' => 0,
+                'total' => 0
+            ];
 
-                if ($value->ACTIVO == 0) {
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '"><span class="slider round"></span></label>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                } else {
-                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '" checked><span class="slider round"></span></label>';
-                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                }
-
-                $value->FOTO_EQUIPO_HTML = '<img src="/equipofoto/' . $value->ID_FORMULARIO_INVENTARIO . '" alt="Foto" class="img-fluid" width="50" height="60">';
+            foreach ($data as $value) {
 
                 $campos = [
                     'DESCRIPCION_EQUIPO',
@@ -104,34 +195,132 @@ class inventarioController extends Controller
 
                 $completo = true;
                 foreach ($campos as $campo) {
-                    if (empty($value->$campo)) {
+                    if (!isset($value->$campo) || $value->$campo === '') {
                         $completo = false;
                         break;
                     }
                 }
 
-                if (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '') {
-                    $cantidad = (float)$value->CANTIDAD_EQUIPO;
-                    $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
+                $cantidad = (float)$value->CANTIDAD_EQUIPO;
+                $tieneMinimo = (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '');
+                $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
 
-                    if ($cantidad <= $minimo) {
-                        $value->ROW_CLASS = 'bg-amarrillo-suave';
-                    } else {
-                        $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
-                    }
+                if ($value->ASIGNADO == 1) {
+                    $conteo['naranja']++;
+                } elseif ($tieneMinimo && $cantidad <= $minimo) {
+                    $conteo['amarillo']++;
+                } elseif ($cantidad == 0) {
+                    $conteo[$completo ? 'rojo' : 'azul']++;
                 } else {
-                    $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-rojo-suave';
+                    $conteo[$completo ? 'verde' : 'azul']++;
                 }
 
+                $conteo['total']++;
+            }
 
+            foreach ($conteo as $key => $val) {
+                if ($key !== 'total') {
+                    $conteo[$key . '_porcentaje'] = $conteo['total'] > 0
+                        ? round(($val / $conteo['total']) * 100, 2)
+                        : 0;
+                }
+            }
+
+            return response()->json($conteo);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()]);
+        }
+    }
+
+    public function Tablainventario(Request $request)
+    {
+        try {
+
+            $query = inventarioModel::query()
+                ->where(function ($q) {
+                    $q->where('ES_INFRAESTRUCTURA', '!=', 1)
+                        ->orWhereNull('ES_INFRAESTRUCTURA');
+                });
+
+            if ($request->filled('UBICACION_EQUIPO')) {
+                $query->where('UBICACION_EQUIPO', $request->UBICACION_EQUIPO);
+            }
+
+            $tabla = $query->get();
+
+            foreach ($tabla as $value) {
+
+                // BOTONES
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+
+                $value->FOTO_EQUIPO_HTML = '<img src="/equipofoto/' . $value->ID_FORMULARIO_INVENTARIO . '" class="img-fluid" width="50" height="60">';
+
+                // CAMPOS
+                $campos = [
+                    'DESCRIPCION_EQUIPO',
+                    'MARCA_EQUIPO',
+                    'MODELO_EQUIPO',
+                    'SERIE_EQUIPO',
+                    'CODIGO_EQUIPO',
+                    'CANTIDAD_EQUIPO',
+                    'UBICACION_EQUIPO',
+                    'ESTADO_EQUIPO',
+                    'FECHA_ADQUISICION',
+                    'UNITARIO_EQUIPO',
+                    'TOTAL_EQUIPO',
+                    'TIPO_EQUIPO',
+                    'OBSERVACION_EQUIPO',
+                    'FOTO_EQUIPO',
+                    'UNIDAD_MEDIDA',
+                    'ITEM_CRITICO',
+                    'PROVEEDOR_ALTA',
+                    'REQUIERE_ARTICULO'
+                ];
+
+                // VALIDACIÓN (N/A y 0 válidos)
+                $completo = true;
+                foreach ($campos as $campo) {
+                    if (!isset($value->$campo) || $value->$campo === '') {
+                        $completo = false;
+                        break;
+                    }
+                }
+
+                $cantidad = (float)$value->CANTIDAD_EQUIPO;
+                $tieneMinimo = (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '');
+                $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
+
+                // 🔥 PRIORIDADES CORRECTAS
+
+                // 🟠 1. ASIGNADO SIEMPRE GANA
                 if ($value->ASIGNADO == 1) {
                     $value->ROW_CLASS = 'bg-naranja-suave';
                 }
 
-                
+                // 🟡 2. TIENE LÍMITE Y ESTÁ POR DEBAJO
+                elseif ($tieneMinimo && $cantidad <= $minimo) {
+                    $value->ROW_CLASS = 'bg-amarrillo-suave';
+                }
+
+                // 🔴 3. CANTIDAD 0
+                elseif ($cantidad == 0) {
+                    $value->ROW_CLASS = $completo ? 'bg-rojo-suave' : 'bg-azul-suave';
+                }
+
+                // 🟢 / 🔵 4. NORMAL
+                else {
+                    $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-azul-suave';
+                }
             }
 
-            // Respuesta
             return response()->json([
                 'data' => $tabla,
                 'msj' => 'Información consultada correctamente'
@@ -143,6 +332,7 @@ class inventarioController extends Controller
             ]);
         }
     }
+
 
 
 

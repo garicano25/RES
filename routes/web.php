@@ -130,6 +130,8 @@ use App\Http\Controllers\proveedor\catalagodocumentosproveedorController;
 use App\Http\Controllers\proveedor\catalogoverificacionproveedorController;
 use App\Http\Controllers\proveedor\listaproveedorcriticoController;
 use App\Http\Controllers\proveedor\actualizaciondocumentosController;
+use App\Http\Controllers\proveedor\ordencompraproveedorController;
+use App\Http\Controllers\proveedor\facturaproveedorController;
 
 
 // CONTROLADORES DE PO 
@@ -944,20 +946,20 @@ Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'v
 
 Route::get('/Tablalistaproveedorinactivo', [listaproveedorController::class, 'Tablalistaproveedorinactivo']);
 Route::post('/activarProveedor', [listaproveedorController::class, 'activarProveedor']);
-
 Route::post('/enviarCorreoActualizacionDocs', [listaproveedorController::class, 'enviarCorreoActualizacionDocs']);
+
 ///// ASIGNACIONES PROVEEDOR
-
-
 
 Route::get('/Tablasignacionproveedor', [listaproveedorController::class, 'Tablasignacionproveedor']);
 Route::get('/Tablasignacionproveedorgeneral', [listaproveedorController::class, 'Tablasignacionproveedorgeneral']);
 Route::get('/TablasignacionproveedorEditar', [listaproveedorController::class, 'TablasignacionproveedorEditar']);
 Route::get('/mostrarasignacionproveedor/{id}', [listaproveedorController::class, 'mostrarasignacionproveedor']);
-
 Route::get('/pdfAsignacionproveedor/{id}', [pdfasingacionController::class, 'pdfAsignacionproveedor']);
 Route::get('/pdfAsignacionEppproveedor/{id}', [pdfasingacionController::class, 'pdfAsignacionEppproveedor']);
 
+///// CONTRATOS PROVEEDOR
+Route::get('/Tablacontratosproveedores', [listaproveedorController::class, 'Tablacontratosproveedores']);
+Route::get('/mostrarcontratoproveedor/{id}', [listaproveedorController::class, 'mostrarcontratoproveedor']);
 
 //==============================================    LISTA DE PROVEEDORES CRITICO  ============================================== 
 
@@ -979,8 +981,6 @@ Route::get('/mostrarequierecontrato/{id}', [proveedortempController::class, 'mos
 Route::get('/verificarPeriodoActualizacion', [altadocumentosController::class, 'verificarPeriodoActualizacion']);
 Route::post('/actualizarDocumentoProveedor', [altadocumentosController::class, 'actualizarDocumentoProveedor']);
 
-
-
 Route::get('/actualizaciondocumentosproveedor', [actualizaciondocumentosController::class, 'index']);
 Route::post('/ActualizarfechasProveedorSave', [actualizaciondocumentosController::class, 'store']);
 Route::get('/Tabladocumentosactualizadosproveedor', [actualizaciondocumentosController::class, 'Tabladocumentosactualizadosproveedor']);
@@ -990,8 +990,6 @@ Route::post('/rechazarDocumentoProveedor',[actualizaciondocumentosController::cl
 
 Route::get('/aprobardocumentosproveedor', function () { return view('compras.proveedores.actualizaciondocsproveedor.aprobaciondocs');});
 Route::get('/Tabladocumentosaprobacionproveedor', [actualizaciondocumentosController::class, 'Tabladocumentosaprobacionproveedor']);
-
-
 
 Route::post('/aprobarDocumentoProveedorFinal', [actualizaciondocumentosController::class, 'aprobarDocumentoProveedorFinal']);
 Route::post('/rechazarDocumentoProveedorFinal', [actualizaciondocumentosController::class, 'rechazarDocumentoProveedorFinal']);
@@ -1006,6 +1004,7 @@ Route::post('/PoSave', [poController::class, 'store']);
 Route::get('/obtenerNombreUsuario/{id}', [poController::class, 'obtenerNombreUsuario']);
 Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
 
+Route::post('/enviarCorreoPO', [pdfpoController::class, 'enviarCorreoPO']);
 
 //==============================================    ORDEN DE COMPRA - HISTORIAL  ============================================== 
 Route::get('/ordencomprahistorial', [pohistorialController::class, 'index']);
@@ -1029,12 +1028,15 @@ Route::post('/consultar-gr', [grController::class, 'consultarGR'])->name('consul
 Route::get('/generarGRpdf/{id}', [pdfgrController::class, 'generarGRpdf']);
 
 
+Route::post('/enviarCorreoGR', [pdfgrController::class, 'enviarCorreoGR']);
+
 /// VO.BO USUARIO EN GR 
 
 Route::get('/vobogrusuario', [vobogrusuarioController::class, 'index']);
 Route::get('/TablaVoBoGRusuarios', [vobogrusuarioController::class, 'TablaVoBoGRusuarios']);
 Route::get('/ConsultarProductosVoBo/{idGR}', [vobogrusuarioController::class, 'ConsultarProductosVoBo']);
 Route::post('/guardarVoBoUsuario', [vobogrusuarioController::class, 'guardarVoBoUsuario']);
+
 
 //==============================================    RECEPCION DE BIENES Y/O SERVICIOS - GR HISTORIAL ============================================== 
 
@@ -1116,8 +1118,6 @@ Route::get('/DocumentosDelete', [altadocumentosController::class, 'store']);
 Route::get('/mostrardocumentosoporteproveedor/{id}', [altadocumentosController::class, 'mostrardocumentosoporteproveedor']);
 Route::get('/documentosRegistrados', [altadocumentosController::class, 'documentosRegistrados']);
 
-
-
 //ALTA DE CUENTAS BANCARIAS 
 Route::get('/proveedorescuentas', function () { return view('compras.proveedores.altacuentas');});
 Route::post('/AltacuentaSave', [altacuentaController::class, 'store']);
@@ -1126,7 +1126,27 @@ Route::get('/CuentasDelete', [altacuentaController::class, 'store']);
 Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratula']);
 
 
+// ORDEN DE COMPRA (PO) Y RECEPCIONES DE BIENES (GR)  
+Route::get('/po-gr', function () { return view('compras.proveedores.poygrproveedor');});
+Route::get('/Tablapoproveedor', [ordencompraproveedorController::class, 'Tablapoproveedor']);
+Route::get('/Tablagrproveedor', [ordencompraproveedorController::class, 'Tablagrproveedor']);
 
+
+// ORDEN DE COMPRA (PO) Y RECEPCIONES DE BIENES (GR)  
+
+Route::get('/factura', function () { return view('compras.proveedores.facturacion');});
+Route::get('/validarContratoVigente', [facturaproveedorController::class, 'validarContratoVigente']);
+Route::post('/validarPOGR', [facturaproveedorController::class, 'validarPOGR']);
+Route::get('/obtenerTipoProveedor', [facturaproveedorController::class, 'obtenerTipoProveedor']);
+Route::post('/validarContratoNumero', [facturaproveedorController::class, 'validarContratoNumero']);
+Route::post('/FacturacionSave', [facturaproveedorController::class, 'store']);
+Route::get('/Tablafacturaproveedores', [facturaproveedorController::class, 'Tablafacturaproveedores']);
+
+Route::get('/mostrarsoportefactura/{id}', [facturaproveedorController::class, 'mostrarsoportefactura']);
+Route::get('/mostrarfactura/{id}', [facturaproveedorController::class, 'mostrarfactura']);
+
+
+Route::get('/validarPuedeSubirFactura', [facturaproveedorController::class, 'validarPuedeSubirFactura']);
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1143,6 +1163,9 @@ Route::get('/inventarioDelete', [inventarioController::class, 'store']);
 Route::get('/generarCodigoAF', [inventarioController::class, 'generarCodigoAF']);
 Route::get('/generarCodigoANF', [inventarioController::class, 'generarCodigoANF']);
 Route::get('/cantidadEquipoReadonly', [inventarioController::class, 'cantidadEquipoReadonly']);
+
+Route::get('/metricasInventario', [inventarioController::class, 'metricasInventario']);
+
 
 /// ENTRADA INVENTARIO
 Route::get('/Tablaentradainventario', [inventarioController::class, 'Tablaentradainventario']);
@@ -1288,7 +1311,7 @@ Route::get('/MttoInstalacionDelete', [listainstalacionController::class, 'store'
 ////////////////////////////////////////////////////////////////PAGINA WEB///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-Route::get('/mensajespaginaweb', function () {    return view('pagina_web.mensajespagina');});
+Route::get('/mensajespaginaweb', function () { return view('pagina_web.mensajespagina');});
 Route::get('/Tablamensajepaginaweb', [mensajespaginaController::class, 'Tablamensajepaginaweb']);
 Route::get('/MensajespaginaDelete', [mensajespaginaController::class, 'store']);
 Route::post('/PaginawebSave', [mensajespaginaController::class, 'store']);
