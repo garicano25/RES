@@ -232,7 +232,7 @@
                                                         <label>Fecha de adquisición *</label>
                                                         <div class="input-group">
                                                             <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ADQUISICION" name="FECHA_ADQUISICION" required>
-                                                            <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                                         </div>
                                                     </div>
                                                 </div>

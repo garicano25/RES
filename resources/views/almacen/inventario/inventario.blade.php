@@ -31,6 +31,10 @@
         background-color: #efd8b9 !important;
     }
 
+    .bg-azul-suave {
+        background-color: #bff4fe !important;
+    }
+
 
     .tabla-scroll-wrapper {
         width: 100%;
@@ -70,6 +74,39 @@
         word-wrap: break-word;
         white-space: normal !important;
     }
+
+
+    .progress {
+        background-color: #eee;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .progress div {
+        height: 100%;
+        transition: width 0.5s ease;
+    }
+
+
+    .filtro-color {
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .filtro-color:hover {
+        opacity: 0.7;
+    }
+
+    .filtro-color.active {
+        border: 2px solid #000;
+    }
+
+    .progress {
+        background-color: #eee;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
 </style>
 
 
@@ -126,6 +163,68 @@
     </div>
 
     <div class="card-body">
+        <div class="mb-3">
+
+            <div class="mb-2 filtro-color" data-color="bg-verde-suave">
+                <div class="d-flex justify-content-between">
+                    <span>🟢 Verde</span>
+                    <span id="txt-verde"></span>
+                </div>
+                <div class="progress" style="height: 10px;">
+                    <div id="bar-verde" class="bg-verde-suave w-100"></div>
+                </div>
+            </div>
+
+            <div class="mb-2 filtro-color" data-color="bg-rojo-suave">
+                <div class="d-flex justify-content-between">
+                    <span>🔴 Rojo</span>
+                    <span id="txt-rojo"></span>
+                </div>
+                <div class="progress" style="height: 10px;">
+                    <div id="bar-rojo" class="bg-rojo-suave w-100"></div>
+                </div>
+            </div>
+
+            <div class="mb-2 filtro-color" data-color="bg-amarrillo-suave">
+                <div class="d-flex justify-content-between">
+                    <span>🟡 Amarillo</span>
+                    <span id="txt-amarillo"></span>
+                </div>
+                <div class="progress" style="height: 10px;">
+                    <div id="bar-amarillo" class="bg-amarrillo-suave w-100"></div>
+                </div>
+            </div>
+            <div class="mb-2 filtro-color" data-color="bg-naranja-suave">
+                <div class="d-flex justify-content-between">
+                    <span>🟠 Naranja</span>
+                    <span id="txt-naranja"></span>
+                </div>
+                <div class="progress" style="height: 10px;">
+                    <div id="bar-naranja" class="bg-naranja-suave w-100"></div>
+                </div>
+            </div>
+            <div class="mb-2 filtro-color" data-color="bg-azul-suave">
+                <div class="d-flex justify-content-between">
+                    <span>🔵 Azul</span>
+                    <span id="txt-azul"></span>
+                </div>
+                <div class="progress" style="height: 10px;">
+                    <div id="bar-azul" class="bg-azul-suave w-100"></div>
+                </div>
+            </div>
+            <div class="text-end mt-2">
+                <strong>Total: <span id="txt-total"></span></strong>
+            </div>
+            <div class="text-end mt-2">
+                <button id="limpiarFiltro" class="btn btn-secondary btn-sm">
+                    Mostrar todo
+                </button>
+            </div>
+
+        </div>
+
+
+
         <div class="tabla-scroll-wrapper">
             <div class="tabla-scroll-top">
                 <div class="scroll-inner"></div>
@@ -290,7 +389,7 @@
                                                                 <label>Inicio de Vigencia *</label>
                                                                 <div class="input-group">
                                                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="INICIOVIGENCIA_POLIZA" name="INICIOVIGENCIA_POLIZA" required>
-                                                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -299,7 +398,7 @@
                                                                 <label>Fin de Vigencia *</label>
                                                                 <div class="input-group">
                                                                     <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FINVIGENCIA_POLIZA" name="FINVIGENCIA_POLIZA" required>
-                                                                    <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -361,7 +460,7 @@
                                                         <label>Fecha de adquisición *</label>
                                                         <div class="input-group">
                                                             <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_ADQUISICION" name="FECHA_ADQUISICION" required>
-                                                            <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -553,12 +652,12 @@
                                         <i class="fa fa-file fileinput-exists"></i>
                                         <span class="fileinput-filename"></span>
                                     </div>
-                                    <span class="input-group-addon btn btn-secondary btn-file">
+                                    <span class="input-group-text btn btn-secondary btn-file">
                                         <span class="fileinput-new">Seleccione</span>
                                         <span class="fileinput-exists">Cambiar</span>
                                         <input type="file" accept=".xls,.xlsx" name="excelEquipos" id="excelEquipos" required>
                                     </span>
-                                    <a href="#" class="input-group-addon btn btn-secondary fileinput-exists" data-dismiss="fileinput">Quitar</a>
+                                    <a href="#" class="input-group-text btn btn-secondary fileinput-exists" data-dismiss="fileinput">Quitar</a>
                                 </div>
                             </div>
                         </div>

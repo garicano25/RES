@@ -183,7 +183,7 @@
                                     <label>Inicio de Vigencia *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="INICIOVIGENCIA_POLIZA" name="INICIOVIGENCIA_POLIZA" required>
-                                        <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                        <span class="input-group-text"><i class="icon-calender"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -192,7 +192,7 @@
                                     <label>Fin de Vigencia *</label>
                                     <div class="input-group">
                                         <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FINVIGENCIA_POLIZA" name="FINVIGENCIA_POLIZA" required>
-                                        <span class="input-group-addon"><i class="icon-calender"></i></span>
+                                        <span class="input-group-text"><i class="icon-calender"></i></span>
                                     </div>
                                 </div>
                             </div>
