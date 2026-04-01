@@ -106,7 +106,6 @@
         border-radius: 10px;
         overflow: hidden;
     }
-
 </style>
 
 
@@ -167,7 +166,7 @@
 
             <div class="mb-2 filtro-color" data-color="bg-verde-suave">
                 <div class="d-flex justify-content-between">
-                    <span>Verde</span>
+                    <span>Verde - Completado</span>
                     <span id="txt-verde"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
@@ -177,7 +176,7 @@
 
             <div class="mb-2 filtro-color" data-color="bg-rojo-suave">
                 <div class="d-flex justify-content-between">
-                    <span>Rojo</span>
+                    <span>Rojo - No hay stock (cantidad 0)</span>
                     <span id="txt-rojo"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
@@ -187,7 +186,7 @@
 
             <div class="mb-2 filtro-color" data-color="bg-amarrillo-suave">
                 <div class="d-flex justify-content-between">
-                    <span>Amarillo</span>
+                    <span>Amarillo - Alerta de stock</span>
                     <span id="txt-amarillo"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
@@ -196,7 +195,7 @@
             </div>
             <div class="mb-2 filtro-color" data-color="bg-naranja-suave">
                 <div class="d-flex justify-content-between">
-                    <span>Naranja</span>
+                    <span>Naranja - Asignado</span>
                     <span id="txt-naranja"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
@@ -205,7 +204,7 @@
             </div>
             <div class="mb-2 filtro-color" data-color="bg-azul-suave">
                 <div class="d-flex justify-content-between">
-                    <span>Azul</span>
+                    <span>Azul - Información incompleta</span>
                     <span id="txt-azul"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
