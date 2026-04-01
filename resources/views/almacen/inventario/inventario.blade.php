@@ -167,49 +167,49 @@
 
             <div class="mb-2 filtro-color" data-color="bg-verde-suave">
                 <div class="d-flex justify-content-between">
-                    <span>🟢 Verde</span>
+                    <span>Verde</span>
                     <span id="txt-verde"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
-                    <div id="bar-verde" class="bg-verde-suave w-100"></div>
+                    <div id="bar-verde" class="bg-verde-suave"></div>
                 </div>
             </div>
 
             <div class="mb-2 filtro-color" data-color="bg-rojo-suave">
                 <div class="d-flex justify-content-between">
-                    <span>🔴 Rojo</span>
+                    <span>Rojo</span>
                     <span id="txt-rojo"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
-                    <div id="bar-rojo" class="bg-rojo-suave w-100"></div>
+                    <div id="bar-rojo" class="bg-rojo-suave "></div>
                 </div>
             </div>
 
             <div class="mb-2 filtro-color" data-color="bg-amarrillo-suave">
                 <div class="d-flex justify-content-between">
-                    <span>🟡 Amarillo</span>
+                    <span>Amarillo</span>
                     <span id="txt-amarillo"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
-                    <div id="bar-amarillo" class="bg-amarrillo-suave w-100"></div>
+                    <div id="bar-amarillo" class="bg-amarrillo-suave"></div>
                 </div>
             </div>
             <div class="mb-2 filtro-color" data-color="bg-naranja-suave">
                 <div class="d-flex justify-content-between">
-                    <span>🟠 Naranja</span>
+                    <span>Naranja</span>
                     <span id="txt-naranja"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
-                    <div id="bar-naranja" class="bg-naranja-suave w-100"></div>
+                    <div id="bar-naranja" class="bg-naranja-suave "></div>
                 </div>
             </div>
             <div class="mb-2 filtro-color" data-color="bg-azul-suave">
                 <div class="d-flex justify-content-between">
-                    <span>🔵 Azul</span>
+                    <span>Azul</span>
                     <span id="txt-azul"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
-                    <div id="bar-azul" class="bg-azul-suave w-100"></div>
+                    <div id="bar-azul" class="bg-azul-suave "></div>
                 </div>
             </div>
             <div class="text-end mt-2">
