@@ -186,7 +186,7 @@
 
             <div class="mb-2 filtro-color" data-color="bg-amarrillo-suave">
                 <div class="d-flex justify-content-between">
-                    <span>Amarillo - Alerta de stock</span>
+                    <span>Amarillo - El stock está debajo del límite mínimo</span>
                     <span id="txt-amarillo"></span>
                 </div>
                 <div class="progress" style="height: 10px;">
