@@ -96,7 +96,9 @@ document.addEventListener("DOMContentLoaded", function () {
 $("#guardarALTA").click(function (e) {
     e.preventDefault();
 
-    formularioValido = validarFormulario($('#formularioALTA'))
+
+    formularioValido = validarFormulario3($('#formularioALTA'))
+
 
     if (formularioValido) {
 

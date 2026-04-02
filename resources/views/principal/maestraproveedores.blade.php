@@ -180,46 +180,60 @@
                     <h5 class="text-center">Menú</h5>
                     <nav>
                         <ul class="menu-list">
-                            <li>
-                                <a href="{{ url('/alta') }}" class="d-flex flex-column align-items-center text-center">
+                            <li class="nav-item dropdown">
+                                <a href="{{ url('/alta') }}" class="d-flex flex-column align-items-center text-center ">
                                     <i class="bi bi-speedometer"></i>
                                     <span>Alta y actualización</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="nav-item dropdown">
                                 <a href="{{ url('/proveedorescuentas') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-currency-dollar"></i>
                                     <span>Cuentas bancarias</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="nav-item dropdown">
                                 <a href="{{ url('/proveedorescontactos') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-person-lines-fill"></i>
                                     <span>Contactos</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="nav-item dropdown">
                                 <a href="{{ url('/proveedorescertificaciones') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-award-fill"></i>
                                     <span>Certificaciones, acreditaciones y membresías</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="nav-item dropdown">
                                 <a href="{{ url('/proveedoresreferencias') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-journal-text"></i>
                                     <span>Referencias comerciales</span>
                                 </a>
                             </li>
-                            <li>
+                            <li class="nav-item dropdown">
                                 <a href="{{ url('/proveedoresdocumentos') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-file-earmark-pdf-fill"></i>
                                     <span>Documentos de soporte</span>
                                 </a>
                             </li>
+                            <li class="nav-item dropdown" id="POYGR" style="display: none;">
+                                <a href="{{ url('/po-gr') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                    <span>Orden de compras (PO) <br> y <br> Recepción de bienes y/o servicios (GR)
+                                    </span>
+                                </a>
+                            </li>
+
                             <li id="FACTURA" style="display: none;">
-                                <a href="{{ url('/#') }}" class="d-flex flex-column align-items-center text-center">
+                                <a href="{{ url('/factura') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-file-earmark-fill"></i>
                                     <span>Facturación</span>
+                                </a>
+                            </li>
+                            <li id="REP" style="display: none;">
+                                <a href="{{ url('/') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                    <span>Recibo Electrónico de Pago (REP)</span>
                                 </a>
                             </li>
                         </ul>
@@ -303,10 +317,10 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
 
     <!-- Funciones generales -->
-    <script src="/assets/js_sitio/funciones.js?v=5.7"></script>
+    <script src="/assets/js_sitio/funciones.js?v=8"></script>
 
 
-    <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js"></script>
+    <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js?v=2"></script>
 
 
 
@@ -327,6 +341,8 @@
             });
         });
     </script>
+
+
 
 
     <script>
@@ -353,7 +369,7 @@
         document.addEventListener('input', function(event) {
             if ((event.target.tagName === 'INPUT' && event.target.type === 'text') || event.target.tagName === 'TEXTAREA') {
 
-                const idsExcluidos = ['TIPO_BANCO', 'OTRO_ID'];
+                const idsExcluidos = ['TIPO_BANCO', 'OTRO_ID', 'NO_PO', 'NO_GR', 'MONEDA_FACTURA', 'NO_FACTURA', 'METODO_PAGO', 'FOLIO_FISCAL', 'NO_FACTURA_EXTRANJERO', 'MONEDA_FACTURA_EXTRANJERO'];
 
                 if (idsExcluidos.includes(event.target.id)) {
                     return;
@@ -378,36 +394,35 @@
 
 
     @if(request()->is('alta'))
-    <script src="/assets/js_sitio/proveedor/altaproveedores.js?v=1.5"></script>
+    <script src="/assets/js_sitio/proveedor/altaproveedores.js?v=2"></script>
     @endif
-
-
-
-
 
     @if(request()->is('proveedorescuentas'))
     <script src="/assets/js_sitio/proveedor/altacuentas.js?v=1.3"></script>
     @endif
 
-
-
     @if(request()->is('proveedorescontactos'))
     <script src="/assets/js_sitio/proveedor/altacontactos.js?v=1.3"></script>
     @endif
-
 
     @if(request()->is('proveedorescertificaciones'))
     <script src="/assets/js_sitio/proveedor/altacertifiacion.js?v=1.0"></script>
     @endif
 
-
     @if(request()->is('proveedoresreferencias'))
     <script src="/assets/js_sitio/proveedor/altareferencias.js?v=1.0"></script>
     @endif
 
-
     @if(request()->is('proveedoresdocumentos'))
     <script src="/assets/js_sitio/proveedor/altadocumentos.js?v=2"></script>
+    @endif
+
+    @if(request()->is('po-gr'))
+    <script src="/assets/js_sitio/proveedor/poygr.js"></script>
+    @endif
+
+    @if(request()->is('factura'))
+    <script src="/assets/js_sitio/proveedor/cargarfactura.js"></script>
     @endif
 
 </body>

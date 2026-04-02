@@ -2,28 +2,17 @@
 var rfcSeleccionada; 
 
 
+window.ID_FORMULARIO_ALTA = 0;
 
 
 // ID DE LOS FORMULARIOS
-
 ID_FORMULARIO_CUENTAPROVEEDOR = 0
 ID_FORMULARIO_CONTACTOPROVEEDOR = 0
 ID_FORMULARIO_CERTIFICACIONPROVEEDOR = 0
 ID_FORMULARIO_REFERENCIASPROVEEDOR = 0
 ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0
 ID_ASINGACIONES_PROVEEDOR = 0;
-
-
-window.ID_FORMULARIO_ALTA = 0;
-
-
-
-ID_FORMULARIO_CUENTAPROVEEDOR = 0
-ID_FORMULARIO_CONTACTOPROVEEDOR = 0
-ID_FORMULARIO_CERTIFICACIONPROVEEDOR = 0
-ID_FORMULARIO_REFERENCIASPROVEEDOR = 0
-ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0
-
+ID_CONTRATO_PROVEEDORES = 0
 
 // TABLAS
 Tablalistaproveedorescriticos = null
@@ -55,6 +44,8 @@ var tablasasignacionesCargada = false;
 
 
 
+var Tablacontratosproveedores;
+var tablascontratoCargada = false; 
 
 
 
@@ -560,6 +551,7 @@ $('#Tablalistaproveedorescriticos tbody').on('click', 'td>button.EDITAR', functi
     tablareferenciasCargada = false;
     tablasoportesCargada = false;
     tablasasignacionesCargada = false;
+    tablascontratoCargada = false;
 
     $('#datosgenerales-tab').tab('show');
 
@@ -802,9 +794,6 @@ function obtenerDocumentosOficiales(data) {
     });
 }
 
-
-
-
 $('#VALIDAR_INFORMACION_PROVEEDOR').on('click', function() {
     if (!rfcSeleccionada) {
         Swal.fire({
@@ -890,7 +879,6 @@ document.getElementById('step2').addEventListener('click', function() {
 
 });
 
-
 const Modalcuenta = document.getElementById('miModal_cuentas');
 
 Modalcuenta.addEventListener('hidden.bs.modal', event => {
@@ -903,7 +891,6 @@ Modalcuenta.addEventListener('hidden.bs.modal', event => {
     document.getElementById('CARATULA_BANCARIA').value = '';
     document.getElementById('iconEliminarArchivo').classList.add('d-none');
 });
-
 
 $("#guardarCuentas").click(function (e) {
     e.preventDefault();
@@ -1000,10 +987,6 @@ $("#guardarCuentas").click(function (e) {
     
 });
 
-
-
-
-
 function cargarTablacuentas() {
     if ($.fn.DataTable.isDataTable('#Tablacuentas')) {
         Tablacuentas.clear().destroy();
@@ -1068,7 +1051,6 @@ function cargarTablacuentas() {
     });
 }
 
-
 $('#Tablacuentas').on('click', '.ver-archivo-caratula', function () {
     var tr = $(this).closest('tr');
     var row = Tablacuentas.row(tr).data();
@@ -1087,13 +1069,6 @@ $('#Tablacuentas').on('click', '.ver-archivo-caratula', function () {
     window.open(url, '_blank');
 });
 
-
-
-
-
-
-
-
 $('#Tablacuentas    ').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacuentas.row(tr);
@@ -1108,8 +1083,6 @@ $('#Tablacuentas    ').on('change', 'td>label>input.ELIMINAR', function () {
 
     eliminarDatoTabla(data, [Tablacuentas], 'CuentasDelete');
 });
-
-
 
 $('#Tablacuentas').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -1127,7 +1100,6 @@ $('#Tablacuentas').on('click', 'td>button.EDITAR', function () {
         $('#CLABE_INTERBANCARIA').show();
     }
 });
-
 
 $(document).ready(function() {
     $('#Tablacuentas').on('click', 'td>button.VISUALIZAR', function () {
@@ -1193,7 +1165,6 @@ document.getElementById('step3').addEventListener('click', function() {
   
 });
 
-
 $(document).ready(function () {
     var selectizeInstance = $('#FUNCIONES_CUENTA').selectize({
         placeholder: 'Seleccione una opción',
@@ -1217,7 +1188,6 @@ $(document).ready(function () {
     });
 });
 
-
 const Modalcontacto = document.getElementById('miModal_contactos')
 Modalcontacto.addEventListener('hidden.bs.modal', event => {
     
@@ -1229,7 +1199,6 @@ Modalcontacto.addEventListener('hidden.bs.modal', event => {
     selectize.setValue("");
 
 })
-
 
 $("#guardarCONTACTOS").click(function (e) {
     e.preventDefault();
@@ -1326,9 +1295,6 @@ $("#guardarCONTACTOS").click(function (e) {
     
 });
 
-
-
-
 function cargarTablacontactos() {
     if ($.fn.DataTable.isDataTable('#Tablacontactos')) {
         Tablacontactos.clear().destroy();
@@ -1396,11 +1362,6 @@ function cargarTablacontactos() {
     });
 }
 
-
-
-
-
-
 $('#Tablacontactos').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacontactos.row(tr);
@@ -1429,10 +1390,6 @@ $('#Tablacontactos').on('click', 'td>button.EDITAR', function () {
 
 
 });
-
-
-
-
 
 $(document).ready(function() {
     $('#Tablacontactos').on('click', 'td>button.VISUALIZAR', function () {
@@ -1471,11 +1428,6 @@ $(document).ready(function() {
         resetFormulario('#miModal_contactos');
     });
 });
-
-
-
-
-
 
 $('#Tablacontactos').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
@@ -1517,8 +1469,6 @@ document.getElementById('step4').addEventListener('click', function() {
 
 });
 
-
-
 const Modalcertificacion = document.getElementById('miModal_certificaciones');
 
 Modalcertificacion.addEventListener('hidden.bs.modal', event => {
@@ -1532,11 +1482,7 @@ Modalcertificacion.addEventListener('hidden.bs.modal', event => {
     $('#DIV_AUTORIZACION').hide();
     $('#DIV_MEMBRESIA').hide();
 
- 
 });
-
-
-
 
 document.getElementById('TIPO_DOCUMENTO').addEventListener('change', function () {
     let tipo = this.value;
@@ -1574,8 +1520,6 @@ function resetSection(divId) {
         }
     });
 }
-
-
 
 $("#guardarCertificaciones").click(function (e) {
     e.preventDefault();
@@ -1733,10 +1677,6 @@ function cargarTablacertificaciones() {
     });
 }
 
-
-
-
-
 $('#Tablacertificaciones').on('click', '.ver-archivo-certificación', function () {
     var tr = $(this).closest('tr');
     var row = Tablacertificaciones.row(tr).data();
@@ -1754,9 +1694,6 @@ $('#Tablacertificaciones').on('click', '.ver-archivo-certificación', function (
     var url = '/mostrarcertificacion/' + id;
     window.open(url, '_blank');
 });
-
-
-
 
 $('#Tablacertificaciones').on('click', '.ver-archivo-acreditacion', function () {
     var tr = $(this).closest('tr');
@@ -1776,11 +1713,6 @@ $('#Tablacertificaciones').on('click', '.ver-archivo-acreditacion', function () 
     window.open(url, '_blank');
 });
 
-
-
-
-
-
 $('#Tablacertificaciones').on('click', '.ver-archivo-autorizacion', function () {
     var tr = $(this).closest('tr');
     var row = Tablacertificaciones.row(tr).data();
@@ -1798,8 +1730,6 @@ $('#Tablacertificaciones').on('click', '.ver-archivo-autorizacion', function () 
     var url = '/mostrarautorizacion/' + id;
     window.open(url, '_blank');
 });
-
-
 
 $('#Tablacertificaciones').on('click', '.ver-archivo-membresia', function () {
     var tr = $(this).closest('tr');
@@ -1819,17 +1749,6 @@ $('#Tablacertificaciones').on('click', '.ver-archivo-membresia', function () {
     window.open(url, '_blank');
 });
 
-
-
-
-
-
-
-
-
-
-
-
 $('#Tablacertificaciones').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacertificaciones.row(tr);
@@ -1844,7 +1763,6 @@ $('#Tablacertificaciones').on('change', 'td>label>input.ELIMINAR', function () {
 
     eliminarDatoTabla(data, [Tablacertificaciones], 'CertificacionDelete');
 });
-
 
 $('#Tablacertificaciones').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
@@ -1884,8 +1802,6 @@ $('#Tablacertificaciones').on('click', 'td>button.EDITAR', function () {
 
   
 });
-
-
 
 $(document).ready(function() {
     $('#Tablacertificaciones').on('click', 'td>button.VISUALIZAR', function () {
@@ -1955,8 +1871,6 @@ document.getElementById('step5').addEventListener('click', function() {
         tablareferenciasCargada = true;
     }
 });
-
-
 
 const Modalreferencia = document.getElementById('miModal_referencia')
 Modalreferencia.addEventListener('hidden.bs.modal', event => {
@@ -2063,8 +1977,6 @@ $("#guardarREFERENCIAS").click(function (e) {
     
 });
 
-
-
 function cargarTablareferencias() {
     if ($.fn.DataTable.isDataTable('#Tablareferencias')) {
         Tablareferencias.clear().destroy();
@@ -2129,11 +2041,6 @@ function cargarTablareferencias() {
     });
 }
 
-
-
-
-
-
 $('#Tablareferencias').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablareferencias.row(tr);
@@ -2146,10 +2053,6 @@ $('#Tablareferencias').on('click', 'td>button.EDITAR', function () {
 
 
 });
-
-
-
-
 
 $(document).ready(function() {
     $('#Tablareferencias').on('click', 'td>button.VISUALIZAR', function () {
@@ -2167,11 +2070,6 @@ $(document).ready(function() {
         resetFormulario('#miModal_referencia');
     });
 });
-
-
-
-
-
 
 $('#Tablareferencias').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
@@ -2214,9 +2112,6 @@ document.getElementById('step6').addEventListener('click', function() {
   
 });
 
-
-
-
 $("#NUEVO_DOCUMENTO").click(function (e) {
     e.preventDefault();
 
@@ -2236,8 +2131,6 @@ $("#NUEVO_DOCUMENTO").click(function (e) {
 
 });
 
-
-
 const Modaldocumentos = document.getElementById('miModal_documentos');
 
 Modaldocumentos.addEventListener('hidden.bs.modal', event => {
@@ -2253,8 +2146,6 @@ Modaldocumentos.addEventListener('hidden.bs.modal', event => {
     $('#miModal_documentos .modal-title').html('Nuevo documento');
  
 });
-
-
 
 $("#guardarDOCUMENTOS").click(function (e) {
     e.preventDefault();
@@ -2348,9 +2239,7 @@ $("#guardarDOCUMENTOS").click(function (e) {
 }
     
 });
-
-
-    
+  
 function cargarTablasoportes() {
     if ($.fn.DataTable.isDataTable('#Tabladocumentosoporteproveedores')) {
         Tabladocumentosoporteproveedores.clear().destroy();
@@ -2413,10 +2302,6 @@ function cargarTablasoportes() {
     });
 }
 
-
-
-
-
 $('#Tabladocumentosoporteproveedores').on('click', '.ver-archivo-documentosoporte', function () {
     var tr = $(this).closest('tr');
     var row = Tabladocumentosoporteproveedores.row(tr).data();
@@ -2435,7 +2320,6 @@ $('#Tabladocumentosoporteproveedores').on('click', '.ver-archivo-documentosoport
     window.open(url, '_blank');
 });
 
-
 $('#Tabladocumentosoporteproveedores').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tabladocumentosoporteproveedores.row(tr);
@@ -2450,7 +2334,6 @@ $('#Tabladocumentosoporteproveedores').on('change', 'td>label>input.ELIMINAR', f
 
     eliminarDatoTabla(data, [Tabladocumentosoporteproveedores], 'DocumentosDelete');
 });
-
 
 $('#Tabladocumentosoporteproveedores').on('click', 'td>button.EDITAR', function () {
     const tr = $(this).closest('tr');
@@ -2472,10 +2355,6 @@ $('#Tabladocumentosoporteproveedores').on('click', 'td>button.EDITAR', function 
         </option>
     `);
 });
-
-
-
-
 
 $(document).ready(function() {
     $('#Tabladocumentosoporteproveedores').on('click', 'td>button.VISUALIZAR', function () {
@@ -2507,16 +2386,6 @@ $(document).ready(function() {
     });
 });
 
-
-
-
-
-
-
-
-
-
-
 const inputArchivo = document.getElementById('DOCUMENTO_SOPORTE');
 const iconEliminar = document.getElementById('iconEliminarArchivo');
 
@@ -2532,8 +2401,6 @@ iconEliminar.addEventListener('click', function () {
     inputArchivo.value = '';
     iconEliminar.classList.add('d-none');
 });
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     const selectTipoDocumento = document.getElementById("TIPO_DOCUMENTO_PROVEEDOR");
@@ -2562,8 +2429,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
-
 
 function cargarSelectDocumentosPorProveedor(rfcSeleccionada) {
     if (!rfcSeleccionada) return;
@@ -2788,12 +2653,6 @@ document.getElementById('step8').addEventListener('click', function() {
   
 });
 
-
-
-
-
-
-
 const Modalasignacion = document.getElementById('modalAsignacionProveedor')
 Modalasignacion.addEventListener('hidden.bs.modal', event => {
 
@@ -2832,8 +2691,6 @@ $('#NUEVA_ASIGNACION').on('click', function () {
     $('#ASIGANCION_EPP').hide();
 
 });
-
-
 
 function cargarTablaAsignacionesModal() {
 
@@ -2925,7 +2782,6 @@ function setAsignacionesSeleccionadas() {
 
     $('#ASIGNACIONES_ID').val(JSON.stringify(asignaciones));
 }
-
 
 $("#guardarASIGNACIONES").click(function (e) {
     e.preventDefault();
@@ -3019,7 +2875,6 @@ $("#guardarASIGNACIONES").click(function (e) {
 }
     
 });
-
 
 function cargarTablasingnaciongeneralproveedor() {
     if ($.fn.DataTable.isDataTable('#Tablasignacionproveedorgeneral')) {
@@ -3147,7 +3002,6 @@ function cargarTablasingnaciongeneralproveedor() {
     });
 }
 
-
 $(document).on('click', '.descargar-asignacion', function () {
     const id = $(this).data('id');
 
@@ -3166,7 +3020,6 @@ $(document).on('click', '.descargar-epp', function () {
     );
 });
 
-
 document.addEventListener('DOMContentLoaded', function () {
 
     const selectTipo = document.getElementById('TIPO_ASIGNACION');
@@ -3183,8 +3036,6 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
-
-
 
 const equiposPorCategoria = {
     "Cabeza": [
@@ -3230,7 +3081,6 @@ const equiposPorCategoria = {
         "Overol"
     ]
 };
-
 
 window.listaEPP = [];
 
@@ -3278,7 +3128,6 @@ $(document).ready(function() {
 
 });
 
-
 function actualizarTabla() {
 
     const tbody = $('#tablaEPPBody');
@@ -3321,8 +3170,6 @@ function limpiarCampos() {
     $('#cantidadSolicitada').val('');
     $('#cantidadEntregada').val('');
 }
-
-
 
 $('#Tablasignacionproveedorgeneral').on('click', 'td>button.EDITAR', function () {
 
@@ -3379,8 +3226,6 @@ $('#Tablasignacionproveedorgeneral').on('click', 'td>button.EDITAR', function ()
     });
 });
 
-
-
 function cargarTablaAsignacionesModalEditar() {
 
     $('#Tablasignacionproveedor').DataTable({
@@ -3432,7 +3277,6 @@ function cargarTablaAsignacionesModalEditar() {
     });
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
     var archivoasignacion = document.getElementById('DOCUMENTO_ASIGNACION');
     var quitarasignacion = document.getElementById('quitar_asignacion');
@@ -3458,7 +3302,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 $('#Tablasignacionproveedorgeneral').on('click', '.ver-archivo-documentoasignacion', function () {
     var tr = $(this).closest('tr');
     var row = Tablasignacionproveedorgeneral.row(tr);
@@ -3475,6 +3318,337 @@ $('#Tablasignacionproveedorgeneral').on('click', '.ver-archivo-documentoasignaci
     abrirModal(url, nombreDocumento);
 });
 
+
+
+
+// <!-- ============================================================================================================================ -->
+// <!--                                                          STEP 9                                                              -->
+// <!-- ============================================================================================================================ -->
+
+
+document.getElementById('step9').addEventListener('click', function() {
+    document.querySelectorAll('[id$="-content"]').forEach(function(content) {
+        content.style.display = 'none';
+    });
+
+    document.getElementById('step9-content').style.display = 'block';
+
+    cargarTablacontratosproveedores();
+
+});
+
+$("#guardarCONTRATOPROVEEDOR").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario3($('#formularioCONTRATO'))
+
+    if (formularioValido) {
+
+    if (ID_CONTRATO_PROVEEDORES == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarCONTRATOPROVEEDOR')
+            await ajaxAwaitFormData({ api: 8, RFC_PROVEEDOR:rfcSeleccionada, ID_CONTRATO_PROVEEDORES: ID_CONTRATO_PROVEEDORES }, 'AltaSave1', 'formularioCONTRATO', 'guardarCONTRATOPROVEEDOR', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                ID_CONTRATO_PROVEEDORES = data.cuenta.ID_CONTRATO_PROVEEDORES
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#miModal_contrato').modal('hide')
+                    document.getElementById('formularioCONTRATO').reset();
+                    
+                    if ($.fn.DataTable.isDataTable('#Tablacontratosproveedores')) {
+                        Tablacontratosproveedores.ajax.reload(null, false); 
+                    }
+            })
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('guardarCONTRATOPROVEEDOR')
+            await ajaxAwaitFormData({ api: 8, RFC_PROVEEDOR: rfcSeleccionada, ID_CONTRATO_PROVEEDORES: ID_CONTRATO_PROVEEDORES }, 'AltaSave1', 'formularioCONTRATO', 'guardarCONTRATOPROVEEDOR', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    
+                    ID_CONTRATO_PROVEEDORES = data.cuenta.ID_CONTRATO_PROVEEDORES
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#miModal_contrato').modal('hide')
+                    document.getElementById('formularioCONTRATO').reset();
+                    if ($.fn.DataTable.isDataTable('#Tablacontratosproveedores')) {
+                        Tablacontratosproveedores.ajax.reload(null, false); 
+                    }
+
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+const Modalcontrato = document.getElementById('miModal_contrato');
+
+Modalcontrato.addEventListener('hidden.bs.modal', event => {
+
+    ID_CONTRATO_PROVEEDORES = 0;
+    document.getElementById('formularioCONTRATO').reset();
+
+    document.getElementById('DOCUMENTO_CONTRATO_PROVEEDOR').value = '';
+    document.getElementById('DOCUEMNTO_ERROR_CONTRATO').classList.add('d-none');
+    document.getElementById('quitar_contrato').classList.add('d-none');
+
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    var archivoasignacion = document.getElementById('DOCUMENTO_CONTRATO_PROVEEDOR');
+    var quitarasignacion = document.getElementById('quitar_contrato');
+    var errorasignacion = document.getElementById('DOCUEMNTO_ERROR_CONTRATO');
+
+    if (archivoasignacion) {
+        archivoasignacion.addEventListener('change', function() {
+            var archivoasignacion = this.files[0];
+            if (archivoasignacion && archivoasignacion.type === 'application/pdf') {
+                if (errorasignacion) errorasignacion.style.display = 'none';
+                if (quitarasignacion) quitarasignacion.style.display = 'block';
+            } else {
+                if (errorasignacion) errorasignacion.style.display = 'block';
+                this.value = '';
+                if (quitarasignacion) quitarasignacion.style.display = 'none';
+            }
+        });
+        quitarasignacion.addEventListener('click', function() {
+            archivoasignacion.value = ''; 
+            quitarasignacion.style.display = 'none'; 
+            if (errorasignacion) errorasignacion.style.display = 'none'; 
+        });
+    }
+});
+
+function cargarTablacontratosproveedores() {
+    if ($.fn.DataTable.isDataTable('#Tablacontratosproveedores')) {
+        Tablacontratosproveedores.clear().destroy();
+    }
+
+    Tablacontratosproveedores = $("#Tablacontratosproveedores").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { rfc: rfcSeleccionada }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablacontratosproveedores',  
+            beforeSend: function () {
+                $('#loadingIcon10').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon10').css('display', 'none');
+                Tablacontratosproveedores.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon2').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+            { 
+                data: null,
+                render: function(data, type, row, meta) {
+                    return meta.row + 1; 
+                }
+            },
+            { data: 'NUMERO_CONTRATO_PROVEEDOR' },
+            { 
+                data: null,
+               render: function(data, type, row) {
+
+                    function parseFechaLocal(fechaStr) {
+                        let partes = fechaStr.split('-');
+                        return new Date(partes[0], partes[1] - 1, partes[2]);
+                    }
+
+                    let fechaInicio = parseFechaLocal(row.FECHAI_CONTRATO_PROVEEDOR);
+                    let fechaFin = parseFechaLocal(row.FECHAF_CONTRATO_PROVEEDOR);
+                    let hoy = new Date();
+
+                    fechaInicio.setHours(0,0,0,0);
+                    fechaFin.setHours(0,0,0,0);
+                    hoy.setHours(0,0,0,0);
+
+                    let totalDias = (fechaFin - fechaInicio) / (1000 * 60 * 60 * 24);
+                    let diasRestantes = Math.floor((fechaFin - hoy) / (1000 * 60 * 60 * 24));
+
+                    if (diasRestantes < 0) diasRestantes = 0;
+
+                    let porcentaje = 100;
+
+                    if (totalDias > 0) {
+                        let diasConsumidos = totalDias - diasRestantes;
+                        porcentaje = (diasConsumidos / totalDias) * 100;
+                    }
+
+                    let estadoHTML = "";
+                    let color = "";
+
+                    if (hoy > fechaFin) {
+                        estadoHTML = "<span style='color:red;'>(Terminado)</span>";
+                    } 
+                    else if (diasRestantes === 0) {
+                        estadoHTML = "<span style='color:red;'>(Hoy vence)</span>";
+                    }
+                    else {
+
+                        if (porcentaje <= 40) {
+                            color = "green";
+                        } else if (porcentaje <= 70) {
+                            color = "orange";
+                        } else {
+                            color = "red";
+                        }
+
+                        estadoHTML = `<span style='color:${color};'>(${diasRestantes} días restantes)</span>`;
+                    }
+
+                    return `
+                        <div>
+                            ${row.FECHAI_CONTRATO_PROVEEDOR} <br> ${row.FECHAF_CONTRATO_PROVEEDOR}
+                            <br>
+                            ${estadoHTML}
+                        </div>
+                    `;
+                }
+            },
+            { data: 'BTN_EDITAR' },
+            { data: 'BTN_VISUALIZAR' },
+            { data: 'BTN_DOCUMENTO' },
+            { data: 'BTN_ELIMINAR' }
+        ],
+            columnDefs: [
+            { targets: 0, title: '#', className: 'all text-center' },
+            { targets: 1, title: 'No de contrato', className: 'all text-center' },
+            { targets: 2, title: 'Vigencia del contrato', className: 'all text-center' },
+            { targets: 3, title: 'Editar', className: 'all text-center' },
+            { targets: 4, title: 'Visualizar', className: 'all text-center' },
+            { targets: 5, title: 'Contrato', className: 'all text-center' },
+            { targets: 6, title: 'Activo', className: 'all text-center' }
+        ]
+    });
+}
+
+
+$('#Tablacontratosproveedores').on('click', '.ver-archivo-contrato', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacontratosproveedores.row(tr).data();
+    var id = $(this).data('id');
+
+    if (!id || !row.DOCUMENTO_CONTRATO_PROVEEDOR || row.DOCUMENTO_CONTRATO_PROVEEDOR.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
+        return;
+    }
+
+    var url = '/mostrarcontratoproveedor/' + id;
+    window.open(url, '_blank');
+});
+
+$('#Tablacontratosproveedores').on('change', 'td>label>input.ELIMINAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacontratosproveedores.row(tr);
+
+    var estado = $(this).is(':checked') ? 1 : 0;
+
+    data = {
+        api: 8,
+        ELIMINAR: estado == 0 ? 1 : 0, 
+        ID_CONTRATO_PROVEEDORES: row.data().ID_CONTRATO_PROVEEDORES
+    };
+
+    eliminarDatoTabla(data, [Tablacontratosproveedores], 'CuentasDelete');
+});
+
+$('#Tablacontratosproveedores').on('click', 'td>button.EDITAR', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablacontratosproveedores.row(tr);
+
+
+    ID_CONTRATO_PROVEEDORES = row.data().ID_CONTRATO_PROVEEDORES;
+
+    editarDatoTabla(row.data(), 'formularioCONTRATO', 'miModal_contrato', 1);
+    
+});
+
+$(document).ready(function() {
+    $('#Tablacontratosproveedores').on('click', 'td>button.VISUALIZAR', function () {
+        var tr = $(this).closest('tr');
+        var row = Tablacontratosproveedores.row(tr);
+        
+        hacerSoloLectura2(row.data(), '#miModal_contrato');
+
+        ID_CONTRATO_PROVEEDORES = row.data().ID_CONTRATO_PROVEEDORES;
+        editarDatoTabla(row.data(), 'formularioCONTRATO', 'miModal_contrato', 1);
+
+    });
+
+
+    $('#miModal_contrato').on('hidden.bs.modal', function () {
+        resetFormulario('#miModal_contrato');
+    });
+});
 
 
 

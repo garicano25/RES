@@ -339,6 +339,12 @@
                                         </div>
                                         <span>Asignación</span>
                                     </div>
+                                    <div class="multisteps-form__progress-btn" id="step9">
+                                        <div class="step-circle">
+                                            <i class="bi bi-file-earmark-text-fill"></i>
+                                        </div>
+                                        <span>Contratos</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -880,13 +886,6 @@
                     </div>
 
 
-
-
-
-
-
-
-
                     <!-- Step 8  ASIGNACION -->
 
                     <div id="step8-content" style="display: none;">
@@ -904,13 +903,21 @@
                     </div>
 
 
+                    <!-- Step 9  Contratos -->
+                    <div id="step9-content" style="display: none;">
+                        <ol class="breadcrumb mt-5">
+                            <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Contratos</h3>
 
-
-
-
-
-
-
+                            <button type="button" class="btn btn-light waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#miModal_contrato" style="margin-left: auto;">
+                                Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
+                            </button>
+                        </ol>
+                        <div class="card-body position-relative">
+                            <i id="loadingIcon10" class="bi bi-arrow-repeat position-absolute spin" style="top: 10px; left: 10px; font-size: 24px; display: none;"></i>
+                            <table id="Tablacontratosproveedores" class="table table-hover bg-white table-bordered text-center w-100 TableCustom">
+                            </table>
+                        </div>
+                    </div>
 
 
 
@@ -1439,7 +1446,6 @@
 <!-- MODAL ASIGNACIONES PROVEEDOR  -->
 <!-- ============================================================== -->
 
-
 <div class="modal fade" id="modalAsignacionProveedor" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -1608,6 +1614,66 @@
     </div>
 </div>
 
+
+<!-- ============================================================== -->
+<!-- MODAL CONTRATO PROVEEDOR  -->
+<!-- ============================================================== -->
+
+<div class="modal fade" id="miModal_contrato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form method="post" enctype="multipart/form-data" id="formularioCONTRATO" style="background-color: #ffffff;">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Contrato</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    {!! csrf_field() !!}
+
+
+                    <div class="mb-3">
+                        <label>Número de contrato</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="NUMERO_CONTRATO_PROVEEDOR" name="NUMERO_CONTRATO_PROVEEDOR" required>
+                        </div>
+                    </div>
+                    <div class="row  mb-3" id="CONTRATO" style="display: block">
+                        <div class="row  mb-3">
+                            <div class="col-6">
+                                <label>Fecha Inicio *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAI_CONTRATO_PROVEEDOR" name="FECHAI_CONTRATO_PROVEEDOR" required>
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>Fecha Fin *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHAF_CONTRATO_PROVEEDOR" name="FECHAF_CONTRATO_PROVEEDOR" required>
+                                    <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label>Subir documento</label>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="DOCUMENTO_CONTRATO_PROVEEDOR" name="DOCUMENTO_CONTRATO_PROVEEDOR" accept=".pdf" style="width: auto; flex: 1;">
+                            <button type="button" class="btn btn-light btn-sm ms-2" id="quitar_contrato" style="display:none;">Quitar archivo</button>
+                        </div>
+                    </div>
+                    <div id="DOCUEMNTO_ERROR_CONTRATO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-success" id="guardarCONTRATOPROVEEDOR">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 

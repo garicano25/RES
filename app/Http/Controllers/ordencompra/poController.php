@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Artisan;
 use Exception;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 
@@ -13,7 +14,9 @@ use Carbon\Carbon;
 
 use DB;
 
-use App\Models\ordencompra\poModel; 
+use App\Models\ordencompra\poModel;
+use App\Models\ordencompra\PoCorreoEnviado;
+
 use App\Models\HojaTrabajo;
 
 use App\Models\proveedor\altaproveedorModel;
@@ -117,15 +120,37 @@ class poController extends Controller
                     $value->ESTADO_BADGE = '<span class="badge bg-secondary">Sin estatus</span>';
                 }
 
+
+                if ($value->ESTADO_APROBACION == 'Aprobada') {
+
+                    $value->DESCARGA_PO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button " data-id="' . $value->ID_FORMULARIO_PO . '" title="Descargar"><i class="bi bi-filetype-pdf"></i></button>';
+
+                    $value->CORREO_AVISO = '<button type="button" class="btn btn-info btn-custom rounded-pill ENVIAR_CORREO" data-id="' . $value->ID_FORMULARIO_PO . '"><i class="bi bi-envelope-paper-fill"></i></button>';
+                } elseif ($value->ESTADO_APROBACION == 'Rechazada') {
+
+                    $value->DESCARGA_PO = '<button class="btn btn-danger rounded-pill" disabled><i class="bi bi-filetype-pdf"></i></button>';
+                    $value->CORREO_AVISO = '<button class="btn btn-info rounded-pill" disabled><i class="bi bi-envelope-paper-fill"></i></button>';
+                } else {
+
+                    $value->DESCARGA_PO = '<button class="btn btn-danger rounded-pill" disabled><i class="bi bi-filetype-pdf"></button>';
+                    $value->CORREO_AVISO = '<button class="btn btn-info rounded-pill" disabled><i class="bi bi-envelope-paper-fill"></i></button>';
+                }
+
+
+                
                 
                 if ($value->CANCELACION_PO == 1) {
                     $value->BTN_EDITAR = '<button class="btn btn-secondary rounded-pill" disabled><i class="bi bi-ban"></i></button>';
+                    $value->DESCARGA_PO = '<button class="btn btn-danger rounded-pill" disabled><i class="bi bi-filetype-pdf"></i></button>';
+                    $value->CORREO_AVISO = '<button class="btn btn-info rounded-pill" disabled><i class="bi bi-envelope-paper-fill"></i></button>';
                 } else {
                     $value->BTN_EDITAR = '<button class="btn btn-warning rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 }
 
                 $value->BTN_VISUALIZAR = '<button class="btn btn-primary rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->DESCARGA_PO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button " data-id="' . $value->ID_FORMULARIO_PO . '" title="Descargar"><i class="bi bi-filetype-pdf"></i></button>';
+
+
+              
 
 
                 $basePO = preg_replace('/-Rev\d+$/', '', $value->NO_PO);

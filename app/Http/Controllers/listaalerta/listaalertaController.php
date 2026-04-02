@@ -82,4 +82,6 @@ class listaalertaController extends Controller
             ]);
         }
     }
+
+    
 }

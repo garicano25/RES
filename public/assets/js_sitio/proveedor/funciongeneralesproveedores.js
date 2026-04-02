@@ -32,6 +32,11 @@ $(document).ready(function () {
                         $(this).replaceWith(btnDeshabilitado);
                     });
                 }, 1000); 
+
+                
+                 $('#POYGR, #FACTURA, #REP').show();
+
+
             }
         },
         error: function () {

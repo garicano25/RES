@@ -20,8 +20,11 @@ use App\Models\proveedor\altacuentaModel;
 use App\Models\proveedor\altaproveedorModel;
 use App\Models\proveedor\altareferenciasModel;
 use App\Models\proveedor\altadocumentosModel;
-
 use App\Models\proveedor\asignacionproveedorModel;
+use App\Models\proveedor\contratoproveedorModel;
+
+
+
 
 use DB;
 
@@ -846,8 +849,6 @@ public function Tablareferencias(Request $request)
 
     // ASIGNACIONES PROVEEDOR
 
-
-
     public function Tablasignacionproveedor(Request $request)
     {
         try {
@@ -923,8 +924,6 @@ public function Tablareferencias(Request $request)
             ]);
         }
     }
-
-
 
     public function Tablasignacionproveedorgeneral(Request $request)
     {
@@ -1095,7 +1094,6 @@ public function Tablareferencias(Request $request)
         }
     }
 
-
     public function mostrarasignacionproveedor($id)
     {
         $archivo = asignacionproveedorModel::findOrFail($id)->DOCUMENTO_ASIGNACION;
@@ -1103,6 +1101,49 @@ public function Tablareferencias(Request $request)
     }
 
 
+    // TABLA CONTRATO PROVEEDOR
+
+
+    public function Tablacontratosproveedores(Request $request)
+    {
+        try {
+            $rfc = $request->get('rfc');
+
+            $tabla = contratoproveedorModel::where('RFC_PROVEEDOR', $rfc)->get();
+
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CONTRATO_PROVEEDORES . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contrato" data-id="' . $value->ID_CONTRATO_PROVEEDORES . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_CONTRATO_PROVEEDORES . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contrato" data-id="' . $value->ID_CONTRATO_PROVEEDORES . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+
+    public function mostrarcontratoproveedor($id)
+    {
+        $archivo = contratoproveedorModel::findOrFail($id)->DOCUMENTO_CONTRATO_PROVEEDOR;
+        return Storage::response($archivo);
+    }
 
 
     public function store(Request $request)
@@ -1528,7 +1569,6 @@ public function Tablareferencias(Request $request)
 
                                 $decoded = json_decode($value, true);
 
-                                // Si sigue siendo string, estaba doble encodeado
                                 if (is_string($decoded)) {
                                     $decoded = json_decode($decoded, true);
                                 }
@@ -1542,19 +1582,14 @@ public function Tablareferencias(Request $request)
                         }
 
 
-                        // =========================
-                        // NORMALIZAR ASIGNACIONES_ID
-                        // =========================
+                   
                         $asignacionesArray = normalizarAsignaciones(
                             $request->ASIGNACIONES_ID ?? null
                         );
 
-                        // SIEMPRE guardar como JSON STRING
                         $asignacionesJson = json_encode($asignacionesArray);
 
-                        // =========================
-                        // NUEVO
-                        // =========================
+                       
                         if ((int)$request->ID_ASINGACIONES_PROVEEDORES === 0) {
 
                             DB::statement('ALTER TABLE asignaciones_proveedores AUTO_INCREMENT = 1');
@@ -1579,9 +1614,7 @@ public function Tablareferencias(Request $request)
                                 ]);
                             }
                         }
-                        // =========================
-                        // EDITAR
-                        // =========================
+                        
                         else {
 
                             $soportes = asignacionproveedorModel::findOrFail(
@@ -1628,6 +1661,63 @@ public function Tablareferencias(Request $request)
 
                     break;
 
+
+                case 8:
+                    $requestData = $request->all();
+                    $rfc = $requestData['RFC_PROVEEDOR'] ?? null;
+
+                    if ($request->ID_CONTRATO_PROVEEDORES == 0) {
+                        DB::statement('ALTER TABLE contratos_proveedores AUTO_INCREMENT=1;');
+
+                        $cuentas = contratoproveedorModel::create($requestData);
+
+                        if ($request->hasFile('DOCUMENTO_CONTRATO_PROVEEDOR')) {
+                            $file = $request->file('DOCUMENTO_CONTRATO_PROVEEDOR');
+                            $folderPath = "proveedores/{$rfc}/Contrato proveedor/{$cuentas->ID_CONTRATO_PROVEEDORES}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+
+                            $cuentas->DOCUMENTO_CONTRATO_PROVEEDOR = $filePath;
+                            $cuentas->save();
+                        }
+                    } else {
+                        $cuentas = contratoproveedorModel::find($request->ID_CONTRATO_PROVEEDORES);
+
+                        if (isset($request->ELIMINAR)) {
+                            $cuentas->ACTIVO = $request->ELIMINAR == 1 ? 0 : 1;
+                            $cuentas->save();
+
+                            $response['code'] = 1;
+                            $response['cuenta'] = $request->ELIMINAR == 1 ? 'Desactivada' : 'Activada';
+                            return response()->json($response);
+                        }
+
+                        if ($request->hasFile('DOCUMENTO_CONTRATO_PROVEEDOR')) {
+                            if ($cuentas->DOCUMENTO_CONTRATO_PROVEEDOR && Storage::exists($cuentas->DOCUMENTO_CONTRATO_PROVEEDOR)) {
+                                Storage::delete($cuentas->DOCUMENTO_CONTRATO_PROVEEDOR);
+                            }
+
+                            $file = $request->file('DOCUMENTO_CONTRATO_PROVEEDOR');
+                            $folderPath = "proveedores/{$rfc}/Contrato proveedor/{$cuentas->ID_CONTRATO_PROVEEDORES}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+
+                            $requestData['DOCUMENTO_CONTRATO_PROVEEDOR'] = $filePath;
+                        }
+
+                        $cuentas->update(collect($requestData)->except('RFC_PROVEEDOR')->toArray());
+
+                        $response['code'] = 1;
+                        $response['cuenta'] = 'Actualizada';
+                        return response()->json($response);
+                    }
+
+                    $response['code']  = 1;
+                    $response['cuenta']  = $cuentas;
+                    return response()->json($response);
+                    break;
+
+                    
                 default:
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';

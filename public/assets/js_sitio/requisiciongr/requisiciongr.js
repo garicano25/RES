@@ -1330,3 +1330,73 @@ $('#DescargarGR').on('click', function () {
 
 
 
+$('#EnviarGR').on('click', function () {
+
+    let idsGR = [];
+
+    if ($(".form-gr").length > 0) {
+
+        let activeTab = $(".tab-pane.show.active");
+
+        if (activeTab.length > 0) {
+            const id = activeTab.find('input[name="ID_GR[]"]').val();
+            if (id && id !== "0") idsGR.push(id);
+        } else {
+            $(".form-gr").each(function () {
+                const id = $(this).find('input[name="ID_GR[]"]').val();
+                if (id && id !== "0") idsGR.push(id);
+            });
+        }
+
+    } else {
+        const id = $('#ID_GR').val();
+        if (id && id !== "0") idsGR.push(id);
+    }
+
+    if (idsGR.length === 0) {
+        Swal.fire('Atención', 'No hay GR para enviar.', 'warning');
+        return;
+    }
+
+    Swal.fire({
+        title: 'Enviar correo GR',
+        text: 'Se notificará al proveedor',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, enviar'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            Swal.fire({
+                title: 'Enviando...',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            $.ajax({
+                url: '/enviarCorreoGR',
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    ids: idsGR
+                },
+                success: function (resp) {
+
+                    if (resp.success) {
+                        Swal.fire('Correcto', resp.message, 'success');
+                    } else {
+                        Swal.fire('Error', resp.message, 'error');
+                    }
+
+                },
+                error: function () {
+                    Swal.fire('Error', 'Fallo al enviar correos', 'error');
+                }
+            });
+
+        }
+
+    });
+
+});

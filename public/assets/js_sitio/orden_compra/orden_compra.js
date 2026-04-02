@@ -64,6 +64,7 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
         },
         { data: 'ESTADO_BADGE' }, 
         { data: 'DESCARGA_PO' },
+        { data: 'CORREO_AVISO' },
         { data: 'BTN_EDITAR' },
         { data: 'BTN_VISUALIZAR' },
 
@@ -77,13 +78,91 @@ var Tablaordencompra = $("#Tablaordencompra").DataTable({
         { targets: 5, title: 'Motivo de la revisión', className: 'text-center' },
         { targets: 6, title: 'Estado', className: 'all text-center' }, 
         { targets: 7, title: 'Descargar PO', className: 'all text-center' },
-        { targets: 8, title: 'Editar', className: 'all text-center' },
-        { targets: 9, title: 'Visualizar', className: 'all text-center' },
+        { targets: 8, title: 'Enviar PO', className: 'all text-center' },
+        { targets: 9, title: 'Editar', className: 'all text-center' },
+        { targets: 10, title: 'Visualizar', className: 'all text-center' },
 
     ],
      infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;
     },
+});
+
+
+
+
+$(document).on('click', '.ENVIAR_CORREO', function () {
+
+    let id = $(this).data('id');
+
+    Swal.fire({
+        title: '¿Enviar correo?',
+        text: 'Se notificará al proveedor sobre la orden de compra',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, enviar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            Swal.fire({
+                title: 'Enviando correo...',
+                text: 'Por favor espera',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            $.ajax({
+                url: '/enviarCorreoPO',
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    id: id
+                },
+                success: function (resp) {
+
+                    if (resp.success) {
+
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Correo enviado',
+                            text: resp.message
+                        }).then(() => {
+
+                        Tablaordencompra.ajax.reload()
+
+                        });
+
+                    } else {
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Atención',
+                            text: resp.message
+                        });
+
+                    }
+
+                },
+                error: function () {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'Ocurrió un problema al enviar el correo'
+                    });
+
+                }
+            });
+
+        }
+
+    });
+
 });
 
 
@@ -781,6 +860,19 @@ $("#cancelarPO").click(function (e) {
         Swal.fire("Error", "Por favor, complete todos los campos del formulario.", "error");
     }
 });
+
+
+const Modalcancelacion = document.getElementById('modalMotivoCancelacion') 
+Modalcancelacion.addEventListener('hidden.bs.modal', event => {
+    
+    
+    ID_FORMULARIO_PO = 0
+    document.getElementById('motivoCancelacionInput').value = '';
+   
+
+})
+
+
 
 $("#confirmarCancelacion").click(function () {
 
