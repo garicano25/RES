@@ -103,7 +103,6 @@ $(document).ready(function() {
         $("#MOSTRAR_ALERTA_DOCUMENTOS").hide();
         $("#DATOS_VEHICULOS").hide();
         $('#CANTIDAD_EQUIPO').attr('readonly', false);
-        $('#LIMITEMINIMO_EQUIPO').attr('readonly', false);
 
 
     });
@@ -539,11 +538,9 @@ $('#Tablainventario tbody').on('click', 'td>button.EDITAR', function () {
 
     if (resp.readonly === true) {
         $('#CANTIDAD_EQUIPO').attr('readonly', true);
-        $('#LIMITEMINIMO_EQUIPO').attr('readonly', true);
 
     } else {
         $('#CANTIDAD_EQUIPO').removeAttr('readonly');
-        $('#LIMITEMINIMO_EQUIPO').removeAttr('readonly');
 
     }
 
