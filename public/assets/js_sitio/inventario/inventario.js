@@ -341,6 +341,10 @@ let colorSeleccionado = null;
 
 $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
 
+    if (settings.nTable.id !== 'Tablainventario') {
+        return true;
+    }
+
     if (!colorSeleccionado) return true;
 
     let row = Tablainventario.row(dataIndex).node();
