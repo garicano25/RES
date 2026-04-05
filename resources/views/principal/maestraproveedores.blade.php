@@ -231,7 +231,7 @@
                                 </a>
                             </li>
                             <li id="REP" style="display: none;">
-                                <a href="{{ url('/') }}" class="d-flex flex-column align-items-center text-center">
+                                <a href="{{ url('/reciboelectronico') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-file-earmark-fill"></i>
                                     <span>Recibo Electrónico de Pago (REP)</span>
                                 </a>
@@ -320,7 +320,7 @@
     <script src="/assets/js_sitio/funciones.js?v=8"></script>
 
 
-    <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js?v=2"></script>
+    <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js?v=3"></script>
 
 
 
@@ -418,13 +418,16 @@
     @endif
 
     @if(request()->is('po-gr'))
-    <script src="/assets/js_sitio/proveedor/poygr.js"></script>
+    <script src="/assets/js_sitio/proveedor/factura/poygr.js?v=1"></script>
     @endif
 
     @if(request()->is('factura'))
-    <script src="/assets/js_sitio/proveedor/cargarfactura.js"></script>
+    <script src="/assets/js_sitio/proveedor/factura/cargarfactura.js?v=1"></script>
     @endif
 
+    @if(request()->is('reciboelectronico'))
+    <script src="/assets/js_sitio/proveedor/factura/cargarrep.js"></script>
+    @endif
 </body>
 
 </body>

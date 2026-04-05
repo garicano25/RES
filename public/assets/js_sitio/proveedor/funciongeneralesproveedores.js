@@ -5,7 +5,9 @@ $(document).ready(function () {
         url: '/verificarBloqueoPorVerificacion',
         method: 'GET',
         success: function (response) {
+
             if (response.bloqueado) {
+
                 const botones = [
                     '#NUEVA_CERTIFICACION',
                     '#guardarCertificaciones',
@@ -31,12 +33,21 @@ $(document).ready(function () {
                     $('.EDITAR').each(function () {
                         $(this).replaceWith(btnDeshabilitado);
                     });
-                }, 1000); 
+                }, 1000);
 
-                
-                 $('#POYGR, #FACTURA, #REP').show();
+                $('#POYGR, #FACTURA').show();
 
+                $.get('/obtenerTipoProveedor', function (res) {
 
+                    if (res.tipo == 1) {
+                        $('#REP').show();   
+                    } else if (res.tipo == 2) {
+                        $('#REP').hide();   
+                    } else {
+                        $('#REP').hide();   
+                    }
+
+                });
             }
         },
         error: function () {

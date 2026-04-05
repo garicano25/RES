@@ -268,6 +268,72 @@ class facturaproveedorController extends Controller
         return Storage::response($archivo);
     }
 
+
+    /////// RECIBO ELECTRIONICO DE PAGO 
+
+
+    public function Tablacargarrecp()
+    {
+        try {
+            $userRFC = Auth::user()->RFC_PROVEEDOR;
+
+            $tabla = facturacionModel::where('RFC_PROVEEDOR', $userRFC)
+                ->where('ESTATUS_FACTURA', 1) 
+                ->where(function ($query) {
+                    $query->whereNull('SUBIR_REP') 
+                        ->orWhere('SUBIR_REP', 0); 
+                })
+                ->get();
+
+            foreach ($tabla as $value) {
+
+                // 🔹 BOTONES (NO SE TOCA)
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_FACTURACION . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_SOPORTES = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-soportes" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_FACTURA = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-factura" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill CARGARREP"><i class="bi bi-arrow-bar-up"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_SOPORTES = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-soportes" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_FACTURA = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-factura" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                }
+
+                // 🔹 FORMATO TIPO FACTURA
+                if ($value->TIPO_FACTURA == 'CONTRATO') {
+                    $value->TIPO_FACTURA_FORMATO = 'Contrato (No. ' . $value->NO_CONTRATO . ')';
+                } elseif ($value->TIPO_FACTURA == 'OC') {
+                    $value->TIPO_FACTURA_FORMATO = 'Orden de Compra y Recepción (PO: ' . $value->NO_PO . ' | GR: ' . $value->NO_GR . ')';
+                } else {
+                    $value->TIPO_FACTURA_FORMATO = $value->TIPO_FACTURA;
+                }
+
+                // 🔹 ESTATUS (aunque siempre serán aprobadas, lo dejo por consistencia)
+                if ($value->ESTATUS_FACTURA == 1) {
+                    $value->ESTADO_FACTURA_TEXTO = '<span class="badge bg-success">Aprobada</span>';
+                } elseif ($value->ESTATUS_FACTURA == 2) {
+                    $value->ESTADO_FACTURA_TEXTO = '<span class="badge bg-danger">Rechazada</span>';
+                } else {
+                    $value->ESTADO_FACTURA_TEXTO = '<span class="badge bg-secondary">En revisión</span>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+
     public function store(Request $request)
     {
         try {
@@ -311,7 +377,7 @@ class facturaproveedorController extends Controller
 
                         if ($request->hasFile('ARCHIVO_REP')) {
                             $file = $request->file('ARCHIVO_REP');
-                            $folderPath = "proveedores/{$rfc}/Facturas/Recibo Electrónico de Pago/PDF/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo Electrónico de Pago/PDF/{$cuentas->ID_FORMULARIO_FACTURACION}";
                             $fileName = $file->getClientOriginalName();
                             $filePath = $file->storeAs($folderPath, $fileName);
                             $cuentas->ARCHIVO_REP = $filePath;
@@ -320,7 +386,7 @@ class facturaproveedorController extends Controller
 
                         if ($request->hasFile('XML_REP')) {
                             $file = $request->file('XML_REP');
-                            $folderPath = "proveedores/{$rfc}/Facturas/Recibo Electrónico de Pago/XML/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo Electrónico de Pago/XML/{$cuentas->ID_FORMULARIO_FACTURACION}";
                             $fileName = $file->getClientOriginalName();
                             $filePath = $file->storeAs($folderPath, $fileName);
                             $cuentas->XML_REP = $filePath;
@@ -378,7 +444,7 @@ class facturaproveedorController extends Controller
                                 Storage::delete($cuentas->ARCHIVO_REP);
                             }
                             $file = $request->file('ARCHIVO_REP');
-                            $folderPath = "proveedores/{$rfc}/Facturas/Recibo Electrónico de Pago/PDF/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo Electrónico de Pago/PDF/{$cuentas->ID_FORMULARIO_FACTURACION}";
                             $fileName = $file->getClientOriginalName();
                             $filePath = $file->storeAs($folderPath, $fileName);
                             $requestData['ARCHIVO_REP'] = $filePath;
@@ -389,7 +455,7 @@ class facturaproveedorController extends Controller
                                 Storage::delete($cuentas->XML_REP);
                             }
                             $file = $request->file('XML_REP');
-                            $folderPath = "proveedores/{$rfc}/Facturas/Recibo Electrónico de Pago/XML/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo Electrónico de Pago/XML/{$cuentas->ID_FORMULARIO_FACTURACION}";
                             $fileName = $file->getClientOriginalName();
                             $filePath = $file->storeAs($folderPath, $fileName);
                             $requestData['XML_REP'] = $filePath;

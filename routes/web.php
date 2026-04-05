@@ -1127,26 +1127,29 @@ Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratu
 
 
 // ORDEN DE COMPRA (PO) Y RECEPCIONES DE BIENES (GR)  
-Route::get('/po-gr', function () { return view('compras.proveedores.poygrproveedor');});
+Route::get('/po-gr', function () { return view('compras.proveedores.factura.poygrproveedor');});
 Route::get('/Tablapoproveedor', [ordencompraproveedorController::class, 'Tablapoproveedor']);
 Route::get('/Tablagrproveedor', [ordencompraproveedorController::class, 'Tablagrproveedor']);
 
 
-// ORDEN DE COMPRA (PO) Y RECEPCIONES DE BIENES (GR)  
+// CARGAR FACTURA
 
-Route::get('/factura', function () { return view('compras.proveedores.facturacion');});
+Route::get('/factura', function () { return view('compras.proveedores.factura.facturacion');});
 Route::get('/validarContratoVigente', [facturaproveedorController::class, 'validarContratoVigente']);
 Route::post('/validarPOGR', [facturaproveedorController::class, 'validarPOGR']);
 Route::get('/obtenerTipoProveedor', [facturaproveedorController::class, 'obtenerTipoProveedor']);
 Route::post('/validarContratoNumero', [facturaproveedorController::class, 'validarContratoNumero']);
 Route::post('/FacturacionSave', [facturaproveedorController::class, 'store']);
 Route::get('/Tablafacturaproveedores', [facturaproveedorController::class, 'Tablafacturaproveedores']);
-
 Route::get('/mostrarsoportefactura/{id}', [facturaproveedorController::class, 'mostrarsoportefactura']);
 Route::get('/mostrarfactura/{id}', [facturaproveedorController::class, 'mostrarfactura']);
-
-
 Route::get('/validarPuedeSubirFactura', [facturaproveedorController::class, 'validarPuedeSubirFactura']);
+
+// CARGAR RECIBO ELECTRONICO (REP)
+
+Route::get('/reciboelectronico', function () {return view('compras.proveedores.factura.reciborep');});
+Route::get('/Tablacargarrecp', [facturaproveedorController::class, 'Tablacargarrecp']);
+
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
