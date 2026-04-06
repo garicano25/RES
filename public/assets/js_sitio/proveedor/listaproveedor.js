@@ -11,6 +11,8 @@ ID_FORMULARIO_REFERENCIASPROVEEDOR = 0
 ID_FORMULARIO_DOCUMENTOSPROVEEDOR = 0
 ID_ASINGACIONES_PROVEEDOR = 0;
 ID_CONTRATO_PROVEEDORES = 0;
+ID_FORMULARIO_FACTURACION = 0;
+
 
 
 // TABLAS
@@ -50,6 +52,9 @@ var tablasasignacionesCargada = false;
 var Tablacontratosproveedores;
 var tablascontratoCargada = false; 
 
+
+var Tablafacturaproveedoresinterno;
+var tablasfacturaCargada = false; 
 
 
 const textoActivo = document.getElementById('texto_activo');
@@ -369,7 +374,7 @@ $('#Tablalistaproveedorinactivo').on('click', 'td>button.EDITAR', function () {
     tablasoportesCargada = false;
     tablasasignacionesCargada = false;
     tablascontratoCargada = false;
-
+    tablasfacturaCargada = false;
 
     $('#datosgenerales-tab').tab('show');
 
@@ -985,6 +990,7 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     tablasoportesCargada = false;
     tablasasignacionesCargada = false;
     tablascontratoCargada = false;
+    tablasfacturaCargada = false;
 
 
     $('#datosgenerales-tab').tab('show');
@@ -3880,7 +3886,7 @@ function cargarTablacontratosproveedores() {
                 Tablacontratosproveedores.columns.adjust().draw(); 
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                $('#loadingIcon2').css('display', 'none');
+                $('#loadingIcon10').css('display', 'none');
                 alertErrorAJAX(jqXHR, textStatus, errorThrown);
             },
             dataSrc: 'data'
@@ -4032,3 +4038,363 @@ $(document).ready(function() {
 
 
 
+// <!-- ============================================================================================================================ -->
+// <!--                                                          STEP 10                                                              -->
+// <!-- ============================================================================================================================ -->
+
+
+document.getElementById('step10').addEventListener('click', function() {
+    document.querySelectorAll('[id$="-content"]').forEach(function(content) {
+        content.style.display = 'none';
+    });
+
+    document.getElementById('step10-content').style.display = 'block';
+
+    cargarTablafacturaproveedores();
+
+});
+
+function cargarTablafacturaproveedores() {
+    if ($.fn.DataTable.isDataTable('#Tablafacturaproveedoresinterno')) {
+        Tablafacturaproveedoresinterno.clear().destroy();
+    }
+
+    Tablafacturaproveedoresinterno = $("#Tablafacturaproveedoresinterno").DataTable({
+        language: { url: "https://cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json" },
+        lengthChange: true,
+        lengthMenu: [
+            [10, 25, 50, -1],
+            [10, 25, 50, 'All']
+        ],
+        info: false,
+        paging: true,
+        searching: true,
+        filtering: true,
+        scrollY: '65vh',
+        scrollCollapse: true,
+        responsive: true,
+        ajax: {
+            dataType: 'json',
+            data: { rfc: rfcSeleccionada }, 
+            method: 'GET',
+            cache: false,
+            url: '/Tablafacturaproveedoresinterno',  
+            beforeSend: function () {
+                $('#loadingIcon11').css('display', 'inline-block');
+            },
+            complete: function () {
+                $('#loadingIcon11').css('display', 'none');
+                Tablafacturaproveedoresinterno.columns.adjust().draw(); 
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                $('#loadingIcon11').css('display', 'none');
+                alertErrorAJAX(jqXHR, textStatus, errorThrown);
+            },
+            dataSrc: 'data'
+        },
+        columns: [
+        { 
+            data: null,
+            render: function(data, type, row, meta) {
+                return meta.row + 1; 
+            }
+        },
+        { data: 'TIPO_FACTURA_FORMATO' },
+        { data: 'BTN_SOPORTES' },
+        { data: 'BTN_FACTURA' },
+        { data: 'ESTADO_FACTURA_TEXTO' },
+        { data: 'BTN_VISUALIZAR' },
+    ],
+    columnDefs: [
+        { targets: 0, title: '#', className: 'all  text-center' },
+        { targets: 1, title: 'Factura por', className: 'all text-center nombre-column' },
+        { targets: 2, title: 'Soporte de la factura', className: 'all text-center' },
+        { targets: 3, title: 'Factura', className: 'all text-center' },
+        { targets: 4, title: 'Estatus factura', className: 'all text-center' },
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+    ]
+    });
+}
+
+$('#Tablafacturaproveedoresinterno').on('click', '.ver-archivo-soportes', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablafacturaproveedoresinterno.row(tr).data();
+    var id = $(this).data('id');
+
+    if (!id || !row.DOCUMENTOS_SOPORTE_FACTURA || row.DOCUMENTOS_SOPORTE_FACTURA.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
+        return;
+    }
+
+    var url = '/mostrarsoportefactura/' + id;
+    window.open(url, '_blank');
+});
+
+$('#Tablafacturaproveedoresinterno').on('click', '.ver-archivo-factura', function () {
+    var tr = $(this).closest('tr');
+    var row = Tablafacturaproveedoresinterno.row(tr).data();
+    var id = $(this).data('id');
+
+    if (!id || !row.FACTURA_PDF || row.FACTURA_PDF.trim() === "") {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin documento',
+            text: 'Este registro no tiene documento.',
+        });
+        return;
+    }
+
+    var url = '/mostrarfactura/' + id;
+    window.open(url, '_blank');
+});
+
+const Modalfactura = document.getElementById('modalDetalleFactura')
+Modalfactura.addEventListener('hidden.bs.modal', event => {
+    
+    document.getElementById('formularioFACTURA').reset();
+    document.getElementById('ID_FORMULARIO_FACTURACION').value = "0"; 
+
+})
+
+$(document).on('click', '.VISUALIZAR', function () {
+
+    let tr = $(this).closest('tr');
+    let row = Tablafacturaproveedoresinterno.row(tr).data();
+
+    let id = row.ID_FORMULARIO_FACTURACION;
+
+    $.get('/obtenerDetalleFactura', { id: id }, function (res) {
+
+        let f = res.factura;
+        let tipo = res.tipoProveedor;
+
+        $('#camposFactura, #camposFacturaExtranjero, #seccionREP, #seccionReciboPago')
+            .addClass('d-none');
+
+        $('#ID_FORMULARIO_FACTURACION').val(f.ID_FORMULARIO_FACTURACION);
+        
+
+        $('#contenedorOC, #contenedorCONTRATO').addClass('d-none');
+
+        $('#contenedorOC input, #contenedorCONTRATO input').prop('required', false);
+
+
+        if (f.TIPO_FACTURA === 'OC') {
+
+            $('#contenedorOC').removeClass('d-none');
+
+            $('#NO_PO').val(f.NO_PO);
+            $('#NO_GR').val(f.NO_GR);
+
+            $('#NO_PO, #NO_GR').prop('required', true);
+
+        } else if (f.TIPO_FACTURA === 'CONTRATO') {
+
+            $('#contenedorCONTRATO').removeClass('d-none');
+
+            $('#NO_CONTRATO').val(f.NO_CONTRATO);
+            $('#NO_CONTRATO').prop('required', true);
+        }
+
+        
+        if (tipo == 1) {
+            toggleCamposFactura(1);
+
+            $('#camposFactura').removeClass('d-none');
+            $('#FOLIO_FISCAL').val(f.FOLIO_FISCAL);
+            $('#FECHA_FACTURA').val(f.FECHA_FACTURA);
+            $('#METODO_PAGO').val(f.METODO_PAGO);
+            $('#MONEDA_FACTURA').val(f.MONEDA_FACTURA);
+            $('#SUBTOTAL_FACTURA').val(f.SUBTOTAL_FACTURA);
+            $('#IVA_FACTURA').val(f.IVA_FACTURA);
+            $('#TOTAL_FACTURA').val(f.TOTAL_FACTURA);
+            $('#verXML').removeClass('d-none');
+
+
+         } else if (tipo == 2) {
+             toggleCamposFactura(2);
+
+            $('#camposFacturaExtranjero').removeClass('d-none');
+            $('#NO_FACTURA_EXTRANJERO').val(f.NO_FACTURA_EXTRANJERO);
+            $('#FECHA_FACTURA_EXTRANJERO').val(f.FECHA_FACTURA_EXTRANJERO);
+            $('#MONEDA_FACTURA_EXTRANJERO').val(f.MONEDA_FACTURA_EXTRANJERO);
+            $('#SUBTOTAL_FACTURA_EXTRANJERO').val(f.SUBTOTAL_FACTURA_EXTRANJERO);
+            $('#IVA_FACTURA_EXTRANJERO').val(f.IVA_FACTURA_EXTRANJERO);
+            $('#TOTAL_FACTURA_EXTRANJERO').val(f.TOTAL_FACTURA_EXTRANJERO);
+            $('#verXML').addClass('d-none');
+
+        }
+
+        $('#verFacturaPDF').attr('href', '/mostrarfactura/' + f.ID_FORMULARIO_FACTURACION);
+        $('#verSoportePDF').attr('href', '/mostrarsoportefactura/' + f.ID_FORMULARIO_FACTURACION);
+
+        $('#verXML').attr('href', '/verXMLFactura/' + f.ID_FORMULARIO_FACTURACION + '?download=1');
+
+        $('#ESTATUS_FACTURA').val(f.ESTATUS_FACTURA ?? '');
+
+        if (
+            tipo == 1 &&
+            f.METODO_PAGO == 'PPD' &&
+            f.ESTATUS_FACTURA == 1 &&
+            f.SUBIR_REP == 1
+        ) {
+            $('#seccionREP').removeClass('d-none');
+
+            $('#verREP').attr('href', '/mostrareciboelectronico/' + f.ID_FORMULARIO_FACTURACION);
+
+            $('#verXMLREP').attr('href', '/verXMLREP/' + f.ID_FORMULARIO_FACTURACION + '?download=1');
+
+            $('#ESTATUS_REP').val(f.ESTATUS_REP ?? '');
+        }
+
+            $('#SUBIR_RECIBO_PAGO').val(f.SUBIR_RECIBO_PAGO ?? '');
+
+            if (f.SUBIR_RECIBO_PAGO == 1) {
+
+                $('#seccionReciboPago').removeClass('d-none');
+
+                if (f.ARCHIVO_RECIBO_PAGO) {
+
+                    $('#verReciboPago')
+                        .removeClass('d-none')
+                        .attr('href', '/mostrarecibodepago/' + f.ID_FORMULARIO_FACTURACION);
+
+                    $('#RECIBO_PAGO').hide();
+
+                } else {
+
+                    $('#RECIBO_PAGO').show();
+                    $('#verReciboPago').addClass('d-none');
+                }
+
+            } else {
+
+                $('#seccionReciboPago').addClass('d-none');
+            }
+        $('#modalDetalleFactura').modal('show');
+    });
+});
+
+$(document).on('change', '#SUBIR_RECIBO_PAGO', function () {
+
+    let valor = $(this).val();
+
+    if (valor == '1') {
+        $('#seccionReciboPago').removeClass('d-none');
+    } else {
+        $('#seccionReciboPago').addClass('d-none');
+        $('#RECIBO_PAGO').val('');
+        $('#verReciboPago').addClass('d-none');
+    }
+});
+
+$("#btnGuardarFactura").click(function (e) {
+    e.preventDefault();
+
+    formularioValido = validarFormulario3($('#formularioFACTURA'))
+
+    if (formularioValido) {
+
+    if (ID_FORMULARIO_FACTURACION == 0) {
+        
+        alertMensajeConfirm({
+            title: "¿Desea guardar la información?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('btnGuardarFactura')
+            await ajaxAwaitFormData({ api: 9,RFC_PROVEEDOR: rfcSeleccionada, ID_FORMULARIO_FACTURACION: ID_FORMULARIO_FACTURACION }, 'AltaSave1', 'formularioFACTURA', 'btnGuardarFactura', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+
+                ID_FORMULARIO_FACTURACION = data.cuenta.ID_FORMULARIO_FACTURACION
+                    alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
+                     $('#modalDetalleFactura').modal('hide')
+                    document.getElementById('formularioFACTURA').reset();
+                    Tablafacturaproveedoresinterno.ajax.reload()
+
+            })
+            
+            
+        }, 1)
+        
+    } else {
+            alertMensajeConfirm({
+            title: "¿Desea editar la información de este formulario?",
+            text: "Al guardarla, se podra usar",
+            icon: "question",
+        },async function () { 
+
+            await loaderbtn('btnGuardarFactura')
+            await ajaxAwaitFormData({ api: 9,RFC_PROVEEDOR: rfcSeleccionada, ID_FORMULARIO_FACTURACION: ID_FORMULARIO_FACTURACION }, 'AltaSave1', 'formularioFACTURA', 'btnGuardarFactura', { callbackAfter: true, callbackBefore: true }, () => {
+        
+                Swal.fire({
+                    icon: 'info',
+                    title: 'Espere un momento',
+                    text: 'Estamos guardando la información',
+                    showConfirmButton: false
+                })
+
+                $('.swal2-popup').addClass('ld ld-breath')
+        
+                
+            }, function (data) {
+                    
+                setTimeout(() => {
+
+                    
+                    ID_FORMULARIO_FACTURACION = data.cuenta.ID_FORMULARIO_FACTURACION
+                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                     $('#modalDetalleFactura').modal('hide')
+                    document.getElementById('formularioFACTURA').reset();
+                    Tablafacturaproveedoresinterno.ajax.reload()
+
+
+                }, 300);  
+            })
+        }, 1)
+    }
+
+} else {
+    // Muestra un mensaje de error o realiza alguna otra acción
+    alertToast('Por favor, complete todos los campos del formulario.', 'error', 2000)
+
+}
+    
+});
+
+function toggleCamposFactura(tipo) {
+
+    if (tipo == 1) {
+        $('#camposFactura').removeClass('d-none');
+        $('#camposFacturaExtranjero').addClass('d-none');
+
+        $('#camposFactura input').prop('required', true);
+
+        $('#camposFacturaExtranjero input').prop('required', false);
+
+    } else if (tipo == 2) {
+        $('#camposFacturaExtranjero').removeClass('d-none');
+        $('#camposFactura').addClass('d-none');
+
+        $('#camposFacturaExtranjero input').prop('required', true);
+
+        $('#camposFactura input').prop('required', false);
+    }
+}

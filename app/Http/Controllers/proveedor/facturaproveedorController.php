@@ -269,6 +269,15 @@ class facturaproveedorController extends Controller
     }
 
 
+
+    public function mostrareciboelectronico($id)
+    {
+        $archivo = facturacionModel::findOrFail($id)->ARCHIVO_REP;
+        return Storage::response($archivo);
+    }
+
+
+
     /////// RECIBO ELECTRIONICO DE PAGO 
 
 
@@ -278,16 +287,16 @@ class facturaproveedorController extends Controller
             $userRFC = Auth::user()->RFC_PROVEEDOR;
 
             $tabla = facturacionModel::where('RFC_PROVEEDOR', $userRFC)
-                ->where('ESTATUS_FACTURA', 1) 
+                ->where('ESTATUS_FACTURA', 1)
+                ->whereRaw("UPPER(TRIM(METODO_PAGO)) = 'PPD'")
                 ->where(function ($query) {
-                    $query->whereNull('SUBIR_REP') 
-                        ->orWhere('SUBIR_REP', 0); 
+                    $query->whereNull('SUBIR_REP')
+                        ->orWhere('SUBIR_REP', 0);
                 })
                 ->get();
 
             foreach ($tabla as $value) {
 
-                // 🔹 BOTONES (NO SE TOCA)
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_FACTURACION . '"><span class="slider round"></span></label>';
@@ -302,7 +311,6 @@ class facturaproveedorController extends Controller
                     $value->BTN_FACTURA = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-factura" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
                 }
 
-                // 🔹 FORMATO TIPO FACTURA
                 if ($value->TIPO_FACTURA == 'CONTRATO') {
                     $value->TIPO_FACTURA_FORMATO = 'Contrato (No. ' . $value->NO_CONTRATO . ')';
                 } elseif ($value->TIPO_FACTURA == 'OC') {
@@ -311,7 +319,6 @@ class facturaproveedorController extends Controller
                     $value->TIPO_FACTURA_FORMATO = $value->TIPO_FACTURA;
                 }
 
-                // 🔹 ESTATUS (aunque siempre serán aprobadas, lo dejo por consistencia)
                 if ($value->ESTATUS_FACTURA == 1) {
                     $value->ESTADO_FACTURA_TEXTO = '<span class="badge bg-success">Aprobada</span>';
                 } elseif ($value->ESTATUS_FACTURA == 2) {
@@ -339,6 +346,7 @@ class facturaproveedorController extends Controller
         try {
             switch (intval($request->api)) {
                 case 1:
+                    
                     $rfc = Auth::user()->RFC_PROVEEDOR;
                     $requestData = $request->all();
                     $requestData['RFC_PROVEEDOR'] = $rfc;
@@ -392,6 +400,17 @@ class facturaproveedorController extends Controller
                             $cuentas->XML_REP = $filePath;
                             $cuentas->save();
                         }
+
+
+                        if ($request->hasFile('ARCHIVO_RECIBO_PAGO')) {
+                            $file = $request->file('ARCHIVO_RECIBO_PAGO');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo de pago/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $cuentas->ARCHIVO_RECIBO_PAGO = $filePath;
+                            $cuentas->save();
+                        }
+
 
 
                     } else {
@@ -460,6 +479,18 @@ class facturaproveedorController extends Controller
                             $filePath = $file->storeAs($folderPath, $fileName);
                             $requestData['XML_REP'] = $filePath;
                         }
+
+                        if ($request->hasFile('ARCHIVO_RECIBO_PAGO')) {
+                            if ($cuentas->ARCHIVO_RECIBO_PAGO && Storage::exists($cuentas->ARCHIVO_RECIBO_PAGO)) {
+                                Storage::delete($cuentas->ARCHIVO_RECIBO_PAGO);
+                            }
+                            $file = $request->file('ARCHIVO_RECIBO_PAGO');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo de pago/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $requestData['ARCHIVO_RECIBO_PAGO'] = $filePath;
+                        }
+
 
 
                         $cuentas->update(collect($requestData)->except('RFC_PROVEEDOR')->toArray());

@@ -22,6 +22,7 @@ use App\Models\proveedor\altareferenciasModel;
 use App\Models\proveedor\altadocumentosModel;
 use App\Models\proveedor\asignacionproveedorModel;
 use App\Models\proveedor\contratoproveedorModel;
+use App\Models\proveedor\facturacionModel;
 
 
 
@@ -439,48 +440,6 @@ class listaproveedorController extends Controller
     }
 
 
-    // public function enviarCorreoActualizacionDocs(Request $request)
-    // {
-    //     $proveedor = DB::table('formulario_altaproveedor')
-    //         ->where('ID_FORMULARIO_ALTA', $request->id)
-    //         ->first();
-
-    //     $periodo = DB::table('fecha_actualizaciondocsproveedor')
-    //         ->where('ACTIVO', 1)
-    //         ->first();
-
-    //     $tipoPersona = $proveedor->TIPO_PERSONA_ALTA;
-    //     $tipoPersonaOpcion = $proveedor->TIPO_PERSONA_OPCION;
-
-    //     $documentos = DB::table('catalogo_documentosproveedor')
-    //         ->where('ACTUALIZAR_DOCUMENTOS', 1)
-    //         ->where(function ($q) use ($tipoPersona) {
-    //             $q->where('TIPO_PERSONA', $tipoPersona)
-    //                 ->orWhere('TIPO_PERSONA', 3); 
-    //         })
-    //         ->where(function ($q) use ($tipoPersonaOpcion) {
-    //             $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)
-    //                 ->orWhere('TIPO_PERSONA_OPCION', 3); 
-    //         })
-    //         ->pluck('NOMBRE_DOCUMENTO');
-
-    //     Mail::send('emails.actualizacion_documentos', [
-    //         'proveedor' => $proveedor,
-    //         'documentos' => $documentos,
-    //         'periodo' => $periodo
-    //     ], function ($mail) use ($proveedor) {
-
-    //         $mail->to($proveedor->CORREO_DIRECTORIO)
-    //             ->subject('Actualización de documentos');
-    //     });
-
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'message' => 'Correo enviado al proveedor'
-    //     ]);
-    // }
-
-
     public function enviarCorreoActualizacionDocs(Request $request)
     {
         $proveedor = DB::table('formulario_altaproveedor')
@@ -551,8 +510,6 @@ class listaproveedorController extends Controller
         }
     }
 
-
-
     public function verificarEstadoVerificacion(Request $request)
     {
         $rfc = $request->input('rfc');
@@ -615,203 +572,191 @@ class listaproveedorController extends Controller
     }
 
 
-
-
     // TABLA DE CUENTAS
-
-
     public function Tablacuentas(Request $request)
-{
-    try {
-        $rfc = $request->get('rfc');
+    {
+        try {
+            $rfc = $request->get('rfc');
 
-        $tabla = altacuentaModel::where('RFC_PROVEEDOR', $rfc)->get();
-
-        foreach ($tabla as $value) {
-            if ($value->ACTIVO == 0) {
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CUENTAPROVEEDOR . '"><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-caratula" data-id="' . $value->ID_FORMULARIO_CUENTAPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
-            } else {
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CUENTAPROVEEDOR . '" checked><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-caratula" data-id="' . $value->ID_FORMULARIO_CUENTAPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
-            }
-        }
-
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
-    }
-}
-
-// TABLA CONTACTOS
-
-
-public function Tablacontactos(Request $request)
-{
-    try {
-        $rfc = $request->get('rfc');
-
-        $tabla = altacontactos::where('RFC_PROVEEDOR', $rfc)->get();
-
-        foreach ($tabla as $value) {
-            if ($value->ACTIVO == 0) {
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CONTACTOPROVEEDOR . '"><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-            } else {
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CONTACTOPROVEEDOR . '" checked><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-              
-            }
-        }
-
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
-    }
-}
-
-
-// TABLA CERTIFICACION
-
-
-public function Tablacertificaciones(Request $request)
-{
-    try {
-        $rfc = $request->get('rfc');
-
-        $tabla = altacertificacionModel::where('RFC_PROVEEDOR', $rfc)->get();
+            $tabla = altacuentaModel::where('RFC_PROVEEDOR', $rfc)->get();
 
             foreach ($tabla as $value) {
-                $value->BTN_EDITAR = '';
-                $value->BTN_ELIMINAR = '';
-                $value->BTN_VISUALIZAR = '';
-                $value->BTN_DOCUMENTO = 'N/A';
-
-                $btnVisualizar = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $btnEditar = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $btnEditarDisabled = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-                $btnEliminarChecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" checked><span class="slider round"></span></label>';
-                $btnEliminarUnchecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '"><span class="slider round"></span></label>';
-
-                $btnCertificacion = $value->DOCUMENTO_CERTIFICACION
-                    ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-certificación" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver certificación"><i class="bi bi-filetype-pdf"></i></button>'
-                    : '';
-
-                $btnAcreditacion = $value->DOCUMENTO_ACREDITACION
-                    ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-acreditacion" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver acreditación"><i class="bi bi-filetype-pdf"></i></button>'
-                    : '';
-
-                $btnAutorizacion = $value->DOCUMENTO_AUTORIZACION
-                    ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-autorizacion" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver autorización"><i class="bi bi-filetype-pdf"></i></button>'
-                    : '';
-
-                $btnMembresia = $value->DOCUMENTO_MEMBRESIA
-                    ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-membresia" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver membresía"><i class="bi bi-filetype-pdf"></i></button>'
-                    : '';
-
-                switch ($value->TIPO_DOCUMENTO) {
-                    case 'Certificación':
-                        $value->BTN_DOCUMENTO = $btnCertificacion ?: 'N/A';
-                        break;
-                    case 'Acreditación':
-                        $botones = [];
-                        if ($btnAcreditacion) {
-                            $botones[] = '<div class="text-center"><small>Acreditación</small><br>' . $btnAcreditacion . '</div>';
-                        }
-                        if ($btnAutorizacion) {
-                            $botones[] = '<div class="text-center"><small>Autorización</small><br>' . $btnAutorizacion . '</div>';
-                        }
-                        $value->BTN_DOCUMENTO = count($botones) ? implode('&nbsp;&nbsp;', $botones) : 'N/A';
-                        break;
-
-                    case 'Membresía':
-                        $value->BTN_DOCUMENTO = $btnMembresia ?: 'N/A';
-                        break;
-                    default:
-                        $value->BTN_DOCUMENTO = 'N/A';
-                        break;
-                }
-
                 if ($value->ACTIVO == 0) {
-                    $value->BTN_VISUALIZAR = $btnVisualizar;
-                    $value->BTN_ELIMINAR = $btnEliminarUnchecked;
-                    $value->BTN_EDITAR = $btnEditarDisabled;
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CUENTAPROVEEDOR . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-caratula" data-id="' . $value->ID_FORMULARIO_CUENTAPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
                 } else {
-                    $value->BTN_VISUALIZAR = $btnVisualizar;
-                    $value->BTN_ELIMINAR = $btnEliminarChecked;
-                    $value->BTN_EDITAR = $btnEditar;
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CUENTAPROVEEDOR . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-caratula" data-id="' . $value->ID_FORMULARIO_CUENTAPROVEEDOR . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
                 }
             }
 
             return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
-    }
-}
-
-// TABLA REFERENCIAS 
-
-
-public function Tablareferencias(Request $request)
-{
-    try {
-        $rfc = $request->get('rfc');
-
-        $tabla = altareferenciasModel::where('RFC_PROVEEDOR', $rfc)->get();
-
-        foreach ($tabla as $value) {
-            if ($value->ACTIVO == 0) {
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_REFERENCIASPROVEEDOR . '"><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
-            } else {
-                $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_REFERENCIASPROVEEDOR . '" checked><span class="slider round"></span></label>';
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-              
-            }
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
         }
+    }   
 
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (Exception $e) {
-        return response()->json([
-            'msj' => 'Error ' . $e->getMessage(),
-            'data' => 0
-        ]);
+    // TABLA CONTACTOS
+    public function Tablacontactos(Request $request)
+    {
+        try {
+            $rfc = $request->get('rfc');
+
+            $tabla = altacontactos::where('RFC_PROVEEDOR', $rfc)->get();
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CONTACTOPROVEEDOR . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CONTACTOPROVEEDOR . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
     }
-}
 
 
+    // TABLA CERTIFICACION
+    public function Tablacertificaciones(Request $request)
+    {
+        try {
+            $rfc = $request->get('rfc');
+
+            $tabla = altacertificacionModel::where('RFC_PROVEEDOR', $rfc)->get();
+
+                foreach ($tabla as $value) {
+                    $value->BTN_EDITAR = '';
+                    $value->BTN_ELIMINAR = '';
+                    $value->BTN_VISUALIZAR = '';
+                    $value->BTN_DOCUMENTO = 'N/A';
+
+                    $btnVisualizar = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $btnEditar = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $btnEditarDisabled = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $btnEliminarChecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" checked><span class="slider round"></span></label>';
+                    $btnEliminarUnchecked = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '"><span class="slider round"></span></label>';
+
+                    $btnCertificacion = $value->DOCUMENTO_CERTIFICACION
+                        ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-certificación" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver certificación"><i class="bi bi-filetype-pdf"></i></button>'
+                        : '';
+
+                    $btnAcreditacion = $value->DOCUMENTO_ACREDITACION
+                        ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-acreditacion" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver acreditación"><i class="bi bi-filetype-pdf"></i></button>'
+                        : '';
+
+                    $btnAutorizacion = $value->DOCUMENTO_AUTORIZACION
+                        ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-autorizacion" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver autorización"><i class="bi bi-filetype-pdf"></i></button>'
+                        : '';
+
+                    $btnMembresia = $value->DOCUMENTO_MEMBRESIA
+                        ? '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-membresia" data-id="' . $value->ID_FORMULARIO_CERTIFICACIONPROVEEDOR . '" title="Ver membresía"><i class="bi bi-filetype-pdf"></i></button>'
+                        : '';
+
+                    switch ($value->TIPO_DOCUMENTO) {
+                        case 'Certificación':
+                            $value->BTN_DOCUMENTO = $btnCertificacion ?: 'N/A';
+                            break;
+                        case 'Acreditación':
+                            $botones = [];
+                            if ($btnAcreditacion) {
+                                $botones[] = '<div class="text-center"><small>Acreditación</small><br>' . $btnAcreditacion . '</div>';
+                            }
+                            if ($btnAutorizacion) {
+                                $botones[] = '<div class="text-center"><small>Autorización</small><br>' . $btnAutorizacion . '</div>';
+                            }
+                            $value->BTN_DOCUMENTO = count($botones) ? implode('&nbsp;&nbsp;', $botones) : 'N/A';
+                            break;
+
+                        case 'Membresía':
+                            $value->BTN_DOCUMENTO = $btnMembresia ?: 'N/A';
+                            break;
+                        default:
+                            $value->BTN_DOCUMENTO = 'N/A';
+                            break;
+                    }
+
+                    if ($value->ACTIVO == 0) {
+                        $value->BTN_VISUALIZAR = $btnVisualizar;
+                        $value->BTN_ELIMINAR = $btnEliminarUnchecked;
+                        $value->BTN_EDITAR = $btnEditarDisabled;
+                    } else {
+                        $value->BTN_VISUALIZAR = $btnVisualizar;
+                        $value->BTN_ELIMINAR = $btnEliminarChecked;
+                        $value->BTN_EDITAR = $btnEditar;
+                    }
+                }
+
+                return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+    // TABLA REFERENCIAS 
+
+    public function Tablareferencias(Request $request)
+    {
+        try {
+            $rfc = $request->get('rfc');
+
+            $tabla = altareferenciasModel::where('RFC_PROVEEDOR', $rfc)->get();
+
+            foreach ($tabla as $value) {
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_REFERENCIASPROVEEDOR . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_REFERENCIASPROVEEDOR . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
 
     // TABLA DOCUMENTOS DE SOPORTE
-
 
     public function Tabladocumentosoporteproveedores(Request $request)
     {
@@ -1103,7 +1048,6 @@ public function Tablareferencias(Request $request)
 
     // TABLA CONTRATO PROVEEDOR
 
-
     public function Tablacontratosproveedores(Request $request)
     {
         try {
@@ -1138,13 +1082,129 @@ public function Tablareferencias(Request $request)
         }
     }
 
-
     public function mostrarcontratoproveedor($id)
     {
         $archivo = contratoproveedorModel::findOrFail($id)->DOCUMENTO_CONTRATO_PROVEEDOR;
         return Storage::response($archivo);
     }
 
+    // TABLA FACTURA PROVEEDOR
+
+
+
+
+
+    public function Tablafacturaproveedoresinterno(Request $request)
+    {
+        try {
+
+            
+            $rfc = $request->get('rfc');
+
+            $tabla = facturacionModel::where('RFC_PROVEEDOR', $rfc)->get();
+
+            
+            foreach ($tabla as $value) {
+
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_FACTURACION . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_SOPORTES = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-soportes" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_FACTURA = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-factura" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_SOPORTES = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-soportes" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                    $value->BTN_FACTURA = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-factura" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+                }
+
+                if ($value->TIPO_FACTURA == 'CONTRATO') {
+                    $value->TIPO_FACTURA_FORMATO = 'Contrato (No. ' . $value->NO_CONTRATO . ')';
+                } elseif ($value->TIPO_FACTURA == 'OC') {
+                    $value->TIPO_FACTURA_FORMATO = 'Orden de Compra y Recepción (PO: ' . $value->NO_PO . ' | GR: ' . $value->NO_GR . ')';
+                } else {
+                    $value->TIPO_FACTURA_FORMATO = $value->TIPO_FACTURA;
+                }
+
+                if ($value->ESTATUS_FACTURA == 1) {
+                    $value->ESTADO_FACTURA_TEXTO = '<span class="badge bg-success">Aprobada</span>';
+                } elseif ($value->ESTATUS_FACTURA == 2) {
+                    $value->ESTADO_FACTURA_TEXTO = '<span class="badge bg-danger">Rechazada</span>';
+                } else {
+                    $value->ESTADO_FACTURA_TEXTO = '<span class="badge bg-secondary">En revisión</span>';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
+
+
+    public function obtenerDetalleFactura(Request $request)
+    {
+        $id = $request->id;
+
+        $factura = facturacionModel::where('ID_FORMULARIO_FACTURACION', $id)->first();
+
+        if (!$factura) {
+            return response()->json(['error' => 'No encontrada']);
+        }
+
+        $proveedor = DB::table('formulario_altaproveedor')
+            ->where('RFC_ALTA', $factura->RFC_PROVEEDOR)
+            ->orderBy('ID_FORMULARIO_ALTA', 'desc')
+            ->first();
+
+        return response()->json([
+            'factura' => $factura,
+            'tipoProveedor' => $proveedor ? $proveedor->TIPO_PERSONA_ALTA : null
+        ]);
+    }
+
+
+    public function mostrarecibodepago($id)
+    {
+        $archivo = facturacionModel::findOrFail($id)->ARCHIVO_RECIBO_PAGO;
+        return Storage::response($archivo);
+    }
+
+    public function verXMLFactura($id)
+    {
+        $archivo = facturacionModel::findOrFail($id)->FACTURA_XML;
+
+        if (request()->has('download')) {
+            return Storage::download($archivo, 'factura.xml');
+        }
+
+        return Storage::response($archivo);
+    }
+
+
+    public function verXMLREP($id)
+    {
+        $archivo = facturacionModel::findOrFail($id)->XML_REP;
+
+        if (request()->has('download')) {
+            return Storage::download($archivo, 'factura.xml');
+        }
+
+        return Storage::response($archivo);
+    }
+
+
+
+
+    //////  STORE
 
     public function store(Request $request)
     {
@@ -1717,7 +1777,158 @@ public function Tablareferencias(Request $request)
                     return response()->json($response);
                     break;
 
-                    
+                case 9:
+
+                    $requestData = $request->all();
+                    $rfc = $requestData['RFC_PROVEEDOR'] ?? null;
+
+                    if ($request->ID_FORMULARIO_FACTURACION == 0) {
+                        DB::statement('ALTER TABLE formulario_facturasproveedores AUTO_INCREMENT=1;');
+
+                        $cuentas = facturacionModel::create($requestData);
+
+                        if ($request->hasFile('DOCUMENTOS_SOPORTE_FACTURA')) {
+                            $file = $request->file('DOCUMENTOS_SOPORTE_FACTURA');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Documentos de soporte";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $cuentas->DOCUMENTOS_SOPORTE_FACTURA = $filePath;
+                            $cuentas->save();
+                        }
+
+                        if ($request->hasFile('FACTURA_PDF')) {
+                            $file = $request->file('FACTURA_PDF');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Documento factura";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $cuentas->FACTURA_PDF = $filePath;
+                            $cuentas->save();
+                        }
+
+                        if ($request->hasFile('FACTURA_XML')) {
+                            $file = $request->file('FACTURA_XML');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/XML factura";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $cuentas->FACTURA_XML = $filePath;
+                            $cuentas->save();
+                        }
+
+                        if ($request->hasFile('ARCHIVO_REP')) {
+                            $file = $request->file('ARCHIVO_REP');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo Electrónico de Pago/PDF/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $cuentas->ARCHIVO_REP = $filePath;
+                            $cuentas->save();
+                        }
+
+                        if ($request->hasFile('XML_REP')) {
+                            $file = $request->file('XML_REP');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo Electrónico de Pago/XML/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $cuentas->XML_REP = $filePath;
+                            $cuentas->save();
+                        }
+
+
+                        if ($request->hasFile('ARCHIVO_RECIBO_PAGO')) {
+                            $file = $request->file('ARCHIVO_RECIBO_PAGO');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo de pago/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $cuentas->ARCHIVO_RECIBO_PAGO = $filePath;
+                            $cuentas->save();
+                        }
+                    } else {
+                        $cuentas = facturacionModel::find($request->ID_FORMULARIO_FACTURACION);
+
+                        if (isset($request->ELIMINAR)) {
+                            $cuentas->ACTIVO = $request->ELIMINAR == 1 ? 0 : 1;
+                            $cuentas->save();
+
+                            $response['code'] = 1;
+                            $response['cuenta'] = $request->ELIMINAR == 1 ? 'Desactivada' : 'Activada';
+                            return response()->json($response);
+                        }
+
+                        if ($request->hasFile('DOCUMENTOS_SOPORTE_FACTURA')) {
+                            if ($cuentas->DOCUMENTOS_SOPORTE_FACTURA && Storage::exists($cuentas->DOCUMENTOS_SOPORTE_FACTURA)) {
+                                Storage::delete($cuentas->DOCUMENTOS_SOPORTE_FACTURA);
+                            }
+                            $file = $request->file('DOCUMENTOS_SOPORTE_FACTURA');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Documentos de soporte";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $requestData['DOCUMENTOS_SOPORTE_FACTURA'] = $filePath;
+                        }
+
+                        if ($request->hasFile('FACTURA_PDF')) {
+                            if ($cuentas->FACTURA_PDF && Storage::exists($cuentas->FACTURA_PDF)) {
+                                Storage::delete($cuentas->FACTURA_PDF);
+                            }
+                            $file = $request->file('FACTURA_PDF');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Documento factura";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $requestData['FACTURA_PDF'] = $filePath;
+                        }
+
+                        if ($request->hasFile('FACTURA_XML')) {
+                            if ($cuentas->FACTURA_XML && Storage::exists($cuentas->FACTURA_XML)) {
+                                Storage::delete($cuentas->FACTURA_XML);
+                            }
+                            $file = $request->file('FACTURA_XML');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/XML factura";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $requestData['FACTURA_XML'] = $filePath;
+                        }
+
+                        if ($request->hasFile('ARCHIVO_REP')) {
+                            if ($cuentas->ARCHIVO_REP && Storage::exists($cuentas->ARCHIVO_REP)) {
+                                Storage::delete($cuentas->ARCHIVO_REP);
+                            }
+                            $file = $request->file('ARCHIVO_REP');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo Electrónico de Pago/PDF/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $requestData['ARCHIVO_REP'] = $filePath;
+                        }
+
+                        if ($request->hasFile('XML_REP')) {
+                            if ($cuentas->XML_REP && Storage::exists($cuentas->XML_REP)) {
+                                Storage::delete($cuentas->XML_REP);
+                            }
+                            $file = $request->file('XML_REP');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo Electrónico de Pago/XML/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $requestData['XML_REP'] = $filePath;
+                        }
+
+                        if ($request->hasFile('ARCHIVO_RECIBO_PAGO')) {
+                            if ($cuentas->ARCHIVO_RECIBO_PAGO && Storage::exists($cuentas->ARCHIVO_RECIBO_PAGO)) {
+                                Storage::delete($cuentas->ARCHIVO_RECIBO_PAGO);
+                            }
+                            $file = $request->file('ARCHIVO_RECIBO_PAGO');
+                            $folderPath = "proveedores/{$rfc}/Facturas/{$cuentas->ID_FORMULARIO_FACTURACION}/Recibo de pago/{$cuentas->ID_FORMULARIO_FACTURACION}";
+                            $fileName = $file->getClientOriginalName();
+                            $filePath = $file->storeAs($folderPath, $fileName);
+                            $requestData['ARCHIVO_RECIBO_PAGO'] = $filePath;
+                        }
+
+
+
+                        $cuentas->update(collect($requestData)->except('RFC_PROVEEDOR')->toArray());
+
+                        $response['code'] = 1;
+                        $response['cuenta'] = 'Actualizada';
+                        return response()->json($response);
+                    }
+                    break;
+
                 default:
                     $response['code']  = 1;
                     $response['msj']  = 'Api no encontrada';

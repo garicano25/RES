@@ -42,5 +42,9 @@ class facturacionModel extends Model
         'XML_REP',
         'ESTATUS_REP',
 
+        'SUBIR_RECIBO_PAGO',
+        'ARCHIVO_RECIBO_PAGO'
+
+
     ];
 }

@@ -961,6 +961,16 @@ Route::get('/pdfAsignacionEppproveedor/{id}', [pdfasingacionController::class, '
 Route::get('/Tablacontratosproveedores', [listaproveedorController::class, 'Tablacontratosproveedores']);
 Route::get('/mostrarcontratoproveedor/{id}', [listaproveedorController::class, 'mostrarcontratoproveedor']);
 
+///// FACTURAS PROVEEDOR
+Route::get('/Tablafacturaproveedoresinterno', [listaproveedorController::class, 'Tablafacturaproveedoresinterno']);
+Route::get('/obtenerDetalleFactura', [listaproveedorController::class, 'obtenerDetalleFactura']);
+Route::get('/mostrarecibodepago/{id}', [listaproveedorController::class, 'mostrarecibodepago']);
+
+
+Route::get('/verXMLFactura/{id}', [listaproveedorController::class, 'verXMLFactura']);
+Route::get('/verXMLREP/{id}', [listaproveedorController::class, 'verXMLREP']);
+
+
 //==============================================    LISTA DE PROVEEDORES CRITICO  ============================================== 
 
 Route::get('/listaproveedorescriticos', [listaproveedorcriticoController::class, 'index']);
@@ -1006,6 +1016,7 @@ Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
 
 Route::post('/enviarCorreoPO', [pdfpoController::class, 'enviarCorreoPO']);
 
+
 //==============================================    ORDEN DE COMPRA - HISTORIAL  ============================================== 
 Route::get('/ordencomprahistorial', [pohistorialController::class, 'index']);
 Route::get('/Tablaordencomprahistorial', [pohistorialController::class, 'Tablaordencomprahistorial']);
@@ -1026,8 +1037,6 @@ Route::get('/Tablabitacoragr', [grController::class, 'Tablabitacoragr']);
 Route::post('/guardarGR', [grController::class, 'guardarGR']);
 Route::post('/consultar-gr', [grController::class, 'consultarGR'])->name('consultar.gr');
 Route::get('/generarGRpdf/{id}', [pdfgrController::class, 'generarGRpdf']);
-
-
 Route::post('/enviarCorreoGR', [pdfgrController::class, 'enviarCorreoGR']);
 
 /// VO.BO USUARIO EN GR 
@@ -1072,7 +1081,7 @@ Route::get('/Tabladocumentosoportes', [catalagodocumentosproveedorController::cl
 Route::get('/DocumentosDeleteProveedor', [catalagodocumentosproveedorController::class, 'store']);
 
 
-//==============================================  PROVEEDOR  ============================================== 
+//==============================================  MODULO PROVEEDOR  ============================================== 
 
 Route::post('/ServiciosSave', [directorioController::class, 'store']);
 Route::get('/mostrarconstanciaproveedor/{id}', [directorioController::class, 'mostrarconstanciaproveedor']);
@@ -1149,6 +1158,7 @@ Route::get('/validarPuedeSubirFactura', [facturaproveedorController::class, 'val
 
 Route::get('/reciboelectronico', function () {return view('compras.proveedores.factura.reciborep');});
 Route::get('/Tablacargarrecp', [facturaproveedorController::class, 'Tablacargarrecp']);
+Route::get('/mostrareciboelectronico/{id}', [facturaproveedorController::class, 'mostrareciboelectronico']);
 
 
 
@@ -1318,7 +1328,6 @@ Route::get('/mensajespaginaweb', function () { return view('pagina_web.mensajesp
 Route::get('/Tablamensajepaginaweb', [mensajespaginaController::class, 'Tablamensajepaginaweb']);
 Route::get('/MensajespaginaDelete', [mensajespaginaController::class, 'store']);
 Route::post('/PaginawebSave', [mensajespaginaController::class, 'store']);
-
 Route::get('/mensajespaginawebhistorial', function () { return view('pagina_web.mensajespaginahistorial');});
 Route::get('/Tablamensajepaginawebhistorial', [mensajespaginaController::class, 'Tablamensajepaginawebhistorial']);
 
