@@ -413,8 +413,8 @@
 
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
-                                                        <label>Límite mínimo </label>
-                                                        <input type="Number" step="any" class="form-control" id="LIMITEMINIMO_EQUIPO" name="LIMITEMINIMO_EQUIPO">
+                                                        <label>Límite mínimo *</label>
+                                                        <input type="Number" step="any" class="form-control" id="LIMITEMINIMO_EQUIPO" name="LIMITEMINIMO_EQUIPO" required>
                                                     </div>
                                                 </div>
 
