@@ -49,7 +49,9 @@ class listaalertaController extends Controller
     public function Tablalistadealertas()
     {
         try {
+            
             $tabla = inventarioModel::whereNotNull('LIMITEMINIMO_EQUIPO')
+                ->whereRaw("CAST(LIMITEMINIMO_EQUIPO AS UNSIGNED) > 0")
                 ->whereRaw("CAST(CANTIDAD_EQUIPO AS UNSIGNED) <= CAST(LIMITEMINIMO_EQUIPO AS UNSIGNED)")
                 ->get();
 
