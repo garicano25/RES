@@ -191,7 +191,8 @@ class inventarioController extends Controller
                     'ITEM_CRITICO',
                     'PROVEEDOR_ALTA',
                     'REQUIERE_ARTICULO',
-                    'LIMITEMINIMO_EQUIPO'
+                    'LIMITEMINIMO_EQUIPO',
+                    'DETALLAR_ARTICULOS'
                 ];
 
                 $completo = true;
@@ -284,7 +285,8 @@ class inventarioController extends Controller
                     'ITEM_CRITICO',
                     'PROVEEDOR_ALTA',
                     'REQUIERE_ARTICULO',
-                    'LIMITEMINIMO_EQUIPO'
+                    'LIMITEMINIMO_EQUIPO',
+                    'DETALLAR_ARTICULOS'
                 ];
 
                 // VALIDACIÓN (N/A y 0 válidos)
