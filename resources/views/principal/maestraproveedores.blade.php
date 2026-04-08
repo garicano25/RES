@@ -369,7 +369,8 @@
         document.addEventListener('input', function(event) {
             if ((event.target.tagName === 'INPUT' && event.target.type === 'text') || event.target.tagName === 'TEXTAREA') {
 
-                const idsExcluidos = ['TIPO_BANCO', 'OTRO_ID', 'NO_PO', 'NO_GR', 'MONEDA_FACTURA', 'NO_FACTURA', 'METODO_PAGO', 'FOLIO_FISCAL', 'NO_FACTURA_EXTRANJERO', 'MONEDA_FACTURA_EXTRANJERO'];
+                const idsExcluidos = ['TIPO_BANCO', 'TIPO_MONEDA', 'CODIGO_SWIFT_BIC', 'CODIGO_ABA', 'CIUDAD', 'PAIS', 'NOMBRE_BENEFICIARIO', 'NOMBRE_CONTACTO_CUENTA', 'CARGO_CONTACTO_CUENTA', 'NORMA_CERTIFICACION', 'VERSION_CERTIFICACION', 'ENTIDAD_CERTIFICADORA', 'NORMA_ACREDITACION', 'VERSION_ACREDITACION', 'ALCANCE_ACREDITACION', 'ENTIDAD_ACREDITADORA', 'ENTIDAD_AUTORIZADORA', 'NOMBRE_ENTIDAD_MEMBRESIA', 'NOMBRE_EMPRESA', 'NOMBRE_CONTACTO', 'CARGO_REFERENCIA', 'PRODUCTO_SERVICIO', 'OTRO_ID', 'NO_PO', 'NO_GR', 'MONEDA_FACTURA', 'NO_FACTURA', 'METODO_PAGO', 'FOLIO_FISCAL', 'NO_FACTURA_EXTRANJERO', 'MONEDA_FACTURA_EXTRANJERO'
+                ];
 
                 if (idsExcluidos.includes(event.target.id)) {
                     return;

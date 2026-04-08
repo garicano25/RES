@@ -9,7 +9,7 @@
         <h3 style="color: #ffffff; margin: 0;">&nbsp;Puesto que se requiere como experiencia</h3>
 
 
-        <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_asesores" data-bs-toggle="modal" data-bs-target="#miModal_EXPERIENCIA" style="margin-left: auto;">
+        <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_EXPERIENCIA" style="margin-left: auto;">
             Nuevo  &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
     </ol>

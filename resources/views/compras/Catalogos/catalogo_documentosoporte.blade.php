@@ -7,7 +7,7 @@
 <div class="contenedor-contenido">
     <ol class="breadcrumb mb-5">
         <h3 style="color: #ffffff; margin: 0;">&nbsp;Documentos de soporte</h3>
-        <button type="button" class="btn btn-light waves-effect waves-light botonnuevo_asesores" data-bs-toggle="modal" data-bs-target="#miModal_documentos" style="margin-left: auto;">
+        <button type="button" class="btn btn-light waves-effect waves-light " data-bs-toggle="modal" data-bs-target="#miModal_documentos" style="margin-left: auto;">
             Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
         </button>
     </ol>
@@ -69,7 +69,7 @@
 
                     <div class="mb-3">
                         <label>¿El documento se necesita actualizar?</label>
-                        <select class="form-control" name="ACTUALIZAR_DOCUMENTOS" id="ACTUALIZAR_DOCUMENTOS" >
+                        <select class="form-control" name="ACTUALIZAR_DOCUMENTOS" id="ACTUALIZAR_DOCUMENTOS">
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Sí</option>
                             <option value="2">No</option>
@@ -79,7 +79,7 @@
 
                     <div class="mb-3">
                         <label>Nombre del documento *</label>
-                        <input type="text" class="form-control" id="NOMBRE_DOCUMENTO" name="NOMBRE_DOCUMENTO" required>
+                        <textarea class="form-control" id="NOMBRE_DOCUMENTO" name="NOMBRE_DOCUMENTO" rows="5"></textarea>
                     </div>
                     <div class="mb-3">
                         <label>Descripción </label>
