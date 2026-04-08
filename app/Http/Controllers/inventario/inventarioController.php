@@ -204,8 +204,8 @@ class inventarioController extends Controller
                 }
 
                 $cantidad = (float)$value->CANTIDAD_EQUIPO;
-                $tieneMinimo = (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '');
                 $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
+                $tieneMinimo = (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '' && $minimo > 0);
 
                 if ($value->ASIGNADO == 1) {
                     $conteo['naranja']++;
@@ -289,7 +289,6 @@ class inventarioController extends Controller
                     'DETALLAR_ARTICULOS'
                 ];
 
-                // VALIDACIÓN (N/A y 0 válidos)
                 $completo = true;
                 foreach ($campos as $campo) {
                     if (!isset($value->$campo) || $value->$campo === '') {
@@ -299,27 +298,22 @@ class inventarioController extends Controller
                 }
 
                 $cantidad = (float)$value->CANTIDAD_EQUIPO;
-                $tieneMinimo = (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '');
                 $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
+                $tieneMinimo = (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '' && $minimo > 0);
 
-                // 🔥 PRIORIDADES CORRECTAS
 
-                // 🟠 1. ASIGNADO SIEMPRE GANA
                 if ($value->ASIGNADO == 1) {
                     $value->ROW_CLASS = 'bg-naranja-suave';
                 }
 
-                // 🟡 2. TIENE LÍMITE Y ESTÁ POR DEBAJO
                 elseif ($tieneMinimo && $cantidad <= $minimo) {
                     $value->ROW_CLASS = 'bg-amarrillo-suave';
                 }
 
-                // 🔴 3. CANTIDAD 0
                 elseif ($cantidad == 0) {
                     $value->ROW_CLASS = $completo ? 'bg-rojo-suave' : 'bg-azul-suave';
                 }
 
-                // 🟢 / 🔵 4. NORMAL
                 else {
                     $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-azul-suave';
                 }
