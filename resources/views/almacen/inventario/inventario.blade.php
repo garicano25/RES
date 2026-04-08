@@ -476,8 +476,8 @@
                                                 </div>
 
                                                 <div class="col-8 mt-2">
-                                                    <label>¿Requiere detallar los componentes del artículo? </label>
-                                                    <select class="form-control" name="DETALLAR_ARTICULOS" id="DETALLAR_ARTICULOS" onchange="guardarDetallearticulo()">
+                                                    <label>¿Requiere detallar los componentes del artículo? *</label>
+                                                    <select class="form-control" name="DETALLAR_ARTICULOS" id="DETALLAR_ARTICULOS" onchange="guardarDetallearticulo()" required>
                                                         <option value="" selected disabled>Seleccione una opción</option>
                                                         <option value="1">Sí</option>
                                                         <option value="2">No</option>
