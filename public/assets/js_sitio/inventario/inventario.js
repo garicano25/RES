@@ -18,6 +18,8 @@ Modalinventario.addEventListener('hidden.bs.modal', event => {
 
     $('#Modal_inventario .modal-title').html('Equipo');
 
+    inventario_id = 0; 
+
 })
 
 
@@ -104,6 +106,7 @@ $(document).ready(function() {
         $("#DATOS_VEHICULOS").hide();
         $('#CANTIDAD_EQUIPO').attr('readonly', false);
 
+        inventario_id = 0; 
 
     });
 
@@ -152,11 +155,11 @@ $("#guardarINVENTARIO").click(function (e) {
                 
             }, function (data) {
                     
-
-                ID_FORMULARIO_INVENTARIO = data.inventario.ID_FORMULARIO_INVENTARIO
+                    inventario_id = data.inventario.ID_FORMULARIO_INVENTARIO;
+                    ID_FORMULARIO_INVENTARIO = data.inventario.ID_FORMULARIO_INVENTARIO
                     alertMensaje('success','Información guardada correctamente', 'Esta información esta lista para usarse',null,null, 1500)
-                     $('#Modal_inventario').modal('hide')
-                    document.getElementById('formularioINVENTARIO').reset();
+                    //  $('#Modal_inventario').modal('hide')
+                    // document.getElementById('formularioINVENTARIO').reset();
                     Tablainventario.ajax.reload()
 
         

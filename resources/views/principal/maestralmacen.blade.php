@@ -447,7 +447,7 @@
     </script>
 
     @if(request()->is('inventario'))
-    <script src="/assets/js_sitio/inventario/inventario.js?v=9"></script>
+    <script src="/assets/js_sitio/inventario/inventario.js?v=10"></script>
     @endif
 
     @if(request()->is('catalogotipoinventario'))
@@ -506,6 +506,10 @@
     <script src="/assets/js_sitio/listadeinfraestructura/listadeinfraestructura.js?v=1"></script>
     @endif
 
+
+    @if(request()->is('catalogoskits'))
+    <script src="/assets/js_sitio/inventario/catalogos/catalogokit.js"></script>
+    @endif
 
 </body>
 
