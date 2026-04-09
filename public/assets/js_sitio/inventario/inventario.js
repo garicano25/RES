@@ -161,7 +161,7 @@ $("#guardarINVENTARIO").click(function (e) {
                     //  $('#Modal_inventario').modal('hide')
                     // document.getElementById('formularioINVENTARIO').reset();
                     Tablainventario.ajax.reload()
-
+                    cargarMetricas();
         
             })
             
@@ -199,7 +199,7 @@ $("#guardarINVENTARIO").click(function (e) {
                      $('#Modal_inventario').modal('hide')
                     document.getElementById('formularioINVENTARIO').reset();
                     Tablainventario.ajax.reload()
-
+                    cargarMetricas();
 
                 }, 300);  
             })
