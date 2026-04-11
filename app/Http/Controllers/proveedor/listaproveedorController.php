@@ -47,6 +47,175 @@ class listaproveedorController extends Controller
 
 
 
+    public function verificarestadobloqueoproveedor(Request $request)
+    {
+        $rfc = $request->input('rfcSeleccionada');
+
+        if (!$rfc) {
+            return response()->json(['error' => 'RFC no proporcionado'], 400);
+        }
+
+        $registro = DB::table('formulario_altaproveedor')
+            ->where('RFC_ALTA', $rfc)
+            ->first();
+
+        $bloqueodesactivado = $registro && $registro->ACTIVO == 0 ? 0 : 1;
+
+        return response()->json(['bloqueodesactivado' => $bloqueodesactivado]);
+    }
+
+
+
+    // public function Tablalistaproveedores()
+    // {
+    //     try {
+    //         $tabla = altaproveedorModel::select('*')
+    //             ->where('ACTIVO', 1)
+    //             ->get();
+
+    //         $periodo = DB::table('fecha_actualizaciondocsproveedor')
+    //             ->where('ACTIVO', 1)
+    //             ->whereDate('FECHA_INICIO', '<=', now())
+    //             ->whereDate('FECHA_FIN', '>=', now())
+    //             ->first();
+
+
+    //         foreach ($tabla as $value) {
+
+
+    //             $value->BTN_ACTUALIZACION_DOCS = '';
+
+
+    //             if ($value->ACTIVO == 0) {
+
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ALTA . '"><span class="slider round"></span></label>';
+    //             } else {
+    //                 $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ALTA . '" checked><span class="slider round"></span></label>';
+    //             }
+
+
+    //             $correoEnviadoPeriodo = false;
+
+    //             if ($periodo) {
+    //                 $correoEnviadoPeriodo = DB::table('enviocorreo_proveedor')
+    //                     ->where('RFC_PROVEEDOR', $value->RFC_ALTA)
+    //                     ->whereBetween('created_at', [
+    //                         $periodo->FECHA_INICIO,
+    //                         $periodo->FECHA_FIN
+    //                     ])
+    //                     ->exists();
+    //             }
+
+
+
+    //             if ((int) $value->VERIFICACION_SOLICITADA === 1) {
+
+    //                 $value->ESTATUS_DATOS = '<span class="badge bg-success">Completo</span>';
+
+    //                 $value->BTN_EDITAR = '<button class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+
+    //                 $value->BTN_CORREO = '';
+
+    //                 if ($periodo) {
+
+    //                     if ($correoEnviadoPeriodo) {
+
+    //                         $value->BTN_ACTUALIZACION_DOCS =
+    //                                     '<button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
+    //                             data-id="' . $value->ID_FORMULARIO_ALTA . '"
+    //                             disabled
+    //                             data-bs-toggle="tooltip"
+    //                             title="Correo ya enviado en este periodo">
+    //                             <i class="bi bi-envelope-paper-fill"></i>
+    //                             </button>';
+
+    //                     } else {
+
+    //                         $value->BTN_ACTUALIZACION_DOCS =
+    //                             '<button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
+    //                             data-id="' . $value->ID_FORMULARIO_ALTA . '"
+    //                             data-bs-toggle="tooltip"
+    //                             title="Enviar solicitud de actualización">
+    //                             <i class="bi bi-envelope-paper-fill"></i>
+    //                             </button>';
+    //                     }
+    //                 } else {
+
+    //                     $value->BTN_ACTUALIZACION_DOCS = '';
+    //                 }
+
+    //                 continue;
+    //             }
+
+
+    //             $mensajes = [];
+    //             $rfc = $value->RFC_ALTA;
+    //             $tipoPersona = $value->TIPO_PERSONA_ALTA;
+    //             $tipoPersonaOpcion = $value->TIPO_PERSONA_OPCION;
+
+    //             if (!DB::table('formulario_altacontactoproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+    //                 $mensajes[] = 'Falta agregar contactos.';
+    //             }
+
+    //             if (!DB::table('formulario_altacuentaproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+    //                 $mensajes[] = 'Falta agregar cuentas bancarias.';
+    //             }
+
+    //             if (!DB::table('formulario_altareferenciasproveedor')->where('RFC_PROVEEDOR', $rfc)->exists()) {
+    //                 $mensajes[] = 'Faltan agregar referencias comerciales.';
+    //             }
+
+    //             $documentosObligatorios = DB::table('catalogo_documentosproveedor')
+    //                 ->where('ACTIVO', 1)
+    //                 ->where('TIPO_DOCUMENTO', 1)
+    //                 ->where(function ($q) use ($tipoPersona) {
+    //                     $q->where('TIPO_PERSONA', $tipoPersona)
+    //                         ->orWhere('TIPO_PERSONA', 3);
+    //                 })
+    //                 ->where(function ($q) use ($tipoPersonaOpcion) {
+    //                     $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)
+    //                         ->orWhere('TIPO_PERSONA_OPCION', 3);
+    //                 })
+    //                 ->get();
+
+    //             $documentosSubidos = DB::table('formulario_altadocumentoproveedores')
+    //                 ->where('RFC_PROVEEDOR', $rfc)
+    //                 ->pluck('TIPO_DOCUMENTO_PROVEEDOR')
+    //                 ->toArray();
+
+    //             foreach ($documentosObligatorios as $doc) {
+    //                 if (!in_array($doc->ID_CATALOGO_DOCUMENTOSPROVEEDOR, $documentosSubidos)) {
+    //                     $mensajes[] = 'Falta el documento: ' . $doc->NOMBRE_DOCUMENTO;
+    //                 }
+    //             }
+
+    //             $value->ESTATUS_DATOS = empty($mensajes)
+    //                 ? '<span class="badge bg-success">Completo</span>'
+    //                 : implode('<br>', array_map(fn($msg) => "<span class='text-danger'>$msg</span>", $mensajes));
+
+    //             $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+
+    //             $value->BTN_CORREO = empty($mensajes)
+    //                 ? ''
+    //                 : '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
+
+
+    //         }
+
+    //         return response()->json([
+    //             'data' => $tabla,
+    //             'msj' => 'Información consultada correctamente'
+    //         ]);
+    //     } catch (Exception $e) {
+    //         return response()->json([
+    //             'msj' => 'Error ' . $e->getMessage(),
+    //             'data' => 0
+    //         ]);
+    //     }
+    // }
+
+
+
     public function Tablalistaproveedores()
     {
         try {
@@ -60,24 +229,21 @@ class listaproveedorController extends Controller
                 ->whereDate('FECHA_FIN', '>=', now())
                 ->first();
 
-
             foreach ($tabla as $value) {
-
 
                 $value->BTN_ACTUALIZACION_DOCS = '';
 
-                
                 if ($value->ACTIVO == 0) {
-
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ALTA . '"><span class="slider round"></span></label>';
                 } else {
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_ALTA . '" checked><span class="slider round"></span></label>';
                 }
 
-
                 $correoEnviadoPeriodo = false;
+                $registroEnPeriodo = false;
 
                 if ($periodo) {
+
                     $correoEnviadoPeriodo = DB::table('enviocorreo_proveedor')
                         ->where('RFC_PROVEEDOR', $value->RFC_ALTA)
                         ->whereBetween('created_at', [
@@ -85,9 +251,10 @@ class listaproveedorController extends Controller
                             $periodo->FECHA_FIN
                         ])
                         ->exists();
+
+                    $registroEnPeriodo = $value->created_at >= $periodo->FECHA_INICIO
+                        && $value->created_at <= $periodo->FECHA_FIN;
                 }
-
-
 
                 if ((int) $value->VERIFICACION_SOLICITADA === 1) {
 
@@ -99,34 +266,25 @@ class listaproveedorController extends Controller
 
                     if ($periodo) {
 
-                        if ($correoEnviadoPeriodo) {
+                        if ($correoEnviadoPeriodo || $registroEnPeriodo) {
 
-                            $value->BTN_ACTUALIZACION_DOCS =
-                                        '<button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
-                                data-id="' . $value->ID_FORMULARIO_ALTA . '"
-                                disabled
-                                data-bs-toggle="tooltip"
-                                title="Correo ya enviado en este periodo">
-                                <i class="bi bi-envelope-paper-fill"></i>
-                                </button>';
+                            $value->BTN_ACTUALIZACION_DOCS = '';
                         } else {
 
                             $value->BTN_ACTUALIZACION_DOCS =
                                 '<button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
-                                data-id="' . $value->ID_FORMULARIO_ALTA . '"
-                                data-bs-toggle="tooltip"
-                                title="Enviar solicitud de actualización">
-                                <i class="bi bi-envelope-paper-fill"></i>
-                                </button>';
+                            data-id="' . $value->ID_FORMULARIO_ALTA . '"
+                            data-bs-toggle="tooltip"
+                            title="Enviar solicitud de actualización">
+                            <i class="bi bi-envelope-paper-fill"></i>
+                            </button>';
                         }
                     } else {
-
                         $value->BTN_ACTUALIZACION_DOCS = '';
                     }
 
                     continue;
                 }
-
 
                 $mensajes = [];
                 $rfc = $value->RFC_ALTA;
@@ -178,8 +336,6 @@ class listaproveedorController extends Controller
                 $value->BTN_CORREO = empty($mensajes)
                     ? ''
                     : '<button type="button" class="btn btn-info btn-custom rounded-pill CORREO" data-id="' . $value->ID_FORMULARIO_ALTA . '"><i class="bi bi-envelope-arrow-up-fill"></i></button>';
-
-                
             }
 
             return response()->json([
@@ -193,6 +349,8 @@ class listaproveedorController extends Controller
             ]);
         }
     }
+
+
 
     /////// INACTIVO
 

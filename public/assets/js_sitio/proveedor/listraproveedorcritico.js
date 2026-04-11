@@ -133,6 +133,13 @@ var Tablalistaproveedorescriticos = $("#Tablalistaproveedorescriticos").DataTabl
         },
         { data: 'RFC_ALTA' },
         { data: 'RAZON_SOCIAL_ALTA' },
+        {
+            data: 'created_at',
+            render: function (data) {
+                if (!data) return '';
+                return data.split('T')[0]; 
+            }
+        },
         { data: 'ESTATUS_DATOS' }, 
         { data: 'BTN_CORREO' },
         { data: 'BTN_EDITAR' },
@@ -154,11 +161,12 @@ var Tablalistaproveedorescriticos = $("#Tablalistaproveedorescriticos").DataTabl
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Razón social/Nombre  ', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Información faltante', className: 'all text-center' },
-        { targets: 4, title: 'Correo', className: 'all text-center' },
-        { targets: 5, title: 'Mostrar', className: 'all text-center' },
-        { targets: 6, title: 'Activo', className: 'all text-center' },
+        { targets: 2, title: 'Razón social/Nombre', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Fecha de registro', className: 'all text-center' },
+        { targets: 4, title: 'Información faltante', className: 'all text-center' },
+        { targets: 5, title: 'Correo', className: 'all text-center' },
+        { targets: 6, title: 'Mostrar', className: 'all text-center' },
+        { targets: 7, title: 'Activo', className: 'all text-center' },
 
 
     ],
@@ -547,7 +555,7 @@ $('#Tablalistaproveedorescriticos tbody').on('click', 'td>button.EDITAR', functi
         $("#DOMICILIO_ERXTRANJERO").show();
     }
 
-    actualizarStepsConCurp(rfc);
+    actualizarStepsConRFC(rfc);
 
     tablacuentasCargada = false;
     tablacontactosCargada = false;
@@ -592,7 +600,6 @@ $('#Tablalistaproveedorescriticos tbody').on('change', 'td>label>input.ELIMINAR'
 function cualdescuentos() {
     var otrosCheckbox = document.getElementById('OTROS_DESCUENTO');
     var actividadDiv = document.getElementById('CUAL_DESCUENTOS');
-    
     actividadDiv.style.display = otrosCheckbox.checked ? 'block' : 'none';
 }
 
@@ -604,7 +611,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function actualizarStepsConCurp(rfc) {
+function actualizarStepsConRFC(rfc) {
     $("#RFC_ALTA").val(rfc);
     rfcSeleccionada = rfc;
 }
@@ -862,7 +869,6 @@ $('#VALIDAR_INFORMACION_PROVEEDOR').on('click', function() {
 // <!-- ============================================================================================================================ -->
 // <!--                                                          STEP 2                                                              -->
 // <!-- ============================================================================================================================ -->
-
 
 
 

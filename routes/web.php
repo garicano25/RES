@@ -167,7 +167,7 @@ use App\Http\Controllers\listaitemcritico\listaitemcriticoController;
 use App\Http\Controllers\listaalerta\listaalertaController;
 use App\Http\Controllers\listaasignacion\listaasignacionController;
 use App\Http\Controllers\listainfraestructura\listainfraestructuraController;
-
+use App\Http\Controllers\inventario\catalogokitsController;
 
 
 //// BITACORAS INVENTARIO
@@ -942,6 +942,8 @@ Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'en
 Route::post('/actualizarVerificacionSolicitada', [listaproveedorController::class, 'actualizarVerificacionSolicitada']);
 Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'verificarEstadoVerificacion']);
 
+Route::post('/verificarestadobloqueoproveedor', [listaproveedorController::class, 'verificarestadobloqueoproveedor']);
+
 ///// INACTIVO 
 
 Route::get('/Tablalistaproveedorinactivo', [listaproveedorController::class, 'Tablalistaproveedorinactivo']);
@@ -1013,7 +1015,6 @@ Route::get('/Tablaordencompraprobacion', [poController::class, 'Tablaordencompra
 Route::post('/PoSave', [poController::class, 'store']);
 Route::get('/obtenerNombreUsuario/{id}', [poController::class, 'obtenerNombreUsuario']);
 Route::get('/generarPDFPO/{id}', [pdfpoController::class, 'generarPDFPO']);
-
 Route::post('/enviarCorreoPO', [pdfpoController::class, 'enviarCorreoPO']);
 
 
@@ -1198,11 +1199,20 @@ Route::get('/Tabladetallearticulos', [inventarioController::class, 'Tabladetalle
 Route::get('/obtenerDocumentosPorInventario/{inventario_id}', [inventarioController::class, 'obtenerDocumentosPorInventario']);
 
 //==============================================   CATALOGOS INVENTRARIO  ============================================== 
+
 Route::get('/catalogosinventarios', function () { return view('almacen.Catalogos.catalogo_inventarios');});
+
+/// TIPO
 Route::get('/catalogotipoinventario', function () { return view('almacen.Catalogos.catalogo_tipo');});
 Route::post('/TipoinventarioSave', [catalogotipoinventarioController::class, 'store']);
 Route::get('/Tablatipoinventario', [catalogotipoinventarioController::class, 'Tablatipoinventario']);
 Route::get('/TipoinventarioDelete', [catalogotipoinventarioController::class, 'store']);
+
+/// KIT
+Route::get('/catalogokits', function () { return view('almacen.Catalogos.catalogo_kits');});
+Route::post('/KitsSave', [catalogokitsController::class, 'store']);
+Route::get('/Tablakits', [catalogokitsController::class, 'Tablakits']);
+Route::get('/KitsDelete', [catalogokitsController::class, 'store']);
 
 //==============================================   APROBACION DE SOLICITUDES  ============================================== 
 Route::get('/aprobacionalmacen', function () {return view('almacen.aprobarsolicitudes.aprobarsolicitudes');});

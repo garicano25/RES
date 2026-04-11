@@ -231,9 +231,9 @@
 
                 <!-- Lista de contratos Tab -->
                 <div class="tab-pane fade show active" id="contratos" role="tabpanel" aria-labelledby="contratos-tab">
-                    <ol class="breadcrumb mb-5">
+                    <ol class="breadcrumb mt-5" style="display: flex; justify-content: center; align-items: center;">
                         <h3 style="color: #ffffff; margin: 0;">
-                            <i class="bi bi-folder2-open"></i>&nbsp;&nbsp;Proveedores
+                            <i class="bi bi-folder2-open"></i>&nbsp;&nbsp;Lista de proveedores
                         </h3>
 
                     </ol>
@@ -890,7 +890,7 @@
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Contratos</h3>
 
-                            <button type="button" class="btn btn-light waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#miModal_contrato" style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_CONTRATO" data-bs-toggle="modal" data-bs-target="#miModal_contrato" style="margin-left: auto;">
                                 Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>

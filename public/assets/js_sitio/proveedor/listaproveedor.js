@@ -96,6 +96,103 @@ textoInactivo.addEventListener('click', () => {
 
 
 
+function bloquearBotones() {
+    const botones = [
+        'guardarALTA',
+        'NUEVA_CUENTA',
+        'guardarCuentas',
+        'NUEVO_CONTACTO',
+        'guardarCONTACTOS',
+        'NUEVA_CERTIFICACION',
+        'guardarCertificaciones',
+        'NUEVA_REFERENCIA',
+        'guardarREFERENCIAS',
+        'NUEVO_DOCUMENTO',
+        'guardarDOCUMENTOS',
+        'NUEVA_ASIGNACION',
+        'guardarASIGNACIONES',
+        'NUEVO_CONTRATO',
+        'guardarCONTRATOPROVEEDOR',
+        'btnGuardarFactura'
+        
+    ];
+
+    botones.forEach(botonId => {
+        const boton = document.getElementById(botonId);
+        if (boton) {
+            boton.setAttribute('disabled', 'true');
+        }
+    });
+}
+
+
+function desbloquearBotones() {
+    const botones = [
+       'guardarALTA',
+        'NUEVA_CUENTA',
+        'guardarCuentas',
+        'NUEVO_CONTACTO',
+        'guardarCONTACTOS',
+        'NUEVA_CERTIFICACION',
+        'guardarCertificaciones',
+        'NUEVA_REFERENCIA',
+        'guardarREFERENCIAS',
+        'NUEVO_DOCUMENTO',
+        'guardarDOCUMENTOS',
+        'NUEVA_ASIGNACION',
+        'guardarASIGNACIONES',
+        'NUEVO_CONTRATO',
+        'guardarCONTRATOPROVEEDOR',
+        'btnGuardarFactura'
+    ];
+
+    botones.forEach(botonId => {
+        const boton = document.getElementById(botonId);
+        if (boton) {
+            boton.removeAttribute('disabled');
+        }
+    });
+}
+
+
+
+
+
+
+function verificarEstadoYActualizarBotones() {
+    if (typeof rfcSeleccionada === 'undefined' || !rfcSeleccionada) {
+        console.error('RFC');
+        return;
+    }
+
+    fetch('/verificarestadobloqueoproveedor', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+        },
+        body: JSON.stringify({ rfcSeleccionada }) 
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error en la respuesta del servidor.');
+            }
+            return response.json();
+        })
+        .then(data => {
+            const bloqueodesactivado = data.bloqueodesactivado;
+
+            if (bloqueodesactivado === 0) {
+                bloquearBotones();
+            } else {
+                desbloquearBotones();
+            }
+        })
+        .catch(error => {
+            console.error('Error al verificar el estado:', error);
+        });
+}
+
 
 $('#myTab a').on('click', function (e) {
     e.preventDefault();
@@ -180,6 +277,13 @@ function cargarTablaProveedoresInactivo() {
             },
             { data: 'RFC_ALTA' },
             { data: 'RAZON_SOCIAL_ALTA' },
+            {
+                data: 'created_at',
+                render: function (data) {
+                    if (!data) return '';
+                    return data.split('T')[0]; 
+                }
+            },
             { data: 'BTN_EDITAR' },
             { data: 'BTN_ELIMINAR' }
         ],
@@ -187,8 +291,9 @@ function cargarTablaProveedoresInactivo() {
             { targets: 0, title: '#', className: 'all text-center' },
             { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
             { targets: 2, title: 'Razón social/Nombre  ', className: 'all text-center nombre-column' },
-            { targets: 3, title: 'Mostrar', className: 'all text-center' },
-            { targets: 4, title: 'Activo', className: 'all text-center' },
+            { targets: 3, title: 'Fecha de registro', className: 'all text-center' },
+            { targets: 4, title: 'Mostrar', className: 'all text-center' },
+            { targets: 5, title: 'Activo', className: 'all text-center' },
 
 
         ],
@@ -365,7 +470,11 @@ $('#Tablalistaproveedorinactivo').on('click', 'td>button.EDITAR', function () {
         $("#DOMICILIO_ERXTRANJERO").show();
     }
 
-    actualizarStepsConCurp(rfc);
+
+    verificarEstadoYActualizarBotones();
+
+
+    actualizarStepsConRFC(rfc);
 
     tablacuentasCargada = false;
     tablacontactosCargada = false;
@@ -533,6 +642,13 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
         },
         { data: 'RFC_ALTA' },
         { data: 'RAZON_SOCIAL_ALTA' },
+        {
+            data: 'created_at',
+            render: function (data) {
+                if (!data) return '';
+                return data.split('T')[0]; 
+            }
+        },
         { data: 'ESTATUS_DATOS' }, 
         { data: 'BTN_CORREO' },
         { data: 'BTN_ACTUALIZACION_DOCS' },
@@ -555,12 +671,13 @@ var Tablalistaproveedores = $("#Tablalistaproveedores").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all text-center' },
         { targets: 1, title: 'RFC/Tax ID ', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Razón social/Nombre  ', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Información faltante', className: 'all text-center' },
-        { targets: 4, title: 'Correo', className: 'all text-center' },
-        { targets: 5, title: 'Actualizar Docs', className: 'text-center' },
-        { targets: 6, title: 'Mostrar', className: 'all text-center' },
-        { targets: 7, title: 'Activo', className: 'all text-center' },
+        { targets: 2, title: 'Razón social/Nombre', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Fecha de registro', className: 'all text-center' },
+        { targets: 4, title: 'Información faltante', className: 'all text-center' },
+        { targets: 5, title: 'Correo', className: 'all text-center' },
+        { targets: 6, title: 'Actualizar Docs', className: 'text-center' },
+        { targets: 7, title: 'Mostrar', className: 'all text-center' },
+        { targets: 8, title: 'Activo', className: 'all text-center' },
 
 
     ],
@@ -981,7 +1098,10 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
         $("#DOMICILIO_ERXTRANJERO").show();
     }
 
-    actualizarStepsConCurp(rfc);
+    verificarEstadoYActualizarBotones();
+
+    
+    actualizarStepsConRFC(rfc);
 
     tablacuentasCargada = false;
     tablacontactosCargada = false;
@@ -1032,7 +1152,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-function actualizarStepsConCurp(rfc) {
+function actualizarStepsConRFC(rfc) {
     $("#RFC_ALTA").val(rfc);
     rfcSeleccionada = rfc;
 }
