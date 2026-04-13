@@ -206,14 +206,13 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::post('/verify-code', [AuthController::class, 'verifyCode']);
-
+Route::get('/validarRolExterno', [AuthController::class, 'validarRolExterno']);
 //==============================================  ENVIAR CORREO  ============================================== 
 
 Route::post('/enviar-codigo', [VerificationController::class, 'enviarCodigo']);
 Route::post('/verificar-codigo', [VerificationController::class, 'verificarCodigo']);
 //==============================================  Módulos  ============================================== 
 
-// Route::get('/modulos', [catalogoanuncioController::class, 'index'])->middleware('role:Superusuario,Administrador,Líder contable y financiero,Asistente de compras,Almacenista,Líder RRHH y Administración,Intendente,Líder de Operaciones,Consultor-Instructor (Junior/Senior),Ejecutivo de ventas,Asistente contable,Analista HSEQ,Asistente de planeación y logística,Desarrollador de Software Junior,Consultor-Instructor Junior,Ama de llaves');
 
 
 Route::get('/modulos', [catalogoanuncioController::class, 'index']);
@@ -265,7 +264,7 @@ Route::get('/mostrarFoto/{id}', [areasController::class, 'mostrarFoto']);
 Route::post('/activarEncargado', [areasController::class, 'activarEncargado']);
 
 // PPT
-Route::get('/ppt', [pptController::class, 'index'])->middleware('role:Superusuario,Administrador,Analista HSEQ,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor-Instructor (Junior/Senior)');
+Route::get('/ppt', [pptController::class, 'index'])->middleware('role:Superusuario,Administrador,Analista HSEQ,Asistente de planeación y logística,Desarrollador de software,Intendente,Consultor-Instructor (Junior/Senior),externo');
 Route::post('/pptSave', [pptController::class, 'store']);
 Route::get('/TablaPPT', [pptController::class, 'TablaPPT']);
 Route::get('/autorizarPPT/{id_formulario}', [pptController::class, 'autorizarPPT']);
@@ -290,7 +289,7 @@ Route::get('/Tablasolicitudrequerimientopersonal', [requerimientopersonalsolicit
 
 
 // REQUERIMIENTO PERSONAL 
-Route::get('/requisiciondepersonal', [requerimientoPersonalController::class, 'index'])->middleware('role:Superusuario,Administrador');
+Route::get('/requisiciondepersonal', [requerimientoPersonalController::class, 'index'])->middleware('role:Superusuario,Administrador,externo');
 Route::post('/RequerimientoSave', [requerimientoPersonalController::class, 'store']);
 Route::get('/RequerimientoDelete', [requerimientoPersonalController::class, 'store']);
 Route::get('/Tablarequerimiento', [requerimientoPersonalController::class, 'Tablarequerimiento']);
@@ -452,14 +451,14 @@ Route::get('/Tablapostulacioneshistorial', [vacanteshistorialController::class, 
 // VISUALIZAR HISTORIAL DE SELECCION
 
 
-Route::get('/visualizarseleccion', [seleccionController::class, 'index2'])->middleware('role:Superusuario,Administrador');
+Route::get('/visualizarseleccion', [seleccionController::class, 'index2'])->middleware('role:Superusuario,Administrador,externo');
 Route::get('/Tablaseleccion2Visualizar', [seleccionController::class, 'Tablaseleccion2Visualizar']);
 Route::get('/consultarSeleccion2Visualizar/{vacantesId}', [seleccionController::class, 'consultarSeleccion2Visualizar']);
 
 
 // SELECCION
 
-Route::get('/seleccion', [seleccionController::class, 'index'])->middleware('role:Superusuario,Administrador');
+Route::get('/seleccion', [seleccionController::class, 'index'])->middleware('role:Superusuario,Administrador,externo');
 Route::get('/Tablaseleccion', [seleccionController::class, 'Tablaseleccion']);
 Route::post('/SeleccionSave', [seleccionController::class, 'store']);
 Route::get('/consultarSeleccion/{vacantesId}', [seleccionController::class, 'consultarSeleccion']);
@@ -514,7 +513,7 @@ Route::get('/obtenerInformacionContrato/{contrato_id}', [contratacionController:
 Route::post('/obtenerSiguienteNumeroEmpleado', [contratacionController::class, 'obtenerSiguienteNumeroEmpleado']);
 
 /////////////////////////////////////// STEP 1 DATOS GENERALES
-Route::get('/contratacion', [contratacionController::class, 'index'])->middleware('role:Superusuario,Administrador');
+Route::get('/contratacion', [contratacionController::class, 'index'])->middleware('role:Superusuario,Administrador,externo');
 Route::post('/contratoSave', [contratacionController::class, 'store']);
 Route::post('/obtenerbajasalta', [contratacionController::class, 'obtenerbajasalta']);
 Route::get('/Tablacontratacion', [contratacionController::class, 'Tablacontratacion']);

@@ -587,7 +587,7 @@
 
 
 
-                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
 
 
                                     <div class="aprobacion-direccion-hoja mt-5" style="display: none;">

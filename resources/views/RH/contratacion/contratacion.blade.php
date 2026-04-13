@@ -802,7 +802,7 @@
                     </div>
 
 
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                     <div id="informacion_medica_contratos">
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-hospital-fill"></i> &nbsp;Información Médica</h3>

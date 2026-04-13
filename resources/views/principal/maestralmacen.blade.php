@@ -295,10 +295,10 @@
                                 </ul>
                             </li>
                         </ul>
-                        @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                        @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/aprobacionalmacen') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                                <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Autorizar salidas de almacén</span><span class="d-none d-lg-inline">Autorizar salida de almacén</span>
+                                <i class="bi bi-patch-check-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Autorizar salidas de almacén</span><span class="d-none d-lg-inline">Aprobar salidas de almacén</span>
                             </a>
                         </li>
                         @endif
@@ -423,6 +423,7 @@
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=8"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
+    <script src="/assets/js_sitio/externo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
     <!-- Select 2 -->
@@ -506,8 +507,7 @@
     <script src="/assets/js_sitio/listadeinfraestructura/listadeinfraestructura.js?v=1"></script>
     @endif
 
-
-    @if(request()->is('catalogoskits'))
+    @if(request()->is('catalogokits'))
     <script src="/assets/js_sitio/inventario/catalogos/catalogokit.js"></script>
     @endif
 

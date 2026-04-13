@@ -788,7 +788,7 @@
                         | Rol con prioridad absoluta
                         |--------------------------------------------------------------------------
                         */
-                        $esSuperusuario = $user->hasAnyRole(['Superusuario', 'Administrador']);
+                        $esSuperusuario = $user->hasAnyRole(['Superusuario', 'Administrador','externo']);
 
                         /*
                         |--------------------------------------------------------------------------

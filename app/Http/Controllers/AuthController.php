@@ -25,6 +25,26 @@ use Carbon\Carbon;
 
 class AuthController extends Controller
 {
+
+
+    public function validarRolExterno()
+    {
+        $esExterno = false;
+
+        if (auth()->check()) {
+            $esExterno = auth()->user()->roles()
+                ->where('NOMBRE_ROL', 'externo')
+                ->where('ACTIVO', 1)
+                ->exists();
+        }
+
+        return response()->json([
+            'externo' => $esExterno
+        ]);
+    }
+
+
+    
     public function showLoginForm()
     {
         if (Auth::check()) {

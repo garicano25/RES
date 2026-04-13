@@ -24,7 +24,7 @@ class usuarioController extends Controller
     {
         $roles = CatalogocategoriaModel::where('ACTIVO', 1)->pluck('NOMBRE_CATEGORIA')->toArray();
 
-        array_unshift($roles, 'Superusuario', 'Administrador', 'Proveedor');
+        array_unshift($roles, 'Superusuario', 'Administrador', 'Proveedor', 'externo');
     
         return view('RH.usuario.usuario', compact('roles'));
     }

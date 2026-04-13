@@ -302,7 +302,7 @@
                             <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','externo']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/tablero') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-speedometer" style="margin-right: 5px;"></i> <span class="d-lg-none">Tablero</span><span class="d-none d-lg-inline">Tablero</span>
@@ -321,7 +321,9 @@
                     'Administrador',
                     'Líder RRHH y Administración',
                     'Líder de Operaciones',
-                    'Líder RRHH y Administración Director'
+                    'Líder RRHH y Administración',
+                    'Director',
+                    'externo'
                     ]))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -334,17 +336,17 @@
 
                         <ul class="dropdown-menu">
 
-                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador','externo']))
                             <li><a class="dropdown-item" href="{{ url('/organigrama') }}">Organigrama</a></li>
                             <hr class="dropdown-divider">
                             @endif
 
-                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador','externo']))
                             <li><a class="dropdown-item" href="{{ url('/ppt') }}">PPT</a></li>
                             <hr class="dropdown-divider">
                             @endif
 
-                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                            @if(auth()->user()->hasRoles(['Superusuario', 'Administrador','externo']))
                             <li><a class="dropdown-item" href="{{ url('/dpt') }}">DPT</a></li>
                             <hr class="dropdown-divider">
                             @endif
@@ -361,7 +363,9 @@
                                     'Administrador',
                                     'Líder RRHH y Administración',
                                     'Líder de Operaciones',
-                                    'Líder RRHH y Administración Director'
+                                    'Líder RRHH y Administración',
+                                    'Director',
+                                    'externo'
                                     ]))
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/requisiciondepersonalsolicitud') }}">
@@ -370,11 +374,11 @@
                                     </li>
                                     @endif
 
-                                    @if(auth()->user()->hasRoles(['Superusuario', 'Administrador']))
+                                    @if(auth()->user()->hasRoles(['Superusuario', 'Administrador','externo']))
                                     <hr class="dropdown-divider">
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/requisiciondepersonal') }}">
-                                           Autorización
+                                            Autorización
                                         </a>
                                     </li>
                                     @endif
@@ -385,7 +389,7 @@
                         </ul>
                     </li>
                     @endif
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Reclutamiento</span><span class="d-none d-lg-inline">Reclutamiento</span>
@@ -400,7 +404,7 @@
                         </ul>
                     </li>
                     @endif
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Selección</span><span class="d-none d-lg-inline">Selección</span>
@@ -414,7 +418,7 @@
                     </li>
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span Contrataciónclass="d-none d-lg-inline">Contratación</span>
+                            <i class="bi bi-person-badge-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Contratación</span><span class="d-none d-lg-inline">Contratación</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/pendientecontratar') }}">Pendientes por contratar</a></li>
@@ -463,7 +467,7 @@
                                     Expediente </a>
                             </li>
                             {{-- Para líderes --}}
-                            @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Líder de Operaciones', 'Administrador']))
+                            @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Líder de Operaciones', 'Administrador','externo']))
                             <hr class="dropdown-divider">
                             <li>
                                 <a class="dropdown-item" href="{{ url('/solicitudesvobo') }}">
@@ -472,7 +476,7 @@
                             </li>
                             @endif
                             {{-- Para administradores --}}
-                            @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                            @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                             <hr class="dropdown-divider">
                             <li>
                                 <a class="dropdown-item" href="{{ url('/solicitudesaprobaciones') }}">
@@ -482,10 +486,10 @@
                             @endif
                         </ul>
                     </li>
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none; " role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span Contrataciónclass="d-none d-lg-inline">Capacitación</span>
+                            <i class="bi bi-person-bounding-box" style="margin-right: 5px;"></i> <span class="d-lg-none">Capacitación</span><span class="d-none d-lg-inline">Capacitación</span>
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="{{ url('/brechacompetencia') }}">Brecha de competencia</a></li>
@@ -499,7 +503,7 @@
                         <i class="bi bi-clipboard-data-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Eval.desempeño</span><span class="d-none d-lg-inline">Eval.desempeño</span>
                     </a>
                 </li> --}}
-                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/desvinculacion') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                             <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
@@ -622,6 +626,8 @@
 
     <script src="/assets/js_sitio/funciones.js?v=8"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
+    <script src="/assets/js_sitio/externo.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
     <!-- Select 2 -->

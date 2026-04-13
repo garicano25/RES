@@ -25,7 +25,7 @@ Modalmr.addEventListener('hidden.bs.modal', event => {
     document.querySelector('.materialesdiv').innerHTML = '';
     contadorMateriales = 1;
 
-const inputFecha = document.getElementById("FECHA_ALMACEN_SOLICITUD");
+    const inputFecha = document.getElementById("FECHA_ALMACEN_SOLICITUD");
     if (inputFecha) {
         inputFecha.classList.remove("is-invalid"); 
     }
@@ -991,8 +991,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
         selectAsignacionarticulos.addEventListener("change", actualizarNombreAsignacion);
 
 
-                        
-
         if (material.VARIOS_ARTICULOS !== "1") {
         
             $(divMaterial).find('.mydatepicker').datepicker({
@@ -1006,7 +1004,6 @@ function cargarMaterialesDesdeJSON(materialesJson) {
             });
 
             
-          
             function cargarInventario(tipoSeleccionado, valorGuardado = null) {
 
                 if (!tipoSeleccionado) return;
@@ -1073,8 +1070,7 @@ function cargarMaterialesDesdeJSON(materialesJson) {
                 });
             }
 
-            
-        
+
             if (material.TIPO_INVENTARIO) {
                 cargarInventario(material.TIPO_INVENTARIO, material.INVENTARIO);
             }

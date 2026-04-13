@@ -302,8 +302,7 @@
                                         Requisición de Materiales - M.R </a>
                                 </li>
                                 @endif
-                                {{-- Para líderes --}}
-                                @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Líder de Operaciones']))
+                                @if(auth()->user()->hasRoles(['Superusuario','Líder RRHH y Administración','Líder contable y financiero','Líder de Operaciones','externo']))
                                 <hr class="dropdown-divider">
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/requisicionmaterialeslideres') }}">
@@ -311,8 +310,7 @@
                                     </a>
                                 </li>
                                 @endif
-                                {{-- Para administradores --}}
-                                @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                                 <hr class="dropdown-divider">
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/requisicionmaterialesaprobacion') }}">
@@ -322,7 +320,7 @@
                                 @endif
                             </ul>
                         </li>
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras','externo']))
                         <!-- <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link BOTON" href="{{ url('/bitacora') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
                                 <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Bitácora de consecutivos - MR</span><span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
@@ -350,7 +348,7 @@
 
                         @endif
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras']))
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras','externo']))
                         <li class="nav-item dropdown" style="margin-left: -2px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
                                 style="color: #fff; font-weight: bold; text-decoration: none;"
@@ -360,14 +358,12 @@
                                 <span class="d-none d-lg-inline">Proveedores</span>
                             </a>
                             <ul class="dropdown-menu">
-                                {{-- Todos los roles anteriores lo ven --}}
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/bancoproveedores') }}">
                                         Banco de proveedores
                                     </a>
                                 </li>
-                                {{-- Solo Superusuario, Administrador y Asistente de compras --}}
-                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras']))
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras','externo']))
                                 <hr class="dropdown-divider">
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/listaproveedores') }}">
@@ -382,8 +378,7 @@
                                 </li>
 
                                 @endif
-                                {{-- Superusuario, Administrador, Asistente de planeación y logística y Asistente de compras --}}
-                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras']))
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras','externo']))
                                 <hr class="dropdown-divider">
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/proveedorestemporales') }}">
@@ -402,7 +397,7 @@
                                             </a>
                                         </li>
 
-                                        @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                                        @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                                         <hr class="dropdown-divider">
                                         <li>
                                             <a class="dropdown-item" href="{{ url('/aprobardocumentosproveedor') }}">
@@ -420,7 +415,7 @@
                         @endif
 
 
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras','externo']))
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -431,14 +426,12 @@
                                     <span class="d-none d-lg-inline">Matriz comparativa</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/matrizcomparativa') }}">
                                             Matriz comparativa
                                         </a>
                                     </li>
-                                    {{-- Solo Superusuario y Administrador --}}
-                                    @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                                    @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                                     <hr class="dropdown-divider">
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/matrizaprobacion') }}">
@@ -450,7 +443,7 @@
                             </li>
                         </ul>
                         @endif
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras','externo']))
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
@@ -461,7 +454,6 @@
                                     <span class="d-none d-lg-inline">Orden de compra - PO</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    {{-- Visible para Superusuario, Administrador y Asistente de compras --}}
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/ordencompra') }}">
                                             Actual
@@ -473,8 +465,7 @@
                                             Historial
                                         </a>
                                     </li>
-                                    {{-- Solo Superusuario y Administrador --}}
-                                    @if(auth()->user()->hasRoles(['Superusuario','Administrador']))
+                                    @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                                     <hr class="dropdown-divider">
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/ordencompraaprobacion') }}">
@@ -496,8 +487,7 @@
                                     <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    {{-- Solo Superusuario, Administrador y Almacenista --}}
-                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Almacenista']))
+                                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','Almacenista','externo']))
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/bitacoragr') }}">
                                             Actual
@@ -512,7 +502,6 @@
                                     <hr class="dropdown-divider">
 
                                     @endif
-                                    {{-- Opción visible para todos los usuarios autenticados --}}
                                     <li>
                                         <a class="dropdown-item" href="{{ url('/vobogrusuario') }}">
                                             Vo.Bo. de usuario de B.y.S
@@ -521,7 +510,7 @@
                                 </ul>
                             </li>
                         </ul>
-                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras']))
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras','externo']))
                         <ul class="navbar-nav">
                             <li class="nav-item dropdown" style="margin-left: -2px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -617,7 +606,9 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=8"></script>
-    <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
+    <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>}
+    <script src="/assets/js_sitio/externo.js"></script>
+
     <!-- Select 2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
