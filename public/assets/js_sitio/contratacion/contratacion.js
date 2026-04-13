@@ -1057,6 +1057,7 @@ $('#Tablacontratacion tbody').on('click', 'td>button.EDITAR', function () {
     }
 
     verificarEstadoYActualizarBotones();
+    bloquearPorRolExterno();
 
     actualizarStepsConCurp(curp);
 
@@ -1585,6 +1586,7 @@ document.getElementById('step2').addEventListener('click', function() {
     }
 
     cargarDocumentosGuardados();
+    bloquearPorRolExterno();
 
 });
 
@@ -2006,6 +2008,8 @@ document.getElementById('step3').addEventListener('click', function() {
         tablacontratosCargada = true;
     }
   
+    bloquearPorRolExterno();
+
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -2681,6 +2685,9 @@ $('#Tablacontratosyanexos').on('click', 'button.informacion', function () {
     validarPrimerContrato();
     cargarTablasingnaciongeneral();
 
+    bloquearPorRolExterno();
+
+    
 });
 
  function cargarInformacionContrato() {
@@ -5664,6 +5671,7 @@ document.getElementById('step4').addEventListener('click', function() {
     }
 
     cargarDocumentossoportecontratosgenerales();
+    bloquearPorRolExterno();
 
 });
 
@@ -6117,6 +6125,8 @@ document.getElementById('step5').addEventListener('click', function() {
         cargarTablaCV();
         tablaCVCargada = true;
     }
+    bloquearPorRolExterno();
+
 });
 
 
@@ -7089,6 +7099,7 @@ document.getElementById('step6').addEventListener('click', function() {
         cargarTablarequisicion();
         tablarequisiconCargada = true;
     }
+    bloquearPorRolExterno();
   
 });
 

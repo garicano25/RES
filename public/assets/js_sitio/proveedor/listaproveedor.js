@@ -1099,6 +1099,7 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     }
 
     verificarEstadoYActualizarBotones();
+    bloquearPorRolExterno();
 
     
     actualizarStepsConRFC(rfc);

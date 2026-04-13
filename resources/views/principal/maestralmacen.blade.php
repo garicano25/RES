@@ -423,7 +423,6 @@
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=8"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
-    <script src="/assets/js_sitio/externo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
     <!-- Select 2 -->
@@ -510,6 +509,9 @@
     @if(request()->is('catalogokits'))
     <script src="/assets/js_sitio/inventario/catalogos/catalogokit.js"></script>
     @endif
+
+
+    <script src="/assets/js_sitio/externo.js?v=1.0"></script>
 
 </body>
 

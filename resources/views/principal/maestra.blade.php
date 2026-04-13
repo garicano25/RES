@@ -626,7 +626,6 @@
 
     <script src="/assets/js_sitio/funciones.js?v=8"></script>
     <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
-    <script src="/assets/js_sitio/externo.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 
@@ -764,7 +763,7 @@
     @endif
 
     @if(request()->is('contratacion'))
-    <script src="/assets/js_sitio/contratacion/contratacion.js?v=13"></script>
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=14"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
@@ -890,6 +889,13 @@
     @if(request()->is('capacitaciolineasnegocios'))
     <script src="/assets/js_sitio/capacitacion/catalogos/lineanegocios.js"></script>
     @endif
+
+
+
+    <script src="/assets/js_sitio/externo.js?v=1.0"></script>
+
+
+    
 </body>
 
 </html>

@@ -26,6 +26,10 @@ function bloquearPorRolExterno() {
                 $('#NUEVO_REQUISICION').prop('disabled', true);
                 $('#guardarFormRP').prop('disabled', true);
 
+
+                $('#guardarDatosGenerales').prop('disabled', true);
+
+                
          
                 $('#NUEVO_CLIENTE').prop('disabled', true);
                 $('#guardarEMPRESA').prop('disabled', true);

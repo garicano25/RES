@@ -606,8 +606,7 @@
     <script src="https://cdn.jsdelivr.net/npm/dropify@0.2.2/dist/js/dropify.min.js"></script>
     <!-- Funciones generales -->
     <script src="/assets/js_sitio/funciones.js?v=8"></script>
-    <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>}
-    <script src="/assets/js_sitio/externo.js"></script>
+    <script src="/assets/js_sitio/notificaciones.js?v=1.0"></script>
 
     <!-- Select 2 -->
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
@@ -669,7 +668,7 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=13"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=14"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -726,6 +725,7 @@
     <script src="/assets/js_sitio/proveedor/aprobardocumentosproveedor.js?v=6"></script>
     @endif
 
+    <script src="/assets/js_sitio/externo.js?v=1.0"></script>
 
 </body>
 
