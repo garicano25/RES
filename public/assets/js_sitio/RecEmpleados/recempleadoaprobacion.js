@@ -428,31 +428,31 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
 
     cargarMaterialesDesdeJSON(row.data().MATERIALES_JSON);
 
-  
+
     
      var CURP = row.data().CURP;
 
     editarDatoTabla(row.data(), 'formularioRECURSOSEMPLEADO', 'miModal_RECURSOSEMPLEADOS', 1);
     
 
-        const dias = document.getElementById("NODIAS_PERMISO");
-        const horas = document.getElementById("NOHORAS_PERMISO");
+    const dias = document.getElementById("NODIAS_PERMISO");
+    const horas = document.getElementById("NOHORAS_PERMISO");
 
-        if (row.data().NODIAS_PERMISO && parseInt(row.data().NODIAS_PERMISO) > 0) {
-            dias.disabled = false;
-            horas.value = "";
-            horas.disabled = true;
-        }
+    if (row.data().NODIAS_PERMISO && parseInt(row.data().NODIAS_PERMISO) > 0) {
+        dias.disabled = false;
+        horas.value = "";
+        horas.disabled = true;
+    }
 
-        else if (row.data().NOHORAS_PERMISO && parseInt(row.data().NOHORAS_PERMISO) > 0) {
-            horas.disabled = false;
-            dias.value = "";
-            dias.disabled = true;
-        }
+    else if (row.data().NOHORAS_PERMISO && parseInt(row.data().NOHORAS_PERMISO) > 0) {
+        horas.disabled = false;
+        dias.value = "";
+        dias.disabled = true;
+    }
 
-        else {
-            dias.disabled = false;
-            horas.disabled = false;
+    else {
+        dias.disabled = false;
+        horas.disabled = false;
     }
     
 
@@ -495,15 +495,17 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
     } else {
         $('#EXPLIQUE_PERMISO').hide();
     }
-        
+    
+    if (row.data().CONCEPTO_PERMISO === "2") {
+    $('#goceno').prop('checked', true);
+    }
+    
    if (row.data().DAR_BUENO == 1) { 
-    $('#VISTO_BUENO_JEFE').show();
-    $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-
+        $('#VISTO_BUENO_JEFE').show();
+        $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
     } else if (row.data().DAR_BUENO == 2) {
         $('#VISTO_BUENO_JEFE').show();
         $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-
     } else {
         $('#VISTO_BUENO_JEFE').hide();
         $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
@@ -524,7 +526,6 @@ $('#Tablarecempleadoaprobacion tbody').on('click', 'td>button.EDITAR', function 
         $("#FECHA_APRUEBA_SOLICITUD").val(fechaHoy);
     } 
 
-     
     if (row.data().ESTADO_APROBACION === "Aprobada") {
      $('#SELECCIONAR_SUBIRDOCUMENTO').show();
     } else if (row.data().ESTADO_APROBACION === "Rechazada") {

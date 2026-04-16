@@ -789,7 +789,7 @@
     @endif
 
     @if(request()->is('solicitudesaprobaciones'))
-    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=1.18"></script>
+    <script src="/assets/js_sitio/RecEmpleados/recempleadoaprobacion.js?v=2"></script>
     @endif
 
     @if(request()->is('requisiciondepersonalsolicitud'))
