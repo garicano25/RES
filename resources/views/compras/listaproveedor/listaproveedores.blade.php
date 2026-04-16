@@ -1728,7 +1728,10 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>Fecha de la factura *</label>
-                            <input type="date" class="form-control" placeholder="aaaa-mm-dd" id="FECHA_FACTURA" name="FECHA_FACTURA" required readonly>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FACTURA" name="FECHA_FACTURA" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>Método Pago</label>
@@ -1759,7 +1762,10 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>Fecha de la factura *</label>
-                            <input type="date" class="form-control" placeholder="aaaa-mm-dd" id="FECHA_FACTURA_EXTRANJERO" name="FECHA_FACTURA_EXTRANJERO" required readonly>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FACTURA_EXTRANJERO" name="FECHA_FACTURA_EXTRANJERO" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>Moneda</label>
