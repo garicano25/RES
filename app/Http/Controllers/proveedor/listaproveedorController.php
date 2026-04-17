@@ -1309,7 +1309,7 @@ class listaproveedorController extends Controller
                 if ($value->TIPO_FACTURA == 'CONTRATO') {
                     $value->TIPO_FACTURA_FORMATO = 'Contrato (No. ' . $value->NO_CONTRATO . ')';
                 } elseif ($value->TIPO_FACTURA == 'OC') {
-                    $value->TIPO_FACTURA_FORMATO = 'Orden de Compra y Recepción (PO: ' . $value->NO_PO . ' | GR: ' . $value->NO_GR . ')';
+                    $value->TIPO_FACTURA_FORMATO = 'Orden de Compra y Recepción <br> (PO: ' . $value->NO_PO . ' | GR: ' . $value->NO_GR . ')';
                 } else {
                     $value->TIPO_FACTURA_FORMATO = $value->TIPO_FACTURA;
                 }
