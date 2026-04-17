@@ -235,7 +235,6 @@
                         <h3 style="color: #ffffff; margin: 0;">
                             <i class="bi bi-folder2-open"></i>&nbsp;&nbsp;Lista de proveedores
                         </h3>
-
                     </ol>
 
                     <div class="d-flex justify-content-center align-items-center mb-4">
@@ -890,7 +889,7 @@
                         <ol class="breadcrumb mt-5">
                             <h3 style="color: #ffffff; margin: 0;"><i class="bi bi-person-lines-fill"></i>&nbsp;Contratos</h3>
 
-                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_CONTRATO" data-bs-toggle="modal" data-bs-target="#miModal_contrato" style="margin-left: auto;">
+                            <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_CONTRATO" style="margin-left: auto;">
                                 Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                             </button>
                         </ol>
@@ -1630,7 +1629,7 @@
                     <div class="mb-3">
                         <label>Número de contrato</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="NUMERO_CONTRATO_PROVEEDOR" name="NUMERO_CONTRATO_PROVEEDOR" required>
+                            <input type="text" class="form-control" id="NUMERO_CONTRATO_PROVEEDOR" name="NUMERO_CONTRATO_PROVEEDOR" required readonly>
                         </div>
                     </div>
                     <div class="row  mb-3" id="CONTRATO" style="display: block">

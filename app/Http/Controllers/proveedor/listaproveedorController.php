@@ -1246,6 +1246,34 @@ class listaproveedorController extends Controller
         return Storage::response($archivo);
     }
 
+
+    public function folioContrato()
+    {
+        $anio = date('y'); 
+
+        $prefijo = "RESCS-" . $anio . "-";
+
+        $ultimo = DB::table('contratos_proveedores')
+            ->where('NUMERO_CONTRATO_PROVEEDOR', 'like', $prefijo . '%')
+            ->orderBy('NUMERO_CONTRATO_PROVEEDOR', 'desc')
+            ->first();
+
+        if ($ultimo) {
+            $numero = intval(substr($ultimo->NUMERO_CONTRATO_PROVEEDOR, -3)) + 1;
+        } else {
+            $numero = 1;
+        }
+
+        $consecutivo = str_pad($numero, 3, '0', STR_PAD_LEFT);
+
+        $folio = $prefijo . $consecutivo;
+
+        return response()->json([
+            'folio' => $folio
+        ]);
+    }
+
+
     // TABLA FACTURA PROVEEDOR
 
 

@@ -59,9 +59,7 @@
                         <label class="form-label">Seleccione el tipo *</label>
                         <select class="form-control" id="TIPO_SOLICITUD" name="TIPO_SOLICITUD" required style="pointer-events:none; background-color:#e9ecef;">
                             <option value="" selected disabled>Seleccione una opción</option>
-                            <option value="1">Aviso de ausencia y/o permiso</option>
                             <option value="2">Salida de almacén de materiales y/o equipos</option>
-                            <!-- <option value="3">Solicitud de Vacaciones</option> -->
                         </select>
                     </div>
 

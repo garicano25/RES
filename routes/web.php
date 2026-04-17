@@ -132,6 +132,8 @@ use App\Http\Controllers\proveedor\listaproveedorcriticoController;
 use App\Http\Controllers\proveedor\actualizaciondocumentosController;
 use App\Http\Controllers\proveedor\ordencompraproveedorController;
 use App\Http\Controllers\proveedor\facturaproveedorController;
+use App\Http\Controllers\proveedor\listacontratosController;
+
 
 
 // CONTROLADORES DE PO 
@@ -962,6 +964,8 @@ Route::get('/pdfAsignacionEppproveedor/{id}', [pdfasingacionController::class, '
 Route::get('/Tablacontratosproveedores', [listaproveedorController::class, 'Tablacontratosproveedores']);
 Route::get('/mostrarcontratoproveedor/{id}', [listaproveedorController::class, 'mostrarcontratoproveedor']);
 
+Route::get('/folioContrato', [listaproveedorController::class, 'folioContrato']);
+
 ///// FACTURAS PROVEEDOR
 Route::get('/Tablafacturaproveedoresinterno', [listaproveedorController::class, 'Tablafacturaproveedoresinterno']);
 Route::get('/obtenerDetalleFactura', [listaproveedorController::class, 'obtenerDetalleFactura']);
@@ -970,6 +974,11 @@ Route::get('/mostrarecibodepago/{id}', [listaproveedorController::class, 'mostra
 
 Route::get('/verXMLFactura/{id}', [listaproveedorController::class, 'verXMLFactura']);
 Route::get('/verXMLREP/{id}', [listaproveedorController::class, 'verXMLREP']);
+
+//==============================================    LISTA DE CONTRATOS PROVEEDORES  ============================================== 
+
+Route::get('/listacontratosproveedores', function () {return view('compras.listacontratos.listacontratos');});
+Route::get('/Tablalistacontratosproveedores', [listacontratosController::class, 'Tablalistacontratosproveedores']);
 
 
 //==============================================    LISTA DE PROVEEDORES CRITICO  ============================================== 

@@ -1,92 +1,125 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd"
-    xmlns:cfdi="http://www.sat.gob.mx/cfd/4" Version="4.0" Serie="A" Folio="86676" Fecha="2025-02-22T08:19:55"
-    Sello="iCXRp8Gil+2cvxV3Wq+YgsOp75b+DzpfIU4SHzIMWQ5R8dxYLhGoYOiYNzTAymmdgzEmV/1B2MZhg5fUCQPUtOc1mUqzcptHCfOkAc8PqnZdIddBnXArF6ZB8t8kSEB2nmaD2nDGn4R7GK1EKv1SRnO047Y+20LBf/UgI2Xkb/im3kfrvkLQrXKUEYiAoVFAWkz2iYveraEGx7QO4cofRPFFL7uqFKdVs8QMGllK+rcOcsJ/ZjbTbxGBqUwAqCSpwvLhFL9P3/v29ilpyREnQuZnA+qdFIIQHeC/1P2NUYenTCQe+nWMJ22C2bVZ1bSzSqwd0+KT3uNr2LYLQkE6JQ=="
-    FormaPago="99" NoCertificado="00001000000507350401"
-    Certificado="MIIGGTCCBAGgAwIBAgIUMDAwMDEwMDAwMDA1MDczNTA0MDEwDQYJKoZIhvcNAQELBQAwggGEMSAwHgYDVQQDDBdBVVRPUklEQUQgQ0VSVElGSUNBRE9SQTEuMCwGA1UECgwlU0VSVklDSU8gREUgQURNSU5JU1RSQUNJT04gVFJJQlVUQVJJQTEaMBgGA1UECwwRU0FULUlFUyBBdXRob3JpdHkxKjAoBgkqhkiG9w0BCQEWG2NvbnRhY3RvLnRlY25pY29Ac2F0LmdvYi5teDEmMCQGA1UECQwdQVYuIEhJREFMR08gNzcsIENPTC4gR1VFUlJFUk8xDjAMBgNVBBEMBTA2MzAwMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQQ0lVREFEIERFIE1FWElDTzETMBEGA1UEBwwKQ1VBVUhURU1PQzEVMBMGA1UELRMMU0FUOTcwNzAxTk4zMVwwWgYJKoZIhvcNAQkCE01yZXNwb25zYWJsZTogQURNSU5JU1RSQUNJT04gQ0VOVFJBTCBERSBTRVJWSUNJT1MgVFJJQlVUQVJJT1MgQUwgQ09OVFJJQlVZRU5URTAeFw0yMTA1MTExNzU3NTRaFw0yNTA1MTExNzU3NTRaMIHnMSYwJAYDVQQDEx1ESVNUUklCVUlET1JBIFpFTElDTyBTQSBERSBDVjEmMCQGA1UEKRMdRElTVFJJQlVJRE9SQSBaRUxJQ08gU0EgREUgQ1YxJjAkBgNVBAoTHURJU1RSSUJVSURPUkEgWkVMSUNPIFNBIERFIENWMSUwIwYDVQQtExxEWkUxMDA0MjcxUTggLyBaRUdBODUwOTEzTklBMR4wHAYDVQQFExUgLyBaRUdBODUwOTEzSFRDUFJHMDcxJjAkBgNVBAsTHURJU1RSSUJVSURPUkEgWkVMSUNPIFNBIERFIENWMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuE/eqJoK3Fg06KYewvFwhzvp5G68P0J4EjVZxRYekEt3m9CmY1UTt8ls8axDGYOdsKPp/1UA1GpuoZg6WV7a9dNLk7sBPTENUYM02aOzc0odyqKRRXzrNpRcZJIJ9z0GyA7nEx6LZ0jsMp7YPjqjq7LXKvXODBfa8cXQBoNJfz9UHcgC+ptZnSChS1fJmHP/cLoZZZST4e/AKW2sDv3ScTPbYEWrhrhaprFbXqzsJp0SkLRL10mvcQd6ZsXy6+duSI+J9565CaM3Nz98U9is9vGEa7/5DZngcnWrRFPjR+r5ucgo/FEeaIlM97CCZR6SqqnFQCk0zBpOuWvGlsHd6QIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAUQ4JOHvnW1BrY8FFM9SEcEcxalfK268+w3xbLXOrJ2hIvJyZ9eUc/xEe0+xifsw/LDwwqGdz26PMVFZWmBOZVMrqwi4x0L1IdZOO6ED2Fwv6+9NAS6lzdhZhnboba+FsYuBF7oRSXwIzU6n3KTRYyUe0ZH58iWS02XwGwD+6uNWRJzle8r4SfXET4wJj1S6vcupo630NMw5sQjHJcNOY9P92qe/QWczBZUL64tZuIbqbFYngm4sbOUicrayB9Uh5RFNbXY1wnaTLQFQI1JozHmCvmPen0B5LfEb64qWDrcnNdHu8LiJYEDdPqsr4oACoIvj3H93qAL9a7+zSTc2oCYji3B5AB3UElTPiV9kmoKx/ZmhLWVhVTUZJY6sSDnAjsnww0+XHm5TaDotGxH5GCwmdfw+62W9/hMtK6J+h+D3Bwdx7VrcBifwhM5k/ZVIIlcS5oG3hzuKvNjcFjoZvPd9fH1fH/agx2apftE6yhG+ecWedSVlaDwUvumrZqPerEUnJdz7J4AGhZBPUlKALTOe/X61N/9KL4RvD+enkKZHK7qF5ztGXO+zLg1/6HOrLrdVmk+90auORuh6ytjbOrgTf3/ROZBDS6afW3OOwr7o7pXQ349EK++CjtRdK7UY10ILmLe5Fu2lSwmZo4z332SbiShdfK2yPHgbajPPOcLU="
-    CondicionesDePago="CREDITO 15 DIAS" SubTotal="1937.97" Moneda="MXN" Total="2248.05" TipoDeComprobante="I"
-    Exportacion="01" MetodoPago="PPD" LugarExpedicion="86150">
-    <cfdi:Emisor Rfc="DZE1004271Q8" Nombre="DISTRIBUIDORA ZELICO" RegimenFiscal="601" />
-    <cfdi:Receptor Rfc="RIP1706223K9" Nombre="RESULTS IN PERFORMANCE" DomicilioFiscalReceptor="86070"
-        RegimenFiscalReceptor="601" UsoCFDI="G03" />
-    <cfdi:Conceptos>
-        <cfdi:Concepto ClaveProdServ="14111704" NoIdentificacion="90401" Cantidad="1" ClaveUnidad="XBX" Unidad="CJ"
-            Descripcion="PAPEL HIG. SCOTT FLUIDO CENTRICO C/12 RLL DE 1600 HD" ValorUnitario="1067.29" Importe="1067.29"
-            ObjetoImp="02">
-            <cfdi:Impuestos>
-                <cfdi:Traslados>
-                    <cfdi:Traslado Base="1067.29" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"
-                        Importe="170.7664" />
-                </cfdi:Traslados>
-            </cfdi:Impuestos>
-        </cfdi:Concepto>
-        <cfdi:Concepto ClaveProdServ="14111703" NoIdentificacion="92221" Cantidad="2" ClaveUnidad="XBX" Unidad="CJ"
-            Descripcion="TOALLA PETALO EN ROLLO BLANCA C/6 RLL DE 180 M" ValorUnitario="435.34" Importe="870.68"
-            ObjetoImp="02">
-            <cfdi:Impuestos>
-                <cfdi:Traslados>
-                    <cfdi:Traslado Base="870.68" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"
-                        Importe="139.3088" />
-                </cfdi:Traslados>
-            </cfdi:Impuestos>
-        </cfdi:Concepto>
-    </cfdi:Conceptos>
-    <cfdi:Impuestos TotalImpuestosTrasladados="310.08">
-        <cfdi:Traslados>
-            <cfdi:Traslado Base="1937.97" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="310.08" />
-        </cfdi:Traslados>
-    </cfdi:Impuestos>
-    <cfdi:Complemento>
-        <tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital"
-            xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd"
-            SelloSAT="nrqzKms0Dxjql3GcoCMOF0I1Ti3XOFI2z9ydIIF34YQR3m2Fma0jrrDWPXCWZN6PQgod0xyT3DOBV3WwRE/yVKxsKXA8TOCs65c+6lsFjUCtptN03tVWkDDbaqRJtxTr5zTt01ndqDBo7a+wZA6dHnDsjFlK93JERxSWGxFxDWF+I5Q0Hz0bldvFer++FsOPue+IlP1d9ZE3NsRB/DVMDRiStSlnZ/DKdvjAm/1DHT8RAwvEfHRmeFecGuLUFvU3WpWCwPFGPWrQR/hlWIKc159+HcYbZFxq6iV3aJtLOQPOBms82MEDFhO9sOrx6l232o7F8WuoqwERAezXpao9Eg=="
-            NoCertificadoSAT="00001000000702501858"
-            SelloCFD="iCXRp8Gil+2cvxV3Wq+YgsOp75b+DzpfIU4SHzIMWQ5R8dxYLhGoYOiYNzTAymmdgzEmV/1B2MZhg5fUCQPUtOc1mUqzcptHCfOkAc8PqnZdIddBnXArF6ZB8t8kSEB2nmaD2nDGn4R7GK1EKv1SRnO047Y+20LBf/UgI2Xkb/im3kfrvkLQrXKUEYiAoVFAWkz2iYveraEGx7QO4cofRPFFL7uqFKdVs8QMGllK+rcOcsJ/ZjbTbxGBqUwAqCSpwvLhFL9P3/v29ilpyREnQuZnA+qdFIIQHeC/1P2NUYenTCQe+nWMJ22C2bVZ1bSzSqwd0+KT3uNr2LYLQkE6JQ=="
-            RfcProvCertif="SCD110105654" +="2025-02-22T08:20:48" UUID="FDAE6155-4D0A-4843-9022-80692C650C19"
-            Version="1.1" />
-    </cfdi:Complemento>
-</cfdi:Comprobante>
+<!DOCTYPE html>
+<html>
+
+<head>
 
 
-<?xml version="1.0" encoding="utf-8"?>
-<cfdi:Comprobante xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.sat.gob.mx/cfd/4 http://www.sat.gob.mx/sitio_internet/cfd/4/cfdv40.xsd" Version="4.0"
-    Serie="M" Folio="776" Fecha="2025-11-04T10:24:12"
-    Sello="SStv6t8HNChosDS4sHTfzEqHflWr96jFsboj93MWEcbYr1bElRjQwhkEMHBqOGT4s88czbD7/AdWR14DROeTgBPMkp/8ESd+zXwtKDEIkf68yAEYRuD4p7AbbZAMIFdCr4hzqNYLfbsQO43RfJOzaaJDC8jgegspzQlqkhRvsz/VxDaVYm6XBQ4QlBW7Icz7rSikB7f8bfnNY7sucQ6uPW1mFTIHEDMvld73htpXALGhoeOQdeSl82MIpP5yKoYwpQ8gNHIBt4bRgEf1MpubI1kvCsV3H+CzGeG8EZKVFOkWASBcCG+FLuwLTgWkyIkngMQsf3eNCw0ImfoXYrcqfQ=="
-    FormaPago="03" NoCertificado="00001000000511102467"
-    Certificado="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"
-    SubTotal="3210.00" Moneda="MXN" Total="3723.60" TipoDeComprobante="I" Exportacion="01" MetodoPago="PUE"
-    LugarExpedicion="86000" xmlns:cfdi="http://www.sat.gob.mx/cfd/4">
-    <cfdi:Emisor Rfc="MOR080625B86" Nombre="MORETT" RegimenFiscal="601" />
-    <cfdi:Receptor Rfc="RIP1706223K9" Nombre="RESULTS IN PERFORMANCE" DomicilioFiscalReceptor="86100"
-        RegimenFiscalReceptor="601" UsoCFDI="G03" />
-    <cfdi:Conceptos>
-        <cfdi:Concepto ClaveProdServ="46161530" Cantidad="2" ClaveUnidad="E48"
-            Descripcion="PENSIÓN DE ESTACIONAMIENTO DEL 01 DE NOVIEMBRE AL 01 DE DICIEMBRE DE 2025"
-            ValorUnitario="1605.00" Importe="3210.00" ObjetoImp="02">
-            <cfdi:Impuestos>
-                <cfdi:Traslados>
-                    <cfdi:Traslado Base="3210.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"
-                        Importe="513.60" />
-                </cfdi:Traslados>
-            </cfdi:Impuestos>
-        </cfdi:Concepto>
-    </cfdi:Conceptos>
-    <cfdi:Impuestos TotalImpuestosTrasladados="513.60">
-        <cfdi:Traslados>
-            <cfdi:Traslado Base="3210.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000" Importe="513.60" />
-        </cfdi:Traslados>
-    </cfdi:Impuestos>
-    <cfdi:Complemento>
-        <tfd:TimbreFiscalDigital
-            xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd"
-            Version="1.1" UUID="3cf4fb75-bf3c-4dec-ba33-2dbd1bb92ef8" FechaTimbrado="2025-11-04T11:26:13"
-            RfcProvCertif="LSO1306189R5"
-            SelloCFD="SStv6t8HNChosDS4sHTfzEqHflWr96jFsboj93MWEcbYr1bElRjQwhkEMHBqOGT4s88czbD7/AdWR14DROeTgBPMkp/8ESd+zXwtKDEIkf68yAEYRuD4p7AbbZAMIFdCr4hzqNYLfbsQO43RfJOzaaJDC8jgegspzQlqkhRvsz/VxDaVYm6XBQ4QlBW7Icz7rSikB7f8bfnNY7sucQ6uPW1mFTIHEDMvld73htpXALGhoeOQdeSl82MIpP5yKoYwpQ8gNHIBt4bRgEf1MpubI1kvCsV3H+CzGeG8EZKVFOkWASBcCG+FLuwLTgWkyIkngMQsf3eNCw0ImfoXYrcqfQ=="
-            NoCertificadoSAT="00001000000509846663"
-            SelloSAT="Tv36X5qZtxXzrvOWfigSBueJYFOfwu37z6ApuaLKXH3MlhxdbAZlgQ0Z7NnY9XwHZG1CaAVsSjN3UgQjoCc2mUoEGax2nDsDCDjfk7poBQFrN9ZcRgOYNmXGs9gYs+ZYljW2reps5QNxQf8d/UYm43tPgqTHF+fkS/1OeJh2v0s1BVJmGFYf6VRnZdX8LZBLroUg0ir/8nLDWu8bOvcMKl9pKHbfcXVF6AIalfCzN87uGehq4K38/Im2/+SS+VQWOBHIhozkUSbnYIK3Zmtf8J3OlljklAvibBLVZMSGBdNicdWLtxEP2hBDzkWonJ0+oyMq19AeZlRo8q/G8Rwsew=="
-            xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital"
-            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" />
-    </cfdi:Complemento>
-</cfdi:Comprobante>
+
+</head>
+
+<body style="background:#f4f6f9;">
+
+
+
+    <!-- ECHARTS -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+
+
+
+
+    <div style="position:relative; width:500px; height:300px; margin:auto;">
+
+        <div id="chart" style="width:100%;height:100%;"></div>
+
+        <svg width="500" height="300" style="position:absolute; top:0; left:0; pointer-events:none;">
+
+            <path id="curveTop" d="M80 200 A170 170 0 0 1 420 200" fill="none" />
+
+            <!-- <text font-size="16" font-weight="bold" fill="#2C2A29">
+                <textPath href="#curveTop" startOffset="40%" text-anchor="middle">
+                    Bajo
+                </textPath>
+            </text>
+
+            <text font-size="16" font-weight="bold" fill="#2C2A29">
+                <textPath href="#curveTop" startOffset="59%" text-anchor="middle">
+                    Alto
+                </textPath>
+            </text> -->
+
+        </svg>
+
+    </div>
+
+
+    <script>
+        var chart = echarts.init(document.getElementById('chart'));
+
+        chart.setOption({
+            series: [{
+                type: 'gauge',
+                startAngle: 180,
+                endAngle: 0,
+                min: 0,
+                max: 100,
+                axisLine: {
+                    lineStyle: {
+                        width: 20,
+                        color: [
+                            [0.5, 'green'],
+                            [1, 'red']
+                        ]
+                    }
+                },
+                axisTick: { show: false },
+                splitLine: { show: false },
+                axisLabel: { show: false },
+                data: [{ value: 40 }]
+            }]
+        });
+    </script>
+
+
+<!-- PLOTLY -->
+
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+<div id="chart" style="width:400px;height:250px;"></div>
+
+<script>
+    var data = [{
+        type: "indicator",
+        mode: "gauge+number",
+        value: 40,
+        gauge: {
+            shape: "angular",
+            axis: { range: [0, 100] },
+            steps: [
+                { range: [0, 50], color: "green" },
+                { range: [50, 100], color: "red" }
+            ]
+        }
+    }];
+
+    Plotly.newPlot('chart', data);
+</script>
+
+
+<!-- HIGHCHARTS -->
+
+   <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    
+    <div id="container"></div>
+    
+    <script>
+        Highcharts.chart('container', {
+            chart: { type: 'gauge' },
+            pane: { startAngle: -90, endAngle: 90 },
+            yAxis: {
+                min: 0,
+                max: 100,
+                plotBands: [
+                    { from: 0, to: 50, color: 'green' },
+                    { from: 50, to: 100, color: 'red' }
+                ]
+            },
+            series: [{ data: [40] }]
+        });
+    </script>
+
+
+</body>
+
+</html>

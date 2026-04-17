@@ -372,6 +372,12 @@
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li>
+                                    <a class="dropdown-item" href="{{ url('/listacontratosproveedores') }}">
+                                        Lista de contratos
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
                                     <a class="dropdown-item" href="{{ url('/listaproveedorescriticos') }}">
                                         Proveedores críticos
                                     </a>
@@ -668,7 +674,7 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=14"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=15"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -713,7 +719,7 @@
     @endif
 
     @if(request()->is('listaproveedorescriticos'))
-    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=4"></script>
+    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=5"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -724,6 +730,11 @@
     @if(request()->is('aprobardocumentosproveedor'))
     <script src="/assets/js_sitio/proveedor/aprobardocumentosproveedor.js?v=6"></script>
     @endif
+
+    @if(request()->is('listacontratosproveedores'))
+    <script src="/assets/js_sitio/proveedor/listacontratosproveedores.js"></script>
+    @endif
+
 
     <script src="/assets/js_sitio/externo.js?v=1.0"></script>
 

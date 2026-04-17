@@ -3847,6 +3847,31 @@ document.getElementById('step9').addEventListener('click', function() {
 
 });
 
+
+$("#NUEVO_CONTRATO").click(function (e) {
+    e.preventDefault();
+
+    
+    $('#formularioCONTRATO').each(function(){
+        this.reset();
+    });
+
+      $.get('/folioContrato', function (resp) {
+        $("#NUMERO_CONTRATO_PROVEEDOR").val(resp.folio);
+      });
+    
+    
+    $("#miModal_contrato").modal("show");
+   
+    ID_CONTRATO_PROVEEDORES = 0;
+
+
+
+});
+
+
+
+
 $("#guardarCONTRATOPROVEEDOR").click(function (e) {
     e.preventDefault();
 
