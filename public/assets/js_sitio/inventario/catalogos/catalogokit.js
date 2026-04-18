@@ -311,18 +311,18 @@ function mostrarcomponenteskits(row) {
       
 
         fila.innerHTML = `
-           <div class="col-6">
+           <div class="col-9">
                 <div class="form-group">
                       <label>Nombre componente *</label>
                     <input type="text"
                            class="form-control"
                            name="NOMBRE_COMPONENTE"
-                           value="${nombrecomponente}"
+                           value="${escapeHtml(nombrecomponente)}"
                            required>
                 </div>
             </div>
 
-            <div class="col-6">
+            <div class="col-3">
                 <div class="form-group">
                         <label>Cantidad *</label>
                         <input type="number"

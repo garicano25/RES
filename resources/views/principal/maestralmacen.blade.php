@@ -507,7 +507,7 @@
     @endif
 
     @if(request()->is('catalogokits'))
-    <script src="/assets/js_sitio/inventario/catalogos/catalogokit.js"></script>
+    <script src="/assets/js_sitio/inventario/catalogos/catalogokit.js?v=1"></script>
     @endif
 
 
