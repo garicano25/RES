@@ -441,7 +441,7 @@ $('#Tablainventarioinactivo tbody').on('click', 'td>button.EDITAR', function () 
     });
 
 
-    editarDatoTablainventarioinactivo(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
+    editarDatoTablainventario(row.data(), 'formularioINVENTARIO', 'Modal_inventario', 1);
 
 
     if (row.data().FOTO_EQUIPO) {

@@ -365,7 +365,7 @@ class inventarioController extends Controller
                         ->orWhereNull('ES_INFRAESTRUCTURA');
                 });
 
-                
+
             if ($request->filled('UBICACION_EQUIPO')) {
                 $query->where('UBICACION_EQUIPO', $request->UBICACION_EQUIPO);
             }
@@ -378,7 +378,7 @@ class inventarioController extends Controller
                 if ($value->ACTIVO == 0) {
                     $value->BTN_VISUALIZAR = '<button class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '"><span class="slider round"></span></label>';
-                    $value->BTN_EDITAR = '<button class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                    $value->BTN_EDITAR = '<button class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
                 } else {
                     $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '" checked><span class="slider round"></span></label>';
                     $value->BTN_EDITAR = '<button class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';

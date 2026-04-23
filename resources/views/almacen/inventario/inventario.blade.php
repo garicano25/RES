@@ -234,6 +234,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th class="text-center">#</th>
+                                <th class="text-center">ID del ítem</th>
                                 <th class="text-center">Descripción</th>
                                 <th class="text-center">Cantidad</th>
                                 <th class="text-center">Marca</th>
