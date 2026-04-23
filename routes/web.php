@@ -1185,8 +1185,13 @@ Route::get('/inventarioDelete', [inventarioController::class, 'store']);
 Route::get('/generarCodigoAF', [inventarioController::class, 'generarCodigoAF']);
 Route::get('/generarCodigoANF', [inventarioController::class, 'generarCodigoANF']);
 Route::get('/cantidadEquipoReadonly', [inventarioController::class, 'cantidadEquipoReadonly']);
-
 Route::get('/metricasInventario', [inventarioController::class, 'metricasInventario']);
+
+
+/// TABLA INVENTARIO INACIVO 
+Route::get('/inventarioinactivo', [inventarioController::class, 'indexinactivo']);
+Route::get('/Tablainventarioinactivo', [inventarioController::class, 'Tablainventarioinactivo']);
+
 
 
 /// ENTRADA INVENTARIO

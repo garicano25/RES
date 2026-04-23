@@ -292,6 +292,9 @@
                                     <hr class="dropdown-divider">
                                     <li><a class="dropdown-item" href="{{url('/listadeinfraestructura')}}">Infraestructura</a>
                                     </li>
+                                    <hr class="dropdown-divider">
+                                    <li><a class="dropdown-item" href="{{url('/inventarioinactivo')}}">Inventario inactivo</a>
+                                    </li>
                                 </ul>
                             </li>
                         </ul>
@@ -510,6 +513,9 @@
     <script src="/assets/js_sitio/inventario/catalogos/catalogokit.js?v=1"></script>
     @endif
 
+    @if(request()->is('inventarioinactivo'))
+    <script src="/assets/js_sitio/inventario/inventarioinactivo.js"></script>
+    @endif
 
     <script src="/assets/js_sitio/externo.js?v=1.0"></script>
 

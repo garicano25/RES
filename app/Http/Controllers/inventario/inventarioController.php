@@ -49,6 +49,23 @@ class inventarioController extends Controller
         return view('almacen.inventario.inventario', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'ubicacioninventario'));
     }
 
+    public function indexinactivo()
+    {
+        $tipoinventario = catalogotipoinventarioModel::where('ACTIVO', 1)->get();
+
+
+        $proveedoresOficiales = altaproveedorModel::select('RAZON_SOCIAL_ALTA', 'RFC_ALTA')->get();
+        $proveedoresTemporales = proveedortempModel::select('RAZON_PROVEEDORTEMP', 'RFC_PROVEEDORTEMP', 'NOMBRE_PROVEEDORTEMP')->get();
+
+
+        $ubicacioninventario = inventarioModel::select('UBICACION_EQUIPO')
+            ->distinct()
+            ->orderBy('UBICACION_EQUIPO')
+            ->get();
+
+
+        return view('almacen.inventario.inventarioinactivo', compact('tipoinventario', 'proveedoresOficiales', 'proveedoresTemporales', 'ubicacioninventario'));
+    }
 
 
     // public function Tablainventario(Request $request)
@@ -331,7 +348,104 @@ class inventarioController extends Controller
         }
     }
 
+    public function Tablainventarioinactivo(Request $request)
+    {
+        try {
 
+            // $query = inventarioModel::query()
+            //     ->where(function ($q) {
+            //         $q->where('ES_INFRAESTRUCTURA', '!=', 1)
+            //             ->orWhereNull('ES_INFRAESTRUCTURA');
+            //     });
+
+            $query = inventarioModel::query()
+                ->where('ACTIVO', 0)
+                ->where(function ($q) {
+                    $q->where('ES_INFRAESTRUCTURA', '!=', 1)
+                        ->orWhereNull('ES_INFRAESTRUCTURA');
+                });
+
+                
+            if ($request->filled('UBICACION_EQUIPO')) {
+                $query->where('UBICACION_EQUIPO', $request->UBICACION_EQUIPO);
+            }
+
+            $tabla = $query->get();
+
+            foreach ($tabla as $value) {
+
+                // BOTONES
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_VISUALIZAR = '<button class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '"><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button class="btn btn-secondary btn-custom rounded-pill EDITAR" disabled><i class="bi bi-ban"></i></button>';
+                } else {
+                    $value->BTN_ELIMINAR = '<label class="switch"><input type="checkbox" class="ELIMINAR" data-id="' . $value->ID_FORMULARIO_INVENTARIO . '" checked><span class="slider round"></span></label>';
+                    $value->BTN_EDITAR = '<button class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                    $value->BTN_VISUALIZAR = '<button class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                }
+
+                $value->FOTO_EQUIPO_HTML = '<img src="/equipofoto/' . $value->ID_FORMULARIO_INVENTARIO . '" class="img-fluid" width="50" height="60">';
+
+                // CAMPOS
+                $campos = [
+                    'DESCRIPCION_EQUIPO',
+                    'MARCA_EQUIPO',
+                    'MODELO_EQUIPO',
+                    'SERIE_EQUIPO',
+                    'CODIGO_EQUIPO',
+                    'CANTIDAD_EQUIPO',
+                    'UBICACION_EQUIPO',
+                    'ESTADO_EQUIPO',
+                    'FECHA_ADQUISICION',
+                    'UNITARIO_EQUIPO',
+                    'TOTAL_EQUIPO',
+                    'TIPO_EQUIPO',
+                    'OBSERVACION_EQUIPO',
+                    'FOTO_EQUIPO',
+                    'UNIDAD_MEDIDA',
+                    'ITEM_CRITICO',
+                    'PROVEEDOR_ALTA',
+                    'REQUIERE_ARTICULO',
+                    'LIMITEMINIMO_EQUIPO',
+                    'DETALLAR_ARTICULOS'
+                ];
+
+                $completo = true;
+                foreach ($campos as $campo) {
+                    if (!isset($value->$campo) || $value->$campo === '') {
+                        $completo = false;
+                        break;
+                    }
+                }
+
+                $cantidad = (float)$value->CANTIDAD_EQUIPO;
+                $minimo = (float)$value->LIMITEMINIMO_EQUIPO;
+                $tieneMinimo = (!is_null($value->LIMITEMINIMO_EQUIPO) && $value->LIMITEMINIMO_EQUIPO !== '' && $minimo > 0);
+
+
+                if ($value->ASIGNADO == 1) {
+                    $value->ROW_CLASS = 'bg-naranja-suave';
+                } elseif ($tieneMinimo && $cantidad <= $minimo) {
+                    $value->ROW_CLASS = 'bg-amarrillo-suave';
+                } elseif ($cantidad == 0) {
+                    $value->ROW_CLASS = $completo ? 'bg-rojo-suave' : 'bg-azul-suave';
+                } else {
+                    $value->ROW_CLASS = $completo ? 'bg-verde-suave' : 'bg-azul-suave';
+                }
+            }
+
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'msj' => 'Error ' . $e->getMessage(),
+                'data' => 0
+            ]);
+        }
+    }
 
 
     public function generarCodigoAF()
