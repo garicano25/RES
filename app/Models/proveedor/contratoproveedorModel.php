@@ -12,6 +12,7 @@ class contratoproveedorModel extends Model
     protected $primaryKey = 'ID_CONTRATO_PROVEEDORES';
     protected $fillable = [
         'NUMERO_CONTRATO_PROVEEDOR',
+        'MONTO_CONTRATO_PROVEEDOR',
         'FECHAI_CONTRATO_PROVEEDOR',
         'FECHAF_CONTRATO_PROVEEDOR',
         'DOCUMENTO_CONTRATO_PROVEEDOR',

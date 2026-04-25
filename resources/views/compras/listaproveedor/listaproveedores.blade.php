@@ -1624,14 +1624,20 @@
                 </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
-
-
-                    <div class="mb-3">
-                        <label>Número de contrato</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" id="NUMERO_CONTRATO_PROVEEDOR" name="NUMERO_CONTRATO_PROVEEDOR" required readonly>
+                        <div class="row  mb-3">
+                            <div class="col-6">
+                                <label>Número de contrato *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="NUMERO_CONTRATO_PROVEEDOR" name="NUMERO_CONTRATO_PROVEEDOR" required readonly>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <label>Monto *</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="MONTO_CONTRATO_PROVEEDOR" name="MONTO_CONTRATO_PROVEEDOR" required>
+                                </div>
+                            </div>
                         </div>
-                    </div>
                     <div class="row  mb-3" id="CONTRATO" style="display: block">
                         <div class="row  mb-3">
                             <div class="col-6">
@@ -1650,7 +1656,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="mb-3">
                         <label>Subir documento</label>
                         <div class="input-group">
@@ -1659,7 +1664,6 @@
                         </div>
                     </div>
                     <div id="DOCUEMNTO_ERROR_CONTRATO" class="text-danger" style="display:none;">Por favor, sube un archivo PDF</div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
