@@ -3865,7 +3865,9 @@ $("#NUEVO_CONTRATO").click(function (e) {
    
     ID_CONTRATO_PROVEEDORES = 0;
 
-
+    document.getElementById('REQUIERE_ADENDA_CONTRATO').style.display = 'none';
+    document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
+    $(".adendadivcontrato").empty();
 
 });
 
@@ -3971,6 +3973,10 @@ Modalcontrato.addEventListener('hidden.bs.modal', event => {
     document.getElementById('DOCUMENTO_CONTRATO_PROVEEDOR').value = '';
     document.getElementById('DOCUEMNTO_ERROR_CONTRATO').classList.add('d-none');
     document.getElementById('quitar_contrato').classList.add('d-none');
+    document.getElementById('REQUIERE_ADENDA_CONTRATO').style.display = 'none';
+    document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
+
+    $(".adendadivcontrato").empty();
 
 });
 
@@ -4158,14 +4164,37 @@ $('#Tablacontratosproveedores').on('change', 'td>label>input.ELIMINAR', function
 $('#Tablacontratosproveedores').on('click', 'td>button.EDITAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacontratosproveedores.row(tr);
+
     ID_CONTRATO_PROVEEDORES = row.data().ID_CONTRATO_PROVEEDORES;
 
     editarDatoTabla(row.data(), 'formularioCONTRATO', 'miModal_contrato', 1);
+    
+    document.getElementById('REQUIERE_ADENDA_CONTRATO').style.display = 'block';
+
+    if (row.data().PROCEDE_ADENDA_CONTRATO == "1") {
+        document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'block';
+        document.getElementById('procedecontratosi').checked = true;
+    } else if (row.data().PROCEDE_ADENDA_CONTRATO == "2") {
+        document.getElementById('AGREGAR_ADENDA').style.display = 'none';
+        document.getElementById('procedecontratono').checked = true;
+    } else {
+        document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
+        document.getElementById('procedecontratosi').checked = false;
+        document.getElementById('procedecontratono').checked = false;
+    }
+
+    $(".adendacontratodiv").empty();
+
+    // if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
+    //     obtenerAdendascontrato(row.data().ADENDAS);
+    // }
+
     
 });
 
 $(document).ready(function() {
     $('#Tablacontratosproveedores').on('click', 'td>button.VISUALIZAR', function () {
+
         var tr = $(this).closest('tr');
         var row = Tablacontratosproveedores.row(tr);
         
@@ -4174,6 +4203,31 @@ $(document).ready(function() {
         ID_CONTRATO_PROVEEDORES = row.data().ID_CONTRATO_PROVEEDORES;
         editarDatoTabla(row.data(), 'formularioCONTRATO', 'miModal_contrato', 1);
 
+
+         document.getElementById('REQUIERE_ADENDA_CONTRATO').style.display = 'block';
+
+        
+        if (row.data().PROCEDE_ADENDA_CONTRATO == "1") {
+            document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'block';
+            document.getElementById('procedecontratosi').checked = true;
+        } else if (row.data().PROCEDE_ADENDA_CONTRATO == "2") {
+            document.getElementById('AGREGAR_ADENDA').style.display = 'none';
+            document.getElementById('procedecontratono').checked = true;
+        } else {
+            document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
+            document.getElementById('procedecontratosi').checked = false;
+            document.getElementById('procedecontratono').checked = false;
+        }
+
+        $(".adendacontratodiv").empty();
+
+        // if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
+        //     obtenerAdendascontrato(row.data().ADENDAS);
+        // }
+
+        
+        
+        
     });
 
 
@@ -4183,6 +4237,164 @@ $(document).ready(function() {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const radioSi = document.getElementById('procedecontratosi');
+    const radioNo = document.getElementById('procedecontratono');
+    const agregarAdendaDiv = document.getElementById('AGREGAR_ADENDA_CONTRATO');
+
+    function toggleAdendaDiv() {
+        if (radioSi.checked) {
+            agregarAdendaDiv.style.display = 'block';
+        } else {
+            agregarAdendaDiv.style.display = 'none';
+        }
+    }
+
+    radioSi.addEventListener('change', toggleAdendaDiv);
+    radioNo.addEventListener('change', toggleAdendaDiv);
+});
+ 
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const botonagregarevidencia = document.getElementById('botonagregarevidenciacontrato');
+    const btnVerificacion = document.getElementById('btnVerificacion');
+
+
+    botonagregarevidencia.addEventListener('click', function () {
+        agregarevidencia();
+    });
+
+   
+function agregarevidencia() {
+    const divVerificacion = document.createElement('div');
+    divVerificacion.classList.add('row', 'generarverificacioncontrato', 'mb-3');
+    divVerificacion.innerHTML = `
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4 mt-2">
+                    <label>Fecha Inicio *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHAI_ADENDA_CONTRATO[]">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <label>Fecha Fin *</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" name="FECHAF_ADENDA_CONTRATO[]">
+                        <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                    </div>
+                </div>
+                <div class="col-4 mt-2">
+                    <label>Comentario *</label>
+                    <textarea class="form-control" name="COMENTARIO_ADENDA_CONTRATO[]" rows="3"></textarea>
+                </div>
+                <div class="col-12 mt-2">
+                    <label class="form-label">Subir documento (PDF) *</label>
+                    <div class="d-flex align-items-center">
+                        <input type="file" class="form-control me-2" name="DOCUMENTO_ADENDA_CONTRATO[]" accept=".pdf">
+                        <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-4">
+            <div class="form-group text-center">
+                <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar adenda <i class="bi bi-trash-fill"></i></button>
+            </div>
+        </div>
+    `;
+
+    const contenedor = document.querySelector('.adendacontratodiv');
+    contenedor.appendChild(divVerificacion);
+
+   
+    const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
+    botonEliminar.addEventListener('click', function () {
+        contenedor.removeChild(divVerificacion);
+    });
+
+    const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
+    const inputArchivo = divVerificacion.querySelector('input[type="file"]');
+    botonEliminarArchivo.addEventListener('click', function () {
+        inputArchivo.value = '';
+    });
+}
+
+
+});
+
+
+
+function obtenerAdendascontrato(adendas) {
+    const contenedor = document.querySelector('.adendacontratodiv');
+    contenedor.innerHTML = '';
+
+    adendas.forEach(function (item, index) {
+        const divVerificacion = document.createElement('div');
+        divVerificacion.classList.add('row', 'generarverificacioncontrato', 'mb-3');
+
+        divVerificacion.innerHTML = `
+            <div class="col-12 mb-2">
+                <label>Adenda ${index + 1}</label>
+            </div>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-4 mt-2">
+                        <label>Fecha Inicio *</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" name="FECHAI_ADENDA_CONTRATO[]" value="${item.FECHAI_ADENDA_CONTRATO || ''}" placeholder="aaaa-mm-dd">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <label>Fecha Fin *</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control mydatepicker" name="FECHAF_ADENDA_CONTRATO[]" value="${item.FECHAF_ADENDA_CONTRATO || ''}" placeholder="aaaa-mm-dd" >
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                        </div>
+                    </div>
+                    <div class="col-4 mt-2">
+                        <label>Comentario *</label>
+                        <textarea class="form-control" name="COMENTARIO_ADENDA_CONTRATO[]" rows="3">${item.COMENTARIO_ADENDA_CONTRATO || ''}</textarea>
+                    </div>
+                    <div class="col-12 mt-2">
+                        <label class="form-label">Subir documento (PDF) *</label>
+                        <div class="d-flex align-items-center">
+                            <input type="file" class="form-control me-2" name="DOCUMENTO_ADENDA_CONTRATO[]" accept=".pdf">
+                            <button type="button" class="btn btn-warning botonEliminarArchivo" title="Eliminar archivo">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-4">
+                <div class="form-group text-center">
+                    <button type="button" class="btn btn-danger botonEliminarVerificacion">Eliminar adenda <i class="bi bi-trash-fill"></i></button>
+                </div>
+            </div>
+        `;
+
+        contenedor.appendChild(divVerificacion);
+
+        const botonEliminar = divVerificacion.querySelector('.botonEliminarVerificacion');
+        botonEliminar.addEventListener('click', function () {
+            contenedor.removeChild(divVerificacion);
+        });
+
+        const botonEliminarArchivo = divVerificacion.querySelector('.botonEliminarArchivo');
+        const inputArchivo = divVerificacion.querySelector('input[type="file"]');
+        botonEliminarArchivo.addEventListener('click', function () {
+            inputArchivo.value = '';
+        });
+    });
+}
 
 // <!-- ============================================================================================================================ -->
 // <!--                                                          STEP 10                                                              -->
