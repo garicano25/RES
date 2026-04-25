@@ -200,6 +200,15 @@
         color: black;
         border-radius: 0.25rem;
     }
+
+
+
+    .bloque-contrato,
+    .bloque-adenda-contrato {
+        min-height: 93px;
+        flex-direction: column;
+        justify-content: center;
+    }
 </style>
 
 

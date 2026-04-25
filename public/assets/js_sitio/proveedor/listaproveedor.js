@@ -4050,7 +4050,32 @@ function cargarTablacontratosproveedores() {
                     return meta.row + 1; 
                 }
             },
-            { data: 'NUMERO_CONTRATO_PROVEEDOR' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    let html = `
+                        <div class="bloque-contrato p-2 mb-2 border-bottom border-secondary">
+                            <strong>${row.NUMERO_CONTRATO_PROVEEDOR || 'Contrato'}</strong>
+                        </div>
+                    `;
+
+                    if (row.ADENDAS && row.ADENDAS.length > 0) {
+                        row.ADENDAS.forEach((adenda, index) => {
+                            html += `
+                                <div class="bloque-adenda-contrato p-2 mb-2 border-bottom border-secondary bg-light">
+                                    <span class="text-muted">Adenda ${index + 1}</span>
+                                    <div class="text-sm text-dark mt-1">${adenda.COMENTARIO_ADENDA_CONTRATO || ''}</div>
+                                </div>
+                            `;
+                        });
+                    }
+
+                    return html;
+                },
+                className: 'text-center'
+            },
+
+            // { data: 'NUMERO_CONTRATO_PROVEEDOR' },
             { 
                 data: null,
                render: function(data, type, row) {
@@ -4113,12 +4138,35 @@ function cargarTablacontratosproveedores() {
             },
             { data: 'BTN_EDITAR' },
             { data: 'BTN_VISUALIZAR' },
-            { data: 'BTN_DOCUMENTO' },
+            // { data: 'BTN_DOCUMENTO' },
+            {
+                data: null,
+                render: function (data, type, row) {
+                    let html = `
+                        <div class="bloque-contrato p-2 mb-2 border-bottom border-secondary">
+                            ${row.BTN_DOCUMENTO || ''}
+                        </div>
+                    `;
+
+                    if (row.ADENDAS && row.ADENDAS.length > 0) {
+                        row.ADENDAS.forEach(adenda => {
+                            html += `
+                                <div class="bloque-adenda-contrato p-2 mb-2 border-bottom border-secondary bg-light">
+                                    ${adenda.BTN_DOCUMENTO || ''}
+                                </div>
+                            `;
+                        });
+                    }
+
+                    return html;
+                },
+                className: 'text-center'
+            },
             { data: 'BTN_ELIMINAR' }
         ],
             columnDefs: [
             { targets: 0, title: '#', className: 'all text-center' },
-            { targets: 1, title: 'No de contrato', className: 'all text-center' },
+            { targets: 1, title: 'No de contrato / Adendas', className: 'all text-center' },
             { targets: 2, title: 'Vigencia del contrato', className: 'all text-center' },
             { targets: 3, title: 'Editar', className: 'all text-center' },
             { targets: 4, title: 'Visualizar', className: 'all text-center' },

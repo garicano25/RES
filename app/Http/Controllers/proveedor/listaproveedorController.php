@@ -1226,7 +1226,30 @@ class listaproveedorController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contrato" data-id="' . $value->ID_CONTRATO_PROVEEDORES . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
                 }
-            }
+
+
+
+                $adendas = DB::table('adenda_contratos_proveedor')
+                    ->where('CONTRATO_ID', $value->ID_CONTRATO_PROVEEDORES)
+                    ->get();
+
+                $adendasAgrupadas = [];
+
+                foreach ($adendas as $adenda) {
+                    $adendasAgrupadas[] = [
+                        'ID_ADENDA_CONTRATO'        => $adenda->ID_ADENDA_CONTRATO,
+                        'FECHAI_ADENDA_CONTRATO'    => $adenda->FECHAI_ADENDA_CONTRATO,
+                        'FECHAF_ADENDA_CONTRATO'    => $adenda->FECHAF_ADENDA_CONTRATO,
+                        'COMENTARIO_ADENDA_CONTRATO' => $adenda->COMENTARIO_ADENDA_CONTRATO,
+                        'DOCUMENTO_ADENDA_CONTRATO' => $adenda->DOCUMENTO_ADENDA_CONTRATO,
+                        'BTN_DOCUMENTO'             => '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-adendacontrato" data-id="' . $adenda->ID_ADENDA_CONTRATO . '" title="Ver Adenda"><i class="bi bi-filetype-pdf"></i></button>',
+                    ];
+                }
+
+                $value->ADENDAS = $adendasAgrupadas;
+
+
+                }
 
             return response()->json([
                 'data' => $tabla,
