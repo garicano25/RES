@@ -3847,7 +3847,6 @@ document.getElementById('step9').addEventListener('click', function() {
 
 });
 
-
 $("#NUEVO_CONTRATO").click(function (e) {
     e.preventDefault();
 
@@ -3870,9 +3869,6 @@ $("#NUEVO_CONTRATO").click(function (e) {
     $(".adendadivcontrato").empty();
 
 });
-
-
-
 
 $("#guardarCONTRATOPROVEEDOR").click(function (e) {
     e.preventDefault();
@@ -4194,6 +4190,16 @@ $('#Tablacontratosproveedores').on('click', '.ver-archivo-contrato', function ()
     window.open(url, '_blank');
 });
 
+$('#Tablacontratosproveedores').on('click', '.ver-archivo-adendacontrato', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostraradendacontratoproveedores/' + id;
+    abrirModal(url, 'Archivo adenda');
+})
+
 $('#Tablacontratosproveedores').on('change', 'td>label>input.ELIMINAR', function () {
     var tr = $(this).closest('tr');
     var row = Tablacontratosproveedores.row(tr);
@@ -4233,9 +4239,9 @@ $('#Tablacontratosproveedores').on('click', 'td>button.EDITAR', function () {
 
     $(".adendacontratodiv").empty();
 
-    // if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
-    //     obtenerAdendascontrato(row.data().ADENDAS);
-    // }
+    if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
+        obtenerAdendascontrato(row.data().ADENDAS);
+    }
 
     
 });
@@ -4269,9 +4275,9 @@ $(document).ready(function() {
 
         $(".adendacontratodiv").empty();
 
-        // if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
-        //     obtenerAdendascontrato(row.data().ADENDAS);
-        // }
+        if (row.data().ADENDAS && row.data().ADENDAS.length > 0) {
+            obtenerAdendascontrato(row.data().ADENDAS);
+        }
 
         
         
@@ -4283,7 +4289,6 @@ $(document).ready(function() {
         resetFormulario('#miModal_contrato');
     });
 });
-
 
 document.addEventListener('DOMContentLoaded', function () {
     const radioSi = document.getElementById('procedecontratosi');
@@ -4302,9 +4307,6 @@ document.addEventListener('DOMContentLoaded', function () {
     radioNo.addEventListener('change', toggleAdendaDiv);
 });
  
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const botonagregarevidencia = document.getElementById('botonagregarevidenciacontrato');
     const btnVerificacion = document.getElementById('btnVerificacion');
@@ -4375,8 +4377,6 @@ function agregarevidencia() {
 
 
 });
-
-
 
 function obtenerAdendascontrato(adendas) {
     const contenedor = document.querySelector('.adendacontratodiv');

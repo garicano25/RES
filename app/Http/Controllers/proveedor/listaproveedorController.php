@@ -24,6 +24,7 @@ use App\Models\proveedor\asignacionproveedorModel;
 use App\Models\proveedor\contratoproveedorModel;
 use App\Models\proveedor\facturacionModel;
 
+use App\Models\proveedor\adendacontratoproveedorModel;
 
 
 
@@ -1237,12 +1238,12 @@ class listaproveedorController extends Controller
 
                 foreach ($adendas as $adenda) {
                     $adendasAgrupadas[] = [
-                        'ID_ADENDA_CONTRATO'        => $adenda->ID_ADENDA_CONTRATO,
+                        'ID_ADENDA_CONTRATO_PROVEEDOR'        => $adenda->ID_ADENDA_CONTRATO_PROVEEDOR,
                         'FECHAI_ADENDA_CONTRATO'    => $adenda->FECHAI_ADENDA_CONTRATO,
                         'FECHAF_ADENDA_CONTRATO'    => $adenda->FECHAF_ADENDA_CONTRATO,
                         'COMENTARIO_ADENDA_CONTRATO' => $adenda->COMENTARIO_ADENDA_CONTRATO,
                         'DOCUMENTO_ADENDA_CONTRATO' => $adenda->DOCUMENTO_ADENDA_CONTRATO,
-                        'BTN_DOCUMENTO'             => '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-adendacontrato" data-id="' . $adenda->ID_ADENDA_CONTRATO . '" title="Ver Adenda"><i class="bi bi-filetype-pdf"></i></button>',
+                        'BTN_DOCUMENTO'             => '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-adendacontrato" data-id="' . $adenda->ID_ADENDA_CONTRATO_PROVEEDOR . '" title="Ver Adenda"><i class="bi bi-filetype-pdf"></i></button>',
                     ];
                 }
 
@@ -1269,6 +1270,13 @@ class listaproveedorController extends Controller
         return Storage::response($archivo);
     }
 
+
+    public function mostraradendacontratoproveedores($id)
+    {
+        $archivo = adendacontratoproveedorModel::findOrFail($id)->DOCUMENTO_ADENDA_CONTRATO;
+        return Storage::response($archivo);
+    }
+    
 
     public function folioContrato()
     {
@@ -1978,8 +1986,50 @@ class listaproveedorController extends Controller
 
                         $response['code'] = 1;
                         $response['cuenta'] = 'Actualizada';
-                        return response()->json($response);
                     }
+
+
+
+                    // ADENDAS
+                    if ($request->filled('FECHAI_ADENDA_CONTRATO')) {
+                        $fechasInicio = $request->FECHAI_ADENDA_CONTRATO;
+                        $fechasFin = $request->FECHAF_ADENDA_CONTRATO;
+                        $comentarios = $request->COMENTARIO_ADENDA_CONTRATO;
+
+
+
+                        $archivos = $request->file('DOCUMENTO_ADENDA_CONTRATO');
+                        $rfc = $request->RFC_PROVEEDOR;
+                        $renovacionId = $cuentas->ID_CONTRATO_PROVEEDORES;
+
+                        $adendasAnteriores = adendacontratoproveedorModel::where('CONTRATO_ID', $renovacionId)->get()->toArray();
+
+                        adendacontratoproveedorModel::where('CONTRATO_ID', $renovacionId)->delete();
+
+                        foreach ($fechasInicio as $i => $inicio) {
+                            $archivoRuta = null;
+
+                            if (isset($archivos[$i]) && $archivos[$i]->isValid()) {
+                                $archivo = $archivos[$i];
+                                $nombre = 'adenda_' . ($i + 1) . '.' . $archivo->getClientOriginalExtension();
+
+                                $rutaAdenda = "proveedores/{$rfc}/Contrato proveedor/{$renovacionId}/adenda de contrato/" . ($i + 1);
+                                $archivoRuta = $archivo->storeAs($rutaAdenda, $nombre);
+                            } elseif (isset($adendasAnteriores[$i]['DOCUMENTO_ADENDA_CONTRATO'])) {
+                                $archivoRuta = $adendasAnteriores[$i]['DOCUMENTO_ADENDA_CONTRATO'];
+                            }
+
+                            adendacontratoproveedorModel::create([
+                                'CONTRATO_ID' => $renovacionId,
+                                'FECHAI_ADENDA_CONTRATO' => $inicio,
+                                'FECHAF_ADENDA_CONTRATO' => $fechasFin[$i] ?? null,
+                                'COMENTARIO_ADENDA_CONTRATO' => $comentarios[$i] ?? '',
+                                'DOCUMENTO_ADENDA_CONTRATO' => $archivoRuta
+                            ]);
+                        }
+                    }
+
+
 
                     $response['code']  = 1;
                     $response['cuenta']  = $cuentas;

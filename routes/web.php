@@ -965,6 +965,7 @@ Route::get('/Tablacontratosproveedores', [listaproveedorController::class, 'Tabl
 Route::get('/mostrarcontratoproveedor/{id}', [listaproveedorController::class, 'mostrarcontratoproveedor']);
 
 Route::get('/folioContrato', [listaproveedorController::class, 'folioContrato']);
+Route::get('/mostraradendacontratoproveedores/{id}', [listaproveedorController::class, 'mostraradendacontratoproveedores']);
 
 ///// FACTURAS PROVEEDOR
 Route::get('/Tablafacturaproveedoresinterno', [listaproveedorController::class, 'Tablafacturaproveedoresinterno']);
