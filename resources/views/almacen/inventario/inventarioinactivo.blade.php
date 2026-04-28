@@ -737,7 +737,7 @@
 
                             <div class="col-md-3 mb-3">
                                 <label class="form-label">Nombre componente</label>
-                                <input type="text" class="form-control" name="NOMBRE_COMPONENTE" id="NOMBRE_COMPONENTE">
+                                <input type="text" class="form-control" name="NOMBRE_COMPONENTE" id="NOMBRE_COMPONENTE" required>
                             </div>
 
                             <div class="col-md-3 mb-3">
