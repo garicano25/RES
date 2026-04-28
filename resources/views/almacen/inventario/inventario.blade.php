@@ -841,7 +841,7 @@
 
                             <div class="col-md-2 mb-3">
                                 <label class="form-label">Cantidad </label>
-                                <input type="number" class="form-control" name="CANTIDAD_DETALLE" id="CANTIDAD_DETALLE">
+                                <input type="number" class="form-control" name="CANTIDAD_DETALLE" id="CANTIDAD_DETALLE" required>
                             </div>
 
                             <div class="col-md-2 mb-3">
