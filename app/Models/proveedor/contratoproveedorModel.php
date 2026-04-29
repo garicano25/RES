@@ -19,6 +19,7 @@ class contratoproveedorModel extends Model
         'DOCUMENTO_CONTRATO_PROVEEDOR',
         'RFC_PROVEEDOR',
         'PROCEDE_ADENDA_CONTRATO',
+        'CONSECUTIVO_CONTRATO',
         'ACTIVO'
     ];
 }

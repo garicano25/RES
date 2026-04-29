@@ -3356,11 +3356,6 @@ $("#NUEVO_CONTRATO").click(function (e) {
         this.reset();
     });
 
-      $.get('/folioContrato', function (resp) {
-        $("#NUMERO_CONTRATO_PROVEEDOR").val(resp.folio);
-      });
-    
-    
     $("#miModal_contrato").modal("show");
    
     ID_CONTRATO_PROVEEDORES = 0;
@@ -3368,6 +3363,26 @@ $("#NUEVO_CONTRATO").click(function (e) {
     document.getElementById('REQUIERE_ADENDA_CONTRATO').style.display = 'none';
     document.getElementById('AGREGAR_ADENDA_CONTRATO').style.display = 'none';
     $(".adendadivcontrato").empty();
+
+});
+
+$("#CONSECUTIVO_CONTRATO").on("change", function () {
+
+    let valor = $(this).val();
+
+    if (valor == "1") {
+        $.get('/folioContrato', function (resp) {
+            $("#NUMERO_CONTRATO_PROVEEDOR")
+                .val(resp.folio)
+                .prop("readonly", true);
+        });
+
+    } else if (valor == "2") {
+        $("#NUMERO_CONTRATO_PROVEEDOR")
+            .val("")
+            .prop("readonly", false)
+            .focus();
+    }
 
 });
 
@@ -3713,7 +3728,7 @@ $('#Tablacontratosproveedores').on('change', 'td>label>input.ELIMINAR', function
         ID_CONTRATO_PROVEEDORES: row.data().ID_CONTRATO_PROVEEDORES
     };
 
-    eliminarDatoTabla(data, [Tablacontratosproveedores], 'CuentasDelete');
+    eliminarDatoTabla(data, [Tablacontratosproveedores], 'AltaDelete');
 });
 
 $('#Tablacontratosproveedores').on('click', 'td>button.EDITAR', function () {
@@ -3744,7 +3759,13 @@ $('#Tablacontratosproveedores').on('click', 'td>button.EDITAR', function () {
         obtenerAdendascontrato(row.data().ADENDAS);
     }
 
-    
+    if (row.data().CONSECUTIVO_CONTRATO == "1") {
+        $("#NUMERO_CONTRATO_PROVEEDOR").prop("readonly", true);
+        
+    } else {
+        $("#NUMERO_CONTRATO_PROVEEDOR").prop("readonly", false);
+       
+    }
 });
 
 $(document).ready(function() {

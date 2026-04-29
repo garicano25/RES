@@ -945,6 +945,9 @@ Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'v
 
 Route::post('/verificarestadobloqueoproveedor', [listaproveedorController::class, 'verificarestadobloqueoproveedor']);
 
+
+Route::get('/AltaDelete', [listaproveedorController::class, 'store']);
+
 ///// INACTIVO 
 
 Route::get('/Tablalistaproveedorinactivo', [listaproveedorController::class, 'Tablalistaproveedorinactivo']);
