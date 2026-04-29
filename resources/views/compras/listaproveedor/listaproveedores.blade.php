@@ -1634,7 +1634,7 @@
                     {!! csrf_field() !!}
 
                     <div class="col-12 mb-3">
-                        <label class="form-label">Seguir con el consecutivo de RES *</label>
+                        <label class="form-label">Usar con el consecutivo de RES *</label>
                         <select class="form-control" id="CONSECUTIVO_CONTRATO" name="CONSECUTIVO_CONTRATO" required>
                             <option value="" selected disabled>Seleccione una opción</option>
                             <option value="1">Sí</option>
