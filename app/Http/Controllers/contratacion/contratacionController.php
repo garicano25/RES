@@ -123,59 +123,92 @@ class contratacionController extends Controller
     }
 
 
-    
+
+
+
     public function Tablacontratacion()
     {
         try {
             $tabla = contratacionModel::where('ACTIVO', 1)->get();
 
             foreach ($tabla as $value) {
+
                 $contrato = DB::table('contratos_anexos_contratacion')
                     ->where('CURP', $value->CURP)
-                    ->orderByDesc('ID_CONTRATOS_ANEXOS') 
+                    ->orderByDesc('ID_CONTRATOS_ANEXOS')
                     ->first();
 
                 if ($contrato) {
+
                     $renovacion = DB::table('renovacion_contrato')
                         ->where('CONTRATO_ID', $contrato->ID_CONTRATOS_ANEXOS)
                         ->orderByDesc('FECHAF_RENOVACION')
                         ->first();
 
-                    $fechaInicio = $renovacion ? $renovacion->FECHAI_RENOVACION : $contrato->FECHAI_CONTRATO;
-                    $fechaFin = $renovacion ? $renovacion->FECHAF_RENOVACION : $contrato->VIGENCIA_CONTRATO;
+                    $fechaInicio = $renovacion
+                        ? $renovacion->FECHAI_RENOVACION
+                        : $contrato->FECHAI_CONTRATO;
+
+                    $fechaFin = $renovacion
+                        ? $renovacion->FECHAF_RENOVACION
+                        : $contrato->VIGENCIA_CONTRATO;
                 } else {
                     $fechaInicio = null;
                     $fechaFin = null;
                 }
 
                 if ($fechaInicio && $fechaFin) {
+
+                    // 🔥 Manejo correcto de fechas
                     $inicio = new \DateTime($fechaInicio);
                     $fin = new \DateTime($fechaFin);
                     $hoy = new \DateTime();
 
+                    // 🔴 Quitar horas (clave)
+                    $inicio->setTime(0, 0, 0);
+                    $fin->setTime(0, 0, 0);
+                    $hoy->setTime(0, 0, 0);
+
                     $totalDias = $inicio->diff($fin)->days;
-                    $diasRestantes = ($fin >= $hoy) ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
+
+                    // 🔴 SIN +1 (conteo real correcto)
+                    if ($fin >= $hoy) {
+                        $diasRestantes = $hoy->diff($fin)->days;
+                    } else {
+                        $diasRestantes = -$hoy->diff($fin)->days;
+                    }
 
                     $umbralVerde = $totalDias * 0.60;
                     $umbralAmarillo = $totalDias * 0.30;
 
-                    if ($diasRestantes <= 0) {
+                    // 🔥 Estados corregidos
+                    if ($fin < $hoy) {
+
                         $estado_dias = "<span style='color: red;'>(Terminado)</span>";
+                    } elseif ($fin == $hoy) {
+
+                        $estado_dias = "<span style='color: orange;'>(Vence hoy)</span>";
                     } elseif ($diasRestantes <= $umbralAmarillo) {
+
                         $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
                     } elseif ($diasRestantes <= $umbralVerde) {
+
                         $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
                     } else {
+
                         $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
                     }
 
                     $value->ESTATUS_CONTRATO = "$fechaInicio<br>$fechaFin<br>$estado_dias";
                 } else {
+
                     $value->ESTATUS_CONTRATO = "<span style='color: gray;'>(Sin contrato)</span>";
                 }
 
-                // Botones
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                // Botón
+                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR">
+                                    <i class="bi bi-eye"></i>
+                                 </button>';
             }
 
             return response()->json([
@@ -189,7 +222,6 @@ class contratacionController extends Controller
             ]);
         }
     }
-
 
 
 public function Tablacontratacion1()
@@ -472,19 +504,20 @@ public function obtenerguardados(Request $request)
     /////////////////////////////////////////// STEP 3  CONTRATOS Y ANEXOS //////////////////////////////////
 
 
+
     public function Tablacontratosyanexos(Request $request)
-{
-    try {
-        $curp = $request->get('curp');
+    {
+        try {
+            $curp = $request->get('curp');
 
-        if (!$curp) {
-            return response()->json([
-                'msj' => 'CURP no proporcionada',
-                'data' => []
-            ], 400);
-        }
+            if (!$curp) {
+                return response()->json([
+                    'msj' => 'CURP no proporcionada',
+                    'data' => []
+                ], 400);
+            }
 
-        $tabla = DB::select("
+            $tabla = DB::select("
             SELECT 
                 rec.*, 
                 cat.NOMBRE_CATEGORIA,
@@ -496,91 +529,106 @@ public function obtenerguardados(Request $request)
             WHERE rec.CURP = ?
         ", [$curp]);
 
-        foreach ($tabla as $value) {
-            $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO) ? $value->ULTIMA_FECHA_INICIO : $value->FECHAI_CONTRATO;
-            $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN) ? $value->ULTIMA_FECHA_FIN : $value->VIGENCIA_CONTRATO;
+            foreach ($tabla as $value) {
 
-            if (!empty($fecha_inicio_mostrar) && !empty($fecha_fin_mostrar)) {
-                $inicio = new \DateTime($fecha_inicio_mostrar);
-                $fin = new \DateTime($fecha_fin_mostrar);
-                $hoy = new \DateTime();
+                $fecha_inicio_mostrar = !empty($value->ULTIMA_FECHA_INICIO)
+                    ? $value->ULTIMA_FECHA_INICIO
+                    : $value->FECHAI_CONTRATO;
 
-                $totalDias = $inicio->diff($fin)->days;
-                $diasRestantes = ($fin >= $hoy) ? $hoy->diff($fin)->days : -$hoy->diff($fin)->days;
+                $fecha_fin_mostrar = !empty($value->ULTIMA_FECHA_FIN)
+                    ? $value->ULTIMA_FECHA_FIN
+                    : $value->VIGENCIA_CONTRATO;
 
-                $umbralVerde = $totalDias * 0.60;     
-                $umbralAmarillo = $totalDias * 0.30;  
+                if (!empty($fecha_inicio_mostrar) && !empty($fecha_fin_mostrar)) {
 
-                if ($diasRestantes <= 0) {
-                    $estado_dias = "<span style='color: red;'>(Terminado)</span>";
-                } elseif ($diasRestantes <= $umbralAmarillo) {
-                    $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
-                } elseif ($diasRestantes <= $umbralVerde) {
-                    $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
+                    $inicio = new \DateTime($fecha_inicio_mostrar);
+                    $fin = new \DateTime($fecha_fin_mostrar);
+                    $hoy = new \DateTime();
+
+                    $inicio->setTime(0, 0, 0);
+                    $fin->setTime(0, 0, 0);
+                    $hoy->setTime(0, 0, 0);
+
+                    $totalDias = $inicio->diff($fin)->days;
+
+                    if ($fin >= $hoy) {
+                        $diasRestantes = $hoy->diff($fin)->days;
+                    } else {
+                        $diasRestantes = -$hoy->diff($fin)->days;
+                    }
+
+                    $umbralVerde = $totalDias * 0.60;
+                    $umbralAmarillo = $totalDias * 0.30;
+
+                    if ($fin < $hoy) {
+
+                        $estado_dias = "<span style='color: red;'>(Terminado)</span>";
+                    } elseif ($fin == $hoy) {
+
+                        $estado_dias = "<span style='color: orange;'>(Vence hoy)</span>";
+                    } elseif ($diasRestantes <= $umbralAmarillo) {
+
+                        $estado_dias = "<span style='color: red;'>($diasRestantes días restantes)</span>";
+                    } elseif ($diasRestantes <= $umbralVerde) {
+
+                        $estado_dias = "<span style='color: orange;'>($diasRestantes días restantes)</span>";
+                    } else {
+
+                        $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
+                    }
                 } else {
-                    $estado_dias = "<span style='color: green;'>($diasRestantes días restantes)</span>";
+                    $estado_dias = "<span style='color: gray;'>(Fecha desconocida)</span>";
                 }
-            } else {
-                $estado_dias = "<span style='color: gray;'>(Fecha desconocida)</span>";
+
+                $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>" . $estado_dias;
+
+                if ($value->ACTIVO == 0) {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
+                } else {
+                    $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
+                }
+
+                $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
+                $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
+                $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
+
+                if ($value->REQUIERE_CREDENCIAL == 1) {
+                    $value->BTN_CREDENCIAL = '<button class="btn btn-danger btn-custom rounded-pill generar-credencial" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" data-curp="' . $value->CURP . '" title="Generar credencial"><i class="bi bi-person-badge-fill"></i></button>';
+                } else {
+                    $value->BTN_CREDENCIAL = '<button type="button" class="btn btn-secondary btn-custom rounded-pill" disabled><i class="bi bi-ban"></i></button>';
+                }
+
+                $adendas = DB::table('adenda_contratos')
+                    ->where('CONTRATO_ID', $value->ID_CONTRATOS_ANEXOS)
+                    ->get();
+
+                $adendasAgrupadas = [];
+
+                foreach ($adendas as $adenda) {
+                    $adendasAgrupadas[] = [
+                        'ID_ADENDA_CONTRATO'        => $adenda->ID_ADENDA_CONTRATO,
+                        'FECHAI_ADENDA_CONTRATO'    => $adenda->FECHAI_ADENDA_CONTRATO,
+                        'FECHAF_ADENDA_CONTRATO'    => $adenda->FECHAF_ADENDA_CONTRATO,
+                        'COMENTARIO_ADENDA_CONTRATO' => $adenda->COMENTARIO_ADENDA_CONTRATO,
+                        'DOCUMENTO_ADENDA_CONTRATO' => $adenda->DOCUMENTO_ADENDA_CONTRATO,
+                        'BTN_DOCUMENTO'             => '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-adendacontrato" data-id="' . $adenda->ID_ADENDA_CONTRATO . '" title="Ver Adenda"><i class="bi bi-filetype-pdf"></i></button>',
+                    ];
+                }
+
+                $value->ADENDAS = $adendasAgrupadas;
             }
 
-            $value->FECHA_ESTADO = $fecha_inicio_mostrar . "<br>" . $fecha_fin_mostrar . "<br>" . $estado_dias;
-
-            if ($value->ACTIVO == 0) {
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill EDITAR"><i class="bi bi-eye"></i></button>';
-            } else {
-                $value->BTN_EDITAR = '<button type="button" class="btn btn-warning btn-custom rounded-pill EDITAR"><i class="bi bi-pencil-square"></i></button>';
-            }
-
-            $value->BTN_DOCUMENTO = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-contratosyanexos" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" title="Ver documento"><i class="bi bi-filetype-pdf"></i></button>';
-            $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
-            $value->BTN_CONTRATO = '<button type="button" class="btn btn-success btn-custom rounded-pill informacion" id="contrato-' . $value->ID_CONTRATOS_ANEXOS . '"><i class="bi bi-eye"></i></button>';
-
-
-            if ($value->REQUIERE_CREDENCIAL == 1) {
-                $value->BTN_CREDENCIAL = '<button class="btn btn-danger btn-custom rounded-pill generar-credencial" data-id="' . $value->ID_CONTRATOS_ANEXOS . '" data-curp="' . $value->CURP . '" title="Generar credencial"><i class="bi bi-person-badge-fill"></i></button>';
-                            } else {
-                                $value->BTN_CREDENCIAL = '<button type="button" class="btn btn-secondary btn-custom rounded-pill " disabled><i class="bi bi-ban"></i></button>';
-                            }
-
-
-
-
-
-            $adendas = DB::table('adenda_contratos')
-                ->where('CONTRATO_ID', $value->ID_CONTRATOS_ANEXOS)
-                ->get();
-
-            $adendasAgrupadas = [];
-
-            foreach ($adendas as $adenda) {
-                $adendasAgrupadas[] = [
-                    'ID_ADENDA_CONTRATO'        => $adenda->ID_ADENDA_CONTRATO,
-                    'FECHAI_ADENDA_CONTRATO'    => $adenda->FECHAI_ADENDA_CONTRATO,
-                    'FECHAF_ADENDA_CONTRATO'    => $adenda->FECHAF_ADENDA_CONTRATO,
-                    'COMENTARIO_ADENDA_CONTRATO'=> $adenda->COMENTARIO_ADENDA_CONTRATO,
-                    'DOCUMENTO_ADENDA_CONTRATO' => $adenda->DOCUMENTO_ADENDA_CONTRATO,
-                    'BTN_DOCUMENTO'             => '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-adendacontrato" data-id="' . $adenda->ID_ADENDA_CONTRATO . '" title="Ver Adenda"><i class="bi bi-filetype-pdf"></i></button>',
-                ];
-            }
-
-            $value->ADENDAS = $adendasAgrupadas;
-
-
-
+            return response()->json([
+                'data' => $tabla,
+                'msj' => 'Información consultada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'msj' => 'Error: ' . $e->getMessage(),
+                'data' => []
+            ]);
         }
-
-        return response()->json([
-            'data' => $tabla,
-            'msj' => 'Información consultada correctamente'
-        ]);
-    } catch (\Exception $e) {
-        return response()->json([
-            'msj' => 'Error: ' . $e->getMessage(),
-            'data' => []
-        ]);
     }
-}
 
 
 
