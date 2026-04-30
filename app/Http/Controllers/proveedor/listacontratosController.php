@@ -21,7 +21,6 @@ class listacontratosController extends Controller
     public function Tablalistacontratosproveedores()
     {
         try {
-
             $tabla = DB::table('contratos_proveedores as cp')
                 ->leftJoin('formulario_altaproveedor as fa', 'cp.RFC_PROVEEDOR', '=', 'fa.RFC_ALTA')
                 ->select(
@@ -29,6 +28,7 @@ class listacontratosController extends Controller
                     'fa.RAZON_SOCIAL_ALTA',
                     'fa.RFC_ALTA'
                 )
+                ->orderBy('cp.ID_CONTRATO_PROVEEDORES', 'asc')
                 ->get();
 
             foreach ($tabla as $value) {
