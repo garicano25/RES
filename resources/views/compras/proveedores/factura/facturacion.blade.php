@@ -98,10 +98,6 @@
                     </div>
 
                     <div class="row d-none" id="datosFactura">
-                        <div class="col-md-4 mb-3" id="SOPORTE_DIV">
-                            <label class="form-label">Soporte de la factura PDF *</label>
-                            <input type="file" class="form-control" name="DOCUMENTOS_SOPORTE_FACTURA" id="DOCUMENTOS_SOPORTE_FACTURA" accept=".pdf" required>
-                        </div>
                         <div class="col-md-4 mb-3" id="FACTURA_DIV">
                             <label class="form-label">Factura PDF *</label>
                             <input type="file" class="form-control" name="FACTURA_PDF" id="FACTURA_PDF" accept=".pdf" required>
@@ -110,6 +106,11 @@
                             <label class="form-label">Factura XML *</label>
                             <input type="file" class="form-control" name="FACTURA_XML" id="FACTURA_XML" accept=".xml" required>
                         </div>
+                        <div class="col-md-4 mb-3" id="SOPORTE_DIV">
+                            <label class="form-label">Soporte de la factura PDF *</label>
+                            <input type="file" class="form-control" name="DOCUMENTOS_SOPORTE_FACTURA" id="DOCUMENTOS_SOPORTE_FACTURA" accept=".pdf" required>
+                        </div>
+
                     </div>
 
                     <div class="row d-none" id="camposFactura">
