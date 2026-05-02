@@ -43,7 +43,12 @@ class inventarioModel extends Model
         'NOMBRE_PROVEEDOR', 
         'REQUIERE_CALIBRACION',
         'ES_INFRAESTRUCTURA',
-        'DETALLAR_ARTICULOS'
+        'DETALLAR_ARTICULOS',
+
+        'FRENTE_DERECHA',
+        'FRENTE_IZQUIERDA',
+        'TRASERA_DERECHA',
+        'TRASERA_IZQUIERDA'
 
     ];
 }

@@ -265,6 +265,33 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-12 text-center mt-2">
+                                                            <h5>Marca de llantas </h5>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Frente derecha *</label>
+                                                                <input type="text" class="form-control" id="FRENTE_DERECHA" name="FRENTE_DERECHA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Frente izquierda *</label>
+                                                                <input type="text" class="form-control" id="FRENTE_IZQUIERDA" name="FRENTE_IZQUIERDA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Trasera derecha *</label>
+                                                                <input type="text" class="form-control" id="TRASERA_DERECHA" name="TRASERA_DERECHA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Trasera izquierda *</label>
+                                                                <input type="text" class="form-control" id="TRASERA_IZQUIERDA" name="TRASERA_IZQUIERDA" required>
+                                                            </div>
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -277,8 +304,8 @@
 
                                                 <div class="col-2 mt-2">
                                                     <div class="form-group">
-                                                        <label>Límite mínimo </label>
-                                                        <input type="Number" step="any" class="form-control" id="LIMITEMINIMO_EQUIPO" name="LIMITEMINIMO_EQUIPO">
+                                                        <label>Límite mínimo *</label>
+                                                        <input type="Number" step="any" class="form-control" id="LIMITEMINIMO_EQUIPO" name="LIMITEMINIMO_EQUIPO" required>
                                                     </div>
                                                 </div>
 
@@ -340,13 +367,14 @@
                                                 </div>
 
                                                 <div class="col-8 mt-2">
-                                                    <label>¿Requiere detallar los componentes del artículo? </label>
-                                                    <select class="form-control" name="DETALLAR_ARTICULOS" id="DETALLAR_ARTICULOS">
+                                                    <label>¿Requiere detallar los componentes del artículo? *</label>
+                                                    <select class="form-control" name="DETALLAR_ARTICULOS" id="DETALLAR_ARTICULOS" onchange="guardarDetallearticulo()" required>
                                                         <option value="" selected disabled>Seleccione una opción</option>
                                                         <option value="1">Sí</option>
                                                         <option value="2">No</option>
                                                     </select>
                                                 </div>
+
 
                                                 <div class="col-12 mt-2" id="PROVEEDORES_ACTIVOS" style="display: block;">
                                                     <label class="form-label">Proveedor</label>
@@ -393,8 +421,6 @@
                                                         <input type="text" class="form-control" id="TOTAL_EQUIPO" name="TOTAL_EQUIPO">
                                                     </div>
                                                 </div>
-
-
                                                 <div class="col-3 mt-2">
                                                     <div class="form-group">
                                                         <label>Tipo *</label>
@@ -403,20 +429,17 @@
                                                             @foreach ($tipoinventario as $tipos)
                                                             <option value="{{ $tipos->DESCRIPCION_TIPO }}">{{ $tipos->DESCRIPCION_TIPO }}</option>
                                                             @endforeach
-
-
                                                         </select>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-3 mt-2">
                                                     <label>Marcar si el ítem. requiere *</label>
-                                                    <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO" required>
+                                                    <select class="form-control" id="REQUIERE_ARTICULO" name="REQUIERE_ARTICULO" onchange="guardarRequiereItem()" required>
                                                         <option value="" selected disabled>Seleccione una opción</option>
                                                         <option value="1">Documentación</option>
                                                         <option value="2">Mantenimiento</option>
                                                         <option value="3">N/A</option>
-
                                                     </select>
                                                 </div>
 
@@ -466,11 +489,12 @@
                                 </div>
                             </div>
                         </div>
+
                         <!-- TAB 5: Detalle artículo  -->
 
                         <div class="tab-pane fade" id="contenido-detalle" role="tabpanel">
                             <ol class="breadcrumb mb-5">
-                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Agregar detalle</h3>
+                                <h3 style="color: #ffffff; margin: 0;">&nbsp;Detalle</h3>
                                 <button type="button" class="btn btn-light waves-effect waves-light" id="NUEVO_DETALLE" style="margin-left: auto;">
                                     Nuevo &nbsp;<i class="bi bi-plus-circle"></i>
                                 </button>
@@ -483,6 +507,7 @@
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
                 <div class="modal-footer mt-5">
@@ -493,6 +518,7 @@
         </div>
     </div>
 </div>
+
 
 
 

@@ -233,15 +233,30 @@ $(document).on('click', '.editarMaterial', function () {
                         }
 
 
-                         if (!$("#INICIOVIGENCIA_POLIZA").val()) {
+                        if (!$("#INICIOVIGENCIA_POLIZA").val()) {
                             $("#INICIOVIGENCIA_POLIZA").val(resp.data.INICIOVIGENCIA_POLIZA);
                         }
 
 
-                         if (!$("#FINVIGENCIA_POLIZA").val()) {
+                        if (!$("#FINVIGENCIA_POLIZA").val()) {
                             $("#FINVIGENCIA_POLIZA").val(resp.data.FINVIGENCIA_POLIZA);
                         }
 
+                        if (!$("#FRENTE_DERECHA").val()) {
+                            $("#FRENTE_DERECHA").val(resp.data.FRENTE_DERECHA);
+                        }
+
+                        if (!$("#FRENTE_IZQUIERDA").val()) {
+                            $("#FRENTE_IZQUIERDA").val(resp.data.FRENTE_IZQUIERDA);
+                        }
+
+                        if (!$("#TRASERA_DERECHA").val()) {
+                            $("#TRASERA_DERECHA").val(resp.data.TRASERA_DERECHA);
+                        }
+
+                        if (!$("#TRASERA_IZQUIERDA").val()) {
+                            $("#TRASERA_IZQUIERDA").val(resp.data.TRASERA_IZQUIERDA);
+                        }
 
                     }
                 });
@@ -280,7 +295,10 @@ $(document).on('click', '.editarMaterial', function () {
                 marcarRadio('PASE_VEHICULAR_VEHICULOS', material.PASE_VEHICULAR_VEHICULOS);
                 marcarRadio('LLANTA_REFACCION_VEHICULOS', material.LLANTA_REFACCION_VEHICULOS);
                 marcarRadio('BRILLO_SEGURIDAD_VEHICULOS', material.BRILLO_SEGURIDAD_VEHICULOS);
-
+                marcarRadio('FRENTE_DERECHA_RADIO', material.FRENTE_DERECHA_RADIO);
+                marcarRadio('FRENTE_IZQUIERDA_RADIO', material.FRENTE_IZQUIERDA_RADIO);
+                marcarRadio('TRASERA_DERECHA_RADIO', material.TRASERA_DERECHA_RADIO);
+                marcarRadio('TRASERA_IZQUIERDA_RADIO', material.TRASERA_IZQUIERDA_RADIO);
             
             
             /* ===============================
@@ -340,6 +358,13 @@ $(document).on('click', '.editarMaterial', function () {
                 $("#OBS_CALIBRADOR_LLANTAS_VEHICULOS").val(material.OBS_CALIBRADOR_LLANTAS_VEHICULOS);
                 $("#OBS_EXTINTOR_PQS_VEHICULOS").val(material.OBS_EXTINTOR_PQS_VEHICULOS);
                 $("#OBS_LINTERNA_RECARGABLE_VEHICULOS").val(material.OBS_LINTERNA_RECARGABLE_VEHICULOS);
+
+
+                $("#FRENTE_DERECHA").val(material.FRENTE_DERECHA);
+                $("#FRENTE_IZQUIERDA").val(material.FRENTE_IZQUIERDA);
+                $("#TRASERA_DERECHA").val(material.TRASERA_DERECHA);
+                $("#TRASERA_IZQUIERDA").val(material.TRASERA_IZQUIERDA);
+
 
                 if (material.BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS === '1') {
                     $('#TABLA_BOTIQUIN_VEHICULOS').show();
@@ -536,6 +561,22 @@ $(document).on('click', '.visualizarMaterial', function () {
                         if (!$("#FINVIGENCIA_POLIZA").val()) {
                             $("#FINVIGENCIA_POLIZA").val(resp.data.FINVIGENCIA_POLIZA);
                         }
+
+                        if (!$("#FRENTE_DERECHA").val()) {
+                            $("#FRENTE_DERECHA").val(resp.data.FRENTE_DERECHA);
+                        }
+
+                        if (!$("#FRENTE_IZQUIERDA").val()) {
+                            $("#FRENTE_IZQUIERDA").val(resp.data.FRENTE_IZQUIERDA);
+                        }
+
+                        if (!$("#TRASERA_DERECHA").val()) {
+                            $("#TRASERA_DERECHA").val(resp.data.TRASERA_DERECHA);
+                        }
+
+                        if (!$("#TRASERA_IZQUIERDA").val()) {
+                            $("#TRASERA_IZQUIERDA").val(resp.data.TRASERA_IZQUIERDA);
+                        }
                     }
                 });
                     
@@ -572,6 +613,10 @@ $(document).on('click', '.visualizarMaterial', function () {
                 marcarRadio('LLANTA_REFACCION_VEHICULOS', material.LLANTA_REFACCION_VEHICULOS);
                 marcarRadio('BRILLO_SEGURIDAD_VEHICULOS', material.BRILLO_SEGURIDAD_VEHICULOS);
 
+                marcarRadio('FRENTE_DERECHA_RADIO', material.FRENTE_DERECHA_RADIO);
+                marcarRadio('FRENTE_IZQUIERDA_RADIO', material.FRENTE_IZQUIERDA_RADIO);
+                marcarRadio('TRASERA_DERECHA_RADIO', material.TRASERA_DERECHA_RADIO);
+                marcarRadio('TRASERA_IZQUIERDA_RADIO', material.TRASERA_IZQUIERDA_RADIO);
             
             
             /* ===============================
@@ -633,6 +678,11 @@ $(document).on('click', '.visualizarMaterial', function () {
                 $("#OBS_CALIBRADOR_LLANTAS_VEHICULOS").val(material.OBS_CALIBRADOR_LLANTAS_VEHICULOS);
                 $("#OBS_EXTINTOR_PQS_VEHICULOS").val(material.OBS_EXTINTOR_PQS_VEHICULOS);
                 $("#OBS_LINTERNA_RECARGABLE_VEHICULOS").val(material.OBS_LINTERNA_RECARGABLE_VEHICULOS);
+                $("#FRENTE_DERECHA").val(material.FRENTE_DERECHA);
+                $("#FRENTE_IZQUIERDA").val(material.FRENTE_IZQUIERDA);
+                $("#TRASERA_DERECHA").val(material.TRASERA_DERECHA);
+                $("#TRASERA_IZQUIERDA").val(material.TRASERA_IZQUIERDA);
+
 
                 if (material.BOTIQUIN_PRIMEROS_AUXILIOS_VEHICULOS === '1') {
                     $('#TABLA_BOTIQUIN_VEHICULOS').show();
@@ -739,11 +789,28 @@ function cargarFirmaEnCanvas(canvas, ctx, base64) {
 }
 
 function marcarRadio(nombre, valor) {
+    if (valor === null || valor === undefined) return;
+
+    valor = valor.toString().toUpperCase().trim();
+
+    let posiblesValores = [];
+
+    if (valor === '1' || valor === 'SI' || valor === 'TRUE') {
+        posiblesValores = ['1', 'SI'];
+    } else if (valor === '0' || valor === 'NO' || valor === 'FALSE') {
+        posiblesValores = ['0', 'NO'];
+    } else {
+        posiblesValores = [valor];
+    }
+
     $('input[name="' + nombre + '"]').prop('checked', false);
 
-    if (valor === 'SI' || valor === 'NO') {
-        $('input[name="' + nombre + '"][value="' + valor + '"]').prop('checked', true);
-    }
+    posiblesValores.forEach(function(val) {
+        const radio = $('input[name="' + nombre + '"][value="' + val + '"]');
+        if (radio.length) {
+            radio.prop('checked', true);
+        }
+    });
 }
 
 $("#guardaBITACORA").click(function (e) {

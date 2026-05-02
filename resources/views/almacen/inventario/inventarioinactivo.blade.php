@@ -308,6 +308,33 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div class="col-12 text-center mt-2">
+                                                            <h5>Marca de llantas </h5>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Frente derecha *</label>
+                                                                <input type="text" class="form-control" id="FRENTE_DERECHA" name="FRENTE_DERECHA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Frente izquierda *</label>
+                                                                <input type="text" class="form-control" id="FRENTE_IZQUIERDA" name="FRENTE_IZQUIERDA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Trasera derecha *</label>
+                                                                <input type="text" class="form-control" id="TRASERA_DERECHA" name="TRASERA_DERECHA" required>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-3">
+                                                            <div class="form-group">
+                                                                <label>Trasera izquierda *</label>
+                                                                <input type="text" class="form-control" id="TRASERA_IZQUIERDA" name="TRASERA_IZQUIERDA" required>
+                                                            </div>
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -534,6 +561,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- ============================================================== -->
 <!-- MODAL CARGAR EXCEL  -->

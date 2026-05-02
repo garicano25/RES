@@ -31,7 +31,9 @@ $("#NUEVA_FACTURA").click(function (e) {
         $('#FACTURA_XML').val('');
         $('#btnGuardarFactura').hide(); 
         $('#contenedorCONTRATO').addClass('d-none');
-      
+        $('#soporteFacturaTextoContrato').addClass('d-none');
+
+
         $("#miModal_factura").modal("show");
     });
 });
@@ -55,6 +57,7 @@ Modalfactura.addEventListener('hidden.bs.modal', event => {
     $('#FACTURA_XML').val('');
     $('#btnGuardarFactura').hide(); 
     $('#contenedorCONTRATO').addClass('d-none');
+    $('#soporteFacturaTextoContrato').addClass('d-none');
  
 });
 
@@ -65,7 +68,7 @@ $(document).on('change', '#TIPO_FACTURA', function () {
 
     let tipo = $(this).val();
 
-    $('#contenedorOC, #datosFactura, #camposFactura','#camposFacturaExtranjero,#soporteFacturaTexto,#contenedorCONTRATO').addClass('d-none');
+    $('#contenedorOC, #datosFactura, #camposFactura','#camposFacturaExtranjero,#soporteFacturaTexto,#contenedorCONTRATO,#soporteFacturaTextoContrato').addClass('d-none');
     $('#btnGuardarFactura').hide();
 
    
@@ -75,7 +78,7 @@ $(document).on('change', '#TIPO_FACTURA', function () {
 
         if (tipo === 'OC') {
             $('#contenedorOC').removeClass('d-none');
-            $('#soporteFacturaTexto,#datosFactura,#camposFactura,#camposFacturaExtranjero,#contenedorCONTRATO').addClass('d-none');
+            $('#soporteFacturaTexto,#datosFactura,#camposFactura,#camposFacturaExtranjero,#contenedorCONTRATO,#soporteFacturaTextoContrato').addClass('d-none');
             $('#NO_PO').val('');
             $('#NO_GR').val('');
         }
@@ -83,7 +86,7 @@ $(document).on('change', '#TIPO_FACTURA', function () {
         if (tipo === 'CONTRATO') {
 
             $('#contenedorCONTRATO').removeClass('d-none');
-            $('#contenedorOC,#soporteFacturaTexto,#datosFactura,#camposFactura,#camposFacturaExtranjero').addClass('d-none');
+            $('#contenedorOC,#soporteFacturaTexto,#datosFactura,#camposFactura,#camposFacturaExtranjero,#soporteFacturaTextoContrato').addClass('d-none');
             $('#NO_CONTRATO').val('');
             $('#NO_PO').val('');
             $('#NO_GR').val('');
@@ -270,8 +273,13 @@ function validarTextoFactura() {
     if (tipo === 'OC')
     {
         $('#soporteFacturaTexto').removeClass('d-none'); 
+        $('#soporteFacturaTextoContrato').addClass('d-none');
         
-    } else { $('#soporteFacturaTexto').addClass('d-none'); }
+    } else {
+        
+        $('#soporteFacturaTexto').addClass('d-none');
+          $('#soporteFacturaTextoContrato').removeClass('d-none');
+    }
 
 }
 

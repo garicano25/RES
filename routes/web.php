@@ -1168,7 +1168,6 @@ Route::get('/mostrarfactura/{id}', [facturaproveedorController::class, 'mostrarf
 Route::get('/validarPuedeSubirFactura', [facturaproveedorController::class, 'validarPuedeSubirFactura']);
 
 // CARGAR RECIBO ELECTRONICO (REP)
-
 Route::get('/reciboelectronico', function () {return view('compras.proveedores.factura.reciborep');});
 Route::get('/Tablacargarrecp', [facturaproveedorController::class, 'Tablacargarrecp']);
 Route::get('/mostrareciboelectronico/{id}', [facturaproveedorController::class, 'mostrareciboelectronico']);
@@ -1191,12 +1190,9 @@ Route::get('/generarCodigoANF', [inventarioController::class, 'generarCodigoANF'
 Route::get('/cantidadEquipoReadonly', [inventarioController::class, 'cantidadEquipoReadonly']);
 Route::get('/metricasInventario', [inventarioController::class, 'metricasInventario']);
 
-
 /// TABLA INVENTARIO INACIVO 
 Route::get('/inventarioinactivo', [inventarioController::class, 'indexinactivo']);
 Route::get('/Tablainventarioinactivo', [inventarioController::class, 'Tablainventarioinactivo']);
-
-
 
 /// ENTRADA INVENTARIO
 Route::get('/Tablaentradainventario', [inventarioController::class, 'Tablaentradainventario']);
@@ -1210,7 +1206,6 @@ Route::post('/guardarRequiereItem', [inventarioController::class, 'guardarRequie
 /// DETALLE DOCUMENTO
 Route::post('/guardarDetallearticulo', [inventarioController::class, 'guardarDetallearticulo']);
 Route::get('/Tabladetallearticulos', [inventarioController::class, 'Tabladetallearticulos']);
-
 
 /// VISUALIZAR FECHAS DE DOCUMENTOS 
 Route::get('/obtenerDocumentosPorInventario/{inventario_id}', [inventarioController::class, 'obtenerDocumentosPorInventario']);

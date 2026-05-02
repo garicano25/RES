@@ -81,19 +81,32 @@
                     </div>
 
 
+
+                    <div class="mb-3 d-none" id="soporteFacturaTextoContrato">
+                        <p>
+                            El soporte de la factura debe incluir en un solo archivo los siguientes documentos:
+                        </p>
+                        <ul>
+                            <li>Verificación de la factura</li>
+                            <li>Opinión de cumplimiento en positivo</li>
+                            <li>Carta de contenido nacional (Si aplica)</li>
+                            <li>Comprobante del pago al IMSS e INFONAVIT (Si aplica)</li>
+                            <li>Comprobante del pago SAT (Si aplica)</li>
+                        </ul>
+                    </div>
+
+
                     <div class="mb-3 d-none" id="soporteFacturaTexto">
                         <p>
                             El soporte de la factura debe incluir en un solo archivo los siguientes documentos:
                         </p>
                         <ul>
                             <li>Factura en PDF</li>
-                            <li>Orden de Compra</li>
-                            <li>Recepción de bienes y/o servicios - GR</li>
                             <li>Verificación de comprobantes fiscales digitales por internet emitida por el SAT</li>
                             <li>Opinión de cumplimiento en positivo</li>
-                            <li>a) Carta de contenido nacional (Si aplica)</li>
-                            <li>b) Comprobante del pago al IMSS e INFONAVIT (Si aplica)</li>
-                            <li>c) Comprobante del pago SAT (Si aplica)</li>
+                            <li>Carta de contenido nacional (Si aplica)</li>
+                            <li>Comprobante del pago al IMSS e INFONAVIT (Si aplica)</li>
+                            <li>Comprobante del pago SAT (Si aplica)</li>
                         </ul>
                     </div>
 

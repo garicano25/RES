@@ -439,6 +439,56 @@
                                 </div>
                             </div>
 
+                            <div class="col-12 mt-2" id="DATOS_VEHICULOS">
+                                <div class="row">
+                                    <div class="col-12 text-center mt-2">
+                                        <h5>Marca de llantas </h5>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Frente derecha *</label>
+                                            <input type="text" class="form-control" id="FRENTE_DERECHA" name="FRENTE_DERECHA" required readonly>
+                                            <label>Si</label>
+                                            <input class="form-check-input" type="radio" id="FRENTE_DERECHA_SI" name="FRENTE_DERECHA_RADIO" value="1" required>
+                                            <label>No</label>
+                                            <input class="form-check-input" type="radio" id="FRENTE_DERECHA_NO" name="FRENTE_DERECHA_RADIO" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Frente izquierda *</label>
+                                            <input type="text" class="form-control" id="FRENTE_IZQUIERDA" name="FRENTE_IZQUIERDA" required readonly>
+                                            <label>Si</label>
+                                            <input class="form-check-input" type="radio" id="FRENTE_IZQUIERDA_SI" name="FRENTE_IZQUIERDA_RADIO" value="1" required>
+                                            <label>No</label>
+                                            <input class="form-check-input" type="radio" id="FRENTE_IZQUIERDA_NO" name="FRENTE_IZQUIERDA_RADIO" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Trasera derecha *</label>
+                                            <input type="text" class="form-control" id="TRASERA_DERECHA" name="TRASERA_DERECHA" required readonly>
+                                            <label>Si</label>
+                                            <input class="form-check-input" type="radio" id="TRASERA_DERECHA_SI" name="TRASERA_DERECHA_RADIO" value="1" required>
+                                            <label>No</label>
+                                            <input class="form-check-input" type="radio" id="TRASERA_DERECHA_NO" name="TRASERA_DERECHA_RADIO" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="col-3">
+                                        <div class="form-group">
+                                            <label>Trasera izquierda *</label>
+                                            <input type="text" class="form-control" id="TRASERA_IZQUIERDA" name="TRASERA_IZQUIERDA" required readonly>
+                                            <label>Si</label>
+                                            <input class="form-check-input" type="radio" id="TRASERA_IZQUIERDA_SI" name="TRASERA_IZQUIERDA_RADIO" value="1" required>
+                                            <label>No</label>
+                                            <input class="form-check-input" type="radio" id="TRASERA_IZQUIERDA_NO" name="TRASERA_IZQUIERDA_RADIO" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
                             <div class="col-12 mt-4">
                                 <div class="table-responsive">
                                     <table class="table table-bordered text-center align-middle">

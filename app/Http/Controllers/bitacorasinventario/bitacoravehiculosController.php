@@ -381,12 +381,13 @@ class bitacoravehiculosController extends Controller
                     'MODELO_EQUIPO'  => $inventario->MODELO_EQUIPO ?? '',
                     'CODIGO_EQUIPO'  => $inventario->CODIGO_EQUIPO ?? '',
                     'NUMERO_POLIZA'  => $inventario->NUMERO_POLIZA ?? '',
-
                     'ENTIDAD_POLIZA'  => $inventario->ENTIDAD_POLIZA ?? '',
                     'INICIOVIGENCIA_POLIZA'  => $inventario->INICIOVIGENCIA_POLIZA ?? '',
                     'FINVIGENCIA_POLIZA'  => $inventario->FINVIGENCIA_POLIZA ?? '',
-
-
+                    'FRENTE_DERECHA'  => $inventario->FRENTE_DERECHA ?? '',
+                    'FRENTE_IZQUIERDA'  => $inventario->FRENTE_IZQUIERDA ?? '',
+                    'TRASERA_DERECHA'  => $inventario->TRASERA_DERECHA ?? '',
+                    'TRASERA_IZQUIERDA'  => $inventario->TRASERA_IZQUIERDA ?? '',
                 ]
             ]);
         } catch (\Exception $e) {
@@ -514,7 +515,14 @@ class bitacoravehiculosController extends Controller
                         'HORAREGRESO_VEHICULOS'          => $bitacora->HORAREGRESO_VEHICULOS,
                         'OBSERVACIONES_BITACORA' => $bitacora->OBSERVACIONES_BITACORA,
                         'DANIOS_UNIDAD_JSON' => $bitacora->DANIOS_UNIDAD_JSON,
-
+                        'FRENTE_DERECHA' => $bitacora->FRENTE_DERECHA,
+                        'FRENTE_IZQUIERDA' => $bitacora->FRENTE_IZQUIERDA,
+                        'TRASERA_DERECHA' => $bitacora->TRASERA_DERECHA,
+                        'TRASERA_IZQUIERDA' => $bitacora->TRASERA_IZQUIERDA,
+                        'FRENTE_DERECHA_RADIO' => $bitacora->FRENTE_DERECHA_RADIO,
+                        'FRENTE_IZQUIERDA_RADIO' => $bitacora->FRENTE_IZQUIERDA_RADIO,
+                        'TRASERA_DERECHA_RADIO' => $bitacora->TRASERA_DERECHA_RADIO,
+                        'TRASERA_IZQUIERDA_RADIO' => $bitacora->TRASERA_IZQUIERDA_RADIO,
                     ]
                 ]);
             }
