@@ -805,7 +805,7 @@ function marcarRadio(nombre, valor) {
 
     $('input[name="' + nombre + '"]').prop('checked', false);
 
-    posiblesValores.forEach(function(val) {
+        posiblesValores.forEach(function(val) {
         const radio = $('input[name="' + nombre + '"][value="' + val + '"]');
         if (radio.length) {
             radio.prop('checked', true);
