@@ -763,7 +763,7 @@
     @endif
 
     @if(request()->is('contratacion'))
-    <script src="/assets/js_sitio/contratacion/contratacion.js?v=14"></script>
+    <script src="/assets/js_sitio/contratacion/contratacion.js?v=15"></script>
     <!-- Form wizard -->
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif

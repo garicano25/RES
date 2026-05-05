@@ -126,7 +126,18 @@ class DenyRoleGlobalMiddleware
         'capacitaciondocumentosemitidos',
         'capacitacionmoneda',
         'capacitaciolineasnegocios',
-        'bitacoragrhistorial'
+        'bitacoragrhistorial',
+        'listacontratosproveedores',
+        'listaproveedorescriticos',
+        'actualizaciondocumentosproveedor',
+        'aprobardocumentosproveedor',
+        'inventarioinactivo',
+        'listadeinfraestructura',
+        'listadeasignacion',
+        'listadealertas',
+        'listadeitemcriticos',
+        'catalogokits',
+        'listafacturas',
 
         
     ];

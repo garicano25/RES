@@ -7114,6 +7114,8 @@ $("#NUEVO_REQUISICION").click(function (e) {
     $("#MOSTRAR_TODO").show();
     $("#MOSTRAR_ANTES").hide();
 
+    $('#guardarFormRP').show();
+
    
 });
 
@@ -7129,6 +7131,7 @@ ModalArea.addEventListener('hidden.bs.modal', event => {
     document.getElementById('MOSTRAR_ANTES').style.display = "none";
     document.getElementById("APROBO_ID").value = "";
 
+    $('#guardarFormRP').show();
   
 });
 
@@ -7339,6 +7342,8 @@ $('#Tablarequisicioncontratacion').on('click', 'td>button.EDITAR', function () {
     ID_CONTRATACION_REQUERIMIENTO = row.data().ID_CONTRATACION_REQUERIMIENTO;
 
     editarDatoTabla(row.data(), 'formularioRP', 'miModal_REQUERIMIENTO', 1);
+
+    $('#guardarFormRP').hide();
 
 
      if (row.data().ANTES_DE1 == 1) {
