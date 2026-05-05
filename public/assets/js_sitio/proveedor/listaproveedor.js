@@ -4528,7 +4528,24 @@ function cargarTablafacturaproveedores() {
             }
         },
         { data: 'TIPO_FACTURA_FORMATO' },
-        { data: 'BTN_SOPORTES' },
+        {
+            data: null,
+            render: function (data, type, row) {
+                if (row.FOLIO_FISCAL === null || row.FOLIO_FISCAL === '') {
+                    return row.NO_FACTURA_EXTRANJERO;
+                }
+                return row.FOLIO_FISCAL;
+            }
+        },
+        {
+            data: null,
+            render: function (data, type, row) {
+                if (!row.DOCUMENTOS_SOPORTE_FACTURA || row.DOCUMENTOS_SOPORTE_FACTURA.trim() === '') {
+                    return 'N/A';
+                }
+                return row.BTN_SOPORTES;
+            }
+        },
         { data: 'BTN_FACTURA' },
         { data: 'ESTADO_FACTURA_TEXTO' },
         { data: 'BTN_VISUALIZAR' },
@@ -4536,10 +4553,11 @@ function cargarTablafacturaproveedores() {
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Factura por', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Soporte de la factura', className: 'all text-center' },
-        { targets: 3, title: 'Factura', className: 'all text-center' },
-        { targets: 4, title: 'Estatus factura', className: 'all text-center' },
-        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 2, title: 'No. Factura', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Soporte de la factura', className: 'all text-center' },
+        { targets: 4, title: 'Factura', className: 'all text-center' },
+        { targets: 5, title: 'Estatus factura', className: 'all text-center' },
+        { targets: 6, title: 'Visualizar', className: 'all text-center' },
     ]
     });
 }
@@ -4595,6 +4613,8 @@ $(document).on('click', '.VISUALIZAR', function () {
 
     let id = row.ID_FORMULARIO_FACTURACION;
 
+
+    
     $.get('/obtenerDetalleFactura', { id: id }, function (res) {
 
         let f = res.factura;
@@ -4641,6 +4661,7 @@ $(document).on('click', '.VISUALIZAR', function () {
             $('#IVA_FACTURA').val(f.IVA_FACTURA);
             $('#TOTAL_FACTURA').val(f.TOTAL_FACTURA);
             $('#verXML').removeClass('d-none');
+            $('#verSoportePDF').removeClass('d-none');
 
 
          } else if (tipo == 2) {
@@ -4654,8 +4675,16 @@ $(document).on('click', '.VISUALIZAR', function () {
             $('#IVA_FACTURA_EXTRANJERO').val(f.IVA_FACTURA_EXTRANJERO);
             $('#TOTAL_FACTURA_EXTRANJERO').val(f.TOTAL_FACTURA_EXTRANJERO);
             $('#verXML').addClass('d-none');
+            $('#verSoportePDF').addClass('d-none');
 
+
+            
         }
+
+
+        console.log(id)
+
+
 
         $('#verFacturaPDF').attr('href', '/mostrarfactura/' + f.ID_FORMULARIO_FACTURACION);
         $('#verSoportePDF').attr('href', '/mostrarsoportefactura/' + f.ID_FORMULARIO_FACTURACION);

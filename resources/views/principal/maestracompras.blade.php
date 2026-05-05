@@ -382,8 +382,15 @@
                                         Proveedores críticos
                                     </a>
                                 </li>
-
                                 @endif
+                                <hr class="dropdown-divider">
+
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/listafacturas') }}">
+                                        Lista de facturas
+                                    </a>
+                                </li>
+
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras','externo']))
                                 <hr class="dropdown-divider">
                                 <li>
@@ -674,7 +681,7 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=18"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=19"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -734,6 +741,11 @@
     @if(request()->is('listacontratosproveedores'))
     <script src="/assets/js_sitio/proveedor/listacontratosproveedores.js"></script>
     @endif
+
+    @if(request()->is('listafacturas'))
+    <script src="/assets/js_sitio/proveedor/listafacturas.js"></script>
+    @endif
+
 
 
     <script src="/assets/js_sitio/externo.js?v=1.0"></script>
