@@ -102,24 +102,26 @@ function activarCampos() {
 
     if (tipoProveedor == 2) {
 
+
+        $('#soporteFacturaTexto').addClass('d-none');
+        $('#soporteFacturaTextoContrato').addClass('d-none');
+
+
         $('#camposFacturaExtranjero').removeClass('d-none');
-
-        $('#SOPORTE_DIV').removeClass('col-md-4');
-        $('#SOPORTE_DIV').addClass('col-md-6');
-        $('#SOPORTE_DIV').closest('.col-md-6').show();
-
-
         $('#FACTURA_DIV').removeClass('col-md-4');
-        $('#FACTURA_DIV').addClass('col-md-6');
-        $('#FACTURA_DIV').closest('.col-md-6').show();
+        $('#FACTURA_DIV').addClass('col-md-12');
+        $('#FACTURA_DIV').closest('.col-md-12').show();
 
         $('#XML_DIV').closest('.col-md-4').hide();
+        $('#SOPORTE_DIV').closest('.col-md-4').hide();
 
 
         $('#MONEDA_FACTURA_EXTRANJERO').val('USD');
         $('#IVA_FACTURA_EXTRANJERO').val('0');
         $('#FOLIO_FISCAL').val('');
         $('#METODO_PAGO').val('');
+
+
 
     } else {
 
@@ -156,16 +158,22 @@ $(document).on('click', '#btnValidarCONTRATO', function () {
 
             if (!res.valido) {
 
+              
                 Swal.fire('Error', res.mensaje, 'error');
 
-                $('#datosFactura, #camposFactura, #camposFacturaExtranjero').addClass('d-none');
+                $('#datosFactura').addClass('d-none');
                 $('#btnGuardarFactura').hide();
+
+              
 
                 return;
             }
 
             Swal.fire('Correcto', 'Contrato válido y vigente', 'success');
 
+           validarTextoFactura();
+            activarCampos();
+            
             $('#DOCUMENTOS_SOPORTE_FACTURA').val('');
             $('#FACTURA_PDF').val('');
             $('#FACTURA_XML').val('');
@@ -180,9 +188,7 @@ $(document).on('click', '#btnValidarCONTRATO', function () {
             $('#FECHA_FACTURA_EXTRANJERO').val('');
             $('#SUBTOTAL_FACTURA_EXTRANJERO').val('');
             $('#TOTAL_FACTURA_EXTRANJERO').val('');
-
-            activarCampos();
-            validarTextoFactura();
+            
         },
         error: function () {
             Swal.fire('Error', 'Error al validar el contrato', 'error');
@@ -226,7 +232,6 @@ $(document).on('click', '#btnValidarPOGR', function () {
             Swal.fire('Correcto', 'Orden de Compra (PO) y Recepción (GR) son válidos', 'success');
             
             validarTextoFactura();
-            validarSoporteFactura();
             activarCampos();
 
 
@@ -256,14 +261,19 @@ $(document).on('click', '#btnValidarPOGR', function () {
 
 
 
-function validarSoporteFactura() {
+// function validarSoporteFactura() {
 
-    if (tipoProveedor == 1) {
-        $('#soporteFacturaTexto').removeClass('d-none');
-    } else {
-        $('#soporteFacturaTexto').addClass('d-none');
-    }
-}
+//     if (tipoProveedor == 1) {
+//         $('#soporteFacturaTexto').removeClass('d-none');
+//         $('#soporteFacturaTextoContrato').removeClass('d-none');
+
+//     } else {
+
+//         $('#soporteFacturaTexto').addClass('d-none');
+//         $('#soporteFacturaTextoContrato').addClass('d-none');
+
+//     }
+// }
 
 
 function validarTextoFactura() {
