@@ -4604,6 +4604,14 @@ Modalfactura.addEventListener('hidden.bs.modal', event => {
     document.getElementById('formularioFACTURA').reset();
     document.getElementById('ID_FORMULARIO_FACTURACION').value = "0"; 
 
+
+     $('#verXML').addClass('d-none');
+            $('#verSoportePDF').addClass('d-none');    
+            $('#verSoportePDF').addClass('d-none');    
+            $('#verSoportePDF').addClass('d-none');    
+
+    
+    
 })
 
 $(document).on('click', '.VISUALIZAR', function () {
@@ -4622,6 +4630,14 @@ $(document).on('click', '.VISUALIZAR', function () {
 
         $('#camposFactura, #camposFacturaExtranjero, #seccionREP, #seccionReciboPago')
             .addClass('d-none');
+
+        
+        $('#verReciboPago')
+        .addClass('d-none')
+        .attr('href', '');
+
+        $('#RECIBO_PAGO').val('');
+        
 
         $('#ID_FORMULARIO_FACTURACION').val(f.ID_FORMULARIO_FACTURACION);
         

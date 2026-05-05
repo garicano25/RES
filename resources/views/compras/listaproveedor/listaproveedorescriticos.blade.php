@@ -1819,7 +1819,10 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>Fecha de la factura *</label>
-                            <input type="date" class="form-control" placeholder="aaaa-mm-dd" id="FECHA_FACTURA" name="FECHA_FACTURA" required readonly>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FACTURA" name="FECHA_FACTURA" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>Método Pago</label>
@@ -1850,7 +1853,10 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>Fecha de la factura *</label>
-                            <input type="date" class="form-control" placeholder="aaaa-mm-dd" id="FECHA_FACTURA_EXTRANJERO" name="FECHA_FACTURA_EXTRANJERO" required readonly>
+                            <div class="input-group">
+                                <input type="text" class="form-control mydatepicker" placeholder="aaaa-mm-dd" id="FECHA_FACTURA_EXTRANJERO" name="FECHA_FACTURA_EXTRANJERO" required>
+                                <span class="input-group-text"><i class="bi bi-calendar-event"></i></span>
+                            </div>
                         </div>
                         <div class="col-md-4 mb-3">
                             <label>Moneda</label>
@@ -1886,22 +1892,7 @@
                         <option value="2">Rechazada</option>
                     </select>
 
-                    <div id="seccionREP" class="d-none mt-4">
-                        <hr>
-                        <h6>Recibo Electrónico de Pago (REP)</h6>
 
-                        <a id="verREP" target="_blank" class="btn btn-warning">PDF REP</a>
-                        <a id="verXMLREP" target="_blank" class="btn btn-secondary">XML REP</a>
-
-                        <div class="mt-3">
-                            <label>Estatus REP</label>
-                            <select id="ESTATUS_REP" name="ESTATUS_REP" class="form-control">
-                                <option value="">Seleccione</option>
-                                <option value="1">Aprobado</option>
-                                <option value="2">Rechazado</option>
-                            </select>
-                        </div>
-                    </div>
 
                     <hr>
                     <h6>Recibo de pago</h6>
@@ -1924,6 +1915,27 @@
                         </a>
 
                     </div>
+
+
+
+                    <div id="seccionREP" class="d-none mt-4">
+                        <hr>
+                        <h6>Recibo Electrónico de Pago (REP)</h6>
+
+                        <a id="verREP" target="_blank" class="btn btn-warning">PDF REP</a>
+                        <a id="verXMLREP" target="_blank" class="btn btn-secondary">XML REP</a>
+
+                        <div class="mt-3">
+                            <label>Estatus REP</label>
+                            <select id="ESTATUS_REP" name="ESTATUS_REP" class="form-control">
+                                <option value="">Seleccione</option>
+                                <option value="1">Aprobado</option>
+                                <option value="2">Rechazado</option>
+                            </select>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 <div class="modal-footer">
@@ -1934,7 +1946,6 @@
         </form>
     </div>
 </div>
-
 
 
 

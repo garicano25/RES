@@ -1867,22 +1867,7 @@
                         <option value="2">Rechazada</option>
                     </select>
 
-                    <div id="seccionREP" class="d-none mt-4">
-                        <hr>
-                        <h6>Recibo Electrónico de Pago (REP)</h6>
 
-                        <a id="verREP" target="_blank" class="btn btn-warning">PDF REP</a>
-                        <a id="verXMLREP" target="_blank" class="btn btn-secondary">XML REP</a>
-
-                        <div class="mt-3">
-                            <label>Estatus REP</label>
-                            <select id="ESTATUS_REP" name="ESTATUS_REP" class="form-control">
-                                <option value="">Seleccione</option>
-                                <option value="1">Aprobado</option>
-                                <option value="2">Rechazado</option>
-                            </select>
-                        </div>
-                    </div>
 
                     <hr>
                     <h6>Recibo de pago</h6>
@@ -1905,6 +1890,27 @@
                         </a>
 
                     </div>
+
+
+
+                    <div id="seccionREP" class="d-none mt-4">
+                        <hr>
+                        <h6>Recibo Electrónico de Pago (REP)</h6>
+
+                        <a id="verREP" target="_blank" class="btn btn-warning">PDF REP</a>
+                        <a id="verXMLREP" target="_blank" class="btn btn-secondary">XML REP</a>
+
+                        <div class="mt-3">
+                            <label>Estatus REP</label>
+                            <select id="ESTATUS_REP" name="ESTATUS_REP" class="form-control">
+                                <option value="">Seleccione</option>
+                                <option value="1">Aprobado</option>
+                                <option value="2">Rechazado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    
                 </div>
 
                 <div class="modal-footer">
