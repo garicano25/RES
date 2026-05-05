@@ -293,6 +293,7 @@ class facturaproveedorController extends Controller
                     $query->whereNull('SUBIR_REP')
                         ->orWhere('SUBIR_REP', 0);
                 })
+                ->where('SUBIR_RECIBO_PAGO', 1)
                 ->get();
 
             foreach ($tabla as $value) {
