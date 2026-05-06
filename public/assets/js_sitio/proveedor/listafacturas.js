@@ -60,6 +60,22 @@ var Tablalistafacturasproveedores = $("#Tablalistafacturasproveedores").DataTabl
         {
             data: null,
             render: function (data, type, row) {
+                if (row.FECHA_FACTURA === null || row.FECHA_FACTURA === '') {
+                    return row.FECHA_FACTURA_EXTRANJERO;
+                }
+                return row.FECHA_FACTURA;
+            }
+        },
+         {
+            data: 'created_at',
+            render: function (data) {
+                if (!data) return '';
+                return data.substring(0, 10);
+            }
+        },
+        {
+            data: null,
+            render: function (data, type, row) {
                 if (!row.DOCUMENTOS_SOPORTE_FACTURA || row.DOCUMENTOS_SOPORTE_FACTURA.trim() === '') {
                     return 'N/A';
                 }
@@ -76,11 +92,13 @@ var Tablalistafacturasproveedores = $("#Tablalistafacturasproveedores").DataTabl
         { targets: 1, title: 'Proveedor', className: 'all text-center nombre-column' },
         { targets: 2, title: 'Factura por', className: 'all text-center nombre-column' },
         { targets: 3, title: 'No. Factura', className: 'all text-center nombre-column' },
-        { targets: 4, title: 'Soporte de la factura', className: 'all text-center' },
-        { targets: 5, title: 'Factura', className: 'all text-center' },
-        { targets: 6, title: 'Estatus factura', className: 'all text-center' },
-        { targets: 7, title: 'Visualizar', className: 'all text-center' },
+        { targets: 4, title: 'Fecha factura', className: 'all text-center nombre-column' },
+        { targets: 5, title: 'Fecha de registro', className: 'all text-center nombre-column' },
+        { targets: 6, title: 'Soporte', className: 'all text-center' },
+        { targets: 7, title: 'Factura', className: 'all text-center' },
         { targets: 8, title: 'Estatus', className: 'all text-center' },
+        { targets: 9, title: 'Visualizar', className: 'all text-center' },
+        { targets: 10, title: 'Estatus', className: 'all text-center' },
     ],
      infoCallback: function (settings, start, end, max, total, pre) {
         return `Total de ${total} registros`;

@@ -281,18 +281,18 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item dropdown" style="margin-left: -2px;">
+                    <li class="nav-item dropdown" style="margin-left: -10px;">
                         <a class="nav-link BOTON" href="{{ url('/modulos') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
-                            <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
+                            <i class="bi bi-grid-3x3-gap-fill" style="margin-right: 1px;"></i> <span class="d-lg-none">Inicio</span><span class="d-none d-lg-inline">Inicio</span>
                         </a>
                     </li>
                     <ul class="navbar-nav">
                         @if(auth()->check() && !auth()->user()->hasRoles(['Almacenista','Asistente de compras']))
-                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                        <li class="nav-item dropdown" style="margin-left: -10px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
                                 style="color: #fff; font-weight: bold; text-decoration: none;"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 1px;"></i>
                                 <span class="d-lg-none">Requisición de Materiales - M.R</span>
                                 <span class="d-none d-lg-inline">Requisición de Materiales - M.R</span>
                             </a>
@@ -329,9 +329,9 @@
 
 
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <li class="nav-item dropdown" style="margin-left: -10px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 1px;"></i>
                                     <span class="d-lg-none">Bitácora de consecutivos - MR</span>
                                     <span class="d-none d-lg-inline">Bitácora de consecutivos - MR</span>
                                 </a>
@@ -349,11 +349,11 @@
                         @endif
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras','externo']))
-                        <li class="nav-item dropdown" style="margin-left: -2px;">
+                        <li class="nav-item dropdown" style="margin-left: -10px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#"
                                 style="color: #fff; font-weight: bold; text-decoration: none;"
                                 role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-lines-fill" style="margin-right: 5px;"></i>
+                                <i class="bi bi-person-lines-fill" style="margin-right: 1px;"></i>
                                 <span class="d-lg-none">Proveedores</span>
                                 <span class="d-none d-lg-inline">Proveedores</span>
                             </a>
@@ -363,17 +363,16 @@
                                         Banco de proveedores
                                     </a>
                                 </li>
-                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de compras','externo']))
                                 <hr class="dropdown-divider">
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/listaproveedores') }}">
-                                        Lista proveedores
+                                        Proveedores
                                     </a>
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/listacontratosproveedores') }}">
-                                        Lista de contratos
+                                    <a class="dropdown-item" href="{{ url('/proveedorestemporales') }}">
+                                        Proveedores temporales
                                     </a>
                                 </li>
                                 <hr class="dropdown-divider">
@@ -382,22 +381,15 @@
                                         Proveedores críticos
                                     </a>
                                 </li>
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo','Asistente de planeación y logística']))
+
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/listacontratosproveedores') }}">
+                                        Contratos
+                                    </a>
+                                </li>
                                 @endif
-                                <hr class="dropdown-divider">
-
-                                <li>
-                                    <a class="dropdown-item" href="{{ url('/listafacturas') }}">
-                                        Lista de facturas
-                                    </a>
-                                </li>
-
-                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','Asistente de planeación y logística','Asistente de compras','externo']))
-                                <hr class="dropdown-divider">
-                                <li>
-                                    <a class="dropdown-item" href="{{ url('/proveedorestemporales') }}">
-                                        Proveedores temporales
-                                    </a>
-                                </li>
                                 <hr class="dropdown-divider">
                                 <li class="dropdown-submenu">
                                     <a class="dropdown-item dropdown-toggle" href="#">
@@ -422,19 +414,51 @@
                                     </ul>
                                 </li>
 
-                                @endif
                             </ul>
                         </li>
                         @endif
 
 
+                        @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras','externo']))
+                        <li class="nav-item dropdown" style="margin-left: -10px;">
+                            <a class="nav-link dropdown-toggle BOTON" href="#"
+                                style="color: #fff; font-weight: bold; text-decoration: none;"
+                                role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-file-earmark-fill" style="margin-right: 1px;"></i>
+                                <span class="d-lg-none">Facturación</span>
+                                <span class="d-none d-lg-inline">Facturación</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/listafacturas') }}">
+                                        Recepción facturas
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/#') }}">
+                                        Relación de pagos
+                                    </a>
+                                </li>
+                                <hr class="dropdown-divider">
+                                <li>
+                                    <a class="dropdown-item" href="{{ url('/#') }}">
+                                        Envió comprobante de pago
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        @endif
+
+
+
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras','externo']))
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <li class="nav-item dropdown" style="margin-left: -10px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
                                     style="color: #fff; font-weight: bold; text-decoration: none;"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 1px;"></i>
                                     <span class="d-lg-none">Matriz comparativa</span>
                                     <span class="d-none d-lg-inline">Matriz comparativa</span>
                                 </a>
@@ -458,11 +482,11 @@
                         @endif
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras','externo']))
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <li class="nav-item dropdown" style="margin-left: -10px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
                                     style="color: #fff; font-weight: bold; text-decoration: none;"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 1px;"></i>
                                     <span class="d-lg-none">Orden de compra - PO</span>
                                     <span class="d-none d-lg-inline">Orden de compra - PO</span>
                                 </a>
@@ -491,11 +515,11 @@
                         </ul>
                         @endif
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <li class="nav-item dropdown" style="margin-left: -10px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#"
                                     style="color: #fff; font-weight: bold; text-decoration: none;"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 1px;"></i>
                                     <span class="d-lg-none">Recepción de bienes y/o servicios - GR</span>
                                     <span class="d-none d-lg-inline">Recepción de bienes y/o servicios - GR</span>
                                 </a>
@@ -525,9 +549,9 @@
                         </ul>
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de compras','externo']))
                         <ul class="navbar-nav">
-                            <li class="nav-item dropdown" style="margin-left: -2px;">
+                            <li class="nav-item dropdown" style="margin-left: -10px;">
                                 <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="bi bi-file-earmark-fill" style="margin-right: 5px;"></i>
+                                    <i class="bi bi-file-earmark-fill" style="margin-right: 1px;"></i>
                                     <span class="d-lg-none">Catálogos</span>
                                     <span class="d-none d-lg-inline">Catálogos</span>
                                 </a>
@@ -681,7 +705,7 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=21"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=22"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -726,7 +750,7 @@
     @endif
 
     @if(request()->is('listaproveedorescriticos'))
-    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=9"></script>
+    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=10"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -743,7 +767,7 @@
     @endif
 
     @if(request()->is('listafacturas'))
-    <script src="/assets/js_sitio/proveedor/listafacturas.js?v=1"></script>
+    <script src="/assets/js_sitio/proveedor/listafacturas.js?v=2"></script>
     @endif
 
 

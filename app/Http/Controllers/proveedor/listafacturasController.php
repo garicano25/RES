@@ -82,19 +82,16 @@ class listafacturasController extends Controller
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="Aprobar factura">
-
                     <i class="bi bi-check-circle"></i>
-
                     </button>
-
+                   
+                    
                     <button class="btn btn-danger btn-custom rounded-pill rechazar-doc"
                     data-id="' . $value->ID_FORMULARIO_FACTURACION . '"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="Rechazar factura">
-
                     <i class="bi bi-x-circle"></i>
-
                     </button>
                 ';
 

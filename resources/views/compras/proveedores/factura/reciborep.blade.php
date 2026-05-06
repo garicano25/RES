@@ -35,6 +35,9 @@
                     <div class="row" id="datosFactura">
 
                         <input type="hidden" id="SUBIR_REP" name="SUBIR_REP" value="1">
+
+                        <input type="hidden" id="TOTAL_FACTURA" name="TOTAL_FACTURA" value="">
+
                         <div class="col-md-12 mb-3">
                             <label class="form-label"> Recibo Electrónico PDF *</label>
                             <input type="file" class="form-control" name="ARCHIVO_REP" id="ARCHIVO_REP" accept=".pdf" required>

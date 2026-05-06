@@ -4038,6 +4038,22 @@ function cargarTablafacturaproveedores() {
                 }
                 return row.FOLIO_FISCAL;
             }
+            },
+          {
+            data: null,
+            render: function (data, type, row) {
+                if (row.FECHA_FACTURA === null || row.FECHA_FACTURA === '') {
+                    return row.FECHA_FACTURA_EXTRANJERO;
+                }
+                return row.FECHA_FACTURA;
+            }
+        },
+        {
+            data: 'created_at',
+            render: function (data) {
+                if (!data) return '';
+                return data.substring(0, 10);
+            }
         },
         {
             data: null,
@@ -4056,13 +4072,16 @@ function cargarTablafacturaproveedores() {
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Factura por', className: 'all text-center nombre-column' },
         { targets: 2, title: 'No. Factura', className: 'all text-center nombre-column' },
-        { targets: 3, title: 'Soporte de la factura', className: 'all text-center' },
-        { targets: 4, title: 'Factura', className: 'all text-center' },
-        { targets: 5, title: 'Estatus factura', className: 'all text-center' },
-        { targets: 6, title: 'Visualizar', className: 'all text-center' },
+        { targets: 3, title: 'Fecha factura', className: 'all text-center nombre-column' },
+        { targets: 4, title: 'Fecha de registro', className: 'all text-center nombre-column' },
+        { targets: 5, title: 'Soporte de la factura', className: 'all text-center' },
+        { targets: 6, title: 'Factura', className: 'all text-center' },
+        { targets: 7, title: 'Estatus factura', className: 'all text-center' },
+        { targets: 8, title: 'Visualizar', className: 'all text-center' },
     ]
     });
 }
+
 
 $('#Tablafacturaproveedoresinterno').on('click', '.ver-archivo-soportes', function () {
     var tr = $(this).closest('tr');

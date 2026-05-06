@@ -35,7 +35,7 @@ $("#btnGuardarFactura").click(function (e) {
         },async function () { 
 
             await loaderbtn('btnGuardarFactura')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_FACTURACION: ID_FORMULARIO_FACTURACION }, 'FacturacionSave', 'formularioFACTURA', 'btnGuardarFactura', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 2, ID_FORMULARIO_FACTURACION: ID_FORMULARIO_FACTURACION }, 'FacturacionSave', 'formularioFACTURA', 'btnGuardarFactura', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -63,13 +63,13 @@ $("#btnGuardarFactura").click(function (e) {
         
     } else {
             alertMensajeConfirm({
-            title: "¿Desea editar la información de este formulario?",
+             title: "¿Desea guardar la información?",
             text: "Al guardarla, se podra usar",
             icon: "question",
         },async function () { 
 
             await loaderbtn('btnGuardarFactura')
-            await ajaxAwaitFormData({ api: 1, ID_FORMULARIO_FACTURACION: ID_FORMULARIO_FACTURACION }, 'FacturacionSave', 'formularioFACTURA', 'btnGuardarFactura', { callbackAfter: true, callbackBefore: true }, () => {
+            await ajaxAwaitFormData({ api: 2, ID_FORMULARIO_FACTURACION: ID_FORMULARIO_FACTURACION }, 'FacturacionSave', 'formularioFACTURA', 'btnGuardarFactura', { callbackAfter: true, callbackBefore: true }, () => {
         
                 Swal.fire({
                     icon: 'info',
@@ -87,7 +87,7 @@ $("#btnGuardarFactura").click(function (e) {
 
                     
                     ID_FORMULARIO_FACTURACION = data.cuenta.ID_FORMULARIO_FACTURACION
-                    alertMensaje('success', 'Información editada correctamente', 'Información guardada')
+                    alertMensaje('success', 'Información guardada correctamente', 'Información guardada')
                      $('#miModal_factura').modal('hide')
                     document.getElementById('formularioFACTURA').reset();
                     Tablacargarrecp.ajax.reload()
@@ -184,10 +184,169 @@ $('#Tablacargarrecp tbody').on('click', 'td>button.CARGARREP', function () {
     var row = Tablacargarrecp.row(tr);
     ID_FORMULARIO_FACTURACION = row.data().ID_FORMULARIO_FACTURACION;
 
-    editarDatoTabla(row.data(), 'formularioFACTURA', 'miModal_factura');
 
     document.getElementById('SUBIR_REP').value = "1"; 
     
 
+    $("#TOTAL_FACTURA").val(row.data().TOTAL_FACTURA);
+
+$('#btnGuardarFactura').prop('disabled', false);
+
+    $('#miModal_factura').modal('show');
+
 });
 
+
+$(document).on('change', '#XML_REP', function () {
+
+    const file = this.files[0];
+
+    if (!file) return;
+
+
+    $('#btnGuardarFactura').prop('disabled', false);
+
+    const reader = new FileReader();
+
+    reader.onload = function (e) {
+
+        try {
+
+            const xmlText = e.target.result;
+
+            const parser = new DOMParser();
+
+            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+
+            let montoREP = null;
+
+
+            const pagos20 = xmlDoc.getElementsByTagName("pago20:Pagos");
+
+            if (pagos20.length > 0) {
+
+                const totales = xmlDoc.getElementsByTagName("pago20:Totales");
+
+                if (totales.length > 0) {
+
+                    montoREP = parseFloat(
+                        totales[0].getAttribute("MontoTotalPagos")
+                    );
+                }
+            }
+
+          
+
+            const pagos10 = xmlDoc.getElementsByTagName("pago10:Pagos");
+
+            if (pagos10.length > 0 && montoREP === null) {
+
+                const pago = xmlDoc.getElementsByTagName("pago10:Pago");
+
+                if (pago.length > 0) {
+
+                    montoREP = parseFloat(
+                        pago[0].getAttribute("Monto")
+                    );
+                }
+            }
+
+           
+
+            if (montoREP === null || isNaN(montoREP)) {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'XML inválido',
+                    text: 'El archivo XML no corresponde a un REP válido'
+                });
+
+                $('#XML_REP').val('');
+
+                $('#btnGuardarFactura').prop('disabled', true);
+
+                return;
+            }
+
+         
+
+            let totalFactura = parseFloat($('#TOTAL_FACTURA').val());
+
+
+            if (isNaN(totalFactura)) {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'No se encontró el total de la factura'
+                });
+
+                $('#XML_REP').val('');
+
+                $('#btnGuardarFactura').prop('disabled', true);
+
+                return;
+            }
+
+            // =========================================
+            // REDONDEAR
+            // =========================================
+
+            montoREP = parseFloat(montoREP.toFixed(2));
+
+            totalFactura = parseFloat(totalFactura.toFixed(2));
+
+            // =========================================
+            // VALIDAR QUE NO EXCEDA
+            // =========================================
+
+            if (montoREP > totalFactura) {
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Monto inválido',
+                    html:
+                        '<b>Total factura:</b> $' + totalFactura.toFixed(2) +
+                        '<br><b>Monto REP:</b> $' + montoREP.toFixed(2) +
+                        '<br><br>El monto del REP no puede ser mayor al total de la factura.'
+                });
+
+                $('#XML_REP').val('');
+
+                $('#btnGuardarFactura').prop('disabled', true);
+
+                return;
+            }
+
+            // =========================================
+            // XML CORRECTO
+            // =========================================
+
+            $('#btnGuardarFactura').prop('disabled', false);
+
+            Swal.fire({
+                icon: 'success',
+                title: 'XML válido',
+                html:
+                    '<b>Total factura:</b> $' + totalFactura.toFixed(2) +
+                    '<br><b>Monto REP:</b> $' + montoREP.toFixed(2)
+            });
+
+        } catch (error) {
+
+            console.error(error);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No fue posible leer el XML'
+            });
+
+            $('#XML_REP').val('');
+
+            $('#btnGuardarFactura').prop('disabled', true);
+        }
+    };
+
+    reader.readAsText(file);
+});
