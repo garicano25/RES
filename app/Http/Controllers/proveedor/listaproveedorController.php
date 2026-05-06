@@ -1400,7 +1400,7 @@ class listaproveedorController extends Controller
         $archivo = facturacionModel::findOrFail($id)->FACTURA_XML;
 
         if (request()->has('download')) {
-            return Storage::download($archivo, 'factura.xml');
+            return Storage::download($archivo);
         }
 
         return Storage::response($archivo);
@@ -1412,7 +1412,7 @@ class listaproveedorController extends Controller
         $archivo = facturacionModel::findOrFail($id)->XML_REP;
 
         if (request()->has('download')) {
-            return Storage::download($archivo, 'factura.xml');
+            return Storage::download($archivo);
         }
 
         return Storage::response($archivo);
