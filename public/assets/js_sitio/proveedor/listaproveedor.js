@@ -4698,8 +4698,14 @@ $(document).on('click', '.VISUALIZAR', function () {
         }
 
 
-        console.log(id)
+        if (f.ESTATUS_FACTURA == 1) { 
+                $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+            }  else {
+                $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+            }
 
+        $('#MOTIVO_RECHAZO_FACTURA').val(f.MOTIVO_RECHAZO_FACTURA);
+        
 
 
         $('#verFacturaPDF').attr('href', '/mostrarfactura/' + f.ID_FORMULARIO_FACTURACION);

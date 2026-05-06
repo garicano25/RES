@@ -503,6 +503,15 @@ var Tablafacturaproveedores = $("#Tablafacturaproveedores").DataTable({
             }
         },
         { data: 'TIPO_FACTURA_FORMATO' },
+        {
+            data: null,
+            render: function (data, type, row) {
+                if (row.FOLIO_FISCAL === null || row.FOLIO_FISCAL === '') {
+                    return row.NO_FACTURA_EXTRANJERO;
+                }
+                return row.FOLIO_FISCAL;
+            }
+        },
         { data: 'BTN_SOPORTES' },
         { data: 'BTN_FACTURA' },
         { data: 'BTN_VISUALIZAR' },
@@ -511,10 +520,11 @@ var Tablafacturaproveedores = $("#Tablafacturaproveedores").DataTable({
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
         { targets: 1, title: 'Factura por', className: 'all text-center nombre-column' },
-        { targets: 2, title: 'Soporte de la factura', className: 'all text-center' },
-        { targets: 3, title: 'Factura', className: 'all text-center' },
-        { targets: 4, title: 'Visualizar', className: 'all text-center' },
-        { targets: 5, title: 'Estatus factura', className: 'all text-center' },
+        { targets: 2, title: 'No. Factura', className: 'all text-center nombre-column' },
+        { targets: 3, title: 'Soporte de la factura', className: 'all text-center' },
+        { targets: 4, title: 'Factura', className: 'all text-center' },
+        { targets: 5, title: 'Visualizar', className: 'all text-center' },
+        { targets: 6, title: 'Estatus factura', className: 'all text-center' },
     ]
 });
 

@@ -48,6 +48,7 @@ class listaproveedorcriticoController extends Controller
         try {
             $tabla = altaproveedorModel::select('*')
                 ->where('PROVEEDOR_CRITICO', 1)
+                ->where('ACTIVO', 1)
                 ->get();
             foreach ($tabla as $value) {
 

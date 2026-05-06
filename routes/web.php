@@ -133,6 +133,7 @@ use App\Http\Controllers\proveedor\actualizaciondocumentosController;
 use App\Http\Controllers\proveedor\ordencompraproveedorController;
 use App\Http\Controllers\proveedor\facturaproveedorController;
 use App\Http\Controllers\proveedor\listacontratosController;
+use App\Http\Controllers\proveedor\listafacturasController;
 
 
 
@@ -942,10 +943,7 @@ Route::get('/documentosProveedorAdmin/{rfc}', [listaproveedorController::class, 
 Route::post('/enviarCorreoFaltantes/{id}', [listaproveedorController::class, 'enviarCorreoFaltantes']);
 Route::post('/actualizarVerificacionSolicitada', [listaproveedorController::class, 'actualizarVerificacionSolicitada']);
 Route::post('/verificarEstadoVerificacion', [listaproveedorController::class, 'verificarEstadoVerificacion']);
-
 Route::post('/verificarestadobloqueoproveedor', [listaproveedorController::class, 'verificarestadobloqueoproveedor']);
-
-
 Route::get('/AltaDelete', [listaproveedorController::class, 'store']);
 
 ///// INACTIVO 
@@ -990,6 +988,12 @@ Route::get('/Tablalistacontratosproveedores', [listacontratosController::class, 
 Route::get('/listaproveedorescriticos', [listaproveedorcriticoController::class, 'index']);
 Route::get('/Tablalistaproveedorescriticos', [listaproveedorcriticoController::class, 'Tablalistaproveedorescriticos']);
 
+//==============================================    LISTA DE FACTURAS  ============================================== 
+Route::get('/listafacturas', function () {return view('compras.listafactura.listafactura');});
+Route::get('/Tablalistafacturasproveedores', [listafacturasController::class, 'Tablalistafacturasproveedores']);
+
+
+Route::post('/aprobarRechazarFactura',[listafacturasController::class, 'aprobarRechazarFactura']);
 
 //==============================================     PROVEEDORES TEMPORALES  ============================================== 
 

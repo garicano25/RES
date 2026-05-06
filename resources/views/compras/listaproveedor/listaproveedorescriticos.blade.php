@@ -1768,7 +1768,8 @@
 <!-- MODAL FACTURA PROVEEDOR  -->
 <!-- ============================================================== -->
 
-<div class="modal fade" id="modalDetalleFactura">
+
+<div class="modal fade" id="modalDetalleFactura" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <form method="post" enctype="multipart/form-data" id="formularioFACTURA" style="background-color: #ffffff;">
 
@@ -1908,7 +1909,7 @@
 
                     <div id="seccionReciboPago" class="d-none mt-3">
 
-                        <input type="file" id="ARCHIVO_RECIBO_PAGO" name="ARCHIVO_RECIBO_PAGO" class="form-control mb-2">
+                        <input type="file" id="ARCHIVO_RECIBO_PAGO" name="ARCHIVO_RECIBO_PAGO" class="form-control mb-2" accept=".pdf">
 
                         <a id="verReciboPago" target="_blank" class="btn btn-info d-none">
                             Ver recibo de pago
@@ -1946,6 +1947,7 @@
         </form>
     </div>
 </div>
+
 
 
 
