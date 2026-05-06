@@ -222,6 +222,11 @@ class facturaproveedorController extends Controller
                     $value->BTN_VISUALIZAR = '<button type="button" class="btn btn-primary btn-custom rounded-pill VISUALIZAR"><i class="bi bi-eye"></i></button>';
                     $value->BTN_SOPORTES = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-soportes" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
                     $value->BTN_FACTURA = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-factura" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+
+
+                    $value->BTN_COMPROBANTE = '<button class="btn btn-danger btn-custom rounded-pill pdf-button ver-archivo-comprobante" data-id="' . $value->ID_FORMULARIO_FACTURACION . '" title="Ver documento "> <i class="bi bi-filetype-pdf"></i></button>';
+
+
                 }
 
                 if ($value->TIPO_FACTURA == 'CONTRATO') {

@@ -705,7 +705,7 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=22"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=23"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -750,7 +750,7 @@
     @endif
 
     @if(request()->is('listaproveedorescriticos'))
-    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=10"></script>
+    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=11"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 

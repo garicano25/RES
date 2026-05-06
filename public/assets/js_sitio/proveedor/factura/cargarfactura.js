@@ -515,7 +515,16 @@ var Tablafacturaproveedores = $("#Tablafacturaproveedores").DataTable({
         { data: 'BTN_SOPORTES' },
         { data: 'BTN_FACTURA' },
         { data: 'BTN_VISUALIZAR' },
-        { data: 'ESTADO_FACTURA_TEXTO' }
+        { data: 'ESTADO_FACTURA_TEXTO' },
+        {
+            data: null,
+            render: function (data, type, row) {
+                if (!row.ARCHIVO_RECIBO_PAGO || row.ARCHIVO_RECIBO_PAGO.trim() === '') {
+                    return '-';
+                }
+                return row.BTN_COMPROBANTE;
+            }
+        },
     ],
     columnDefs: [
         { targets: 0, title: '#', className: 'all  text-center' },
@@ -525,6 +534,8 @@ var Tablafacturaproveedores = $("#Tablafacturaproveedores").DataTable({
         { targets: 4, title: 'Factura', className: 'all text-center' },
         { targets: 5, title: 'Visualizar', className: 'all text-center' },
         { targets: 6, title: 'Estatus factura', className: 'all text-center' },
+        { targets: 7, title: 'Comprobante de pago', className: 'all text-center' },
+
     ]
 });
 
@@ -550,6 +561,19 @@ $('#Tablafacturaproveedores').on('click', '.ver-archivo-factura', function () {
     var url = '/mostrarfactura/' + id;
     abrirModal(url, 'Factura');
 })
+
+
+$('#Tablafacturaproveedores').on('click', '.ver-archivo-comprobante', function () {
+    var id = $(this).data('id');
+    if (!id) {
+        alert('ARCHIVO NO ENCONTRADO');
+        return;
+    }
+    var url = '/mostrarecibodepago/' + id;
+    abrirModal(url, 'Comprobante de pago');
+})
+
+
 
 
 $(document).ready(function() {

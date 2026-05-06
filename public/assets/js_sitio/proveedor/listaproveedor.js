@@ -4716,12 +4716,16 @@ $(document).on('click', '.VISUALIZAR', function () {
         }
 
 
+              
         if (f.ESTATUS_FACTURA == 1) { 
-                $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
-            }  else {
-                $('#MOTIVO_RECHAZO_JEFE_DIV').show();
-            }
+            $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+        } else if (f.ESTATUS_FACTURA == 2) {
+            $('#MOTIVO_RECHAZO_JEFE_DIV').show();
+        } else {
+            $('#MOTIVO_RECHAZO_JEFE_DIV').hide();
+        }
 
+        
         $('#MOTIVO_RECHAZO_FACTURA').val(f.MOTIVO_RECHAZO_FACTURA);
         
 
