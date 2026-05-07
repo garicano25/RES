@@ -310,18 +310,24 @@ class listaproveedorController extends Controller
                         ->toArray();
 
 
-                    $documentosSubidosPeriodo = DB::table('actualizacion_documentosproveedor')
+                        $documentosSubidosPeriodo = DB::table('actualizacion_documentosproveedor')
 
-                        ->where('RFC_PROVEEDOR', $value->RFC_ALTA)
+                            ->where('RFC_PROVEEDOR', $value->RFC_ALTA)
 
-                        ->whereBetween('created_at', [
-                            $periodo->FECHA_INICIO,
-                            $periodo->FECHA_FIN
-                        ])
+                            ->whereBetween('created_at', [
+                                $periodo->FECHA_INICIO,
+                                $periodo->FECHA_FIN
+                            ])
 
-                        ->pluck('ID_CATALOGO_DOCUMENTO')
+                            ->where(function ($q) {
 
-                        ->toArray();
+                                $q->whereNull('VOBO_RH')
+                                    ->orWhere('VOBO_RH', '!=', 2);
+                            })
+
+                            ->pluck('ID_CATALOGO_DOCUMENTO')
+
+                            ->toArray();
 
 
                     $faltantes = array_diff(
@@ -733,7 +739,7 @@ class listaproveedorController extends Controller
 
             ->get();
 
-       
+
 
         $documentosSubidos = DB::table('actualizacion_documentosproveedor')
 
@@ -743,6 +749,12 @@ class listaproveedorController extends Controller
                 $periodo->FECHA_INICIO,
                 $periodo->FECHA_FIN
             ])
+
+            ->where(function ($q) {
+
+                $q->whereNull('VOBO_RH')
+                    ->orWhere('VOBO_RH', '!=', 2);
+            })
 
             ->pluck('ID_CATALOGO_DOCUMENTO')
 
