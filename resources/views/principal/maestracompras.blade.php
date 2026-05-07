@@ -382,7 +382,6 @@
                                     </a>
                                 </li>
                                 @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo','Asistente de planeación y logística']))
-
                                 <hr class="dropdown-divider">
                                 <li>
                                     <a class="dropdown-item" href="{{ url('/listacontratosproveedores') }}">
@@ -402,22 +401,17 @@
                                             </a>
                                         </li>
 
-                                        @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
                                         <hr class="dropdown-divider">
                                         <li>
                                             <a class="dropdown-item" href="{{ url('/aprobardocumentosproveedor') }}">
                                                 Aprobación
                                             </a>
                                         </li>
-                                        @endif
-
                                     </ul>
                                 </li>
-
                             </ul>
                         </li>
                         @endif
-
 
                         @if(auth()->check() && auth()->user()->hasRoles(['Superusuario', 'Administrador','Asistente de planeación y logística','Asistente de compras','externo']))
                         <li class="nav-item dropdown" style="margin-left: -10px;">
