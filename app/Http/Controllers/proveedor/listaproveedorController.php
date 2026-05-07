@@ -244,7 +244,6 @@ class listaproveedorController extends Controller
 
 
 
-                /////// ACTUALIZAR DOCUMENTOS BOTONES ///////
 
                 $value->BTN_ACTUALIZACION_DOCS = '';
 
@@ -261,126 +260,99 @@ class listaproveedorController extends Controller
 
                     if ($periodo) {
 
-                        $hoy = now();
+                    $hoy = now();
 
-                        // =========================================
-                        // VALIDAR SI EL PERIODO SIGUE VIGENTE
-                        // =========================================
+                  
 
-                        $periodoActivo =
-                            $hoy >= $periodo->FECHA_INICIO &&
-                            $hoy <= $periodo->FECHA_FIN;
+                    $periodoActivo =
+                        $hoy >= $periodo->FECHA_INICIO &&
+                        $hoy <= $periodo->FECHA_FIN;
 
-                        if (!$periodoActivo) {
-
-                            $value->BTN_ACTUALIZACION_DOCS = '';
-
-                            continue;
-                        }
-
-                        // =========================================
-                        // SI EL PROVEEDOR SE REGISTRÓ
-                        // EN ESTE PERIODO
-                        // =========================================
-
-                        $registroEnPeriodo =
-                            $value->created_at >= $periodo->FECHA_INICIO &&
-                            $value->created_at <= $periodo->FECHA_FIN;
-
-                        // SI SE REGISTRÓ EN ESTE PERIODO
-                        // NO PEDIR ACTUALIZACIÓN
-
-                        if ($registroEnPeriodo) {
-
-                            $value->BTN_ACTUALIZACION_DOCS = '';
-
-                            continue;
-                        }
-
-                        // =========================================
-                        // DOCUMENTOS QUE LE CORRESPONDEN
-                        // =========================================
-
-                        $documentosActualizar = DB::table('catalogo_documentosproveedor')
-
-                            ->where('ACTUALIZAR_DOCUMENTOS', 1)
-
-                            ->where(function ($q) use ($value) {
-
-                                $q->where('TIPO_PERSONA', $value->TIPO_PERSONA_ALTA)
-                                    ->orWhere('TIPO_PERSONA', 3);
-                            })
-
-                            ->where(function ($q) use ($value) {
-
-                                $q->where('TIPO_PERSONA_OPCION', $value->TIPO_PERSONA_OPCION)
-                                    ->orWhere('TIPO_PERSONA_OPCION', 3);
-                            })
-
-                            ->pluck('ID_CATALOGO_DOCUMENTOSPROVEEDOR')
-
-                            ->toArray();
-
-                        // =========================================
-                        // DOCUMENTOS SUBIDOS EN ESTE PERIODO
-                        // =========================================
-
-                        $documentosSubidosPeriodo = DB::table('actualizacion_documentosproveedor')
-
-                            ->where('RFC_PROVEEDOR', $value->RFC_ALTA)
-
-                            ->whereBetween('created_at', [
-                                $periodo->FECHA_INICIO,
-                                $periodo->FECHA_FIN
-                            ])
-
-                            ->pluck('ID_CATALOGO_DOCUMENTO')
-
-                            ->toArray();
-
-                        // =========================================
-                        // DOCUMENTOS FALTANTES
-                        // =========================================
-
-                        $faltantes = array_diff(
-                            $documentosActualizar,
-                            $documentosSubidosPeriodo
-                        );
-
-                        // =========================================
-                        // SI COMPLETÓ TODO
-                        // =========================================
-
-                        if (empty($faltantes)) {
-
-                            $value->BTN_ACTUALIZACION_DOCS = '
-                <span class="badge bg-success">
-                    Actualización completa
-                </span>';
-                        } else {
-
-                            // =========================================
-                            // SI FALTAN DOCUMENTOS
-                            // =========================================
-
-                            $value->BTN_ACTUALIZACION_DOCS = '
-
-                <button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
-
-                    data-id="' . $value->ID_FORMULARIO_ALTA . '"
-
-                    data-bs-toggle="tooltip"
-
-                    title="Enviar solicitud de actualización">
-
-                    <i class="bi bi-envelope-paper-fill"></i>
-
-                </button>';
-                        }
-                    } else {
+                    if (!$periodoActivo) {
 
                         $value->BTN_ACTUALIZACION_DOCS = '';
+
+                        continue;
                     }
+
+                    $registroEnPeriodo =
+                        $value->created_at >= $periodo->FECHA_INICIO &&
+                        $value->created_at <= $periodo->FECHA_FIN;
+
+                  
+
+                    if ($registroEnPeriodo) {
+
+                        $value->BTN_ACTUALIZACION_DOCS = '';
+
+                        continue;
+                    }
+
+
+                    $documentosActualizar = DB::table('catalogo_documentosproveedor')
+
+                        ->where('ACTUALIZAR_DOCUMENTOS', 1)
+
+                        ->where(function ($q) use ($value) {
+
+                            $q->where('TIPO_PERSONA', $value->TIPO_PERSONA_ALTA)
+                                ->orWhere('TIPO_PERSONA', 3);
+                        })
+
+                        ->where(function ($q) use ($value) {
+
+                            $q->where('TIPO_PERSONA_OPCION', $value->TIPO_PERSONA_OPCION)
+                                ->orWhere('TIPO_PERSONA_OPCION', 3);
+                        })
+
+                        ->pluck('ID_CATALOGO_DOCUMENTOSPROVEEDOR')
+
+                        ->toArray();
+
+
+                    $documentosSubidosPeriodo = DB::table('actualizacion_documentosproveedor')
+
+                        ->where('RFC_PROVEEDOR', $value->RFC_ALTA)
+
+                        ->whereBetween('created_at', [
+                            $periodo->FECHA_INICIO,
+                            $periodo->FECHA_FIN
+                        ])
+
+                        ->pluck('ID_CATALOGO_DOCUMENTO')
+
+                        ->toArray();
+
+
+                    $faltantes = array_diff(
+                        $documentosActualizar,
+                        $documentosSubidosPeriodo
+                    );
+
+
+                    if (empty($faltantes)) {
+
+                        $value->BTN_ACTUALIZACION_DOCS = '
+                        <span class="badge bg-success">
+                            Actualización completa
+                        </span>';
+                    } else {
+
+                        
+
+                    $value->BTN_ACTUALIZACION_DOCS = '
+
+                    <button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
+                        data-id="' . $value->ID_FORMULARIO_ALTA . '"
+                        data-bs-toggle="tooltip"
+                        title="Enviar solicitud de actualización">
+                        <i class="bi bi-envelope-paper-fill"></i>
+                    </button>';
+                            }
+                        } else {
+
+                            $value->BTN_ACTUALIZACION_DOCS = '';
+                        }
 
                     continue;
                 }
