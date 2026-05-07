@@ -244,6 +244,8 @@ class listaproveedorController extends Controller
 
 
 
+                /////// ACTUALIZAR DOCUMENTOS BOTONES ///////
+
                 $value->BTN_ACTUALIZACION_DOCS = '';
 
                 if ((int) $value->VERIFICACION_SOLICITADA === 1) {
@@ -257,17 +259,17 @@ class listaproveedorController extends Controller
 
                     $value->BTN_CORREO = '';
 
-                  
-
                     if ($periodo) {
 
                         $hoy = now();
 
-                      
+                        // =========================================
+                        // VALIDAR SI EL PERIODO SIGUE VIGENTE
+                        // =========================================
+
                         $periodoActivo =
                             $hoy >= $periodo->FECHA_INICIO &&
                             $hoy <= $periodo->FECHA_FIN;
-
 
                         if (!$periodoActivo) {
 
@@ -275,6 +277,29 @@ class listaproveedorController extends Controller
 
                             continue;
                         }
+
+                        // =========================================
+                        // SI EL PROVEEDOR SE REGISTRÓ
+                        // EN ESTE PERIODO
+                        // =========================================
+
+                        $registroEnPeriodo =
+                            $value->created_at >= $periodo->FECHA_INICIO &&
+                            $value->created_at <= $periodo->FECHA_FIN;
+
+                        // SI SE REGISTRÓ EN ESTE PERIODO
+                        // NO PEDIR ACTUALIZACIÓN
+
+                        if ($registroEnPeriodo) {
+
+                            $value->BTN_ACTUALIZACION_DOCS = '';
+
+                            continue;
+                        }
+
+                        // =========================================
+                        // DOCUMENTOS QUE LE CORRESPONDEN
+                        // =========================================
 
                         $documentosActualizar = DB::table('catalogo_documentosproveedor')
 
@@ -296,6 +321,10 @@ class listaproveedorController extends Controller
 
                             ->toArray();
 
+                        // =========================================
+                        // DOCUMENTOS SUBIDOS EN ESTE PERIODO
+                        // =========================================
+
                         $documentosSubidosPeriodo = DB::table('actualizacion_documentosproveedor')
 
                             ->where('RFC_PROVEEDOR', $value->RFC_ALTA)
@@ -309,30 +338,44 @@ class listaproveedorController extends Controller
 
                             ->toArray();
 
+                        // =========================================
+                        // DOCUMENTOS FALTANTES
+                        // =========================================
+
                         $faltantes = array_diff(
                             $documentosActualizar,
                             $documentosSubidosPeriodo
                         );
 
+                        // =========================================
+                        // SI COMPLETÓ TODO
+                        // =========================================
+
                         if (empty($faltantes)) {
 
                             $value->BTN_ACTUALIZACION_DOCS = '
-                            <span class="badge bg-success">
-                                Actualización completa
-                            </span>';
-
+                <span class="badge bg-success">
+                    Actualización completa
+                </span>';
                         } else {
 
-                          
+                            // =========================================
+                            // SI FALTAN DOCUMENTOS
+                            // =========================================
 
                             $value->BTN_ACTUALIZACION_DOCS = '
 
-                             <button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
-                            data-id="' . $value->ID_FORMULARIO_ALTA . '"
-                            data-bs-toggle="tooltip"
-                            title="Enviar solicitud de actualización">
-                            <i class="bi bi-envelope-paper-fill"></i>
-                            </button>';
+                <button class="btn btn-warning btn-custom rounded-pill ACTUALIZAR_DOCS"
+
+                    data-id="' . $value->ID_FORMULARIO_ALTA . '"
+
+                    data-bs-toggle="tooltip"
+
+                    title="Enviar solicitud de actualización">
+
+                    <i class="bi bi-envelope-paper-fill"></i>
+
+                </button>';
                         }
                     } else {
 
