@@ -38,12 +38,9 @@ textoInactivo.addEventListener('click', () => {
     textoActivo.classList.add('texto-no-seleccionado');
     textoActivo.classList.remove('texto-seleccionado');
 
-    if (TablaproveedoresCargada) {
-        Tablaproveedores.columns.adjust().draw();
-    } else {
+   
         cargarTablaProveedores();
-        TablaproveedoresCargada = true;
-    }
+     
 
 
 });

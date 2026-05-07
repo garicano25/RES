@@ -759,7 +759,7 @@
     @endif
 
     @if(request()->is('usuario'))
-    <script src="/assets/js_sitio/usuario/usuario.js?v=4.12"></script>
+    <script src="/assets/js_sitio/usuario/usuario.js?v=5"></script>
     @endif
 
     @if(request()->is('contratacion'))
