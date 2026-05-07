@@ -663,46 +663,135 @@ class listaproveedorController extends Controller
             ->where('ID_FORMULARIO_ALTA', $request->id)
             ->first();
 
+     
         $periodo = DB::table('fecha_actualizaciondocsproveedor')
-            ->where('ACTIVO', 1)
+
+            ->orderByDesc('ID_ACTUALIZACION_DOCUMENTOS_PROVEEDOR')
+
             ->first();
 
+        if (!$periodo) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No existe periodo activo'
+            ]);
+        }
+
+        
+        $hoy = now();
+
+        $periodoActivo =
+            $hoy >= $periodo->FECHA_INICIO &&
+            $hoy <= $periodo->FECHA_FIN;
+
+        if (!$periodoActivo) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'El periodo ya finalizó'
+            ]);
+        }
+
+      
+
         $tipoPersona = $proveedor->TIPO_PERSONA_ALTA;
+
         $tipoPersonaOpcion = $proveedor->TIPO_PERSONA_OPCION;
 
-        $documentos = DB::table('catalogo_documentosproveedor')
+
+        $documentosCatalogo = DB::table('catalogo_documentosproveedor')
+
             ->where('ACTUALIZAR_DOCUMENTOS', 1)
+
             ->where(function ($q) use ($tipoPersona) {
+
                 $q->where('TIPO_PERSONA', $tipoPersona)
                     ->orWhere('TIPO_PERSONA', 3);
             })
+
             ->where(function ($q) use ($tipoPersonaOpcion) {
+
                 $q->where('TIPO_PERSONA_OPCION', $tipoPersonaOpcion)
                     ->orWhere('TIPO_PERSONA_OPCION', 3);
             })
+
+            ->get();
+
+       
+
+        $documentosSubidos = DB::table('actualizacion_documentosproveedor')
+
+            ->where('RFC_PROVEEDOR', $proveedor->RFC_ALTA)
+
+            ->whereBetween('created_at', [
+                $periodo->FECHA_INICIO,
+                $periodo->FECHA_FIN
+            ])
+
+            ->pluck('ID_CATALOGO_DOCUMENTO')
+
+            ->toArray();
+
+       
+
+        $documentosFaltantes = $documentosCatalogo
+            ->filter(function ($doc) use ($documentosSubidos) {
+
+                return !in_array(
+                    $doc->ID_CATALOGO_DOCUMENTOSPROVEEDOR,
+                    $documentosSubidos
+                );
+            })
+
             ->pluck('NOMBRE_DOCUMENTO');
 
+
+        if ($documentosFaltantes->isEmpty()) {
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'El proveedor ya completó todos los documentos'
+            ]);
+        }
+
+       
+
         Mail::send('emails.actualizacion_documentos', [
+
             'proveedor' => $proveedor,
-            'documentos' => $documentos,
+
+            'documentos' => $documentosFaltantes,
+
             'periodo' => $periodo
+
         ], function ($mail) use ($proveedor) {
 
             $mail->to($proveedor->CORREO_DIRECTORIO)
+
                 ->subject('Actualización de documentos');
         });
 
+        
+
         DB::table('enviocorreo_proveedor')->insert([
+
             'RFC_PROVEEDOR' => $proveedor->RFC_ALTA,
+
             'created_at' => now(),
+
             'updated_at' => now()
         ]);
 
         return response()->json([
+
             'status' => 'success',
+
             'message' => 'Correo enviado al proveedor'
         ]);
     }
+
+
 
     public function actualizarVerificacionSolicitada(Request $request)
     {
