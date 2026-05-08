@@ -915,6 +915,7 @@ public function Tablaincidencias(Request $request)
             $tabla = recemplaedosModel::where('CONTRATO_ID', $contrato)
                 ->where('TIPO_SOLICITUD', 1)
                 ->where('ESTADO_APROBACION', 'Aprobada')
+                ->orderBy('FECHA_SALIDA', 'asc')
                 ->get();
 
             foreach ($tabla as $value) {
