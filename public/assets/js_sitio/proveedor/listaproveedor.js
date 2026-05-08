@@ -373,6 +373,11 @@ $('#Tablalistaproveedorinactivo').on('click', 'td>button.EDITAR', function () {
     $("#PROVEEDOR_CRITICO").val(row.data().PROVEEDOR_CRITICO);
 
     
+        $("#PROVEEDOR_CONTRATO").val(row.data().PROVEEDOR_CONTRATO);
+
+    
+
+
     $(".listadedocumentoficial").empty();
     obtenerDocumentosOficiales(row);
 
@@ -999,6 +1004,7 @@ $('#Tablalistaproveedores tbody').on('click', 'td>button.EDITAR', function () {
     $("#DEPARTAMENTO_EXTRANJERO").val(row.data().DEPARTAMENTO_EXTRANJERO);
     $("#TIENE_ASIGNACION").val(row.data().TIENE_ASIGNACION);
     $("#PROVEEDOR_CRITICO").val(row.data().PROVEEDOR_CRITICO);
+        $("#PROVEEDOR_CONTRATO").val(row.data().PROVEEDOR_CONTRATO);
 
     
     $(".listadedocumentoficial").empty();
