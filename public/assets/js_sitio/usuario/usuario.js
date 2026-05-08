@@ -39,7 +39,7 @@ textoInactivo.addEventListener('click', () => {
     textoActivo.classList.remove('texto-seleccionado');
 
    
-        cargarTablaProveedores();
+    cargarTablaProveedores();
      
 
 

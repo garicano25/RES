@@ -732,7 +732,7 @@
     @endif
 
     @if(request()->is('bitacoragr'))
-    <script src="/assets/js_sitio/requisiciongr/requisiciongr.js?v=9"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisiciongr.js?v=10"></script>
     @endif
 
     @if(request()->is('vobogrusuario'))
@@ -740,7 +740,7 @@
     @endif
 
     @if(request()->is('bitacoragrhistorial'))
-    <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=8"></script>
+    <script src="/assets/js_sitio/requisiciongr/requisiciongrhistorial.js?v=9"></script>
     @endif
 
     @if(request()->is('listaproveedorescriticos'))

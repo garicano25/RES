@@ -675,7 +675,7 @@
                                 </div>
 
                                 <div class="row mt-2">
-                                    <div class="col-6 mb-3">
+                                    <div class="col-4 mb-3">
                                         <label>¡El proveedor es interno!</label>
                                         <select class="form-control" name="TIENE_ASIGNACION" id="TIENE_ASIGNACION">
                                             <option value="" selected disabled>Seleccione una opción</option>
@@ -683,10 +683,17 @@
                                             <option value="2">No</option>
                                         </select>
                                     </div>
-
-                                    <div class="col-6 mb-3">
+                                    <div class="col-4 mb-3">
                                         <label>¡El proveedor es crítico!</label>
                                         <select class="form-control" name="PROVEEDOR_CRITICO" id="PROVEEDOR_CRITICO">
+                                            <option value="" selected disabled>Seleccione una opción</option>
+                                            <option value="1">Sí</option>
+                                            <option value="2">No</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-4 mb-3">
+                                        <label>¡El proveedor tiene contrato!</label>
+                                        <select class="form-control" name="PROVEEDOR_CONTRATO" id="PROVEEDOR_CONTRATO">
                                             <option value="" selected disabled>Seleccione una opción</option>
                                             <option value="1">Sí</option>
                                             <option value="2">No</option>
@@ -1467,7 +1474,6 @@
     </div>
 </div>
 
-
 <!-- ============================================================== -->
 <!-- MODAL ASIGNACIONES PROVEEDOR  -->
 <!-- ============================================================== -->
@@ -1640,12 +1646,9 @@
     </div>
 </div>
 
-
 <!-- ============================================================== -->
 <!-- MODAL CONTRATO PROVEEDOR  -->
 <!-- ============================================================== -->
-
-
 
 <div class="modal fade" id="miModal_contrato" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -1763,11 +1766,9 @@
 </div>
 </div>
 
-
 <!-- ============================================================== -->
 <!-- MODAL FACTURA PROVEEDOR  -->
 <!-- ============================================================== -->
-
 
 <div class="modal fade" id="modalDetalleFactura" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">

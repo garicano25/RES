@@ -698,7 +698,6 @@ if (resp.existe) {
     });
 });
 
-
 function obtenerModalPadre(elemento) {
     const modalBody = $(elemento).closest(".modal-body");
 
@@ -736,9 +735,6 @@ function activarSelect2EnBloque(bloque) {
         });
     });
 }
-
-
-
 
 function calcularTotales(bloque) {
 
@@ -792,12 +788,6 @@ function calcularTotales(bloque) {
     bloque.find(".comentario-diferencia-almacen")
           .toggle(cantidad !== almacen);
 }
-
-
-
-
-
-
 
 $('#btnGuardarGR').on('click', function () {
 
@@ -874,8 +864,6 @@ $('#btnGuardarGR').on('click', function () {
 
 });
 
-
-
 function validarFormulariogr(formulario) {
 
     let formularioValido = true;
@@ -911,8 +899,6 @@ function validarFormulariogr(formulario) {
 
     return formularioValido;
 }
-
-
 
 function crearBloqueDetalle(det, resp) {
     let bloque = $(`
@@ -1214,7 +1200,6 @@ function crearBloqueDetalle(det, resp) {
     return bloque;
 }
 
-
 $('#GR_PARCIAL').on('change', function () {
     if ($(this).val() === "Sí") {
         $('.bs-esparcial').css({
@@ -1229,8 +1214,6 @@ $('#GR_PARCIAL').on('change', function () {
     }
 });
 
-
-
 $(document).on('change', '.gr_parcialjs', function () {
     if ($(this).val() === "Sí") {
         $('.bs-esparcial').css({
@@ -1244,14 +1227,6 @@ $(document).on('change', '.gr_parcialjs', function () {
         });
     }
 });
-
-
-
-
-
-
-
-
 
 $('#DescargarGR').on('click', function () {
     let idsGR = [];
@@ -1326,9 +1301,6 @@ $('#DescargarGR').on('click', function () {
         }
     });
 });
-
-
-
 
 $('#EnviarGR').on('click', function () {
 

@@ -134,6 +134,9 @@ use App\Http\Controllers\proveedor\ordencompraproveedorController;
 use App\Http\Controllers\proveedor\facturaproveedorController;
 use App\Http\Controllers\proveedor\listacontratosController;
 use App\Http\Controllers\proveedor\listafacturasController;
+use App\Http\Controllers\proveedor\contratoproveedorController;
+
+
 
 
 
@@ -991,8 +994,6 @@ Route::get('/Tablalistaproveedorescriticos', [listaproveedorcriticoController::c
 //==============================================    LISTA DE FACTURAS  ============================================== 
 Route::get('/listafacturas', function () {return view('compras.listafactura.listafactura');});
 Route::get('/Tablalistafacturasproveedores', [listafacturasController::class, 'Tablalistafacturasproveedores']);
-
-
 Route::post('/aprobarRechazarFactura',[listafacturasController::class, 'aprobarRechazarFactura']);
 
 //==============================================     PROVEEDORES TEMPORALES  ============================================== 
@@ -1112,6 +1113,7 @@ Route::get('/obtenerDatosProveedor', [altaproveedorController::class, 'obtenerDa
 Route::post('/AltaSave', [altaproveedorController::class, 'store']);
 Route::post('/solicitarValidacion', [altaproveedorController::class, 'solicitarValidacion']);
 Route::get('/verificarBloqueoPorVerificacion', [altaproveedorController::class, 'verificarBloqueoPorVerificacion']);
+Route::get('/verificarcontratoproveedor', [altaproveedorController::class, 'verificarcontratoproveedor']);
 
 //ALTA DE CERTIFICACIONES
 Route::get('/proveedorescertificaciones', function () {return view('compras.proveedores.altacertificacion');});
@@ -1152,6 +1154,11 @@ Route::get('/CuentasDelete', [altacuentaController::class, 'store']);
 Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratula']);
 
 
+// CONTRATOS
+Route::get('/contratoproveedores', function () {return view('compras.proveedores.contratosproveedores');});
+Route::get('/Tablaproveedorescontrato', [contratoproveedorController::class, 'Tablaproveedorescontrato']);
+
+
 // ORDEN DE COMPRA (PO) Y RECEPCIONES DE BIENES (GR)  
 Route::get('/po-gr', function () { return view('compras.proveedores.factura.poygrproveedor');});
 Route::get('/Tablapoproveedor', [ordencompraproveedorController::class, 'Tablapoproveedor']);
@@ -1170,6 +1177,11 @@ Route::get('/Tablafacturaproveedores', [facturaproveedorController::class, 'Tabl
 Route::get('/mostrarsoportefactura/{id}', [facturaproveedorController::class, 'mostrarsoportefactura']);
 Route::get('/mostrarfactura/{id}', [facturaproveedorController::class, 'mostrarfactura']);
 Route::get('/validarPuedeSubirFactura', [facturaproveedorController::class, 'validarPuedeSubirFactura']);
+
+
+
+Route::get('/obtenerContratosProveedor', [facturaproveedorController::class, 'obtenerContratosProveedor']);
+
 
 // CARGAR RECIBO ELECTRONICO (REP)
 Route::get('/reciboelectronico', function () {return view('compras.proveedores.factura.reciborep');});

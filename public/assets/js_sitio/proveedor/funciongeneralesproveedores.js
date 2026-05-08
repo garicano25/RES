@@ -54,6 +54,27 @@ $(document).ready(function () {
             console.warn('No se pudo verificar el estado de la validación.');
         }
     });
+
+
+     $.ajax({
+        url: '/verificarcontratoproveedor',
+        method: 'GET',
+        success: function (response) {
+
+            if (response.tienecontrato) {
+                $('#CONTRATOS').show();
+            } else {
+                $('#CONTRATOS').hide();
+            }
+
+        },
+        error: function () {
+            console.warn('No se pudo verificar el contrato del proveedor.');
+        }
+     });
+    
+    
+    
 });
 
 

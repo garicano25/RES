@@ -209,6 +209,19 @@ class altaproveedorController extends Controller
     }
 
 
+    public function verificarcontratoproveedor()
+    {
+        $rfc = Auth::user()->RFC_PROVEEDOR;
+
+        $contrato = DB::table('formulario_altaproveedor')
+            ->where('RFC_ALTA', $rfc)
+            ->value('PROVEEDOR_CONTRATO');
+
+        return response()->json([
+            'tienecontrato' => $contrato == 1
+        ]);
+    }
+
     public function store(Request $request)
     {
         try {

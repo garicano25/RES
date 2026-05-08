@@ -216,6 +216,12 @@
                                     <span>Documentos de soporte</span>
                                 </a>
                             </li>
+                            <li class="nav-item dropdown" id="CONTRATOS" style="display: none;">
+                                <a href="{{ url('/contratoproveedores') }}" class="d-flex flex-column align-items-center text-center">
+                                    <i class="bi bi-file-earmark-fill"></i>
+                                    <span> Contratos </span>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown" id="POYGR" style="display: none;">
                                 <a href="{{ url('/po-gr') }}" class="d-flex flex-column align-items-center text-center">
                                     <i class="bi bi-file-earmark-fill"></i>
@@ -320,7 +326,7 @@
     <script src="/assets/js_sitio/funciones.js?v=8"></script>
 
 
-    <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js?v=3"></script>
+    <script src="/assets/js_sitio/proveedor/funciongeneralesproveedores.js?v=4"></script>
 
 
 
@@ -422,12 +428,20 @@
     @endif
 
     @if(request()->is('factura'))
-    <script src="/assets/js_sitio/proveedor/factura/cargarfactura.js?v=4"></script>
+    <script src="/assets/js_sitio/proveedor/factura/cargarfactura.js?v=5"></script>
     @endif
 
     @if(request()->is('reciboelectronico'))
     <script src="/assets/js_sitio/proveedor/factura/cargarrep.js?v=1"></script>
     @endif
+
+
+    @if(request()->is('contratoproveedores'))
+    <script src="/assets/js_sitio/proveedor/contratosproveedors.js"></script>
+    @endif
+
+
+
 </body>
 
 </body>

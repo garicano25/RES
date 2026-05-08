@@ -157,6 +157,25 @@ class facturaproveedorController extends Controller
     }
 
 
+
+    public function obtenerContratosProveedor()
+    {
+        $userRFC = Auth::user()->RFC_PROVEEDOR;
+
+        $hoy = Carbon::today();
+
+        $contratos = contratoproveedorModel::where('RFC_PROVEEDOR', $userRFC)
+            ->whereDate('FECHAI_CONTRATO_PROVEEDOR', '<=', $hoy)
+            ->whereDate('FECHAF_CONTRATO_PROVEEDOR', '>=', $hoy)
+            ->orderBy('ID_CONTRATO_PROVEEDORES', 'desc')
+            ->get();
+
+        return response()->json($contratos);
+    }
+
+
+    
+
     public function validarPOGR(Request $request)
     {
         $request->validate([

@@ -83,16 +83,70 @@ $(document).on('change', '#TIPO_FACTURA', function () {
             $('#NO_GR').val('');
         }
 
-        if (tipo === 'CONTRATO') {
+       if (tipo === 'CONTRATO') {
 
             $('#contenedorCONTRATO').removeClass('d-none');
+
             $('#contenedorOC,#soporteFacturaTexto,#datosFactura,#camposFactura,#camposFacturaExtranjero,#soporteFacturaTextoContrato').addClass('d-none');
+
             $('#NO_CONTRATO').val('');
             $('#NO_PO').val('');
             $('#NO_GR').val('');
+
+            $('#SELECCIONAR_CONTRATO').html('');
+
+            $.get('/obtenerContratosProveedor', function (contratos) {
+                $('#SELECCIONAR_CONTRATO').append(`
+                    <option value="">Seleccione un contrato</option>
+                `);
+                if (contratos.length > 0) {
+                    contratos.forEach(function (contrato) {
+                        $('#SELECCIONAR_CONTRATO').append(`
+                           <option value="${contrato.NUMERO_CONTRATO_PROVEEDOR}">
+                                ${contrato.NUMERO_CONTRATO_PROVEEDOR}
+                            </option>
+                        `);
+
+                    });
+                } else {
+
+                    $('#SELECCIONAR_CONTRATO').append(`
+                        <option value="">No hay contratos vigentes</option>
+                    `);
+                }
+            });
         }
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const selectorContrato = document.getElementById('SELECCIONAR_CONTRATO');
+    const inputContrato = document.getElementById('NO_CONTRATO');
+
+    selectorContrato.addEventListener('change', function () {
+
+        let selectedOption = this.options[this.selectedIndex].text;
+
+        if (this.value == '') {
+
+            inputContrato.value = '';
+
+        } else {
+
+            inputContrato.removeAttribute('readonly');
+
+            inputContrato.value = selectedOption;
+
+            inputContrato.setAttribute('readonly', true);
+
+        }
+
+    });
+
+});
+
 
 function activarCampos() {
 

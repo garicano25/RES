@@ -162,12 +162,6 @@ $(document).on('click', '.btn-ver-mas-materiales', function() {
 });
 
 
-
-
-
-
-
-
 $('#Tablabitacoragrhistorial tbody').on('click', 'button.btn-gr', function () {
   var data = Tablabitacoragrhistorial.row($(this).parents('tr')).data();
 
@@ -568,7 +562,7 @@ if (resp.existe) {
                             </div>
                            <div class="col-4 mt-2">
                               <label class="form-label">U.M</label>
-                              <input type="text" class="form-control " name="UNIDAD_MEDIDA_ALMACEN[]" >
+                              <input type="text" class="form-control " name="UNIDAD_MEDIDA_ALMACEN[]" required>
                             </div>
 
                              <div class="col-4 mt-2">
@@ -723,7 +717,6 @@ if (resp.existe) {
     });
 });
 
-
 function obtenerModalPadre(elemento) {
     const modalBody = $(elemento).closest(".modal-body");
 
@@ -748,6 +741,7 @@ function activarSelect2EnBloque(bloque) {
 
         let $this = $(this);
 
+        // Si ya está inicializado lo destruimos primero
         if ($this.hasClass("select2-hidden-accessible")) {
             $this.select2("destroy");
         }
@@ -760,8 +754,6 @@ function activarSelect2EnBloque(bloque) {
         });
     });
 }
-
-
 
 function calcularTotales(bloque) {
 
@@ -816,19 +808,28 @@ function calcularTotales(bloque) {
           .toggle(cantidad !== almacen);
 }
 
-
-
-
-
 $('#btnGuardarGR').on('click', function () {
-    let formData = [];
+
+    let formActivo;
 
     if ($(".form-gr").length > 0) {
-        let activeForm = $(".tab-pane.active .form-gr");
-        formData = formData.concat(activeForm.serializeArray());
+        formActivo = $(".tab-pane.active .form-gr");
     } else {
-        formData = formData.concat($("#formulariorecepciongr").serializeArray());
+        formActivo = $("#formulariorecepciongr");
     }
+
+    if (!validarFormulariogr(formActivo)) {
+
+        Swal.fire({
+            icon: 'warning',
+            title: 'Formulario incompleto',
+            text: 'Debe completar los campos obligatorios.'
+        });
+
+        return; 
+    }
+
+    let formData = formActivo.serializeArray();
 
     formData.push({
         name: "_token",
@@ -843,7 +844,9 @@ $('#btnGuardarGR').on('click', function () {
         confirmButtonText: 'Sí, guardar',
         cancelButtonText: 'No, cancelar'
     }).then((result) => {
+
         if (result.isConfirmed) {
+
             $.ajax({
                 url: '/guardarGR',
                 method: 'POST',
@@ -854,12 +857,11 @@ $('#btnGuardarGR').on('click', function () {
                         text: 'Por favor espere',
                         allowOutsideClick: false,
                         allowEscapeKey: false,
-                        didOpen: () => {
-                            Swal.showLoading();
-                        }
+                        didOpen: () => Swal.showLoading()
                     });
                 },
                 success: function (resp) {
+
                     Swal.close();
 
                     if (resp.ok) {
@@ -875,10 +877,47 @@ $('#btnGuardarGR').on('click', function () {
                     Swal.fire('Error', 'Ocurrió un problema al guardar la GR', 'error');
                 }
             });
+
         }
     });
+
 });
 
+function validarFormulariogr(formulario) {
+
+    let formularioValido = true;
+
+    formulario.find('.error').removeClass('error');
+
+    const campos = formulario.find(
+        'input[required]:not([disabled]):visible, textarea[required]:not([disabled]):visible, select[required]:not([disabled]):visible'
+    );
+
+    campos.each(function () {
+
+        const tipoCampo = $(this).attr('type');
+        const valorCampo = $(this).val();
+
+        if (tipoCampo === 'radio' || tipoCampo === 'checkbox') {
+
+            const nombreGrupo = $(this).attr('name');
+
+            if ($('input[name="' + nombreGrupo + '"]:checked').length === 0) {
+                $('input[name="' + nombreGrupo + '"]').addClass('error');
+                formularioValido = false;
+            }
+
+        } else {
+            if (!valorCampo || valorCampo.trim() === '') {
+                $(this).addClass('error');
+                formularioValido = false;
+            }
+        }
+
+    });
+
+    return formularioValido;
+}
 
 function crearBloqueDetalle(det, resp) {
     let bloque = $(`
@@ -964,7 +1003,7 @@ function crearBloqueDetalle(det, resp) {
 
                           <div class="col-4 mt-2">
                               <label class="form-label">U.M</label>
-                              <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]"  value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}">
+                              <input type="text" class="form-control" name="UNIDAD_MEDIDA_ALMACEN[]"  value="${det.UNIDAD_MEDIDA_ALMACEN ?? ''}" required>
                             </div>
 
 
@@ -1194,8 +1233,6 @@ $('#GR_PARCIAL').on('change', function () {
     }
 });
 
-
-
 $(document).on('change', '.gr_parcialjs', function () {
     if ($(this).val() === "Sí") {
         $('.bs-esparcial').css({
@@ -1209,9 +1246,6 @@ $(document).on('change', '.gr_parcialjs', function () {
         });
     }
 });
-
-
-
 
 $('#DescargarGR').on('click', function () {
     let idsGR = [];
@@ -1287,6 +1321,74 @@ $('#DescargarGR').on('click', function () {
     });
 });
 
+$('#EnviarGR').on('click', function () {
 
+    let idsGR = [];
 
+    if ($(".form-gr").length > 0) {
+
+        let activeTab = $(".tab-pane.show.active");
+
+        if (activeTab.length > 0) {
+            const id = activeTab.find('input[name="ID_GR[]"]').val();
+            if (id && id !== "0") idsGR.push(id);
+        } else {
+            $(".form-gr").each(function () {
+                const id = $(this).find('input[name="ID_GR[]"]').val();
+                if (id && id !== "0") idsGR.push(id);
+            });
+        }
+
+    } else {
+        const id = $('#ID_GR').val();
+        if (id && id !== "0") idsGR.push(id);
+    }
+
+    if (idsGR.length === 0) {
+        Swal.fire('Atención', 'No hay GR para enviar.', 'warning');
+        return;
+    }
+
+    Swal.fire({
+        title: 'Enviar correo GR',
+        text: 'Se notificará al proveedor',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, enviar'
+    }).then((result) => {
+
+        if (result.isConfirmed) {
+
+            Swal.fire({
+                title: 'Enviando...',
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            $.ajax({
+                url: '/enviarCorreoGR',
+                method: 'POST',
+                data: {
+                    _token: $('meta[name="csrf-token"]').attr('content'),
+                    ids: idsGR
+                },
+                success: function (resp) {
+
+                    if (resp.success) {
+                        Swal.fire('Correcto', resp.message, 'success');
+                    } else {
+                        Swal.fire('Error', resp.message, 'error');
+                    }
+
+                },
+                error: function () {
+                    Swal.fire('Error', 'Fallo al enviar correos', 'error');
+                }
+            });
+
+        }
+
+    });
+
+});
 

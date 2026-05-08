@@ -35,8 +35,6 @@
                 </div>
                 <div class="modal-body">
                     {!! csrf_field() !!}
-
-
                     <div class="mb-4">
                         <label class="form-label fw-bold">La factura es por *</label>
                         <select class="form-control" id="TIPO_FACTURA" name="TIPO_FACTURA">
@@ -45,14 +43,21 @@
                             <option value="CONTRATO">Contrato</option>
                         </select>
                     </div>
-
-
                     <div class="mb-4 d-none" id="contenedorCONTRATO">
                         <div class="row">
+
                             <div class="col-12">
-                                <label class="form-label fw-bold">No. de contrato *</label>
-                                <input type="text" class="form-control" id="NO_CONTRATO" name="NO_CONTRATO" required>
+                                <label class="form-label">Seleccionar contrato *</label>
+                                <select class="form-control" id="SELECCIONAR_CONTRATO" name="SELECCIONAR_CONTRATO">
+                                </select>
                             </div>
+                            <div class="col-12 mt-2 text-start">
+                                <label class="form-label fw-bold">
+                                    No. de contrato *
+                                </label>
+                                <input type="text" class="form-control" id="NO_CONTRATO" name="NO_CONTRATO" readonly>
+                            </div>
+
                             <div class="text-center mt-2">
                                 <button type="button" class="btn btn-primary" id="btnValidarCONTRATO">
                                     Validar contrato
@@ -60,8 +65,6 @@
                             </div>
                         </div>
                     </div>
-
-
                     <div class="mb-4 d-none" id="contenedorOC">
                         <div class="row">
                             <div class="col-6">
@@ -79,9 +82,6 @@
                             </div>
                         </div>
                     </div>
-
-
-
                     <div class="mb-3 d-none" id="soporteFacturaTextoContrato">
                         <p>
                             El soporte de la factura debe incluir en un solo archivo los siguientes documentos:
@@ -94,8 +94,6 @@
                             <li>Comprobante del pago SAT (Si aplica)</li>
                         </ul>
                     </div>
-
-
                     <div class="mb-3 d-none" id="soporteFacturaTexto">
                         <p>
                             El soporte de la factura debe incluir en un solo archivo los siguientes documentos:

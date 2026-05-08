@@ -509,6 +509,8 @@
                             <i class="bi bi-person-dash-fill" style="margin-right: 5px;"></i> <span class="d-lg-none">Desvinculación</span><span class="d-none d-lg-inline">Desvinculación</span>
                         </a>
                     </li>
+                    @endif
+                    @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador','externo','Líder de Operaciones']))
                     <ul class="navbar-nav">
                         <li class="nav-item dropdown" style="margin-left: 8px;">
                             <a class="nav-link dropdown-toggle BOTON" href="#" style="color: #fff; font-weight: bold; text-decoration: none;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -517,6 +519,7 @@
                                 <span class="d-none d-lg-inline">Catálogos</span>
                             </a>
                             <ul class="dropdown-menu">
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo']))
 
                                 <li><a class="dropdown-item" href="{{url('/catalogoppt')}}">Catálogos de PPT</a>
                                 </li>
@@ -529,13 +532,17 @@
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/catalogogenerales')}}">Catálogos generales</a>
                                 </li>
+                                @endif
+                                @if(auth()->user()->hasRoles(['Superusuario','Administrador','externo','Líder de Operaciones']))
                                 <hr class="dropdown-divider">
                                 <li><a class="dropdown-item" href="{{url('/catalogoscapacitacion')}}">Catálogos capacitación</a>
                                 </li>
+                                @endif
                             </ul>
                         </li>
                     </ul>
                     @endif
+
                     @if(auth()->check() && auth()->user()->hasRoles(['Superusuario','Administrador']))
                     <li class="nav-item dropdown" style="margin-left: -2px;">
                         <a class="nav-link BOTON" href="{{ url('/usuario') }}" style="color: #fff; font-weight: bold; text-decoration: none; ">
@@ -895,7 +902,7 @@
     <script src="/assets/js_sitio/externo.js?v=1.0"></script>
 
 
-    
+
 </body>
 
 </html>
