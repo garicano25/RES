@@ -4132,6 +4132,7 @@ function cargarTablaAusenciaEmpleado() {
         scrollY: '65vh',
         scrollCollapse: true,
         responsive: true,
+        order: [[1, 'asc']],
 
         ajax: {
             dataType: 'json',
