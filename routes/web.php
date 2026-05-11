@@ -996,6 +996,12 @@ Route::get('/listafacturas', function () {return view('compras.listafactura.list
 Route::get('/Tablalistafacturasproveedores', [listafacturasController::class, 'Tablalistafacturasproveedores']);
 Route::post('/aprobarRechazarFactura',[listafacturasController::class, 'aprobarRechazarFactura']);
 
+//============================================== RELACION DE PAGOS   ============================================== 
+Route::get('/relacionpagos', function () {return view('compras.relacionpagos.relacionpagos');});
+
+
+
+
 //==============================================     PROVEEDORES TEMPORALES  ============================================== 
 
 Route::get('/proveedorestemporales', function () { return view('compras.listaproveedor.proveedorestemporales');});
@@ -1074,7 +1080,7 @@ Route::get('/Tablabitacoragrhistorial', [grhistorialController::class, 'Tablabit
 Route::get('/catalogosproveedores', function () {return view('compras.Catalogos.catalogo_generales');});
 
 
-//  CATALOGO FUNCIONEES/AREAS CONTACTOS
+//  CATALOGO FUNCIONES/AREAS CONTACTOS
 Route::get('/catalogofunciones', function () {return view('compras.Catalogos.catalogo_funcionproveedor');});
 Route::post('/FuncionesareasSave', [catalagofuncionesproveedorController::class, 'store']);
 Route::get('/Tablafuncionescontacto', [catalagofuncionesproveedorController::class, 'Tablafuncionescontacto']);
@@ -1153,20 +1159,16 @@ Route::get('/Tablacuentasproveedores', [altacuentaController::class, 'Tablacuent
 Route::get('/CuentasDelete', [altacuentaController::class, 'store']);
 Route::get('/mostrarcaratula/{id}', [altacuentaController::class, 'mostrarcaratula']);
 
-
 // CONTRATOS
 Route::get('/contratoproveedores', function () {return view('compras.proveedores.contratosproveedores');});
 Route::get('/Tablaproveedorescontrato', [contratoproveedorController::class, 'Tablaproveedorescontrato']);
-
 
 // ORDEN DE COMPRA (PO) Y RECEPCIONES DE BIENES (GR)  
 Route::get('/po-gr', function () { return view('compras.proveedores.factura.poygrproveedor');});
 Route::get('/Tablapoproveedor', [ordencompraproveedorController::class, 'Tablapoproveedor']);
 Route::get('/Tablagrproveedor', [ordencompraproveedorController::class, 'Tablagrproveedor']);
 
-
 // CARGAR FACTURA
-
 Route::get('/factura', function () { return view('compras.proveedores.factura.facturacion');});
 Route::get('/validarContratoVigente', [facturaproveedorController::class, 'validarContratoVigente']);
 Route::post('/validarPOGR', [facturaproveedorController::class, 'validarPOGR']);
@@ -1177,11 +1179,7 @@ Route::get('/Tablafacturaproveedores', [facturaproveedorController::class, 'Tabl
 Route::get('/mostrarsoportefactura/{id}', [facturaproveedorController::class, 'mostrarsoportefactura']);
 Route::get('/mostrarfactura/{id}', [facturaproveedorController::class, 'mostrarfactura']);
 Route::get('/validarPuedeSubirFactura', [facturaproveedorController::class, 'validarPuedeSubirFactura']);
-
-
-
 Route::get('/obtenerContratosProveedor', [facturaproveedorController::class, 'obtenerContratosProveedor']);
-
 
 // CARGAR RECIBO ELECTRONICO (REP)
 Route::get('/reciboelectronico', function () {return view('compras.proveedores.factura.reciborep');});

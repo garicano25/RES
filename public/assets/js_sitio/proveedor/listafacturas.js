@@ -93,7 +93,7 @@ var Tablalistafacturasproveedores = $("#Tablalistafacturasproveedores").DataTabl
         { targets: 2, title: 'Factura por', className: 'all text-center nombre-column' },
         { targets: 3, title: 'No. Factura', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Fecha factura', className: 'all text-center nombre-column' },
-        { targets: 5, title: 'Fecha de registro', className: 'all text-center nombre-column' },
+        { targets: 5, title: 'Fecha de recepción', className: 'all text-center nombre-column' },
         { targets: 6, title: 'Soporte', className: 'all text-center' },
         { targets: 7, title: 'Factura', className: 'all text-center' },
         { targets: 8, title: 'Estatus', className: 'all text-center' },

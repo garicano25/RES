@@ -430,7 +430,7 @@
                                 </li>
                                 <hr class="dropdown-divider">
                                 <li>
-                                    <a class="dropdown-item" href="{{ url('/#') }}">
+                                    <a class="dropdown-item" href="{{ url('/relacionpagos') }}">
                                         Relación de pagos
                                     </a>
                                 </li>
@@ -699,7 +699,7 @@
     @endif
 
     @if(request()->is('listaproveedores'))
-    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=24"></script>
+    <script src="/assets/js_sitio/proveedor/listaproveedor.js?v=25"></script>
     <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
@@ -744,8 +744,8 @@
     @endif
 
     @if(request()->is('listaproveedorescriticos'))
-    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=12"></script>
-    <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script> 
+    <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=13"></script>
+    <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
     @endif
 
     @if(request()->is('actualizaciondocumentosproveedor'))
@@ -761,7 +761,7 @@
     @endif
 
     @if(request()->is('listafacturas'))
-    <script src="/assets/js_sitio/proveedor/listafacturas.js?v=2"></script>
+    <script src="/assets/js_sitio/proveedor/listafacturas.js?v=3"></script>
     @endif
 
 
