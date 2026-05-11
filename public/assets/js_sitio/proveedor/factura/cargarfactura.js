@@ -405,7 +405,8 @@ $(document).on('change', '#FACTURA_XML', function () {
         $('#MONEDA_FACTURA').val(moneda);
         $('#METODO_PAGO').val(metodo);
         $('#FOLIO_FISCAL').val(uuid);
-        $('#IVA_FACTURA').val(iva);
+        // $('#IVA_FACTURA').val(iva);
+        $('#IVA_FACTURA').val(parseFloat(iva).toFixed(2));
         $('#FECHA_FACTURA').val(fecha);
 
 

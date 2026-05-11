@@ -745,7 +745,7 @@
 
     @if(request()->is('listaproveedorescriticos'))
     <script src="/assets/js_sitio/proveedor/listraproveedorcritico.js?v=12"></script>
-    <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script>
+    <script src="/assets/plugins/form_wizard_steps_bootstrap/form_wizard_script.js"></script> 
     @endif
 
     @if(request()->is('actualizaciondocumentosproveedor'))
