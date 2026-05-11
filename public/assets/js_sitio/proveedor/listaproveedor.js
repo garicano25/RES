@@ -4578,10 +4578,10 @@ function cargarTablafacturaproveedores() {
         { targets: 2, title: 'No. Factura', className: 'all text-center nombre-column' },
         { targets: 3, title: 'Fecha factura', className: 'all text-center nombre-column' },
         { targets: 4, title: 'Fecha de recepción', className: 'all text-center nombre-column' },
-        { targets: 5, title: 'Soporte', className: 'all text-center' },
-        { targets: 6, title: 'Factura', className: 'all text-center' },
-        { targets: 7, title: 'Estatus factura', className: 'all text-center' },
-        { targets: 8, title: 'Visualizar', className: 'all text-center' },
+        { targets: 5, title: 'Soporte', className: 'all text-center nombre-column' },
+        { targets: 6, title: 'Factura', className: 'all text-center nombre-column' },
+        { targets: 7, title: 'Estatus factura', className: 'all text-center nombre-column' },
+        { targets: 8, title: 'Visualizar', className: 'all text-center nombre-column' },
     ]
     });
 }
