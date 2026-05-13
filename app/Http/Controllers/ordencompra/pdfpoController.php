@@ -12,7 +12,7 @@ use DB;
 use App\Models\ordencompra\poModel;
 use App\Models\proveedor\directorioModel;
 
-
+use App\Models\proveedor\altaproveedorModel;
 
 use Illuminate\Support\Facades\Mail;
 class pdfpoController extends Controller
@@ -28,6 +28,11 @@ class pdfpoController extends Controller
 
         $proveedor = directorioModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_SELECCIONADO)->first();
 
+
+        $proveedor1 = altaproveedorModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_SELECCIONADO)->first();
+
+
+
         $usuarioSolicito = DB::table('usuarios')
             ->select('EMPLEADO_NOMBRE', 'EMPLEADO_APELLIDOPATERNO', 'EMPLEADO_APELLIDOMATERNO')
             ->where('ID_USUARIO', $orden->USUARIO_ID)
@@ -38,7 +43,7 @@ class pdfpoController extends Controller
             ->where('ID_USUARIO', $orden->APROBO_ID)
             ->first();
 
-        return Pdf::loadView('pdf.po_pdf', compact('orden', 'proveedor', 'usuarioSolicito', 'usuarioAprobo'))
+        return Pdf::loadView('pdf.po_pdf', compact('orden', 'proveedor', 'usuarioSolicito', 'usuarioAprobo', 'proveedor1'))
             ->download("PO_{$orden->NO_PO}.pdf");
     }
 
