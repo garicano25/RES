@@ -219,8 +219,8 @@ var Tablarequerimiento = $("#Tablarequerimiento").DataTable({
         { targets: 4, title: 'Motivo', className: 'all text-center' },
         { targets: 5, title: 'Fecha de creación', className: 'all text-center' },
         { targets: 6, title: 'Nombre del solicitante', className: 'all text-center' },
-        { targets: 7, title: 'Nombre del solicitante', className: 'all text-center' },
-        { targets: 8, title: 'Estatus', className: 'all text-center' },
+        { targets: 7, title: 'Estatus', className: 'all text-center' },
+        { targets: 8, title: 'Editar', className: 'all text-center' },
         { targets: 9, title: 'Visualizar', className: 'all text-center' }
     ]
 });
