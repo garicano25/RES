@@ -29,8 +29,7 @@ class pdfpoController extends Controller
         $proveedor = directorioModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_SELECCIONADO)->first();
 
 
-        $proveedor1 = altaproveedorModel::where('RFC_PROVEEDOR', $orden->PROVEEDOR_SELECCIONADO)->first();
-
+        $proveedor1 = altaproveedorModel::where('RFC_ALTA', $orden->PROVEEDOR_SELECCIONADO)->first();
 
 
         $usuarioSolicito = DB::table('usuarios')
