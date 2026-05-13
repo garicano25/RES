@@ -234,31 +234,31 @@
         <tr>
             <td class="bg-gray bold">Dirección:</td>
             <td colspan="3">
-                @if ($proveedor->TIPO_PERSONA == '1')
-                {{ $proveedor->TIPO_VIALIDAD_EMPRESA ?? '' }} {{ $proveedor->NOMBRE_VIALIDAD_EMPRESA ?? '' }}
-                {{ $proveedor->NUMERO_EXTERIOR_EMPRESA ?? '' }}
-                {{ $proveedor->NUMERO_INTERIOR_EMPRESA ? 'Int. ' . $proveedor->NUMERO_INTERIOR_EMPRESA : '' }},
-                Col. {{ $proveedor->NOMBRE_COLONIA_EMPRESA ?? '' }}<br>
-                C.P. {{ $proveedor->CODIGO_POSTAL ?? '' }},
-                {{ $proveedor->NOMBRE_LOCALIDAD_EMPRESA ?? '' }},
-                {{ $proveedor->NOMBRE_ENTIDAD_EMPRESA ?? '' }}
-                @elseif ($proveedor->TIPO_PERSONA == '2')
-                {{ $proveedor->DOMICILIO_EXTRANJERO ?? '' }},
-                {{ $proveedor->DEPARTAMENTO_EXTRANJERO ?? '' }},
-                {{ $proveedor->CODIGO_EXTRANJERO ?? '' }},
-                {{ $proveedor->ESTADO_EXTRANJERO ?? '' }},
-                {{ $proveedor->CIUDAD_EXTRANJERO ?? '' }},
-                {{ $proveedor->PAIS_EXTRANJERO ?? '' }}
+                @if ($proveedor1->TIPO_PERSONA == '1')
+                {{ $proveedor1->TIPO_VIALIDAD_EMPRESA ?? '' }} {{ $proveedor1->NOMBRE_VIALIDAD_EMPRESA ?? '' }}
+                {{ $proveedor1->NUMERO_EXTERIOR_EMPRESA ?? '' }}
+                {{ $proveedor1->NUMERO_INTERIOR_EMPRESA ? 'Int. ' . $proveedor1->NUMERO_INTERIOR_EMPRESA : '' }},
+                Col. {{ $proveedor1->NOMBRE_COLONIA_EMPRESA ?? '' }}<br>
+                C.P. {{ $proveedor1->CODIGO_POSTAL ?? '' }},
+                {{ $proveedor1->NOMBRE_LOCALIDAD_EMPRESA ?? '' }},
+                {{ $proveedor1->NOMBRE_ENTIDAD_EMPRESA ?? '' }}
+                @elseif ($proveedor1->TIPO_PERSONA == '2')
+                {{ $proveedor1->DOMICILIO_EXTRANJERO ?? '' }},
+                {{ $proveedor1->DEPARTAMENTO_EXTRANJERO ?? '' }},
+                {{ $proveedor1->CODIGO_EXTRANJERO ?? '' }},
+                {{ $proveedor1->ESTADO_EXTRANJERO ?? '' }},
+                {{ $proveedor1->CIUDAD_EXTRANJERO ?? '' }},
+                {{ $proveedor1->PAIS_EXTRANJERO ?? '' }}
                 @endif
             </td>
         </tr>
         <tr>
             <td class="bg-gray bold">Ciudad / País</td>
             <td>
-                @if ($proveedor->TIPO_PERSONA == '1')
-                {{ $proveedor->NOMBRE_LOCALIDAD_EMPRESA ?? '' }}, {{ $proveedor->PAIS_EMPRESA ?? '' }}
+                @if ($proveedor1->TIPO_PERSONA == '1')
+                {{ $proveedor1->NOMBRE_LOCALIDAD_EMPRESA ?? '' }}, {{ $proveedor1->PAIS_EMPRESA ?? '' }}
                 @else
-                {{ $proveedor->CIUDAD_EXTRANJERO ?? '' }}, {{ $proveedor->PAIS_EXTRANJERO ?? '' }}
+                {{ $proveedor1->CIUDAD_EXTRANJERO ?? '' }}, {{ $proveedor1->PAIS_EXTRANJERO ?? '' }}
                 @endif
             </td>
             <td class="bg-gray bold">Fecha de entrega<br>(aaaa/mm/dd)</td>
@@ -266,9 +266,9 @@
         </tr>
         <tr>
             <td class="bg-gray bold">Teléfono</td>
-            <td>{{ $proveedor->TELEFONO_DIRECOTORIO && trim($proveedor->TELEFONO_DIRECOTORIO) !== '' ? $proveedor->TELEFONO_DIRECOTORIO : 'N/P' }}</td>
+            <td>{{ $proveedor1->TELEFONO_DIRECOTORIO && trim($proveedor1->TELEFONO_DIRECOTORIO) !== '' ? $proveedor1->TELEFONO_DIRECOTORIO : 'N/P' }}</td>
             <td class="bg-gray bold">Celular</td>
-            <td>{{ $proveedor->CELULAR_DIRECTORIO && trim($proveedor->CELULAR_DIRECTORIO) !== '' ? $proveedor->CELULAR_DIRECTORIO : 'N/P' }}</td>
+            <td>{{ $proveedor1->CELULAR_DIRECTORIO && trim($proveedor1->CELULAR_DIRECTORIO) !== '' ? $proveedor1->CELULAR_DIRECTORIO : 'N/P' }}</td>
 
         </tr>
         <tr>
