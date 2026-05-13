@@ -234,7 +234,7 @@
         <tr>
             <td class="bg-gray bold">Dirección:</td>
             <td colspan="3">
-                @if ($proveedor1->TIPO_PERSONA == '1')
+                @if ($proveedor1->TIPO_PERSONA_ALTA == '1')
                 {{ $proveedor1->TIPO_VIALIDAD_EMPRESA ?? '' }} {{ $proveedor1->NOMBRE_VIALIDAD_EMPRESA ?? '' }}
                 {{ $proveedor1->NUMERO_EXTERIOR_EMPRESA ?? '' }}
                 {{ $proveedor1->NUMERO_INTERIOR_EMPRESA ? 'Int. ' . $proveedor1->NUMERO_INTERIOR_EMPRESA : '' }},
@@ -242,7 +242,7 @@
                 C.P. {{ $proveedor1->CODIGO_POSTAL ?? '' }},
                 {{ $proveedor1->NOMBRE_LOCALIDAD_EMPRESA ?? '' }},
                 {{ $proveedor1->NOMBRE_ENTIDAD_EMPRESA ?? '' }}
-                @elseif ($proveedor1->TIPO_PERSONA == '2')
+                @elseif ($proveedor1->TIPO_PERSONA_ALTA == '2')
                 {{ $proveedor1->DOMICILIO_EXTRANJERO ?? '' }},
                 {{ $proveedor1->DEPARTAMENTO_EXTRANJERO ?? '' }},
                 {{ $proveedor1->CODIGO_EXTRANJERO ?? '' }},
@@ -255,7 +255,7 @@
         <tr>
             <td class="bg-gray bold">Ciudad / País</td>
             <td>
-                @if ($proveedor1->TIPO_PERSONA == '1')
+                @if ($proveedor1->TIPO_PERSONA_ALTA == '1')
                 {{ $proveedor1->NOMBRE_LOCALIDAD_EMPRESA ?? '' }}, {{ $proveedor1->PAIS_EMPRESA ?? '' }}
                 @else
                 {{ $proveedor1->CIUDAD_EXTRANJERO ?? '' }}, {{ $proveedor1->PAIS_EXTRANJERO ?? '' }}
