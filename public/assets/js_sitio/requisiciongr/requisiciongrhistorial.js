@@ -698,7 +698,7 @@ if (resp.existe) {
                                 .filter(inv => inv.TIPO_EQUIPO == tipoDesc)
                                 .forEach(inv => {
                                     inventarioSelect.append(
-                                        `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`
+                                        `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO} | ${inv.MARCA_EQUIPO} | ${inv.MODELO_EQUIPO} | ${inv.SERIE_EQUIPO}</option>`
                                     );
                                 });
                         }
@@ -1080,7 +1080,7 @@ function crearBloqueDetalle(det, resp) {
                                   ${resp.inventario ? resp.inventario
                                     .filter(inv => inv.TIPO_EQUIPO == det.TIPO_EQUIPO)
                                     .map(inv =>
-                                      `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO}</option>`
+                                    `<option value="${inv.ID_FORMULARIO_INVENTARIO}" ${det.INVENTARIO_ID == inv.ID_FORMULARIO_INVENTARIO ? "selected" : ""}>${inv.DESCRIPCION_EQUIPO} | ${inv.MARCA_EQUIPO} | ${inv.MODELO_EQUIPO} | ${inv.SERIE_EQUIPO}</option>`
                                     ).join("") : ""}
                                 </select>
                               </div>
@@ -1188,7 +1188,7 @@ function crearBloqueDetalle(det, resp) {
                 .filter(inv => inv.TIPO_EQUIPO == tipoDesc)
                 .forEach(inv => {
                     inventarioSelect.append(
-                        `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO}</option>`
+                        `<option value="${inv.ID_FORMULARIO_INVENTARIO}">${inv.DESCRIPCION_EQUIPO} | ${inv.MARCA_EQUIPO} | ${inv.MODELO_EQUIPO} | ${inv.SERIE_EQUIPO}</option>`
                     );
                 });
         }
